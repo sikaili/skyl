@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <Index msg="Welcome to Your Vue.js App" />
+    <Head msg="Welcome to Your Vue.js App" />
     <router-view />
   </div>
 </template>
 
 <script>
-import Index from "./components/Index.vue";
+import Head from "./components/Head.vue";
 export default {
   name: "app",
   components: {
-    Index
+    Head
   }
 };
 </script>
