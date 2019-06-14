@@ -1,5 +1,5 @@
 <template>
-  <div class="db">
+  <div>
     <Menu :works="arrr" mName="Applis" />
     <Menu :works="arr1" mName="Songs" />
   </div>
