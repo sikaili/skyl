@@ -1,7 +1,9 @@
 <template>
   <div>
-    <div class="fl w-40"><h1 class="ph5 f3 black tr">Applications:</h1></div>
-    <div class="fl w-20">
+    <div class="fl w-40 bg-black-50">
+      <h1 class="ph5 f3 white tr">Applications:</h1>
+    </div>
+    <div class="fl w-20 bg-white-80">
       <div class="flex flex-column justify-center">
         <div v-for="work in works" :key="work.id" class="pa3 tc">
           <a
@@ -18,7 +20,7 @@
         </div>
       </div>
     </div>
-    <div class="fl w-40">
+    <div class="fl w-40 bg-white-80">
       <div>
         <div v-for="w in works" :key="w.id * 100 + 100" v-show="w.show">
           <div class="fl w-100 w-100-ns tl">
@@ -44,48 +46,49 @@
 </template>
 
 <script>
+const arr = [
+  {
+    name: "Eyes",
+    link: "http://eyes.skyl.fr",
+    img: require("@/assets/eyes.png"),
+    id: 0,
+    show: false
+  },
+  {
+    name: "Unsustainable",
+    link: "http://unsustainable.skyl.fr",
+    img: require("@/assets/eyes.png"),
+    id: 1,
+    show: false
+  },
+  {
+    name: "Where's Jane",
+    link: "http://unsustainable.skyl.fr",
+    img: require("@/assets/eyes.png"),
+    id: 2,
+    show: false
+  },
+  {
+    name: "Noisy Lines",
+    link: "http://unsustainable.skyl.fr",
+    img: require("@/assets/eyes.png"),
+    id: 3,
+    show: false
+  },
+  {
+    name: "Forces",
+    link: "http://forces.skyl.fr",
+    img: require("@/assets/eyes.png"),
+    id: 4,
+    show: false
+  }
+];
 export default {
   name: "work",
   props: {},
   data() {
     return {
-      works: [
-        {
-          name: "Eyes",
-          link: "http://eyes.skyl.fr",
-          img: require("@/assets/eyes.png"),
-          id: 0,
-          show: false
-        },
-        {
-          name: "Unsustainable",
-          link: "http://unsustainable.skyl.fr",
-          img: require("@/assets/eyes.png"),
-          id: 1,
-          show: false
-        },
-        {
-          name: "Where's Jane",
-          link: "http://unsustainable.skyl.fr",
-          img: require("@/assets/eyes.png"),
-          id: 2,
-          show: false
-        },
-        {
-          name: "Noisy Lines",
-          link: "http://unsustainable.skyl.fr",
-          img: require("@/assets/eyes.png"),
-          id: 3,
-          show: false
-        },
-        {
-          name: "Forces",
-          link: "http://forces.skyl.fr",
-          img: require("@/assets/eyes.png"),
-          id: 4,
-          show: false
-        }
-      ]
+      works: arr
     };
   },
   methods: {},
@@ -96,5 +99,3 @@ export default {
   }
 };
 </script>
-
-<style></style>

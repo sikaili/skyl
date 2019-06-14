@@ -2,13 +2,19 @@
   <div id="nav">
     <div class="cf">
       <div class="flex justify-center tc">
-        <router-link class="min w-10 pa3 f4 black no-underline" to="/"
+        <router-link
+          class="bg-white-80 min w-10 pa3 f4 black no-underline"
+          to="/"
           >Work</router-link
         >
-        <router-link class="min w-10 pa3 f4 black no-underline" to="/info"
+        <router-link
+          class="bg-white-80 min w-10 pa3 f4 black no-underline"
+          to="/info"
           >Info</router-link
         >
-        <router-link class="min w-10 pa3 f4 black no-underline" to="/drawings"
+        <router-link
+          class="bg-white-80 min w-10 pa3 f4 black no-underline"
+          to="/drawings"
           >Drawings</router-link
         >
       </div>
