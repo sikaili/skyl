@@ -1,6 +1,6 @@
 <template>
   <div class="f2">
-    <h1 class="tc">Sikai Li</h1>
+    <h1 class="tc">Digital</h1>
   </div>
 </template>
 
