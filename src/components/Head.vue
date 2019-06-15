@@ -2,13 +2,16 @@
   <div id="nav">
     <div class="flex justify-center bg-white-50">
       <router-link class="tc min pa3 w-20 f4 black link" to="/"
-        >Work</router-link
+        >Applis</router-link
       >
-      <router-link class="tc min pa3 w-20 f4 black link" to="/info"
-        >Info</router-link
+      <router-link class="tc min pa3 w-20 f4 black link" to="/music"
+        >Music</router-link
       >
       <router-link class="tc min pa3 w-20 f4 black link" to="/drawings"
         >Drawings</router-link
+      >
+      <router-link class="tc min pa3 w-20 f4 black link" to="/info"
+        >Info</router-link
       >
     </div>
     <div class="flex justify-center">

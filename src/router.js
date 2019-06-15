@@ -3,6 +3,7 @@ import Router from "vue-router";
 import draw from "./views/draw.vue";
 import work from "./views/work.vue";
 import info from "./views/info.vue";
+import music from "./views/music.vue";
 
 Vue.use(Router);
 
@@ -22,6 +23,11 @@ export default new Router({
       path: "/info",
       name: "info",
       component: info
+    },
+    {
+      path: "/music",
+      name: "music",
+      component: music
     }
   ]
 });

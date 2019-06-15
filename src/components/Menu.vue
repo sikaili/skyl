@@ -2,7 +2,7 @@
   <div>
     <div class="cl">
       <div class="fl w-40 bg-black-50 flex flex-row justify-end">
-        <h1 class="ph5 f3 white tr">Applications</h1>
+        <h1 class="ph5 f3 white tr">{{ mName }}</h1>
         <!-- <h1 class="ph5 f3 white tr"></h1> -->
       </div>
       <div class="fl w-20 bg-white-80">
@@ -58,6 +58,9 @@ export default {
     works: {
       type: Array,
       required: true
+    },
+    mName: {
+      type: String
     }
   },
   data() {
