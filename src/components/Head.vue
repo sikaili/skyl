@@ -1,24 +1,20 @@
 <template>
   <div id="nav">
-    <div class="cf">
-      <div class="flex justify-center tc">
-        <router-link
-          class="bg-white-80 min w-10 pa3 f4 black no-underline"
-          to="/"
-          >Work</router-link
-        >
-        <router-link
-          class="bg-white-80 min w-10 pa3 f4 black no-underline"
-          to="/info"
-          >Info</router-link
-        >
-        <router-link
-          class="bg-white-80 min w-10 pa3 f4 black no-underline"
-          to="/drawings"
-          >Drawings</router-link
-        >
+    <div class="flex justify-center bg-white-50">
+      <router-link class="tc min pa3 w-20 f4 black link" to="/"
+        >Work</router-link
+      >
+      <router-link class="tc min pa3 w-20 f4 black link" to="/info"
+        >Info</router-link
+      >
+      <router-link class="tc min pa3 w-20 f4 black link" to="/drawings"
+        >Drawings</router-link
+      >
+    </div>
+    <div class="flex justify-center">
+      <div class="tc w-20">
+        <h1 class="f2 b white">LI Sikai</h1>
       </div>
-      <h2 class="tc">Sikai LI</h2>
     </div>
   </div>
 </template>

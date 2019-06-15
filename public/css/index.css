@@ -1,5 +1,5 @@
 * {
-  font-family: 'helvetica neue', helvetica, sans-serif;
+  font-family: 'Roboto Mono','Roboto Mono', monospace,'helvetica neue', helvetica, sans-serif;
   box-sizing: border-box !important;
 }
 .back{
@@ -25,7 +25,7 @@ div.back{
 }
 a:hover {
   text-decoration: line-through;
-  /* border-color: black; */
+  background-color:white;
 }
 
 .ba {
