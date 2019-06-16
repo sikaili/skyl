@@ -26,7 +26,7 @@ export default {
   data() {
     return {
       linkDefault: "http://eyes.skyl.fr",
-      link: "http://eyes.skyl.fr"
+      link: "/1/index.html"
     };
   }
 };
