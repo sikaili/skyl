@@ -1,12 +1,19 @@
 <template>
   <div>
-    <h1>{{ $route.params.id }}</h1>
+    <h1>{{ array[$route.params.id].name }}</h1>
     <p></p>
   </div>
 </template>
 
 <script>
-export default {};
+import obj from "@/data.js";
+export default {
+  data() {
+    return {
+      array: obj.musicArray
+    };
+  }
+};
 </script>
 
 <style></style>
