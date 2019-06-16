@@ -12,7 +12,7 @@ export default {
   },
   data() {
     return {
-      arrr: obj.musicArray
+      arrr: obj.music
     };
   }
 };

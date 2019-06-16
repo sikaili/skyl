@@ -94,4 +94,4 @@ arrayDump.map(obj => {
   });
 });
 
-export default { worksArray: data.work, musicArray: data.music };
+export default { work: data.work, music: data.music };

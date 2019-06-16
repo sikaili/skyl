@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="tc">{{ array[$route.params.id].name }}</h1>
+    <h1 class="tc">{{ item.name }}</h1>
     <p></p>
   </div>
 </template>
@@ -11,8 +11,18 @@ export default {
   name: "page",
   data() {
     return {
-      array: obj.musicArray
+      obj: obj,
+      id: this.$route.params.id
     };
+  },
+  computed: {
+    item: function() {
+      const arr = this.obj[this.$route.path.split("/")[1]];
+      if (this.id > arr.length) {
+        return "ERROR!";
+      }
+      return arr[this.id];
+    }
   }
 };
 </script>
