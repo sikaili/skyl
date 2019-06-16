@@ -16,9 +16,14 @@ export default new Router({
       component: draw
     },
     {
-      path: "/",
-      name: "work",
+      path: "/work",
+      name: "work/",
       component: work
+    },
+    {
+      path: "/work/:id",
+      name: "applications",
+      component: page
     },
     {
       path: "/info",
@@ -27,12 +32,18 @@ export default new Router({
     },
     {
       path: "/music",
-      name: "music",
+      name: "music/",
       component: music
     },
+
     {
-      path: "/:id",
+      path: "/music/:id",
+      name: "music",
       component: page
     }
+    // {
+    //   path: "/:id",
+    //   component: page
+    // }
   ]
 });

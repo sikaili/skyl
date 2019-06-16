@@ -8,6 +8,7 @@
 <script>
 import obj from "@/data.js";
 export default {
+  name: "page",
   data() {
     return {
       array: obj.musicArray

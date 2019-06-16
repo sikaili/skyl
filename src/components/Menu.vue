@@ -27,7 +27,12 @@
       <div>
         <div v-for="(w, index) in works" :key="mName + index">
           <transition name="slide-fade">
-            <div class="fl w-100 w-100-ns tl" v-show="w.show">
+            <div
+              class="fl w-100 w-100-ns tl"
+              v-show="w.show"
+              @mouseenter="w.show = true"
+              @mouseleave="w.show = false"
+            >
               <div class="pa4">
                 <span class="f4 f1-ns b dib pr3">{{ w.name }}</span>
                 <b class="dib bg-blue">{{ w.year }}</b>
@@ -41,6 +46,7 @@
                   <code class="f6 db lh-copy nowrap">{{ w.link }}</code>
                 </div>
                 <img :src="w.img" :alt="w.name" class="w-100 dim" />
+                <button @click="goToPage(index)">+</button>
               </div>
             </div>
           </transition>
@@ -66,6 +72,15 @@ export default {
     return {
       bwhite: "bg-white"
     };
+  },
+  methods: {
+    goToPage(itemId) {
+      console.log(itemId);
+      this.$router.push({
+        name: this.mName.toLowerCase(),
+        params: { id: itemId }
+      });
+    }
   }
 };
 </script>
