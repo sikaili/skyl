@@ -16,7 +16,8 @@
     </div>
     <h1 class="tc autoM f2 b white">LI Sikai</h1>
     <p class="bg-black-10 tl white autoM">
-      I'm a creative technologist & interction designer based in Paris.
+      I'm a creative technologist & interction designer based in Paris. I make
+      music and new media art.
     </p>
   </div>
 </template>
