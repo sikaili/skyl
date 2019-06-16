@@ -4,6 +4,7 @@ import draw from "./views/draw.vue";
 import work from "./views/work.vue";
 import info from "./views/info.vue";
 import music from "./views/music.vue";
+import page from "./views/page.vue";
 
 Vue.use(Router);
 
@@ -28,6 +29,10 @@ export default new Router({
       path: "/music",
       name: "music",
       component: music
+    },
+    {
+      path: "/:id",
+      component: page
     }
   ]
 });
