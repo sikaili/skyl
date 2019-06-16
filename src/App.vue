@@ -1,10 +1,10 @@
 <template>
   <div id="app">
-    <Head msg="Welcome to Your Vue.js App"/>
+    <Head msg="Welcome to Your Vue.js App" />
     <iframe class="back" :src="link"></iframe>
     <div class="back"></div>
     <transition name="slide-fade1">
-      <router-view/>
+      <router-view />
     </transition>
   </div>
 </template>

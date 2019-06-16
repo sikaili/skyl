@@ -31,7 +31,7 @@
               class="fl w-100 w-100-ns tl"
               v-show="w.show"
               @mouseenter="handleMouseIn(w, w.id)"
-              @mouseleave="w.show = false"
+              @mouseleave="handleMouseOut(w)"
             >
               <div class="pa4">
                 <span class="f4 f1-ns b dib pr3">{{ w.name }}</span>
@@ -45,7 +45,7 @@
                 <div class="w-100 overflow-auto">
                   <code class="f6 db lh-copy nowrap">{{ w.link }}</code>
                 </div>
-                <img :src="w.img" :alt="w.name" class="w-100 dim">
+                <img :src="w.img" :alt="w.name" class="w-100 dim" />
                 <button @click="goToPage(index)">+</button>
               </div>
             </div>
@@ -57,6 +57,7 @@
 </template>
 
 <script>
+import { clearTimeout } from "timers";
 export default {
   name: "Menu",
   props: {
@@ -76,7 +77,14 @@ export default {
   methods: {
     handleMouseIn(w, itemId) {
       w.show = true;
-      this.$root.$emit("itemDesOpen", itemId);
+      setTimeout(() => this.$root.$emit("itemDesOpen", itemId), 1000);
+    },
+    handleMouseOut(w) {
+      w.show = false;
+      let id = window.setTimeout(function() {}, 0);
+      while (id--) {
+        window.clearTimeout(id); // will do nothing if no timeout with id is present
+      }
     },
     goToPage(itemId) {
       console.log(itemId);
