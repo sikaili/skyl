@@ -25,6 +25,9 @@
     </div>
     <div class="fl w-40 bg-white">
       <div>
+        <transition name="loading">
+          <div v-show="tab.show" class="loading bg-blue">Loading...</div>
+        </transition>
         <div v-for="(w, index) in works" :key="mName + index">
           <transition name="slide-fade">
             <div
@@ -71,16 +74,22 @@ export default {
   },
   data() {
     return {
+      tab: { show: false },
       bwhite: "bg-white"
     };
   },
   methods: {
     handleMouseIn(w, itemId) {
       w.show = true;
-      setTimeout(() => this.$root.$emit("itemDesOpen", itemId), 1000);
+      this.tab.show = true;
+      setTimeout(() => {
+        this.$root.$emit("itemDesOpen", itemId), (this.tab.show = false);
+      }, 1000);
     },
     handleMouseOut(w) {
       w.show = false;
+      this.tab.show = false;
+
       let id = window.setTimeout(function() {}, 0);
       while (id--) {
         window.clearTimeout(id); // will do nothing if no timeout with id is present
@@ -97,6 +106,10 @@ export default {
 };
 </script>
 <style>
+.loading {
+  width: 100%;
+  height: 30px;
+}
 .slide-fade-enter-active {
   transition: all 0.15s ease;
 }
@@ -106,6 +119,17 @@ export default {
 }
 .slide-fade-enter {
   transform: translateX(30px);
+  opacity: 0;
+}
+.loading-enter-active {
+  transition: all 1s;
+}
+.loading-leave-active {
+  transition: all 0s;
+  display: none;
+}
+.loading-enter {
+  width: 0;
   opacity: 0;
 }
 </style>
