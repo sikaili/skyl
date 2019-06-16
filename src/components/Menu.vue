@@ -49,7 +49,7 @@
                   <code class="f6 db lh-copy nowrap">{{ w.link }}</code>
                 </div>
                 <img :src="w.img" :alt="w.name" class="w-100 dim" />
-                <button @click="goToPage(index)">+</button>
+                <button @click="goToPage(index)">Read more...</button>
               </div>
             </div>
           </transition>
