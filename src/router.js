@@ -11,6 +11,11 @@ Vue.use(Router);
 export default new Router({
   routes: [
     {
+      path: "/",
+      name: "home",
+      component: work
+    },
+    {
       path: "/drawings",
       name: "draw",
       component: draw

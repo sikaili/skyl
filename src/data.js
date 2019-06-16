@@ -90,7 +90,6 @@ arrayDump.map(obj => {
       .split(" ")
       .join("")
       .toLowerCase();
-    console.log(a);
   });
 });
 

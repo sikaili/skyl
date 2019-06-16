@@ -30,7 +30,7 @@
             <div
               class="fl w-100 w-100-ns tl"
               v-show="w.show"
-              @mouseenter="w.show = true"
+              @mouseenter="handleMouseIn(w, w.link)"
               @mouseleave="w.show = false"
             >
               <div class="pa4">
@@ -74,6 +74,10 @@ export default {
     };
   },
   methods: {
+    handleMouseIn(w, itemId) {
+      w.show = true;
+      this.$root.$emit("itemDesOpen", itemId);
+    },
     goToPage(itemId) {
       console.log(itemId);
       this.$router.push({
