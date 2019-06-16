@@ -15,7 +15,9 @@ export default {
   name: "app",
   mounted() {
     this.$root.$on("itemDesOpen", a => {
-      this.link = a;
+      a.split(":")[0] == `http`
+        ? (this.link = a)
+        : (this.link = this.linkDefault);
     });
   },
   components: {
@@ -23,6 +25,7 @@ export default {
   },
   data() {
     return {
+      linkDefault: "http://eyes.skyl.fr",
       link: "http://eyes.skyl.fr"
     };
   }
