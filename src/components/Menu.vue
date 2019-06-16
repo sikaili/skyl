@@ -2,7 +2,6 @@
   <div class="cl">
     <div class="fl w-40 bg-black-50 flex flex-row justify-end">
       <h1 class="ph5 f3 white tr">{{ mName }}</h1>
-      <!-- <h1 class="ph5 f3 white tr"></h1> -->
     </div>
     <div class="fl w-20 bg-white-80">
       <div class="flex flex-column justify-center">
@@ -26,7 +25,7 @@
     </div>
     <div class="fl w-40 bg-white">
       <div>
-        <div v-for="w in works" :key="w.id * 100 + 100">
+        <div v-for="(w, index) in works" :key="mName + index">
           <transition name="slide-fade">
             <div class="fl w-100 w-100-ns tl" v-show="w.show">
               <div class="pa4">
