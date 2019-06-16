@@ -52,7 +52,7 @@ const data = {
   ],
   music: [
     {
-      name: "Plastic Ocean",
+      name: "Rain Addiction",
       link: "",
       img: require("@/assets/eyes.png"),
       show: false
