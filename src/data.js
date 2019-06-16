@@ -43,7 +43,7 @@ const data = {
       show: false
     },
     {
-      name: "Forces",
+      name: "Gravity",
       year: 2017,
       link: "http://forces.skyl.fr",
       img: require("@/assets/force.jpg"),
@@ -93,4 +93,7 @@ arrayDump.map(obj => {
   });
 });
 
-export default { work: data.work, music: data.music };
+export default {
+  work: data.work,
+  music: data.music
+};

@@ -1,10 +1,10 @@
 <template>
   <div id="app">
-    <Head msg="Welcome to Your Vue.js App" />
+    <Head msg="Welcome to Your Vue.js App"/>
     <iframe class="back" :src="link"></iframe>
     <div class="back"></div>
     <transition name="slide-fade1">
-      <router-view />
+      <router-view/>
     </transition>
   </div>
 </template>
@@ -15,9 +15,12 @@ export default {
   name: "app",
   mounted() {
     this.$root.$on("itemDesOpen", a => {
-      a.split(":")[0] == `http`
-        ? (this.link = a)
-        : (this.link = this.linkDefault);
+      // a is link
+      // a.split(":")[0] == `http`
+      //   ? (this.link = a)
+      //   : (this.link = this.linkDefault);
+      // a is name
+      a ? (this.link = `/${a}/index.html`) : "";
     });
   },
   components: {
@@ -25,8 +28,9 @@ export default {
   },
   data() {
     return {
+      item: "eyes",
       linkDefault: "http://eyes.skyl.fr",
-      link: "/1/index.html"
+      link: `/eyes/index.html`
     };
   }
 };

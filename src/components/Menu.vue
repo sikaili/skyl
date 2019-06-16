@@ -30,7 +30,7 @@
             <div
               class="fl w-100 w-100-ns tl"
               v-show="w.show"
-              @mouseenter="handleMouseIn(w, w.link)"
+              @mouseenter="handleMouseIn(w, w.id)"
               @mouseleave="w.show = false"
             >
               <div class="pa4">
@@ -45,7 +45,7 @@
                 <div class="w-100 overflow-auto">
                   <code class="f6 db lh-copy nowrap">{{ w.link }}</code>
                 </div>
-                <img :src="w.img" :alt="w.name" class="w-100 dim" />
+                <img :src="w.img" :alt="w.name" class="w-100 dim">
                 <button @click="goToPage(index)">+</button>
               </div>
             </div>
