@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>{{ array[$route.params.id].name }}</h1>
+    <h1 class="tc">{{ array[$route.params.id].name }}</h1>
     <p></p>
   </div>
 </template>
