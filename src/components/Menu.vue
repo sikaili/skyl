@@ -26,7 +26,7 @@
     <div class="fl w-40 bg-white">
       <div>
         <transition name="loading">
-          <div v-show="tab.show" class="loading bg-blue">Loading...</div>
+          <div v-show="tab.show" class="loading bg-blue f3">Loading...</div>
         </transition>
         <div v-for="(w, index) in works" :key="mName + index">
           <transition name="slide-fade">
@@ -125,8 +125,8 @@ export default {
   transition: all 1s;
 }
 .loading-leave-active {
-  transition: all 0s;
-  display: none;
+  transition: all 0.2s;
+  opacity:1;
 }
 .loading-enter {
   width: 0;
