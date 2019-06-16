@@ -31,15 +31,15 @@
             <div class="fl w-100 w-100-ns tl" v-show="w.show">
               <div class="pa4">
                 <span class="f4 f1-ns b dib pr3">{{ w.name }}</span>
-                <b class="dib bg-blue">2018</b>
+                <b class="dib bg-blue">{{ w.year }}</b>
                 <blockquote class="ph0 pb2 mb3 bb mh0 mt0">
                   <p class="lh-copy measure f6">
-                    {{ w.name }}
+                    {{ w.des }}
                     <i></i>
                   </p>
                 </blockquote>
                 <div class="w-100 overflow-auto">
-                  <code class="f6 db lh-copy nowrap">eyes.skyl.fr</code>
+                  <code class="f6 db lh-copy nowrap">{{ w.link }}</code>
                 </div>
                 <img :src="w.img" :alt="w.name" class="w-100 dim" />
               </div>
