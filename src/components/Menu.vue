@@ -1,9 +1,12 @@
 <template>
   <div class="cl">
-    <div class="fl w-40 bg-black-50 flex flex-row justify-end">
+    <div
+      @click="menuShow = !menuShow"
+      class="fl w-40 bg-black-50 flex flex-row justify-end"
+    >
       <h1 class="ph5 f3 white tr">{{ mName }}</h1>
     </div>
-    <div class="fl w-20 bg-white-80 h5 overflow-auto">
+    <div v-if="menuShow" class="fl w-20 bg-white-80 h5 overflow-auto">
       <div class="flex flex-column justify-center">
         <a
           target="_blank"
@@ -75,6 +78,7 @@ export default {
   },
   data() {
     return {
+      menuShow: true,
       tab: { show: false },
       bwhite: "bg-white"
     };
