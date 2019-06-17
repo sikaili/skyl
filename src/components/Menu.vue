@@ -6,7 +6,7 @@
     >
       <h1 class="ph5 f3 white tr">{{ mName }}</h1>
     </div>
-    <div v-if="menuShow" class="fl w-20 bg-white-80 h5 overflow-auto">
+    <div v-if="menuShow" class="fl w-20 bg-white-80">
       <div class="flex flex-column justify-center">
         <a
           target="_blank"
@@ -21,7 +21,20 @@
           <div class="link ma0 pa0 bw0">
             <dl class="mt2 f6 lh-copy">
               <dt class="clip"></dt>
-              <dd class="f4 ml0 black truncate w-100">{{ work.name }}</dd>
+              <dd class="f4 ml0 black truncate w-100">
+                {{ work.name }}
+
+                <svg
+                  v-show="work.show"
+                  class="w2 fr"
+                  data-icon="chevronRight"
+                  viewBox="0 0 32 32"
+                  style="fill:red"
+                >
+                  <title>chevronRight icon</title>
+                  <path d="M12 1 L26 16 L12 31 L8 27 L18 16 L8 5 z"></path>
+                </svg>
+              </dd>
             </dl>
           </div>
         </a>
