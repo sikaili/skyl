@@ -3,9 +3,10 @@
     <div class="fl w-40 bg-black-50 flex flex-row justify-end">
       <h1 class="ph5 f3 white tr">{{ mName }}</h1>
     </div>
-    <div class="fl w-20 bg-white-80">
+    <div class="fl w-20 bg-white-80 h5 overflow-auto">
       <div class="flex flex-column justify-center">
         <a
+          target="_blank"
           v-for="work in works"
           :href="work.link"
           :key="work.id"
@@ -92,7 +93,7 @@ export default {
 
       let id = window.setTimeout(function() {}, 0);
       while (id--) {
-        window.clearTimeout(id); // will do nothing if no timeout with id is present
+        window.clearTimeout(id);
       }
     },
     goToPage(itemId) {
@@ -126,7 +127,7 @@ export default {
 }
 .loading-leave-active {
   transition: all 0.2s;
-  opacity:1;
+  opacity: 0 0.2s;
 }
 .loading-enter {
   width: 0;

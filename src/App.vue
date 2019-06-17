@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <Head msg="Welcome to Your Vue.js App" />
-    <iframe class="back" :src="link"></iframe>
+    <Head msg="Hello, I'm Sikai." />
+    <!-- <iframe class="back" :src="link"></iframe> -->
     <div class="back"></div>
     <transition name="slide-fade1">
       <router-view />
@@ -19,6 +19,7 @@ export default {
       // a.split(":")[0] == `http`
       //   ? (this.link = a)
       //   : (this.link = this.linkDefault);
+
       // a is name
       a ? (this.link = `/${a}/index.html`) : "";
     });
