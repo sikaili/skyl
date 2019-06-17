@@ -10,10 +10,10 @@
       <div class="flex flex-column justify-center">
         <a
           target="_blank"
-          v-for="work in works"
+          v-for="work in items"
           :href="work.link"
           :key="work.id"
-          class="pa3 tc link"
+          class="pa1 tc link"
           :class="work.show ? bwhite : ''"
           @mouseenter="work.show = true"
           @mouseleave="work.show = false"
@@ -32,7 +32,7 @@
         <transition name="loading">
           <div v-show="tab.show" class="loading bg-blue f3">Loading...</div>
         </transition>
-        <div v-for="(w, index) in works" :key="mName + index">
+        <div v-for="(w, index) in items" :key="mName + index">
           <transition name="slide-fade">
             <div
               class="fl w-100 w-100-ns tl"
@@ -68,7 +68,7 @@ import { clearTimeout } from "timers";
 export default {
   name: "Menu",
   props: {
-    works: {
+    itemsprops: {
       type: Array,
       required: true
     },
@@ -78,6 +78,7 @@ export default {
   },
   data() {
     return {
+      items: this.itemsprops,
       menuShow: true,
       tab: { show: false },
       bwhite: "bg-white"

@@ -1,5 +1,5 @@
 <template>
-  <Menu :works="arrr" mName="Music" />
+  <Menu :itemsprops="arrr" mName="Music" />
 </template>
 
 <script>
