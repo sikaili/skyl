@@ -156,17 +156,11 @@ a:hover {
   clip: rect(1px, 1px, 1px, 1px);
 }
 
-.dim {
-  opacity: 1;
-  transition: opacity .15s ease-in;
-}
-
 .dim:hover,
 .dim:focus {
   opacity: 1;
-
-  /* transform: scale(1.5); */
-  transition: border-width .15s ease-in;
+  background-color:rgb(179, 192, 212);
+  transition: background-color .15s ease-in;
 }
 
 .dim:active {

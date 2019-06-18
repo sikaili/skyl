@@ -15,7 +15,7 @@
           :key="work.id"
           class="pa1 tc link"
           :class="work.show ? bwhite : ''"
-          @mouseover="work.show = true"
+          @mouseenter="handleMouseIn(work)"
           @mouseleave="work.show = false"
         >
           <div class="link ma0 pa0 bw0">
@@ -50,7 +50,7 @@
             <div
               class="fl w-100 w-100-ns tl"
               v-show="w.show"
-              @mouseover="handleMouseIn(w, w.id)"
+              @mouseenter="handleMouseIn(w, w.id)"
               @mouseleave="handleMouseOut(w)"
             >
               <div class="pa4">
@@ -58,7 +58,13 @@
                 <b class="dib bg-blue">{{ w.year }}</b>
                 <blockquote class="ph0 pb2 mb3 bb mh0 mt0">
                   <p class="lh-copy measure f6">
-                    {{ w.des }}
+                    {{ w.des }}<br />
+                    <a
+                      @click="goToPage(index)"
+                      class="f6 dim link ba bw2 ph3 pv1 mt3 dib black"
+                      href="#0"
+                      >Read more...</a
+                    >
                     <i></i>
                   </p>
                 </blockquote>
@@ -66,7 +72,6 @@
                   <code class="f6 db lh-copy nowrap">{{ w.link }}</code>
                 </div>
                 <img :src="w.img" :alt="w.name" class="w-100 dim" />
-                <button @click="goToPage(index)">Read more...</button>
               </div>
             </div>
           </transition>
@@ -100,19 +105,23 @@ export default {
   methods: {
     handleMouseIn(w, itemId) {
       w.show = true;
-      this.tab.show = true;
-      setTimeout(() => {
-        this.$root.$emit("itemDesOpen", itemId), (this.tab.show = false);
-      }, 1000);
+      itemId ? this.load(itemId) : "";
     },
     handleMouseOut(w) {
-      w.show = false;
-      this.tab.show = false;
-
       let id = window.setTimeout(function() {}, 0);
       while (id--) {
         window.clearTimeout(id);
       }
+      setTimeout(() => {
+        w.show = false;
+        this.tab.show = false;
+      }, 200);
+    },
+    load(itemId) {
+      this.tab.show = true;
+      setTimeout(() => {
+        this.$root.$emit("itemDesOpen", itemId), (this.tab.show = false);
+      }, 1000);
     },
     goToPage(itemId) {
       console.log(itemId);
@@ -144,8 +153,8 @@ export default {
   transition: all 1s;
 }
 .loading-leave-active {
-  transition: all 0.2s;
-  opacity: 0 0.2s;
+  transition: all 0s;
+  opacity: 0s;
 }
 .loading-enter {
   width: 0;
