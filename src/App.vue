@@ -16,12 +16,12 @@ export default {
   mounted() {
     this.$root.$on("itemDesOpen", a => {
       // a is link
-      // a.split(":")[0] == `http`
-      //   ? (this.link = a)
-      //   : (this.link = this.linkDefault);
+      a.split(":")[0] == `http`
+        ? (this.link = a)
+        : (this.link = this.linkDefault);
 
       // a is name
-      a ? (this.link = `/${a}/index.html`) : "";
+      // a ? (this.link = `/${a}/index.html`) : "";
     });
   },
   components: {
@@ -31,7 +31,7 @@ export default {
     return {
       item: "eyes",
       linkDefault: "http://eyes.skyl.fr",
-      link: `/eyes/index.html`
+      link: `http://eyes.skyl.fr`
     };
   }
 };

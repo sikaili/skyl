@@ -50,7 +50,7 @@
             <div
               class="fl w-100 w-100-ns tl"
               v-show="w.show"
-              @mouseenter="handleMouseIn(w, w.id)"
+              @mouseenter="handleMouseIn(w, w.link)"
               @mouseleave="handleMouseOut(w)"
             >
               <div class="pa4">
