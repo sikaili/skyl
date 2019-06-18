@@ -15,7 +15,7 @@
           :key="work.id"
           class="pa1 tc link"
           :class="work.show ? bwhite : ''"
-          @mouseenter="work.show = true"
+          @mouseover="work.show = true"
           @mouseleave="work.show = false"
         >
           <div class="link ma0 pa0 bw0">
@@ -50,7 +50,7 @@
             <div
               class="fl w-100 w-100-ns tl"
               v-show="w.show"
-              @mouseenter="handleMouseIn(w, w.id)"
+              @mouseover="handleMouseIn(w, w.id)"
               @mouseleave="handleMouseOut(w)"
             >
               <div class="pa4">
