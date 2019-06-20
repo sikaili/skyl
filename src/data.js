@@ -59,20 +59,20 @@ const data = {
     },
     {
       name: "Dancers",
-      link: "http://unsustainable.skyl.fr",
+      link: "",
       img: require("@/assets/eyes.png"),
       show: false
     },
     {
       name: "Saturation Noich",
-      link: "http://unsustainable.skyl.fr",
+      link: "",
       img: require("@/assets/eyes.png"),
       show: false
     },
     {
       name: "Flower",
-      link: "http://unsustainable.skyl.fr",
-      img: require("@/assets/eyes.png"),
+      link: "http://song.skyl.fr",
+      img: require("@/assets/hua.jpg"),
       show: false
     },
     {

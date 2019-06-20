@@ -103,9 +103,9 @@ export default {
     };
   },
   methods: {
-    handleMouseIn(w, itemId) {
+    handleMouseIn(w, itemToEmit) {
       w.show = true;
-      itemId ? this.load(itemId) : "";
+      itemToEmit ? this.load(itemToEmit) : "";
     },
     handleMouseOut(w) {
       let id = window.setTimeout(function() {}, 0);
@@ -117,17 +117,17 @@ export default {
         this.tab.show = false;
       }, 200);
     },
-    load(itemId) {
+    load(itemToEmit) {
       this.tab.show = true;
       setTimeout(() => {
-        this.$root.$emit("itemDesOpen", itemId), (this.tab.show = false);
+        this.$root.$emit("itemDesOpen", itemToEmit), (this.tab.show = false);
       }, 1000);
     },
-    goToPage(itemId) {
-      console.log(itemId);
+    goToPage(itemToEmit) {
+      console.log(itemToEmit);
       this.$router.push({
         name: this.mName.toLowerCase(),
-        params: { id: itemId }
+        params: { id: itemToEmit }
       });
     }
   }
