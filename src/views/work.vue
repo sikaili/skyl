@@ -12,7 +12,7 @@ export default {
   },
   data() {
     return {
-      items: dataObj.items
+      items: dataObj.work
     };
   }
 };

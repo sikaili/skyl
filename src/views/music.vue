@@ -1,10 +1,10 @@
 <template>
-  <Menu :itemsprops="arrr" mName="Music" />
+  <Menu :itemsprops="items" mName="Music" />
 </template>
 
 <script>
 import Menu from "@/components/Menu.vue";
-import obj from "@/data.js";
+import dataObj from "@/data.js";
 export default {
   name: "music",
   components: {
@@ -12,7 +12,7 @@ export default {
   },
   data() {
     return {
-      arrr: obj.music
+      items: dataObj.music
     };
   }
 };
