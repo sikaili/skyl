@@ -1,9 +1,9 @@
 <template>
-  <Menu :itemsprops="works" mName="Applications" />
+  <Menu :itemsprops="items" mName="Applications" />
 </template>
 
 <script>
-import obj from "@/data.js";
+import dataObj from "@/data.js";
 import Menu from "@/components/Menu.vue";
 export default {
   name: "work",
@@ -12,7 +12,7 @@ export default {
   },
   data() {
     return {
-      works: obj.work
+      items: dataObj.items
     };
   }
 };
