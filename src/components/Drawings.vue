@@ -1,29 +1,33 @@
 <template>
-  <div class="bg-black-60 bt bb bw5 b--black-20 cl">
-    <div
-      v-for="drawing in drawings"
-      :key="drawing.id"
-      class="center w-50 pa5 cl"
-    >
-      <a href class="db link tc o-80">
-        <img
-          :src="drawing.link"
-          alt="Frank Ocean Blonde Album Cover"
-          class="w-100 db dim ba bw5 white-50 border-box"
-        />
-        <dl class="mt2 f6 lh-copy">
-          <dt class="clip">Title</dt>
-          <dd class="ml0 black truncate w-100">{{ drawing.name }}</dd>
-        </dl>
-      </a>
+  <div>
+    <gallery :images="images" :index="index" @close="index = null"></gallery>
+    <div class="bg-black-30 bt bb b--black-20 cl">
+      <div
+        v-for="(drawing, imgIndex) in drawings"
+        :key="drawing.id"
+        class="center w-40 pa3 cl"
+      >
+        <a @click="index = imgIndex" class="mt3 db link tc o-80">
+          <img
+            :src="drawing.link"
+            alt="Frank Ocean Blonde Album Cover"
+            class="w-100 db dim ba bw5 white-50 border-box"
+          />
+          <dl class="mt2 f6 lh-copy">
+            <dt class="clip">Title</dt>
+            <dd class="ml0 black truncate w-100">{{ drawing.name }}</dd>
+          </dl>
+        </a>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import VueGallery from "vue-gallery";
+
 export default {
-  name: "Drawings",
-  data() {
+  data: function() {
     return {
       drawings: [
         {
@@ -51,10 +55,28 @@ export default {
           link: require("@/assets/4.jpg"),
           id: 4
         }
-      ]
+      ],
+      index: null
     };
+  },
+  components: {
+    gallery: VueGallery
+  },
+  computed: {
+    images: function() {
+      return this.drawings.map(a => a.link);
+    }
   }
 };
 </script>
 
-<style></style>
+<style>
+.blueimp-gallery > .slides > .slide > .slide-content {
+  margin: auto;
+  border: solid rgba(255, 255, 255, 0.3) 30px;
+  /* height: auto; */
+  max-width: 60%;
+  opacity: 0.9;
+  max-height: 70%;
+}
+</style>
