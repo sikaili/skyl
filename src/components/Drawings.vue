@@ -2,17 +2,13 @@
   <div>
     <gallery :images="images" :index="index" @close="index = null"></gallery>
     <div class="bg-black-30 bt bb b--black-20 cl">
-      <div
-        v-for="(drawing, imgIndex) in drawings"
-        :key="drawing.id"
-        class="center w-40 pa3 cl"
-      >
+      <div v-for="(drawing, imgIndex) in drawings" :key="drawing.id" class="center w-30 pa3 cl">
         <a @click="index = imgIndex" class="mt3 db link tc o-80">
           <img
             :src="drawing.link"
             alt="Frank Ocean Blonde Album Cover"
             class="w-100 db dim ba bw5 white-50 border-box"
-          />
+          >
           <dl class="mt2 f6 lh-copy">
             <dt class="clip">Title</dt>
             <dd class="ml0 black truncate w-100">{{ drawing.name }}</dd>

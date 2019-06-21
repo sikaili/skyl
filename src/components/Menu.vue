@@ -1,31 +1,26 @@
 <template>
   <div class="cl">
-    <div
-      @click="menuShow = !menuShow"
-      class="fl w-40 bg-black-50 flex flex-row justify-end"
-    >
+    <div @click="menuShow = !menuShow" class="fl w-40 bg-black-50 flex flex-row justify-end">
       <h1 class="ph5 f3 white tr">{{ mName }}</h1>
     </div>
     <div v-if="menuShow" class="fl w-20 bg-white-80">
       <div class="flex flex-column justify-center">
         <a
-          target="_blank"
-          v-for="work in items"
-          :href="work.link"
-          :key="work.id"
+          href="#"
+          @mouseenter="handleMouseIn(item)"
+          @click="handleClick(item)"
+          v-for="item in items"
+          :key="item.id"
           class="pa1 tc link"
-          :class="work.show ? bwhite : ''"
-          @mouseenter="handleMouseIn(work)"
-          @mouseleave="work.show = false"
+          :class="item.show ? 'router-link-active' : ''"
         >
           <div class="link ma0 pa0 bw0">
             <dl class="mt2 f6 lh-copy">
               <dt class="clip"></dt>
               <dd class="f4 ml0 black truncate w-100">
-                {{ work.name }}
-
-                <svg
-                  v-show="work.show"
+                {{ item.name }}
+                <!-- <svg
+                  v-show="item.show"
                   class="w2 fr"
                   data-icon="chevronRight"
                   viewBox="0 0 32 32"
@@ -33,7 +28,7 @@
                 >
                   <title>chevronRight icon</title>
                   <path d="M12 1 L26 16 L12 31 L8 27 L18 16 L8 5 z"></path>
-                </svg>
+                </svg>-->
               </dd>
             </dl>
           </div>
@@ -43,35 +38,35 @@
     <div class="fl w-40 bg-white">
       <div>
         <transition name="loading">
-          <div v-show="tab.show" class="loading bg-blue f3">Loading...</div>
+          <div v-show="loadingAnimation" class="loading bg-blue f3">Loading...</div>
         </transition>
         <div v-for="(w, index) in items" :key="mName + index">
           <transition name="slide-fade">
             <div
-              class="fl w-100 w-100-ns tl"
-              v-show="w.show"
+              class="fl w-100 w-100-ns tl ma0"
+              v-show="w.show && menuShow"
               @mouseenter="handleMouseIn(w, w.link)"
-              @mouseleave="handleMouseOut(w)"
+              @mouseleave="handleMouseOut()"
             >
               <div class="pa4">
                 <span class="f4 f1-ns b dib pr3">{{ w.name }}</span>
                 <b class="dib bg-blue">{{ w.year }}</b>
                 <blockquote class="ph0 pb2 mb3 bb mh0 mt0">
                   <p class="lh-copy measure f6">
-                    {{ w.des }}<br />
+                    {{ w.des }}
+                    <br>
                     <a
                       @click="goToPage(index)"
                       class="f6 dim link ba bw2 ph3 pv1 mt3 dib black"
                       href="#0"
-                      >Read more...</a
-                    >
+                    >Read more...</a>
                     <i></i>
                   </p>
                 </blockquote>
                 <div class="w-100 overflow-auto">
                   <code class="f6 db lh-copy nowrap">{{ w.link }}</code>
                 </div>
-                <img :src="w.img" :alt="w.name" class="w-100 dim" />
+                <img :src="w.img" :alt="w.name" class="w-100 dim">
               </div>
             </div>
           </transition>
@@ -98,31 +93,41 @@ export default {
     return {
       items: this.itemsprops,
       menuShow: true,
-      tab: { show: false },
+      loadingAnimation: false,
       bwhite: "bg-white"
     };
   },
   methods: {
-    handleMouseIn(w, itemToEmit) {
-      w.show = true;
-      itemToEmit ? this.load(itemToEmit) : "";
+    handleClick(item) {
+      this.items.filter(a => a != item).map(a => (a.show = false));
+      item.show = !item.show;
     },
-    handleMouseOut(w) {
+    handleMouseIn(item) {
+      if (this.items.some(a => a.show)) {
+        this.items.filter(a => a != item).map(a => (a.show = false));
+        item.show = true;
+      }
+    },
+    handleMouseOut() {
+      this.abortLoad();
+    },
+    abortLoad() {
       let id = window.setTimeout(function() {}, 0);
       while (id--) {
         window.clearTimeout(id);
       }
       setTimeout(() => {
-        w.show = false;
-        this.tab.show = false;
+        this.loadingAnimation = false;
       }, 200);
     },
     load(itemToEmit) {
-      this.tab.show = true;
+      this.loadingAnimation = true;
       setTimeout(() => {
-        this.$root.$emit("itemDesOpen", itemToEmit), (this.tab.show = false);
+        this.$root.$emit("itemDesOpen", itemToEmit),
+          (this.loadingAnimation = false);
       }, 1000);
     },
+
     goToPage(itemToEmit) {
       console.log(itemToEmit);
       this.$router.push({
@@ -142,19 +147,17 @@ export default {
   transition: all 0.15s ease;
 }
 .slide-fade-leave-active {
-  transition: all 0s;
-  display: none;
 }
 .slide-fade-enter {
   transform: translateX(30px);
-  opacity: 0;
+  opacity: 0 0.15s;
 }
 .loading-enter-active {
   transition: all 1s;
 }
 .loading-leave-active {
   transition: all 0s;
-  opacity: 0s;
+  opacity: 0;
 }
 .loading-enter {
   width: 0;
