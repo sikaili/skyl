@@ -1,8 +1,9 @@
 <template>
   <div id="app">
     <Head msg="Hello, I'm Sikai." />
-    <iframe v-if="$mq !== `sm`" class="back" :src="link"></iframe>
+    <!-- <iframe class="back" :src="link"></iframe> -->
     <div class="back"></div>
+
     <transition name="slide-fade1">
       <router-view />
     </transition>

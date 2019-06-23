@@ -1,14 +1,18 @@
 <template>
-  <Menu :itemsprops="items" mName="Applications" />
+  <MenuS v-if="$mq == `sm`" :itemsprops="items" mName="Applications" />
+  <MenuD v-else :itemsprops="items" mName="Applications" />
 </template>
 
 <script>
 import dataObj from "@/data.js";
-import Menu from "@/components/Menu.vue";
+import MenuS from "@/components/MenuS.vue";
+import MenuD from "@/components/MenuD.vue";
+
 export default {
   name: "work",
   components: {
-    Menu
+    MenuS,
+    MenuD
   },
   data() {
     return {

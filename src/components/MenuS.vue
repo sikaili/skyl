@@ -1,33 +1,76 @@
 <template>
   <div class="cl">
-    <div
-      @click="menuShow = !menuShow"
-      class="fl bg-black-50 w-40 flex flex-row justify-end"
-    >
-      <h1 class="ph5 f3 white tr">{{ mName }}</h1>
-    </div>
-    <div v-if="menuShow" class="fl w-20 bg-white-80">
-      <div class="flex flex-column justify-center">
+    <h1 class="tc autoM f4 b white">LI Sikai</h1>
+    <p class="bg-black-10 tl white autoM f6" :class="$mq == `sm` ? `ph3` : ``">
+      I'm a creative technologist & interction designer based in Paris. I make
+      music and new media art.
+    </p>
+    <div v-if="menuShow" class="fl w-100 bg-white-80">
+      <div
+        v-for="(item, index) in items"
+        :key="item.id"
+        class="flex flex-column justify-center"
+      >
         <a
           href="#"
           @mouseenter="handleMouseIn(item)"
           @click="handleClick(item)"
-          v-for="item in items"
-          :key="item.id"
           class="pa1 tc link"
           :class="item.show ? 'router-link-active' : ''"
         >
           <div class="link ma0 pa0 bw0">
             <dl class="mt2 f6 lh-copy">
               <dt class="clip"></dt>
-              <dd class="f4 ml0 black truncate w-100">
+              <dd class="f5 ml0 black truncate w-100">
                 {{ item.name }}
+                <b v-show="item.show" class="dib bg-blue">{{ item.year }}</b>
               </dd>
             </dl>
           </div>
         </a>
+        <transition name="slide1-fade">
+          <div class="bg-black-10 fl w-100 tl ma0" v-show="item.show">
+            <div class="ph4 pv3">
+              <!-- <span class="f4 f1-ns b dib pr3">{{ item.name }}</span> -->
+              <blockquote class="ph0 pb2 mb3 bb mh0 mt0">
+                <p class="lh-copy measure f6 ma0 black">
+                  {{ item.des }}
+                  <br />
+                  <a
+                    @click="goToPage(index)"
+                    class="f6 dim link ba bw2 ph3 pv1 mt3 dib black"
+                    href="#0"
+                    >Read more...</a
+                  >
+                  <i></i>
+                </p>
+              </blockquote>
+              <div class="w-100 overflow-auto">
+                <code class="f6 db lh-copy nowrap">{{ item.link }}</code>
+              </div>
+              <img :src="item.img" :alt="item.name" class="w-100 dim" />
+            </div>
+          </div>
+        </transition>
       </div>
     </div>
+    <div class="flex items-center justify-center pa4 ph3 bg-lightest-blue navy">
+      <svg
+        class="w1"
+        data-icon="info"
+        viewBox="0 0 32 32"
+        style="fill:currentcolor"
+      >
+        <title>info icon</title>
+        <path
+          d="M16 0 A16 16 0 0 1 16 32 A16 16 0 0 1 16 0 M19 15 L13 15 L13 26 L19 26 z M16 6 A3 3 0 0 0 16 12 A3 3 0 0 0 16 6"
+        ></path>
+      </svg>
+      <span class="lh-title ml3">
+        Please come back on a desktop for better expereince
+      </span>
+    </div>
+
     <div class="fl w-40 bg-white">
       <div>
         <transition name="loading">
@@ -35,38 +78,7 @@
             Loading...
           </div>
         </transition>
-        <div v-for="(w, index) in items" :key="mName + index">
-          <transition name="slide-fade">
-            <div
-              class="fl w-100 w-100-ns tl ma0"
-              v-show="w.show && menuShow"
-              @mouseenter="handleMouseIn(w, w.link)"
-              @mouseleave="handleMouseOut()"
-            >
-              <div class="pa4">
-                <span class="f4 f1-ns b dib pr3">{{ w.name }}</span>
-                <b class="dib bg-blue">{{ w.year }}</b>
-                <blockquote class="ph0 pb2 mb3 bb mh0 mt0">
-                  <p class="lh-copy measure f6">
-                    {{ w.des }}
-                    <br />
-                    <a
-                      @click="goToPage(index)"
-                      class="f6 dim link ba bw2 ph3 pv1 mt3 dib black"
-                      href="#0"
-                      >Read more...</a
-                    >
-                    <i></i>
-                  </p>
-                </blockquote>
-                <div class="w-100 overflow-auto">
-                  <code class="f6 db lh-copy nowrap">{{ w.link }}</code>
-                </div>
-                <img :src="w.img" :alt="w.name" class="w-100 dim" />
-              </div>
-            </div>
-          </transition>
-        </div>
+        <div v-for="(w, index) in items" :key="mName + index"></div>
       </div>
     </div>
   </div>
@@ -142,14 +154,19 @@ export default {
   width: 100%;
   height: 30px;
 }
-.slide-fade-enter-active {
+.slide1-fade-enter-active {
   transition: all 0.15s ease;
 }
-.slide-fade-leave-active {
+.slide1-fade-leave-active {
+  transition: all 0.15s ease;
 }
-.slide-fade-enter {
-  transform: translateX(30px);
+.slide1-fade-enter {
+  transform: translateY(50px);
   opacity: 0 0.15s;
+}
+.slide1-fade-leave-to {
+  /* max-height: 0px 0.5s; */
+  opacity: 0 0.2s;
 }
 .loading-enter-active {
   transition: all 1s;

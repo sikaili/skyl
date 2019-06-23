@@ -1,0 +1,170 @@
+<template>
+  <div class="cl">
+    <h1 class="tc autoM f2 b white">LI Sikai</h1>
+    <p class="bg-black-10 tl white autoM" :class="$mq == `sm` ? `ph3` : ``">
+      I'm a creative technologist & interction designer based in Paris. I make
+      music and new media art.
+    </p>
+    <div
+      @click="menuShow = !menuShow"
+      class="fl bg-black-50 w-40 flex flex-row justify-end"
+    >
+      <h1 class="ph5 f3 white tr">{{ mName }}</h1>
+    </div>
+    <div v-if="menuShow" class="fl w-20 bg-white-80">
+      <div class="flex flex-column justify-center">
+        <a
+          href="#"
+          @mouseenter="handleMouseIn(item)"
+          @click="handleClick(item)"
+          v-for="item in items"
+          :key="item.id"
+          class="pa1 tc link"
+          :class="item.show ? 'router-link-active' : ''"
+        >
+          <div class="link ma0 pa0 bw0">
+            <dl class="mt2 f6 lh-copy">
+              <dt class="clip"></dt>
+              <dd class="f4 ml0 black truncate w-100">
+                {{ item.name }}
+              </dd>
+            </dl>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="fl w-40 bg-white">
+      <div>
+        <transition name="loading">
+          <div v-show="loadingAnimation" class="loading bg-blue f3">
+            Loading...
+          </div>
+        </transition>
+        <div v-for="(w, index) in items" :key="mName + index">
+          <transition name="slide-fade">
+            <div
+              class="fl w-100 w-100-ns tl ma0"
+              v-show="w.show && menuShow"
+              @mouseenter="handleMouseIn(w, w.link)"
+              @mouseleave="handleMouseOut()"
+            >
+              <div class="pa4">
+                <span class="f4 f1-ns b dib pr3">{{ w.name }}</span>
+                <b class="dib bg-blue">{{ w.year }}</b>
+                <blockquote class="ph0 pb2 mb3 bb mh0 mt0">
+                  <p class="lh-copy measure f6">
+                    {{ w.des }}
+                    <br />
+                    <a
+                      @click="goToPage(index)"
+                      class="f6 dim link ba bw2 ph3 pv1 mt3 dib black"
+                      href="#0"
+                      >Read more...</a
+                    >
+                    <i></i>
+                  </p>
+                </blockquote>
+                <div class="w-100 overflow-auto">
+                  <code class="f6 db lh-copy nowrap">{{ w.link }}</code>
+                </div>
+                <img :src="w.img" :alt="w.name" class="w-100 dim" />
+              </div>
+            </div>
+          </transition>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { clearTimeout } from "timers";
+export default {
+  name: "Menu",
+  props: {
+    itemsprops: {
+      type: Array,
+      required: true
+    },
+    mName: {
+      type: String
+    }
+  },
+  data() {
+    return {
+      items: this.itemsprops,
+      menuShow: true,
+      loadingAnimation: false,
+      bwhite: "bg-white"
+    };
+  },
+  methods: {
+    handleClick(item) {
+      this.items.filter(a => a != item).map(a => (a.show = false));
+      item.show = !item.show;
+    },
+    handleMouseIn(item, itemToEmit) {
+      if (this.items.some(a => a.show)) {
+        this.items.filter(a => a != item).map(a => (a.show = false));
+        item.show = true;
+      }
+      if (itemToEmit) {
+        this.load(itemToEmit);
+      }
+    },
+    handleMouseOut() {
+      this.abortLoad();
+    },
+    abortLoad() {
+      let id = window.setTimeout(function() {}, 0);
+      while (id--) {
+        window.clearTimeout(id);
+      }
+      setTimeout(() => {
+        this.loadingAnimation = false;
+      }, 200);
+    },
+    load(itemToEmit) {
+      this.loadingAnimation = true;
+      setTimeout(() => {
+        this.$root.$emit("itemDesOpen", itemToEmit),
+          (this.loadingAnimation = false);
+      }, 1000);
+    },
+
+    goToPage(itemToEmit) {
+      console.log(itemToEmit);
+      this.$router.push({
+        name: this.mName.toLowerCase(),
+        params: { id: itemToEmit }
+      });
+    }
+  }
+};
+</script>
+<style>
+.loading {
+  width: 100%;
+  height: 30px;
+}
+.slide-fade-enter-active {
+  transition: all 0.15s ease;
+}
+.slide-fade-leave-active {
+}
+.slide-fade-enter {
+  transform: translateX(30px);
+  opacity: 0 0.15s;
+}
+.loading-enter-active {
+  transition: all 1s;
+}
+.loading-leave-active {
+  transition: all 0s;
+  opacity: 0;
+}
+.loading-enter {
+  width: 0;
+  opacity: 0;
+}
+</style>
