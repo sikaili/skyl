@@ -1,6 +1,10 @@
 <template>
   <div class="cl">
-    <div @click="menuShow = !menuShow" class="fl w-40 bg-black-50 flex flex-row justify-end">
+    <div
+      @click="menuShow = !menuShow"
+      v-show="$mq !== `sm`"
+      class="fl bg-black-50 flex flex-row justify-end"
+    >
       <h1 class="ph5 f3 white tr">{{ mName }}</h1>
     </div>
     <div v-if="menuShow" class="fl w-20 bg-white-80">
@@ -17,19 +21,7 @@
           <div class="link ma0 pa0 bw0">
             <dl class="mt2 f6 lh-copy">
               <dt class="clip"></dt>
-              <dd class="f4 ml0 black truncate w-100">
-                {{ item.name }}
-                <!-- <svg
-                  v-show="item.show"
-                  class="w2 fr"
-                  data-icon="chevronRight"
-                  viewBox="0 0 32 32"
-                  style="fill:red"
-                >
-                  <title>chevronRight icon</title>
-                  <path d="M12 1 L26 16 L12 31 L8 27 L18 16 L8 5 z"></path>
-                </svg>-->
-              </dd>
+              <dd class="f4 ml0 black truncate w-100">{{ item.name }}</dd>
             </dl>
           </div>
         </a>
@@ -38,7 +30,9 @@
     <div class="fl w-40 bg-white">
       <div>
         <transition name="loading">
-          <div v-show="loadingAnimation" class="loading bg-blue f3">Loading...</div>
+          <div v-show="loadingAnimation" class="loading bg-blue f3">
+            Loading...
+          </div>
         </transition>
         <div v-for="(w, index) in items" :key="mName + index">
           <transition name="slide-fade">
@@ -54,19 +48,20 @@
                 <blockquote class="ph0 pb2 mb3 bb mh0 mt0">
                   <p class="lh-copy measure f6">
                     {{ w.des }}
-                    <br>
+                    <br />
                     <a
                       @click="goToPage(index)"
                       class="f6 dim link ba bw2 ph3 pv1 mt3 dib black"
                       href="#0"
-                    >Read more...</a>
+                      >Read more...</a
+                    >
                     <i></i>
                   </p>
                 </blockquote>
                 <div class="w-100 overflow-auto">
                   <code class="f6 db lh-copy nowrap">{{ w.link }}</code>
                 </div>
-                <img :src="w.img" :alt="w.name" class="w-100 dim">
+                <img :src="w.img" :alt="w.name" class="w-100 dim" />
               </div>
             </div>
           </transition>

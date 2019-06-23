@@ -1,18 +1,10 @@
 <template>
   <div class="cl">
     <div class="flex justify-center bg-white-50">
-      <router-link class="tc min pa3 w-20 f4 black link" to="/work" exact
-        >Applis</router-link
-      >
-      <router-link class="tc min pa3 w-20 f4 black link" to="/music"
-        >Music</router-link
-      >
-      <router-link class="tc min pa3 w-20 f4 black link" to="/drawings"
-        >Drawings</router-link
-      >
-      <router-link class="tc min pa3 w-20 f4 black link" to="/info"
-        >Info</router-link
-      >
+      <router-link :class="style" to="/work" exact>Applis</router-link>
+      <router-link :class="style" to="/music">Music</router-link>
+      <router-link :class="style" to="/drawings">Drawings</router-link>
+      <router-link :class="style" to="/info">Info</router-link>
     </div>
     <h1 class="tc autoM f2 b white">LI Sikai</h1>
     <p class="bg-black-10 tl white autoM">
@@ -27,9 +19,20 @@ export default {
   name: "Head",
   data() {
     return {
-      path: window.location.pathname,
-      classes: ["bg-white", "linet"]
+      class: {
+        mdPlus: "tc min pa3 w-20 f4 black link",
+        sm: "tc min pv4 ph1 w-20 f6 black link"
+      }
     };
+  },
+  computed: {
+    style: function() {
+      if (this.$mq == "sm") {
+        return this.class.sm;
+      } else {
+        return this.class.mdPlus;
+      }
+    }
   }
 };
 </script>
