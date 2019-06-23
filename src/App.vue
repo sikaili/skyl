@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <Head msg="Hello, I'm Sikai." />
-    <!-- <iframe class="back" :src="link"></iframe> -->
-    <div class="back"></div>
+    <iframe class="back" :src="link"></iframe>
+    <!-- <div class="back"></div> -->
 
     <transition name="slide-fade1">
       <router-view />
@@ -11,6 +11,10 @@
 </template>
 
 <script>
+document.ontouchmove = function(e) {
+  console.log(e);
+  return true;
+};
 import Head from "./components/Head.vue";
 export default {
   name: "app",

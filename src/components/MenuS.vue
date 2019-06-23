@@ -5,7 +5,7 @@
       I'm a creative technologist & interction designer based in Paris. I make
       music and new media art.
     </p>
-    <div v-if="menuShow" class="fl w-100 bg-white-80">
+    <div v-if="menuShow" class="w-100 bg-white-80">
       <div
         v-for="(item, index) in items"
         :key="item.id"
@@ -13,7 +13,6 @@
       >
         <a
           href="#"
-          @mouseenter="handleMouseIn(item)"
           @click="handleClick(item)"
           class="pa1 tc link"
           :class="item.show ? 'router-link-active' : ''"
@@ -28,8 +27,8 @@
             </dl>
           </div>
         </a>
-        <transition name="slide1-fade">
-          <div class="bg-black-10 fl w-100 tl ma0" v-show="item.show">
+        <transition name="slide-fade">
+          <div class="bg-black-10 w-100 tl ma0" v-show="item.show">
             <div class="ph4 pv3">
               <!-- <span class="f4 f1-ns b dib pr3">{{ item.name }}</span> -->
               <blockquote class="ph0 pb2 mb3 bb mh0 mt0">
@@ -71,7 +70,7 @@
       </span>
     </div>
 
-    <div class="fl w-40 bg-white">
+    <!-- <div class="w-40 bg-white">
       <div>
         <transition name="loading">
           <div v-show="loadingAnimation" class="loading bg-blue f3">
@@ -80,12 +79,11 @@
         </transition>
         <div v-for="(w, index) in items" :key="mName + index"></div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
-import { clearTimeout } from "timers";
 export default {
   name: "Menu",
   props: {
@@ -110,18 +108,18 @@ export default {
       this.items.filter(a => a != item).map(a => (a.show = false));
       item.show = !item.show;
     },
-    handleMouseIn(item, itemToEmit) {
-      if (this.items.some(a => a.show)) {
-        this.items.filter(a => a != item).map(a => (a.show = false));
-        item.show = true;
-      }
-      if (itemToEmit) {
-        this.load(itemToEmit);
-      }
-    },
-    handleMouseOut() {
-      this.abortLoad();
-    },
+    // handleMouseIn(item, itemToEmit) {
+    //   if (this.items.some(a => a.show)) {
+    //     this.items.filter(a => a != item).map(a => (a.show = false));
+    //     item.show = true;
+    //   }
+    //   if (itemToEmit) {
+    //     this.load(itemToEmit);
+    //   }
+    // },
+    // handleMouseOut() {
+    //   this.abortLoad();
+    // },
     abortLoad() {
       let id = window.setTimeout(function() {}, 0);
       while (id--) {
@@ -154,17 +152,17 @@ export default {
   width: 100%;
   height: 30px;
 }
-.slide1-fade-enter-active {
+.slide-fade-enter-active {
   transition: all 0.15s ease;
 }
-.slide1-fade-leave-active {
+.slide-fade-leave-active {
   transition: all 0.15s ease;
 }
-.slide1-fade-enter {
+.slide-fade-enter {
   transform: translateY(50px);
   opacity: 0 0.15s;
 }
-.slide1-fade-leave-to {
+.slide-fade-leave-to {
   /* max-height: 0px 0.5s; */
   opacity: 0 0.2s;
 }

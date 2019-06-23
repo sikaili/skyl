@@ -151,6 +151,7 @@ export default {
   transition: all 0.15s ease;
 }
 .slide-fade-leave-active {
+  display: none;
 }
 .slide-fade-enter {
   transform: translateX(30px);
