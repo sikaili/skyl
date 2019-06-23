@@ -53,7 +53,7 @@
         </transition>
       </div>
     </div>
-    <div class="flex items-center justify-center pa4 ph3 bg-lightest-blue navy">
+    <div class="flex items-center justify-center pa4 ph3 bg-black-30 white">
       <svg
         class="w1"
         data-icon="info"

@@ -1,12 +1,18 @@
 <template>
   <div id="app">
     <Head msg="Hello, I'm Sikai." />
-    <div class="w-100">
-      <iframe class="back ma0 pa0 w-100" :src="link"></iframe>
-    </div>
+    <!-- <div class="flex items-center justify-center w-100">
+      <iframe class="back bw0 w-100" :src="link"></iframe>
+    </div> -->
+
     <transition name="slide-fade1">
       <router-view />
     </transition>
+    <!-- <div class="back popover-body"> -->
+    <div id="iframe">
+      <iframe class="back w-100" :src="link"></iframe>
+    </div>
+    <!-- </div> -->
   </div>
 </template>
 
@@ -36,7 +42,7 @@ export default {
     return {
       item: "eyes",
       linkDefault: "http://eyes.skyl.fr",
-      link: `http://unsustainable.skyl.fr`
+      link: `http://eyes.skyl.fr`
     };
   }
 };
