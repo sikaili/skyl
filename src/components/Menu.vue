@@ -2,8 +2,7 @@
   <div class="cl">
     <div
       @click="menuShow = !menuShow"
-      v-show="$mq !== `sm`"
-      class="fl bg-black-50 flex flex-row justify-end"
+      class="fl bg-black-50 w-40 flex flex-row justify-end"
     >
       <h1 class="ph5 f3 white tr">{{ mName }}</h1>
     </div>
@@ -21,7 +20,9 @@
           <div class="link ma0 pa0 bw0">
             <dl class="mt2 f6 lh-copy">
               <dt class="clip"></dt>
-              <dd class="f4 ml0 black truncate w-100">{{ item.name }}</dd>
+              <dd class="f4 ml0 black truncate w-100">
+                {{ item.name }}
+              </dd>
             </dl>
           </div>
         </a>
@@ -97,10 +98,13 @@ export default {
       this.items.filter(a => a != item).map(a => (a.show = false));
       item.show = !item.show;
     },
-    handleMouseIn(item) {
+    handleMouseIn(item, itemToEmit) {
       if (this.items.some(a => a.show)) {
         this.items.filter(a => a != item).map(a => (a.show = false));
         item.show = true;
+      }
+      if (itemToEmit) {
+        this.load(itemToEmit);
       }
     },
     handleMouseOut() {
