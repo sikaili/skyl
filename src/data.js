@@ -1,12 +1,28 @@
 const data = {
   work: [
     {
-      name: "Plastic Ocean",
+      name: "Ocean Loop",
       des:
         "Immersive experience about ocean plastic pollution, using sound of plastic particles & randomly generated organic graphics",
       link: "http://ocean.skylstudio.com",
       img: require("@/assets/plastic-ocean1.jpg"),
       year: 2019,
+      credits: [
+        {
+          role: `Concept, Sound, Code`,
+          name: `Sikai Li`,
+          link: `http://skyl.fr`
+        },
+        {
+          role: `Mentor`,
+          name: `Olaf Avenati`,
+          link: `http://olaf.avenati.net`
+        },
+        {
+          role: `Communication`,
+          name: `Yasmine Ben Khaled, Solène Pyrizok, Mathilde Zajac`
+        }
+      ],
       show: false
     },
     {
@@ -14,7 +30,24 @@ const data = {
       year: 2019,
       des: `From Jane's facebook JSON file, we extracted over 30 days of geolocation data, from the visualisation we can conclude her residence, her school, and more...  `,
       link: "http://myss.skyl.fr",
-      img: require("@/assets/where-is-joe.png"),
+      img: require("@/assets/where-is-joe.jpg"),
+      credits: [
+        {
+          role: `Concept, Production`,
+          name: `Sikai Li`,
+          link: `http://skyl.fr`
+        },
+        {
+          role: `Mentor`,
+          name: `Olaf Avenati`,
+          link: `http://olaf.avenati.net`
+        },
+        {
+          role: `Communication`,
+          name: `Yasmine Ben Khaled, Solène Pyrizok, Mathilde Zajac`
+        }
+      ],
+
       show: false
     },
     {
