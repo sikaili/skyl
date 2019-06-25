@@ -24,12 +24,12 @@ const data = {
       img: require("@/assets/where-is-joe.jpg"),
       credits: [
         {
-          role: `Concept, Production`,
+          role: `Concept, Development`,
           name: `Sikai Li`,
           link: `http://skyl.fr`
         },
         {
-          role: `Mentor`,
+          role: `Ideas, Design`,
           name: `Olaf Avenati`,
           link: `http://olaf.avenati.net`
         },
@@ -103,16 +103,10 @@ const data = {
   ],
   music: [
     {
-      name: "Rain Addiction",
-      year: 2017,
-      link: "",
-      img: require("@/assets/eyes.png"),
-      show: false
-    },
-    {
       name: "Dancers",
+      des: `Music for 'The Ordinary Circus Girl', a VR short film by Fheel Concepts.`,
       link: "",
-      img: require("@/assets/eyes.png"),
+      img: require("@/assets/dancers.png"),
       credits: [
         {
           role: `Composition & Production`,
@@ -138,9 +132,37 @@ const data = {
     },
     {
       name: "Saturation Chinoise",
-      link: "",
-      img: require("@/assets/eyes.png"),
-      show: false
+      link: "https://thecamp.fr/projects/plastic-arcade",
+      des: `Music for the video game 'Plastic Arcade' I've been working on during my residency at thecamp, 80's style guitar riff & retro synth sound. There's a also chiptone remake done by 2080.`,
+      img: require("@/assets/saturation-chinoise.jpg"),
+      show: false,
+      credits: [
+        {
+          role: `Composition & Production`,
+          name: `Sikai Li`,
+          link: `http://skyl.fr`
+        },
+        {
+          role: `Game Designer`,
+          name: `Theo Le Du`,
+          link: `https://cosmografik.fr/`
+        },
+        {
+          role: `3D Artist`,
+          name: `Nicolas Grossman`,
+          link: `http://epoqevisual.com/`
+        },
+        {
+          role: `Host`,
+          name: `thecamp`,
+          link: `https://www.thecamp.fr`
+        },
+        {
+          role: `Music for Game`,
+          name: `Plastic Arcade`,
+          link: `https://www.hivers.fr/hive-2/projects/plastic-arcade/`
+        }
+      ]
     },
     {
       name: "Flower",
@@ -149,8 +171,9 @@ const data = {
       show: false
     },
     {
-      name: "Forces",
-      link: "http://forces.skyl.fr",
+      name: "Rain Addiction",
+      year: 2017,
+      link: "",
       img: require("@/assets/eyes.png"),
       show: false
     }

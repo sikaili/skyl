@@ -14,6 +14,16 @@ Vue.use(VueMq, {
 });
 
 Vue.config.productionTip = false;
+// router.beforeEach((to, from, next) => {
+//   console.log(to);
+//   console.log(from);
+//   if (to.name == from.name) {
+//     next("/0");
+//   } else {
+//     next();
+//   }
+//   console.log(next);
+// });
 
 new Vue({
   router,

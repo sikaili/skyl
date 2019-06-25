@@ -14,7 +14,6 @@ export default new Router({
       path: "/",
       name: "home",
       redirect: "/work",
-
       component: work
     },
     {
@@ -48,9 +47,5 @@ export default new Router({
       name: "music",
       component: page
     }
-    // {
-    //   path: "/:id",
-    //   component: page
-    // }
   ]
 });

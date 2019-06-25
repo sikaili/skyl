@@ -69,17 +69,6 @@
         Please come back on a desktop for better expereince
       </span>
     </div>
-
-    <!-- <div class="w-40 bg-white">
-      <div>
-        <transition name="loading">
-          <div v-show="loadingAnimation" class="loading bg-blue f3">
-            Loading...
-          </div>
-        </transition>
-        <div v-for="(w, index) in items" :key="mName + index"></div>
-      </div>
-    </div> -->
   </div>
 </template>
 
