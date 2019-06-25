@@ -12,14 +12,14 @@
         <br />
         <h3>Project Webpage</h3>
         <p>
-          <a :href="item.link" class="black">{{ item.link }}</a>
+          <a target="_blank" :href="item.link" class="black">{{ item.link }}</a>
         </p>
         <br />
 
         <h3>Credits</h3>
         <div
           v-for="person in item.credits"
-          :key="person"
+          :key="person.link"
           class="flex f7"
           style="line-height:0"
         >
@@ -63,7 +63,7 @@ export default {
   },
   methods: {
     back() {
-      this.$router.push({ path: "/work" });
+      this.$router.go(-2);
     }
   },
   computed: {

@@ -19,7 +19,7 @@ const data = {
     {
       name: "Where's Jane",
       year: 2019,
-      des: `From Jane's facebook JSON file, we extracted over 30 days of geolocation data, from the visualisation we can conclude her residence, her school, and more...  `,
+      des: `30 days of geolocation data was extracted from Jane's Facebook JSON file, and here is the visualization of it.`,
       link: "http://myss.skyl.fr",
       img: require("@/assets/where-is-joe.jpg"),
       credits: [
@@ -44,16 +44,27 @@ const data = {
     {
       name: "Eyes",
       year: 2018,
-      des: `An interactive installation questionning about the survillance & privacy. More than 5000 hanzi sorted by usage frequency, displayed (hided) on the same page.`,
+      des: `The 5000 most common Chinese characters sorted by frequency, displayed or hidden on the same page. Cute brother is watching you.`,
       link: "http://eyes.skyl.fr",
       img: require("@/assets/eyes.png"),
-      show: false
+      show: false,
+      credits: [
+        {
+          role: `Concept, Sound, Code`,
+          name: `Sikai Li`,
+          link: `http://skyl.fr`
+        },
+        {
+          role: `Host`,
+          name: `thecamp`,
+          link: `http://thecamp.fr`
+        }
+      ]
     },
     {
       name: "Unsustainable",
       year: "2018",
-      des:
-        "10 million people sat for the Gaokao each year and only 10% of them enter a 'decent' school, this one is for them.",
+      des: `10 million people sat for the Gaokao each year and only 10% of them enter a 'decent' school, this one is for them.`,
       link: "http://unsustainable.skyl.fr",
       img: require("@/assets/unsustainable.jpg"),
       show: false
@@ -62,14 +73,30 @@ const data = {
     {
       name: "Noise Draw",
       year: 2018,
+      des: `A tool I made, to draw perlin noise lines and make glichy sound at the same time.`,
       link: "http://line.skyl.fr",
+      credits: [
+        {
+          role: `Concept, Code`,
+          name: `Sikai Li`,
+          link: `http://skyl.fr`
+        }
+      ],
       img: require("@/assets/draw.png"),
       show: false
     },
     {
       name: "Gravity",
       year: 2017,
+      des: `The force that attracts a body toward any other physical body having mass.`,
       link: "http://forces.skyl.fr",
+      credits: [
+        {
+          role: `Concept, Code`,
+          name: `Sikai Li`,
+          link: `http://skyl.fr`
+        }
+      ],
       img: require("@/assets/force.jpg"),
       show: false
     }
@@ -77,6 +104,7 @@ const data = {
   music: [
     {
       name: "Rain Addiction",
+      year: 2017,
       link: "",
       img: require("@/assets/eyes.png"),
       show: false
@@ -85,10 +113,31 @@ const data = {
       name: "Dancers",
       link: "",
       img: require("@/assets/eyes.png"),
+      credits: [
+        {
+          role: `Composition & Production`,
+          name: `Sikai Li`,
+          link: `http://skyl.fr`
+        },
+        {
+          role: `Commission`,
+          name: `Corinne Linder`,
+          link: `https://www.fheelconcepts.com`
+        },
+        {
+          role: `Samples`,
+          name: `Fheel Concepts`,
+          link: `https://www.fheelconcepts.com`
+        },
+        {
+          role: `Music for VR Film`,
+          name: `The Ordinary Circus Girl`
+        }
+      ],
       show: false
     },
     {
-      name: "Saturation Noich",
+      name: "Saturation Chinoise",
       link: "",
       img: require("@/assets/eyes.png"),
       show: false
