@@ -23,7 +23,7 @@
           class="flex f7"
           style="line-height:0"
         >
-          <p class="fl w-40">{{ person.role }}:</p>
+          <p class="w-40">{{ person.role }}:</p>
           <p>
             <a class="black w-40" :href="person.link">{{ person.name }}</a>
           </p>

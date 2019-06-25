@@ -84,26 +84,34 @@ const data = {
       ],
       img: require("@/assets/draw.png"),
       show: false
-    },
-    {
-      name: "Gravity",
-      year: 2017,
-      des: `The force that attracts a body toward any other physical body having mass.`,
-      link: "http://forces.skyl.fr",
-      credits: [
-        {
-          role: `Concept, Code`,
-          name: `Sikai Li`,
-          link: `http://skyl.fr`
-        }
-      ],
-      img: require("@/assets/force.jpg"),
-      show: false
     }
+    // {
+    //   name: "Gravity",
+    //   year: 2017,
+    //   des: `The force that attracts a body toward any other physical body having mass.`,
+    //   link: "http://forces.skyl.fr",
+    //   credits: [
+    //     {
+    //       role: `Concept, Code`,
+    //       name: `Sikai Li`,
+    //       link: `http://skyl.fr`
+    //     }
+    //   ],
+    //   img: require("@/assets/force.jpg"),
+    //   show: false
+    // }
   ],
   music: [
     {
+      name: "Plastic Ocean",
+      year: "2018",
+      des: `A piece of electroacoustic music, sound recorded from plastic objects`,
+      link: "",
+      img: require("@/assets/plastic-ocean.png")
+    },
+    {
       name: "Dancers",
+      year: "2018",
       des: `Music for 'The Ordinary Circus Girl', a VR short film by Fheel Concepts.`,
       link: "",
       img: require("@/assets/dancers.png"),
@@ -132,6 +140,7 @@ const data = {
     },
     {
       name: "Saturation Chinoise",
+      year: "2018",
       link: "https://thecamp.fr/projects/plastic-arcade",
       des: `Music for the video game 'Plastic Arcade' I've been working on during my residency at thecamp, 80's style guitar riff & retro synth sound. There's a also chiptone remake done by 2080.`,
       img: require("@/assets/saturation-chinoise.jpg"),
@@ -166,13 +175,14 @@ const data = {
     },
     {
       name: "Flower",
+      year: 2017,
       link: "http://song.skyl.fr",
       img: require("@/assets/hua.jpg"),
       show: false
     },
     {
       name: "Rain Addiction",
-      year: 2017,
+      year: "2017",
       link: "",
       img: require("@/assets/eyes.png"),
       show: false
