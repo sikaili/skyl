@@ -17,6 +17,42 @@ const data = {
       show: false
     },
     {
+      name: "Plastic Arcade",
+      year: "2018",
+      link: "https://thecamp.fr/projects/plastic-arcade",
+      des: `A playfull arcade cabinet raising awareness about plastic pollution`,
+      about: `Plastic Arcade wants to raise awareness about plastic pollution by turning the systems that create the problem into easily understandable, high-impact video games. Using the arcade cabinet seemed like a natural way to touch the nostalgic fiber in each of us, parents and children alike. By creating several arcade games, each exploring a specific aspect of the plastic pollution problem, we aim to shake people into reflecting and connecting on a personal level to one of the largest issues concerning our civilization today.`,
+      img: require("@/assets/plastic-arcade.png"),
+      show: false,
+      credits: [
+        {
+          role: `Code, Electronics, Sound`,
+          name: `Sikai Li`,
+          link: `http://skyl.fr`
+        },
+        {
+          role: `Product, Game Design`,
+          name: `Theo Le Du`,
+          link: `https://cosmografik.fr/`
+        },
+        {
+          role: `3D Graphics, Effects`,
+          name: `Nicolas Grossman`,
+          link: `http://epoqevisual.com/`
+        },
+        {
+          role: `Host`,
+          name: `thecamp`,
+          link: `https://www.thecamp.fr`
+        },
+        {
+          role: `Music for Game`,
+          name: `Plastic Arcade`,
+          link: `https://www.hivers.fr/hive-2/projects/plastic-arcade/`
+        }
+      ]
+    },
+    {
       name: "Where's Jane",
       year: 2019,
       des: `30 days of geolocation data was extracted from Jane's Facebook JSON file, and here is the visualization of it.`,
@@ -192,6 +228,7 @@ const data = {
 const arrayDump = Object.entries(data);
 arrayDump.map(obj => {
   data[obj[0]].map(a => {
+    !a.about ? (a.about = a.des) : ``;
     a["id"] = a.name
       .split(" ")
       .join("")

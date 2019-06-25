@@ -15,7 +15,6 @@
       <div class="flex flex-column justify-center">
         <a
           href="#"
-          @mouseenter="handleMouseIn(item)"
           @click="handleClick(item)"
           v-for="item in items"
           :key="item.id"
@@ -68,6 +67,20 @@
                   <code class="f6 db lh-copy nowrap">{{ w.link }}</code>
                 </div>
                 <img :src="w.img" :alt="w.name" class="w-100 dim" />
+                <h5>Credits</h5>
+                <div
+                  v-for="person in w.credits"
+                  :key="person.link"
+                  class="f7 flex"
+                  style="line-height:1"
+                >
+                  <p class="truncate">{{ person.role }}:</p>
+                  <p class="truncate">
+                    <a target="_blank" class="ml3 black" :href="person.link">{{
+                      person.name
+                    }}</a>
+                  </p>
+                </div>
               </div>
             </div>
           </transition>

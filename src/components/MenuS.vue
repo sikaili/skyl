@@ -48,6 +48,21 @@
                 <code class="f6 db lh-copy nowrap">{{ item.link }}</code>
               </div>
               <img :src="item.img" :alt="item.name" class="w-100 dim" />
+              <h4>Credits</h4>
+              <div
+                v-for="person in item.credits"
+                :key="person.link"
+                class="f7 flex"
+                style="line-height:1"
+              >
+                <p class="truncate">{{ person.role }}:</p>
+                <p class="truncate">
+                  <a target="_blank" class="ml3 black" :href="person.link">{{
+                    person.name
+                  }}</a>
+                </p>
+                <br />
+              </div>
             </div>
           </div>
         </transition>

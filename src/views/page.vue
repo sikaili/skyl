@@ -8,7 +8,7 @@
     <div class="fl w-80 mw7 bg-white" :class="$mq == `sm` ? `w-100` : ''">
       <div class="flex-row pa5 justify-center tl">
         <h3>About</h3>
-        <p>{{ item.des }}</p>
+        <p>{{ item.about }}</p>
         <br />
         <h3>Project Webpage</h3>
         <p>
