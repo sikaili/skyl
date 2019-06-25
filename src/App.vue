@@ -1,11 +1,7 @@
 <template>
   <div id="app">
     <Head msg="Hello, I'm Sikai." />
-    <iframe
-      class="back vh-100 bw0 w-100"
-      :src="link"
-      :style="getWidth"
-    ></iframe>
+    <iframe class="back vh-100 bw0" :src="link" :style="getWidth"></iframe>
     <transition name="slide-fade1">
       <router-view />
     </transition>
@@ -33,6 +29,13 @@ export default {
       // a ? (this.link = `/${a}/index.html`) : "";
     });
   },
+  created() {
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.handleResize);
+  },
   components: {
     Head
   },
@@ -40,12 +43,18 @@ export default {
     return {
       item: "eyes",
       linkDefault: "http://eyes.skyl.fr",
-      link: `http://eyes.skyl.fr`
+      link: `http://eyes.skyl.fr`,
+      width: 0
     };
+  },
+  methods: {
+    handleResize() {
+      this.width = window.innerWidth;
+    }
   },
   computed: {
     getWidth: function() {
-      return `width:${window.innerWidth}`;
+      return `width:${this.$mq == "sm" ? screen.width : this.width}px;`;
     }
   }
 };

@@ -3,7 +3,7 @@ const data = {
     {
       name: "Ocean Loop",
       des:
-        "Immersive experience about ocean plastic pollution, using sound of plastic particles & randomly generated organic graphics",
+        "An installation about ocean plastic pollution, randomly generated graphics with real sound of plastic particles.",
       link: "http://ocean.skylstudio.com",
       img: require("@/assets/plastic-ocean1.jpg"),
       year: 2019,
@@ -12,15 +12,6 @@ const data = {
           role: `Concept, Sound, Code`,
           name: `Sikai Li`,
           link: `http://skyl.fr`
-        },
-        {
-          role: `Mentor`,
-          name: `Olaf Avenati`,
-          link: `http://olaf.avenati.net`
-        },
-        {
-          role: `Communication`,
-          name: `Yasmine Ben Khaled, Solène Pyrizok, Mathilde Zajac`
         }
       ],
       show: false
