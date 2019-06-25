@@ -74,7 +74,7 @@
                   class="f7 flex"
                   style="line-height:1"
                 >
-                  <p class="truncate">{{ person.role }}:</p>
+                  <p class="truncate w-40">{{ person.role }}:</p>
                   <p class="truncate">
                     <a target="_blank" class="ml3 black" :href="person.link">{{
                       person.name
