@@ -12,7 +12,6 @@
 
 <script>
 document.ontouchmove = function(e) {
-  console.log(e);
   return true;
 };
 import Head from "./components/Head.vue";

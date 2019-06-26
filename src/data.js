@@ -1,11 +1,10 @@
 const data = {
   work: [
     {
-      name: "Ocean Loop",
-      des:
-        "An installation about ocean plastic pollution, randomly generated graphics with real sound of plastic particles.",
-      link: "http://ocean.skylstudio.com",
-      img: require("@/assets/plastic-ocean1.jpg"),
+      name: `Ocean Loop`,
+      des: `An installation about ocean plastic pollution, randomly generated graphics with real sound of plastic particles.`,
+      link: `http://ocean.skylstudio.com`,
+      img: require(`@/assets/plastic-ocean1.jpg`),
       year: 2019,
       credits: [
         {
@@ -17,12 +16,12 @@ const data = {
       show: false
     },
     {
-      name: "Plastic Arcade",
-      year: "2018",
-      link: "https://thecamp.fr/projects/plastic-arcade",
+      name: `Plastic Arcade`,
+      year: `2018`,
+      link: `https://thecamp.fr/projects/plastic-arcade`,
       des: `A playfull arcade cabinet raising awareness about plastic pollution`,
       about: `Plastic Arcade wants to raise awareness about plastic pollution by turning the systems that create the problem into easily understandable, high-impact video games. Using the arcade cabinet seemed like a natural way to touch the nostalgic fiber in each of us, parents and children alike. By creating several arcade games, each exploring a specific aspect of the plastic pollution problem, we aim to shake people into reflecting and connecting on a personal level to one of the largest issues concerning our civilization today.`,
-      img: require("@/assets/plastic-arcade.png"),
+      img: require(`@/assets/plastic-arcade.png`),
       show: false,
       credits: [
         {
@@ -53,11 +52,11 @@ const data = {
       ]
     },
     {
-      name: "Where's Jane",
+      name: `Where's Jane`,
       year: 2019,
       des: `30 days of geolocation data was extracted from Jane's Facebook JSON file, and here is the visualization of it.`,
-      link: "http://myss.skyl.fr",
-      img: require("@/assets/where-is-joe.jpg"),
+      link: `http://myss.skyl.fr`,
+      img: require(`@/assets/where-is-joe.jpg`),
       credits: [
         {
           role: `Concept, Development`,
@@ -78,11 +77,11 @@ const data = {
       show: false
     },
     {
-      name: "Eyes",
+      name: `Eyes`,
       year: 2018,
       des: `The 5000 most common Chinese characters sorted by frequency, displayed or hidden on the same page. Cute brother is watching you.`,
-      link: "http://eyes.skyl.fr",
-      img: require("@/assets/eyes.png"),
+      link: `http://eyes.skyl.fr`,
+      img: require(`@/assets/eyes.png`),
       show: false,
       credits: [
         {
@@ -98,19 +97,19 @@ const data = {
       ]
     },
     {
-      name: "Unsustainable",
-      year: "2018",
+      name: `Unsustainable`,
+      year: `2018`,
       des: `10 million people sat for the Gaokao each year and only 10% of them enter a 'decent' school, this one is for them.`,
-      link: "http://unsustainable.skyl.fr",
-      img: require("@/assets/unsustainable.jpg"),
+      link: `http://unsustainable.skyl.fr`,
+      img: require(`@/assets/unsustainable.jpg`),
       show: false
     },
 
     {
-      name: "Noise Draw",
+      name: `Noise Draw`,
       year: 2018,
       des: `A tool I made, to draw perlin noise lines and make glichy sound at the same time.`,
-      link: "http://line.skyl.fr",
+      link: `http://line.skyl.fr`,
       credits: [
         {
           role: `Concept, Code`,
@@ -118,14 +117,14 @@ const data = {
           link: `http://skyl.fr`
         }
       ],
-      img: require("@/assets/draw.png"),
+      img: require(`@/assets/draw.png`),
       show: false
     }
     // {
-    //   name: "Gravity",
+    //   name: `Gravity`,
     //   year: 2017,
     //   des: `The force that attracts a body toward any other physical body having mass.`,
-    //   link: "http://forces.skyl.fr",
+    //   link: `http://forces.skyl.fr`,
     //   credits: [
     //     {
     //       role: `Concept, Code`,
@@ -133,24 +132,17 @@ const data = {
     //       link: `http://skyl.fr`
     //     }
     //   ],
-    //   img: require("@/assets/force.jpg"),
+    //   img: require(`@/assets/force.jpg`),
     //   show: false
     // }
   ],
   music: [
     {
-      name: "Plastic Ocean",
-      year: "2018",
-      des: `A piece of electroacoustic music, sound recorded from plastic objects`,
-      link: "",
-      img: require("@/assets/plastic-ocean.png")
-    },
-    {
-      name: "Dancers",
-      year: "2018",
+      name: `Dancers`,
+      year: `2018`,
       des: `Music for 'The Ordinary Circus Girl', a VR short film by Fheel Concepts.`,
-      link: "",
-      img: require("@/assets/dancers.png"),
+      link: ``,
+      img: require(`@/assets/dancers.png`),
       credits: [
         {
           role: `Composition & Production`,
@@ -175,11 +167,18 @@ const data = {
       show: false
     },
     {
-      name: "Saturation Chinoise",
-      year: "2018",
-      link: "https://thecamp.fr/projects/plastic-arcade",
+      name: `Plastic Ocean`,
+      year: `2018`,
+      des: `A piece of electroacoustic music, sound recorded from plastic objects.`,
+      link: `http://ocean.skyl.studio`,
+      img: require(`@/assets/plastic-ocean.jpg`)
+    },
+    {
+      name: `Saturation Chinoise`,
+      year: `2018`,
+      link: `https://thecamp.fr/projects/plastic-arcade`,
       des: `Music for the video game 'Plastic Arcade' I've been working on during my residency at thecamp, 80's style guitar riff & retro synth sound. There's a also chiptone remake done by 2080.`,
-      img: require("@/assets/saturation-chinoise.jpg"),
+      img: require(`@/assets/saturation-chinoise.jpg`),
       show: false,
       credits: [
         {
@@ -210,17 +209,17 @@ const data = {
       ]
     },
     {
-      name: "Flower",
+      name: `Flower`,
       year: 2017,
-      link: "http://song.skyl.fr",
-      img: require("@/assets/hua.jpg"),
+      link: `http://song.skyl.fr`,
+      img: require(`@/assets/hua.jpg`),
       show: false
     },
     {
-      name: "Rain Addiction",
-      year: "2017",
-      link: "",
-      img: require("@/assets/eyes.png"),
+      name: `Rain Addiction`,
+      year: `2017`,
+      link: ``,
+      img: require(`@/assets/eyes.png`),
       show: false
     }
   ]
@@ -229,9 +228,9 @@ const arrayDump = Object.entries(data);
 arrayDump.map(obj => {
   data[obj[0]].map(a => {
     !a.about ? (a.about = a.des) : ``;
-    a["id"] = a.name
-      .split(" ")
-      .join("")
+    a[`id`] = a.name
+      .split(` `)
+      .join(``)
       .toLowerCase();
   });
 });

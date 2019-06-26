@@ -51,7 +51,7 @@
               <h4>Credits</h4>
               <div
                 v-for="person in item.credits"
-                :key="person.link"
+                :key="person.link + person.name"
                 class="f7 flex"
                 style="line-height:1"
               >

@@ -6,7 +6,10 @@
       class="fl w-20 vh-100 flex items-start justify-end"
     ></div>
     <div class="fl w-80 mw7 bg-white" :class="$mq == `sm` ? `w-100` : ''">
-      <div class="flex-row pa5 justify-center tl">
+      <div
+        class="flex-row justify-center tl"
+        :class="$mq == `sm` ? `ma2 pa3 mb5 pb5` : `pa5`"
+      >
         <h3>About</h3>
         <p>{{ item.about }}</p>
         <br />
@@ -17,16 +20,32 @@
         <br />
 
         <h3>Credits</h3>
-        <div
-          v-for="person in item.credits"
-          :key="person.link"
-          class="flex f7"
-          style="line-height:0"
-        >
-          <p class="w-40">{{ person.role }}:</p>
-          <p>
-            <a class="black w-40" :href="person.link">{{ person.name }}</a>
-          </p>
+        <div v-if="$mq !== `sm`">
+          <div
+            v-for="person in item.credits"
+            :key="person.link"
+            class="flex f7"
+            style="line-height:0"
+          >
+            <p class="w-40">{{ person.role }}:</p>
+            <p>
+              <a class="black w-60" :href="person.link">{{ person.name }}</a>
+            </p>
+          </div>
+        </div>
+        <div v-else>
+          <div
+            v-for="person in item.credits"
+            :key="person.link"
+            class="f7"
+            style="line-height:1"
+          >
+            <p class="w-100">{{ person.role }}:</p>
+            <p>
+              <a class="black w-60" :href="person.link">{{ person.name }}</a>
+            </p>
+            <br />
+          </div>
         </div>
         <br />
         <a
