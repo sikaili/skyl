@@ -4,7 +4,7 @@
       <router-link :class="style" to="/work" exact>Applis</router-link>
       <router-link :class="style" to="/music">Music</router-link>
       <router-link :class="style" to="/drawings">Drawings</router-link>
-      <router-link :class="style" to="/info">Info</router-link>
+      <router-link :class="style" to="/info:0">Play</router-link>
     </div>
     <!-- <h1 class="tc autoM f2 b white">LI Sikai</h1>
     <p class="bg-black-10 tl white autoM" :class="$mq == `sm` ? `ph3` : ``">
@@ -31,6 +31,13 @@ export default {
         return this.class.sm;
       } else {
         return this.class.mdPlus;
+      }
+    }
+  },
+  methods: {
+    navigate: function(name) {
+      if (this.$route.name == name) {
+        this.$router.push({ path: `/info` });
       }
     }
   }

@@ -93,8 +93,6 @@ export default {
       if (this.id > arr.length) {
         return "ERROR!";
       }
-      console.log(arr[this.id]);
-
       return arr[this.id];
     }
   }

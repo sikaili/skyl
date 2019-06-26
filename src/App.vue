@@ -20,24 +20,21 @@ document.ontouchmove = function(e) {
   console.log(e);
   return true;
 };
-// document.getElementById("iframe").addEventListener(
-//   "ontouchmove",
-//   function(e) {
-//     e.preventDefault();
-//   },
-//   {
-//     passive: false
-//   }
-// );
-// document.getElementById("iframe").ontouchmove = function(d) {
-//   d.preventDefault();
-// };
 
 import Head from "./components/Head.vue";
 export default {
   name: "app",
   mounted() {
     this.$root.$on("itemDesOpen", a => {
+      // a is link
+      a.split(":")[0] == `http`
+        ? (this.link = a)
+        : (this.link = this.linkDefault);
+
+      // a is name
+      // a ? (this.link = `/${a}/index.html`) : "";
+    });
+    this.$root.$on("selected", a => {
       // a is link
       a.split(":")[0] == `http`
         ? (this.link = a)

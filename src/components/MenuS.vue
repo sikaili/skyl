@@ -120,6 +120,7 @@ export default {
     handleClick(item) {
       this.items.filter(a => a != item).map(a => (a.show = false));
       item.show = !item.show;
+      this.$root.$emit("selected", item.link);
     },
     // handleMouseIn(item, itemToEmit) {
     //   if (this.items.some(a => a.show)) {
@@ -151,7 +152,6 @@ export default {
     },
 
     goToPage(itemToEmit) {
-      console.log(itemToEmit);
       this.$router.push({
         name: this.mName.toLowerCase(),
         params: { id: itemToEmit }
