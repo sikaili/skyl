@@ -31,21 +31,25 @@
           <div class="bg-black-10 w-100 tl ma0" v-show="item.show">
             <div class="ph4 pv3">
               <!-- <span class="f4 f1-ns b dib pr3">{{ item.name }}</span> -->
-              <blockquote class="ph0 pb2 mb3 bb mh0 mt0">
+              <blockquote class="ph0 pb2 mb0 bb mh0 mt0">
                 <p class="lh-copy measure f6 ma0 black">
                   {{ item.des }}
                   <br />
                   <a
                     @click="goToPage(index)"
                     class="f6 dim link ba bw2 ph3 pv1 mt3 dib black"
-                    href="#0"
+                    href="#"
                     >Read more...</a
                   >
-                  <i></i>
                 </p>
               </blockquote>
               <div class="w-100 overflow-auto">
-                <code class="f6 db lh-copy nowrap">{{ item.link }}</code>
+                <a
+                  :href="item.link"
+                  target="_blank"
+                  class="f6 truncate black lh-copy nowrap"
+                  >{{ item.link }}</a
+                >
               </div>
               <img :src="item.img" :alt="item.name" class="w-100 dim" />
               <h4>Credits</h4>
@@ -68,7 +72,10 @@
         </transition>
       </div>
     </div>
-    <div class="flex items-center justify-center pa4 ph3 bg-black-30 white">
+    <div
+      v-show="alert"
+      class="flex items-center justify-center pa3 f6 ph3 bg-black-30 white"
+    >
       <svg
         class="w1"
         data-icon="info"
@@ -83,6 +90,7 @@
       <span class="lh-title ml3">
         Please come back on a desktop for better expereince
       </span>
+      <p class="pl3" @click="alert = false">X</p>
     </div>
   </div>
 </template>
@@ -101,6 +109,7 @@ export default {
   },
   data() {
     return {
+      alert: true,
       items: this.itemsprops,
       menuShow: true,
       loadingAnimation: false,
