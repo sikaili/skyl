@@ -11,11 +11,13 @@
         :class="$mq == `sm` ? `ma2 pa3 mb5 pb5` : `pa5`"
       >
         <h3>About</h3>
-        <p>{{ item.about }}</p>
+        <p class="f6">{{ item.about }}</p>
         <br />
         <h3>Project Webpage</h3>
         <p>
-          <a target="_blank" :href="item.link" class="black">{{ item.link }}</a>
+          <a target="_blank" :href="item.link" class="black f7">{{
+            item.link
+          }}</a>
         </p>
         <br />
 
@@ -23,7 +25,7 @@
         <div v-if="$mq !== `sm`">
           <div
             v-for="person in item.credits"
-            :key="person.link"
+            :key="person.link + person.role"
             class="flex f7"
             style="line-height:0"
           >
@@ -38,11 +40,11 @@
             v-for="person in item.credits"
             :key="person.link"
             class="f7"
-            style="line-height:1"
+            style="line-height:0.3"
           >
             <p class="w-100">{{ person.role }}:</p>
             <p>
-              <a class="black w-60" :href="person.link">{{ person.name }}</a>
+              <a class="black w-100" :href="person.link">{{ person.name }}</a>
             </p>
             <br />
           </div>

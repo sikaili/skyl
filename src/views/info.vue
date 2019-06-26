@@ -1,6 +1,6 @@
 <template>
-  <div class="f2">
-    <h1 class="tc">Digital</h1>
+  <div class="f3 tc bg-black-40">
+    <p class="tc white">mail:skyl@me.com</p>
   </div>
 </template>
 

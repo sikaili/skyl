@@ -16,8 +16,8 @@
         <a
           href="#"
           @click="handleClick(item)"
-          v-for="item in items"
-          :key="item.id"
+          v-for="(item, n) in items"
+          :key="item.id + n"
           class="pa1 tc link"
           :class="item.show ? 'router-link-active' : ''"
         >
@@ -70,7 +70,7 @@
                 <h5>Credits</h5>
                 <div
                   v-for="person in w.credits"
-                  :key="person.link"
+                  :key="person.link + person.role"
                   class="f7 flex"
                   style="line-height:1"
                 >

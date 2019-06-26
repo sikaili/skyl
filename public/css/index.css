@@ -15,13 +15,12 @@
     opacity: 0.5;
 }
 .back{
+  overflow: hidden;
   z-index:-100;
   position:fixed;
   left:0;
   top:0;
   opacity: 0.5;
-  /* width:100vw; */
-  height:100vh;
 }
 #app{
   z-index:100;

@@ -43,11 +43,6 @@ const data = {
           role: `Host`,
           name: `thecamp`,
           link: `https://www.thecamp.fr`
-        },
-        {
-          role: `Music for Game`,
-          name: `Plastic Arcade`,
-          link: `https://www.hivers.fr/hive-2/projects/plastic-arcade/`
         }
       ]
     },
@@ -64,7 +59,7 @@ const data = {
           link: `http://skyl.fr`
         },
         {
-          role: `Ideas, Design`,
+          role: `Ideas, Support`,
           name: `Olaf Avenati`,
           link: `http://olaf.avenati.net`
         },
@@ -99,10 +94,22 @@ const data = {
     {
       name: `Unsustainable`,
       year: `2018`,
-      des: `10 million people sat for the Gaokao each year and only 10% of them enter a 'decent' school, this one is for them.`,
+      des: `Particles trying to get bigger and bigger, each collision triggers a random sequence of the poem.`,
       link: `http://unsustainable.skyl.fr`,
       img: require(`@/assets/unsustainable.jpg`),
-      show: false
+      show: false,
+      credits: [
+        {
+          role: `Concept, Sound, Code`,
+          name: `Sikai Li`,
+          link: `http://skyl.fr`
+        },
+        {
+          role: `Poem`,
+          name: `Ryan Dzelzkalns`,
+          link: `https://www.ryandz.com`
+        }
+      ]
     },
 
     {
@@ -171,7 +178,20 @@ const data = {
       year: `2018`,
       des: `A piece of electroacoustic music, sound recorded from plastic objects.`,
       link: `http://ocean.skyl.studio`,
-      img: require(`@/assets/plastic-ocean.jpg`)
+      img: require(`@/assets/plastic-ocean.jpg`),
+      show: false,
+      credits: [
+        {
+          role: `Composition & Production`,
+          name: `Sikai Li`,
+          link: `http://skyl.fr`
+        },
+        {
+          role: `Host`,
+          name: `thecamp`,
+          link: `https://www.thecamp.fr`
+        }
+      ]
     },
     {
       name: `Saturation Chinoise`,
@@ -210,18 +230,31 @@ const data = {
     },
     {
       name: `Flower`,
+      des: `A song about, flowers.`,
       year: 2017,
       link: `http://song.skyl.fr`,
       img: require(`@/assets/hua.jpg`),
-      show: false
-    },
-    {
-      name: `Rain Addiction`,
-      year: `2017`,
-      link: ``,
-      img: require(`@/assets/eyes.png`),
-      show: false
+      show: false,
+      credits: [
+        {
+          role: `Composition & Production`,
+          name: `Sikai Li`,
+          link: `http://skyl.fr`
+        },
+        {
+          role: `Post-Production`,
+          name: `AB Studio`,
+          link: ``
+        }
+      ]
     }
+    // {
+    //   name: `Rain Addiction`,
+    //   year: `2017`,
+    //   link: ``,
+    //   img: require(`@/assets/eyes.png`),
+    //   show: false
+    // }
   ]
 };
 const arrayDump = Object.entries(data);

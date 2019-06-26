@@ -1,19 +1,38 @@
 <template>
   <div id="app">
     <Head msg="Hello, I'm Sikai." />
-    <iframe class="back vh-100 bw0" :src="link" :style="getWidth"></iframe>
+    <iframe
+      id="iframe"
+      class="back bw0"
+      scrolling="no"
+      scroll="no"
+      :src="link"
+      :style="getWidth"
+    ></iframe>
     <transition name="slide-fade1">
       <router-view />
     </transition>
-    <!-- <div class="back popover-body"> -->
-    <!-- </div> -->
   </div>
 </template>
 
 <script>
 document.ontouchmove = function(e) {
+  console.log(e);
   return true;
 };
+// document.getElementById("iframe").addEventListener(
+//   "ontouchmove",
+//   function(e) {
+//     e.preventDefault();
+//   },
+//   {
+//     passive: false
+//   }
+// );
+// document.getElementById("iframe").ontouchmove = function(d) {
+//   d.preventDefault();
+// };
+
 import Head from "./components/Head.vue";
 export default {
   name: "app",
@@ -43,17 +62,21 @@ export default {
       item: "eyes",
       linkDefault: "http://eyes.skyl.fr",
       link: `http://eyes.skyl.fr`,
-      width: 0
+      width: 0,
+      height: 0
     };
   },
   methods: {
     handleResize() {
       this.width = window.innerWidth;
+      this.height = window.innerHeight;
     }
   },
   computed: {
     getWidth: function() {
-      return `width:${this.$mq == "sm" ? screen.width : this.width}px;`;
+      return `width:${this.$mq == "sm" ? screen.width : this.width}px;
+      height:${this.height}px;
+      `;
     }
   }
 };
