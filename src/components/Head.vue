@@ -10,7 +10,7 @@
     <p class="bg-black-10 tl white autoM" :class="$mq == `sm` ? `ph3` : ``">
       I'm a creative technologist & interction designer based in Paris. I make
       music and new media art.
-    </p> -->
+    </p>-->
   </div>
 </template>
 
@@ -37,7 +37,7 @@ export default {
   methods: {
     navigate: function(name) {
       if (this.$route.name == name) {
-        this.$router.push({ path: `/info` });
+        this.$router.push({ path: `/info:0` });
       }
     }
   }

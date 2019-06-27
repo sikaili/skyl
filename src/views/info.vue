@@ -17,7 +17,10 @@
       <span class="pl1">Return</span>
     </a> -->
     <br />
-    <p class="tc f6 white bg-black-40">info</p>
+    <p class="tc f6 white bg-black-40">
+      info_
+      <i class="fr mr2 icon ion-logo-twitch"></i>
+    </p>
     <p class="tc f6 white bg-black-40">mail: skyl@me.com</p>
     <p class="tc f6 white bg-black-40">link: skyl.fr</p>
   </div>

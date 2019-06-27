@@ -7,9 +7,11 @@
     </p>
     <div
       @click="menuShow = !menuShow"
-      class="fl bg-black-50 w-40 flex flex-row justify-end"
+      class="fl bg-black-50 w-40 flex justify-end"
     >
-      <h1 class="ph5 f3 white tr">{{ mName }}</h1>
+      <h1 class="ph5 f3 white tr">
+        {{ mName }}
+      </h1>
     </div>
     <div v-if="menuShow" class="fl w-20 bg-white-80">
       <div class="flex flex-column justify-center">
@@ -26,6 +28,13 @@
               <dt class="clip"></dt>
               <dd class="f4 ml0 black truncate w-100">
                 {{ item.name }}
+                <i
+                  :class="
+                    `fr mr2 icon ion-md-arrow-dropright ${
+                      item.show ? `mr3` : ''
+                    }`
+                  "
+                ></i>
               </dd>
             </dl>
           </div>
@@ -60,7 +69,6 @@
                       href="#0"
                       >Read more...</a
                     >
-                    <i></i>
                   </p>
                 </blockquote>
                 <div class="w-100 overflow-auto">
@@ -94,6 +102,9 @@
 import { clearTimeout } from "timers";
 export default {
   name: "Menu",
+  mounted() {
+    this.items[0].show = true;
+  },
   props: {
     itemsprops: {
       type: Array,
@@ -105,6 +116,7 @@ export default {
   },
   data() {
     return {
+      style: null,
       items: this.itemsprops,
       menuShow: true,
       loadingAnimation: false,
