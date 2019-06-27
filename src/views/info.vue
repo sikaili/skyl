@@ -3,7 +3,7 @@
     <div class="fixed f3 tc left-1">
       <br />
       <a
-        @click="back"
+        @click="send"
         href="#0"
         class="w-100 f5 no-underline white bg-black-80 bg-animate hover-bg-black hover-white inline-flex items-center pa3 border-box"
       >
@@ -12,9 +12,7 @@
         <span class="pl1">Random </span>
       </a>
       <div class="f6 tl" style="min-height:5rem;">
-        <p class="white bg-black-50">
-          info
-        </p>
+        <p class="white bg-black-50">info</p>
         <!-- <p class="white bg-black-50">
         mail : skyl@me.com
       </p> -->
@@ -38,14 +36,19 @@
 </template>
 
 <script>
+import dataObj from "@/data.js";
 export default {
   name: "info",
   data() {
-    return {};
+    return {
+      dataObj: dataObj
+    };
   },
   methods: {
-    back() {
-      this.$router.go(-1);
+    send() {
+      const arr = this.dataObj["work"];
+      const n = Math.floor(Math.random() * arr.length);
+      this.$root.$emit("itemDesOpen", arr[n].link);
     }
   }
 };

@@ -7,7 +7,6 @@
 <script>
 import MenuS from "@/components/MenuS.vue";
 import MenuD from "@/components/MenuD.vue";
-
 import dataObj from "@/data.js";
 export default {
   name: "music",
