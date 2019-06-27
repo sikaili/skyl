@@ -91,6 +91,7 @@ export default {
     getWidth: function() {
       return `width:${this.$mq == "sm" ? screen.width : this.width}px;
       height:${this.height}px;
+      opacity:${this.$route.path.includes("info") ? 1 : ""}
       `;
     }
   }
