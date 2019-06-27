@@ -9,7 +9,7 @@
         mail : skyl@me.com
       </p> -->
       <p class="mb0 pb2 white bg-black-40">links: <a>skyl.fr</a></p>
-      <p class="ma0 pa0 f4 white bg-black-40">
+      <p class="ma0 pa0 f3 white bg-black-40">
         <!-- <a><i class="mh1 icon ion-logo-javascript"></i></a> -->
         <a target="_blank" href="https://github.com/sikaili"
           ><i class="white mh1 icon ion-logo-github"></i
