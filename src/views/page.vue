@@ -37,14 +37,16 @@
         </div>
         <div v-else>
           <div
-            v-for="person in item.credits"
-            :key="person.link"
-            class="f7"
-            style="line-height:0.3"
+            v-for="(person, n) in item.credits"
+            :key="person.link + n"
+            class="f7 flex"
+            style="line-height:1"
           >
-            <p class="w-100">{{ person.role }}:</p>
-            <p>
-              <a class="black w-100" :href="person.link">{{ person.name }}</a>
+            <p class="truncate w-60 ma1">{{ person.role }}:</p>
+            <p class="truncate ma0">
+              <a target="_blank" class="ml3 black" :href="person.link">{{
+                person.name
+              }}</a>
             </p>
             <br />
           </div>
