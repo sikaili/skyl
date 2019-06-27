@@ -22,6 +22,13 @@
               <dt class="clip"></dt>
               <dd class="f5 ml0 black truncate w-100">
                 {{ item.name }}
+                <i
+                  :class="
+                    `fixed right-1 fr ma0 icon ion-md-arrow-dropdown ${
+                      item.show ? `black` : 'black-50 ion-md-arrow-dropup'
+                    }`
+                  "
+                ></i>
                 <b v-show="item.show" class="dib bg-blue">{{ item.year }}</b>
               </dd>
             </dl>

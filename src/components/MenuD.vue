@@ -31,7 +31,7 @@
                 <i
                   :class="
                     `fr mr2 icon ion-md-arrow-dropright ${
-                      item.show ? `mr3` : ''
+                      item.show ? `mr3 black` : 'black-50'
                     }`
                   "
                 ></i>

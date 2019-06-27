@@ -4,10 +4,20 @@
     <div class="f6 tl" style="min-height:5rem;">
       <p class="white bg-black-40">
         info
-        <i class="mh2 icon ion-logo-twitch"></i>
       </p>
-      <p class="white bg-black-40">mail: skyl@me.com</p>
-      <p class="white bg-black-40">link: skyl.fr</p>
+      <!-- <p class="white bg-black-40">
+        mail : skyl@me.com
+      </p> -->
+      <p class="mb0 pb2 white bg-black-40">links: <a>skyl.fr</a></p>
+      <p class="ma0 pa0 f4 white bg-black-40">
+        <!-- <a><i class="mh1 icon ion-logo-javascript"></i></a> -->
+        <a target="_blank" href="https://github.com/sikaili"
+          ><i class="white mh1 icon ion-logo-github"></i
+        ></a>
+        <a target="_blank"><i class="white mh1 icon ion-logo-instagram"></i></a>
+        <a target="_blank"><i class="white mh1 icon ion-logo-twitter"></i></a>
+        <a href="mailto:skyl@me.com"><i class="white icon ion-ios-send"></i></a>
+      </p>
     </div>
   </div>
 </template>
@@ -26,4 +36,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+a:hover {
+  background-color: black;
+}
+</style>
