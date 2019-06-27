@@ -1,14 +1,15 @@
 <template>
   <div id="app">
     <Head msg="Hello, I'm Sikai." />
-    <iframe
-      id="iframe"
-      class="back bw0"
-      scrolling="no"
-      scroll="no"
-      :src="link"
-      :style="getWidth"
-    ></iframe>
+    <div class="back bw0" :style="getWidth">
+      <iframe
+        class="back bw0"
+        scrolling="no"
+        scroll="no"
+        :src="link"
+        :style="getWidth2"
+      ></iframe>
+    </div>
     <transition name="slide-fade1">
       <router-view />
     </transition>
@@ -88,11 +89,30 @@ export default {
     }
   },
   computed: {
-    getWidth: function() {
-      return `width:${this.$mq == "sm" ? screen.width : this.width}px;
-      height:${this.height}px;
+    getWidth2: function() {
+      const scale = 2;
+      return `width:${this.$mq == "sm" ? screen.width * scale : this.width}px;
+      height:${this.height * scale}px;
       opacity:${this.$route.path.includes("info") ? 1 : ""};
-      top:${this.$route.path.includes("info") ? "" : ""};
+      -moz-transform: scale(${1 / scale});
+      -moz-transform-origin: 0 0;
+      -o-transform: scale(${1 / scale});
+      -o-transform-origin: 0 0;
+      -webkit-transform: scale(${1 / scale});
+      -webkit-transform-origin: 0 0;
+      `;
+    },
+    getWidth: function() {
+      const scale = 1;
+      return `width:${this.$mq == "sm" ? screen.width * scale : this.width}px;
+      height:${this.height * scale}px;
+      opacity:${this.$route.path.includes("info") ? 1 : "1"};
+      -moz-transform: scale(${1 / scale});
+      -moz-transform-origin: 0 0;
+      -o-transform: scale(${1 / scale});
+      -o-transform-origin: 0 0;
+      -webkit-transform: scale(${1 / scale});
+      -webkit-transform-origin: 0 0;
       `;
     }
   }
