@@ -8,7 +8,7 @@
     <div class="fl w-80 mw7 bg-white-90" :class="$mq == `sm` ? `w-100` : ''">
       <i
         @click="back"
-        class="absolute right-0 pr2 f2 icon ion-md-close gray c-animate hover-black"
+        class="fr right-0 pr2 f2 icon ion-md-close gray c-animate hover-black"
       ></i>
 
       <div
@@ -70,9 +70,16 @@
           @click="back"
           class="f5 no-underline white bg-black-40 bg-animate hover-bg-black hover-white inline-flex items-center pa3 border-box mr1"
         >
-          <i class="tc icon ion-md-shuffle"></i>
+          <i class="icon ion-md-return-left"></i>
 
           <span class="pl1">Return</span>
+        </span>
+        <span
+          @click="$router.push({ path: '/info:0' })"
+          class="f5 no-underline white bg-light-red bg-animate hover-bg-black hover-white inline-flex items-center pa3 border-box mr1"
+        >
+          <span class="pr1">Play!</span>
+          <i class="icon ion-md-return-right"></i>
         </span>
       </div>
     </div>
