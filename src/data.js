@@ -2,7 +2,7 @@ const data = {
   work: [
     {
       name: `Ocean Loop`,
-      des: `An installation about ocean plastic pollution, randomly generated graphics with real sound of plastic particles.`,
+      des: `An audio-visual experiment about ocean plastic pollution, randomly generated graphics, sound of plastic particles.`,
       link: `http://ocean.skylstudio.com`,
       img: require(`@/assets/plastic-ocean1.jpg`),
       year: 2019,
@@ -270,7 +270,7 @@ arrayDump.map(obj => {
     const arr = [];
     for (let i = 0; i < num; i++) {
       try {
-        let m = require(`@/assets/${a.id}_${i}.jpg`);
+        let m = require(`@/assets/${a.id}/${a.id}_${i}.jpg`);
         arr.push(m);
       } catch (err) {
         continue;

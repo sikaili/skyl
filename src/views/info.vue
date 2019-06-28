@@ -2,15 +2,14 @@
   <div class="cl">
     <div class="fixed f3 tc left-1">
       <br />
-      <a
+      <span
         @click="send"
-        href="#0"
-        class="w-100 f5 no-underline white bg-black-80 bg-animate hover-bg-black hover-white inline-flex items-center pa3 border-box"
+        class="w-100 f5 no-underline white bg-black-80 bg-animate hover-bg-white hover-black inline-flex items-center pa3 border-box"
       >
         <i class="tc icon ion-md-shuffle"></i>
 
         <span class="pl1">Random </span>
-      </a>
+      </span>
       <div class="f6 tl" style="min-height:5rem;">
         <p class="white bg-black-50">info</p>
         <!-- <p class="white bg-black-50">
