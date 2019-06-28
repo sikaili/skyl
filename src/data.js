@@ -3,14 +3,14 @@ const data = {
     {
       name: `Ocean Loop`,
       des: `An audio-visual experiment about ocean plastic pollution, randomly generated graphics, sound of plastic particles.`,
-      link: `http://ocean.skylstudio.com`,
+      link: `https://ocean.skylstudio.com`,
       img: require(`@/assets/plastic-ocean1.jpg`),
       year: 2019,
       credits: [
         {
           role: `Concept, Sound, Code`,
           name: `Sikai Li`,
-          link: `http://skyl.fr`
+          link: `https://skyl.fr`
         }
       ],
       show: false
@@ -18,7 +18,7 @@ const data = {
     {
       name: `Plastic Arcade`,
       year: `2018`,
-      link: `https://thecamp.fr/projects/plastic-arcade`,
+      link: `http://thecamp.fr/projects/plastic-arcade`,
       des: `A playfull arcade cabinet raising awareness about plastic pollution`,
       about: `Plastic Arcade wants to raise awareness about plastic pollution by turning the systems that create the problem into easily understandable, high-impact video games. Using the arcade cabinet seemed like a natural way to touch the nostalgic fiber in each of us, parents and children alike. By creating several arcade games, each exploring a specific aspect of the plastic pollution problem, we aim to shake people into reflecting and connecting on a personal level to one of the largest issues concerning our civilization today.`,
       img: require(`@/assets/plastic-arcade.png`),
@@ -28,7 +28,7 @@ const data = {
         {
           role: `Code, Electronics, Sound`,
           name: `Sikai Li`,
-          link: `http://skyl.fr`
+          link: `https://skyl.fr`
         },
         {
           role: `Product, Game Design`,
@@ -38,7 +38,7 @@ const data = {
         {
           role: `3D Graphics, Effects`,
           name: `Nicolas Grossman`,
-          link: `http://epoqevisual.com/`
+          link: `https://epoqevisual.com/`
         },
         {
           role: `Host`,
@@ -51,18 +51,18 @@ const data = {
       name: `Where's Jane`,
       year: 2019,
       des: `30 days of geolocation data was extracted from Jane's Facebook JSON file, and here is the visualization of it.`,
-      link: `http://myss.skyl.fr`,
+      link: `https://myss.skyl.fr`,
       img: require(`@/assets/where-is-joe.jpg`),
       credits: [
         {
           role: `Concept, Development`,
           name: `Sikai Li`,
-          link: `http://skyl.fr`
+          link: `https://skyl.fr`
         },
         {
           role: `Ideas, Support`,
           name: `Olaf Avenati`,
-          link: `http://olaf.avenati.net`
+          link: `https://olaf.avenati.net`
         },
         {
           role: `Communication`,
@@ -76,19 +76,19 @@ const data = {
       name: `Eyes`,
       year: 2018,
       des: `The 5000 most common Chinese characters sorted by frequency, displayed or hidden on the same page. Cute brother is watching you.`,
-      link: `http://eyes.skyl.fr`,
+      link: `https://eyes.skyl.fr`,
       img: require(`@/assets/eyes.png`),
       show: false,
       credits: [
         {
           role: `Concept, Sound, Code`,
           name: `Sikai Li`,
-          link: `http://skyl.fr`
+          link: `https://skyl.fr`
         },
         {
           role: `Host`,
           name: `thecamp`,
-          link: `http://thecamp.fr`
+          link: `https://thecamp.fr`
         }
       ]
     },
@@ -96,14 +96,14 @@ const data = {
       name: `Unsustainable`,
       year: `2018`,
       des: `Particles trying to get bigger and bigger, each collision triggers a random sequence of the poem.`,
-      link: `http://unsustainable.skyl.fr`,
+      link: `https://unsustainable.skyl.fr`,
       img: require(`@/assets/unsustainable.jpg`),
       show: false,
       credits: [
         {
           role: `Concept, Sound, Code`,
           name: `Sikai Li`,
-          link: `http://skyl.fr`
+          link: `https://skyl.fr`
         },
         {
           role: `Poem`,
@@ -117,12 +117,12 @@ const data = {
       name: `Noise Draw`,
       year: 2018,
       des: `A tool I made, to draw perlin noise lines and make glichy sound at the same time.`,
-      link: `http://line.skyl.fr`,
+      link: `https://line.skyl.fr`,
       credits: [
         {
           role: `Concept, Code`,
           name: `Sikai Li`,
-          link: `http://skyl.fr`
+          link: `https://skyl.fr`
         }
       ],
       img: require(`@/assets/draw.png`),
@@ -132,12 +132,12 @@ const data = {
     //   name: `Gravity`,
     //   year: 2017,
     //   des: `The force that attracts a body toward any other physical body having mass.`,
-    //   link: `http://forces.skyl.fr`,
+    //   link: `https://forces.skyl.fr`,
     //   credits: [
     //     {
     //       role: `Concept, Code`,
     //       name: `Sikai Li`,
-    //       link: `http://skyl.fr`
+    //       link: `https://skyl.fr`
     //     }
     //   ],
     //   img: require(`@/assets/force.jpg`),
@@ -155,7 +155,7 @@ const data = {
         {
           role: `Composition & Production`,
           name: `Sikai Li`,
-          link: `http://skyl.fr`
+          link: `https://skyl.fr`
         },
         {
           role: `Commission`,
@@ -178,14 +178,14 @@ const data = {
       name: `Plastic Ocean`,
       year: `2018`,
       des: `A piece of electroacoustic music, sound recorded from plastic objects.`,
-      link: `http://ocean.skyl.studio`,
+      link: `https://ocean.skyl.studio`,
       img: require(`@/assets/plastic-ocean.jpg`),
       show: false,
       credits: [
         {
           role: `Composition & Production`,
           name: `Sikai Li`,
-          link: `http://skyl.fr`
+          link: `https://skyl.fr`
         },
         {
           role: `Host`,
@@ -205,7 +205,7 @@ const data = {
         {
           role: `Composition & Production`,
           name: `Sikai Li`,
-          link: `http://skyl.fr`
+          link: `https://skyl.fr`
         },
         {
           role: `Game Designer`,
@@ -215,7 +215,7 @@ const data = {
         {
           role: `3D Artist`,
           name: `Nicolas Grossman`,
-          link: `http://epoqevisual.com/`
+          link: `https://epoqevisual.com/`
         },
         {
           role: `Host`,
@@ -233,14 +233,14 @@ const data = {
       name: `Flower`,
       des: `A song about, flowers.`,
       year: 2017,
-      link: `http://song.skyl.fr`,
+      link: `https://song.skyl.fr`,
       img: require(`@/assets/hua.jpg`),
       show: false,
       credits: [
         {
           role: `Composition & Production`,
           name: `Sikai Li`,
-          link: `http://skyl.fr`
+          link: `https://skyl.fr`
         },
         {
           role: `Post-Production`,

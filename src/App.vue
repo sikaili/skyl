@@ -46,7 +46,7 @@ export default {
   mounted() {
     this.$root.$on("itemDesOpen", a => {
       // a is link
-      a.split(":")[0] == `http`
+      a.split(":")[0] == `https`
         ? (this.link = a)
         : (this.link = this.linkDefault);
 
@@ -55,7 +55,7 @@ export default {
     });
     this.$root.$on("selected", a => {
       // a is link
-      a.split(":")[0] == `http`
+      a.split(":")[0] == `https`
         ? (this.link = a)
         : (this.link = this.linkDefault);
 
@@ -76,8 +76,8 @@ export default {
   data() {
     return {
       item: "eyes",
-      linkDefault: "http://eyes.skyl.fr",
-      link: `http://eyes.skyl.fr`,
+      linkDefault: "https://eyes.skyl.fr",
+      link: `https://eyes.skyl.fr`,
       width: 0,
       height: 0
     };

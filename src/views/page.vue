@@ -10,6 +10,8 @@
         class="flex-row justify-center items-start tl"
         :class="$mq == `sm` ? `ma2 pa3 mb5 pb5` : `pa5`"
       >
+        <h3>{{ item.name }}</h3>
+        <p class="f6">{{ item.des }}</p>
         <img
           class="w-100 pv3 ph5"
           v-for="picLink in item.imgs"
