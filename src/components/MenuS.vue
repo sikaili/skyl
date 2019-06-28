@@ -128,7 +128,7 @@ export default {
     handleClick(item) {
       this.items.filter(a => a != item).map(a => (a.show = false));
       item.show = !item.show;
-      this.$root.$emit("selected", item.img);
+      this.$root.$emit("selected", item.link);
     },
     // handleMouseIn(item, itemToEmit) {
     //   if (this.items.some(a => a.show)) {
