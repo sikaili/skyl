@@ -7,9 +7,15 @@
     ></div>
     <div class="fl w-80 mw7 bg-white" :class="$mq == `sm` ? `w-100` : ''">
       <div
-        class="flex-row justify-center tl"
+        class="flex-row justify-center items-start tl"
         :class="$mq == `sm` ? `ma2 pa3 mb5 pb5` : `pa5`"
       >
+        <img
+          class="w-100 pa5"
+          v-for="picLink in item.imgs"
+          :src="picLink"
+          :key="picLink"
+        />
         <h3>About</h3>
         <p class="f6">{{ item.about }}</p>
         <br />

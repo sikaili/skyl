@@ -158,7 +158,6 @@ export default {
     },
 
     goToPage(itemToEmit) {
-      console.log(itemToEmit);
       this.$router.push({
         name: this.mName.toLowerCase(),
         params: { id: itemToEmit }
