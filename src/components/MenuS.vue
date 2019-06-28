@@ -44,11 +44,10 @@
                 <p class="lh-copy measure f6 ma0 black">
                   {{ item.des }}
                   <br />
-                  <a
+                  <span
                     @click="goToPage(index)"
                     class="f6 dim link ba bw2 ph3 pv1 mt3 dib black"
-                    href="#"
-                    >Read more...</a
+                    >Read more...</span
                   >
                 </p>
               </blockquote>

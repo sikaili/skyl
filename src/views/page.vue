@@ -6,6 +6,11 @@
       class="fl w-20 vh-100 flex items-start justify-end"
     ></div>
     <div class="fl w-80 mw7 bg-white-90" :class="$mq == `sm` ? `w-100` : ''">
+      <i
+        @click="back"
+        class="absolute right-0 pr2 f2 icon ion-md-close gray c-animate hover-black"
+      ></i>
+
       <div
         class="flex-row justify-center items-start tl"
         :class="$mq == `sm` ? `ma2 pa3 mb5 pb5` : `pa5`"
@@ -13,7 +18,8 @@
         <h3>{{ item.name }}</h3>
         <p class="f6">{{ item.des }}</p>
         <img
-          class="w-100 pv3 ph5"
+          class="w-100 pv3"
+          :class="$mq == `sm` ? `ph3` : 'ph5'"
           v-for="picLink in item.imgs"
           :src="picLink"
           :key="picLink"
@@ -64,15 +70,8 @@
           @click="back"
           class="f5 no-underline white bg-black-40 bg-animate hover-bg-black hover-white inline-flex items-center pa3 border-box mr1"
         >
-          <svg
-            class="w1"
-            data-icon="chevronLeft"
-            viewBox="0 0 32 32"
-            style="fill:currentcolor"
-          >
-            <title>chevronLeft icon</title>
-            <path d="M20 1 L24 5 L14 16 L24 27 L20 31 L6 16 z"></path>
-          </svg>
+          <i class="tc icon ion-md-shuffle"></i>
+
           <span class="pl1">Return</span>
         </span>
       </div>
