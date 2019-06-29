@@ -55,7 +55,7 @@
                 <a
                   :href="item.link"
                   target="_blank"
-                  class="f6 truncate black lh-copy nowrap"
+                  class="f7 truncate black lh-copy nowrap"
                   >{{ item.link }}</a
                 >
               </div>
@@ -160,9 +160,12 @@ export default {
     },
 
     goToPage(itemToEmit) {
+      // this.$router.push({
+      //   name: this.mName.toLowerCase(),
+      //   params: { id: itemToEmit }
+      // });
       this.$router.push({
-        name: this.mName.toLowerCase(),
-        params: { id: itemToEmit }
+        path: `/${this.mNmae.toLowerCase()}/id:${itemToEmit}`
       });
     }
   }

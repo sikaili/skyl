@@ -119,7 +119,10 @@ export default {
   },
   methods: {
     back() {
-      this.$router.go(-1);
+      // this.$router.go(-1);
+
+      this.$router.replace({ path: `/${this.$route.path.split("/")[1]}/` });
+      // this.$router.go(-1);
     }
   },
   computed: {

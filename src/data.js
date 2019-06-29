@@ -16,6 +16,31 @@ const data = {
       show: false
     },
     {
+      name: `Where's Jane`,
+      year: 2019,
+      des: `30 days of geolocation data was extracted from Jane's Facebook JSON file, and here is the visualization of it.`,
+      link: `https://myss.skyl.fr`,
+      img: require(`@/assets/where-is-joe.jpg`),
+      credits: [
+        {
+          role: `Concept, Development`,
+          name: `Sikai Li`,
+          link: `https://skyl.fr`
+        },
+        {
+          role: `Ideas, Support`,
+          name: `Olaf Avenati`,
+          link: `https://olaf.avenati.net`
+        },
+        {
+          role: `Communication`,
+          name: `Yasmine Ben Khaled, Solène Pyrizok, Mathilde Zajac`
+        }
+      ],
+
+      show: false
+    },
+    {
       name: `Plastic Arcade`,
       year: `2018`,
       link: `http://thecamp.fr/projects/plastic-arcade`,
@@ -47,31 +72,7 @@ const data = {
         }
       ]
     },
-    {
-      name: `Where's Jane`,
-      year: 2019,
-      des: `30 days of geolocation data was extracted from Jane's Facebook JSON file, and here is the visualization of it.`,
-      link: `https://myss.skyl.fr`,
-      img: require(`@/assets/where-is-joe.jpg`),
-      credits: [
-        {
-          role: `Concept, Development`,
-          name: `Sikai Li`,
-          link: `https://skyl.fr`
-        },
-        {
-          role: `Ideas, Support`,
-          name: `Olaf Avenati`,
-          link: `https://olaf.avenati.net`
-        },
-        {
-          role: `Communication`,
-          name: `Yasmine Ben Khaled, Solène Pyrizok, Mathilde Zajac`
-        }
-      ],
 
-      show: false
-    },
     {
       name: `Eyes`,
       year: 2018,
