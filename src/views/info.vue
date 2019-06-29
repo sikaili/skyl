@@ -15,9 +15,15 @@
         <!-- <p class="white bg-black-50">
         mail : skyl@me.com
       </p> -->
+        <p
+          v-if="currentLink.split(':')[0] == `https`"
+          class=" mb0 pb2 white bg-black-50"
+        >
+          {{ currentLink.split("//")[1].split(".")[0] }}
+        </p>
         <p class="mb0 pb2 white bg-black-50">links: <a>skyl.fr</a></p>
+
         <p class="ma0 pa0 f3 white bg-black-50">
-          <!-- <a><i class="mh1 icon ion-logo-javascript"></i></a> -->
           <a target="_blank" href="https://github.com/sikaili"
             ><i class="white mh1 icon ion-logo-github"></i
           ></a>
@@ -40,14 +46,23 @@ export default {
   name: "info",
   data() {
     return {
-      dataObj: dataObj
+      dataObj: dataObj,
+      links: [
+        { link: "https://forces.skyl.fr" },
+        { link: "https://k.skyl.fr" },
+        { link: "https://data.skyl.fr" }
+      ],
+      currentLink: ""
     };
   },
   methods: {
     send() {
-      const arr = this.dataObj["work"];
+      let arr = this.dataObj["work"];
+      arr = arr.concat(this.links);
+      // console.log(arr);
       const n = Math.floor(Math.random() * arr.length);
-      this.$root.$emit("itemDesOpen", arr[n].link);
+      this.currentLink = arr[n].link;
+      this.$root.$emit("itemDesOpen", this.currentLink);
     }
   }
 };
