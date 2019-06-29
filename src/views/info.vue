@@ -19,7 +19,7 @@
           v-if="currentLink.split(':')[0] == `https`"
           class=" mb0 pb2 white bg-black-50"
         >
-          {{ currentLink.split("//")[1].split(".")[0] }}
+          {{ name }}
         </p>
         <p class="mb0 pb2 white bg-black-50">links: <a>skyl.fr</a></p>
 
@@ -57,7 +57,11 @@ export default {
         { link: "https://sikaili.github.io/p5js/washed/" },
         { link: "https://sikaili.github.io/p5js/e-minor/" },
         { link: "https://sikaili.github.io/p5js/blood-particles-2017/" },
-        { link: "https://sikaili.github.io/p5js/c-syn/" }
+        { link: "https://sikaili.github.io/p5js/c-syn/" },
+        { link: "https://sikaili.github.io/p5js/happy-birth-day-mon-zhu/" },
+        { link: "https://sikaili.github.io/p5js/blood-particles-2017/" },
+        { link: "https://sikaili.github.io/p5js/eyes-sand-sound/" },
+        { link: "https://sikaili.github.io/p5js/eyes-macro/" }
       ],
       currentLink: ""
     };
@@ -75,6 +79,12 @@ export default {
   computed: {
     name: function() {
       let dump = this.currentLink.split("//");
+      if (dump[1].includes(`github`)) {
+        dump = this.currentLink.split("/");
+        dump = dump[dump.length - 2];
+      } else {
+        dump = dump[1].split(".")[0];
+      }
       return dump;
     }
   }
