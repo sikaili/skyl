@@ -36,7 +36,6 @@
 
 <script>
 document.ontouchmove = function(e) {
-  console.log(e);
   return true;
 };
 

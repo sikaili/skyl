@@ -30,7 +30,7 @@
                 {{ item.name }}
                 <i
                   :class="
-                    `fr mr2 icon ion-md-arrow-dropright ${
+                    `mr1 fr ma0 icon ion-md-arrow-dropright ${
                       item.show ? `mr3 black` : 'black-50'
                     }`
                   "
