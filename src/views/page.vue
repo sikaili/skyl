@@ -27,7 +27,6 @@
         <span class="pr1">Play!</span>
         <i class="icon ion-md-return-right"></i>
       </span> -->
-
       <div
         class="flex-row justify-center items-start tl"
         :class="$mq == `sm` ? `ma2 pa3 mb5 pb5` : `pa5`"
