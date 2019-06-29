@@ -50,7 +50,14 @@ export default {
       links: [
         { link: "https://forces.skyl.fr" },
         { link: "https://k.skyl.fr" },
-        { link: "https://data.skyl.fr" }
+        { link: "https://data.skyl.fr" },
+        { link: "https://sikaili.github.io/p5js/3d-terrain/" },
+        { link: "https://sikaili.github.io/p5js/joker/" },
+        { link: "https://sikaili.github.io/p5js/hua/" },
+        { link: "https://sikaili.github.io/p5js/washed/" },
+        { link: "https://sikaili.github.io/p5js/e-minor/" },
+        { link: "https://sikaili.github.io/p5js/blood-particles-2017/" },
+        { link: "https://sikaili.github.io/p5js/c-syn/" }
       ],
       currentLink: ""
     };
@@ -63,6 +70,12 @@ export default {
       const n = Math.floor(Math.random() * arr.length);
       this.currentLink = arr[n].link;
       this.$root.$emit("itemDesOpen", this.currentLink);
+    }
+  },
+  computed: {
+    name: function() {
+      let dump = this.currentLink.split("//");
+      return dump;
     }
   }
 };
