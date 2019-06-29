@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1 class="tc pa2">{{ item.name }}</h1>
+
     <div
       v-show="$mq !== 'sm'"
       class="fl w-20 vh-100 flex items-start justify-end"
@@ -32,7 +33,9 @@
         :class="$mq == `sm` ? `ma2 pa3 mb5 pb5` : `pa5`"
       >
         <h3>{{ item.name }}</h3>
-        <p class="f6">{{ item.des }}</p>
+        <p v-if="item.about != item.des || item.imgs" class="f6">
+          {{ item.about }}
+        </p>
         <img
           class="w-100 pv3"
           :class="$mq == `sm` ? `ph3` : 'ph5'"
@@ -40,6 +43,7 @@
           :src="picLink"
           :key="picLink"
         />
+        <br />
         <h3>About</h3>
         <p class="f6">{{ item.about }}</p>
         <br />
@@ -116,7 +120,7 @@ export default {
   },
   methods: {
     back() {
-      this.$router.go(-2);
+      this.$router.go(-1);
     }
   },
   computed: {

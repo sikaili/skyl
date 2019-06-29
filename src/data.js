@@ -178,7 +178,7 @@ const data = {
       name: `Plastic Ocean`,
       year: `2018`,
       des: `A piece of electroacoustic music, sound recorded from plastic objects.`,
-      link: `https://ocean.skyl.studio`,
+      link: ``,
       img: require(`@/assets/plastic-ocean.jpg`),
       show: false,
       credits: [
@@ -197,7 +197,7 @@ const data = {
     {
       name: `Saturation Chinoise`,
       year: `2018`,
-      link: `https://thecamp.fr/projects/plastic-arcade`,
+      link: `http://thecamp.fr/projects/plastic-arcade`,
       des: `Music for the video game 'Plastic Arcade' I've been working on during my residency at thecamp, 80's style guitar riff & retro synth sound. There's a also chiptone remake done by 2080.`,
       img: require(`@/assets/saturation-chinoise.jpg`),
       show: false,
