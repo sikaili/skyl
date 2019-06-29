@@ -1,6 +1,6 @@
 <template>
-  <MenuS v-if="$mq == `sm`" :itemsprops="items" mName="Applications" />
-  <MenuD v-else :itemsprops="items" mName="Applications" />
+  <MenuS v-if="$mq == `sm`" :itemsprops="items" mName="Work" />
+  <MenuD v-else :itemsprops="items" mName="Work" />
 </template>
 
 <script>

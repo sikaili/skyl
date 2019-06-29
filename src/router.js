@@ -28,7 +28,7 @@ export default new Router({
     },
     {
       path: "/work/:id",
-      name: "applications",
+      name: "work",
       component: page
     },
     {

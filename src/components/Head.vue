@@ -1,7 +1,7 @@
 <template>
   <div class="cl">
     <div class="flex justify-center bg-white-50">
-      <router-link :class="style" to="/work" exact>Applis</router-link>
+      <router-link :class="style" to="/work" exact>Work</router-link>
       <router-link :class="style" to="/music">Music</router-link>
       <router-link :class="style" to="/drawings">Drawings</router-link>
       <router-link :class="style" to="/info:0">Play!</router-link>

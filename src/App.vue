@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Head msg="Hello, I'm Sikai." />
-    <!-- <div class="back bw0" :style="getWidth">
+    <div class="back bw0" :style="getWidth">
       <iframe
         class="back bw0"
         scrolling="no"
@@ -9,7 +9,7 @@
         :src="link"
         :style="getWidth2"
       ></iframe>
-    </div> -->
+    </div>
     <transition name="slide-fade1">
       <router-view />
     </transition>
