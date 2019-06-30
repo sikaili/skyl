@@ -33,7 +33,7 @@
       >
         <h3>{{ item.name }}</h3>
         <p v-if="item.about != item.des || item.imgs" class="f6">
-          {{ item.about }}
+          {{ item.des }}
         </p>
         <img
           class="w-100 pv3"

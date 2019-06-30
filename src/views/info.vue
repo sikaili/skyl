@@ -7,19 +7,17 @@
         class="w-100 f5 no-underline white bg-black-80 bg-animate hover-bg-white hover-black inline-flex items-center pa3 border-box"
       >
         <i class="tc icon ion-md-shuffle"></i>
-
         <span class="pl1">Random </span>
       </span>
       <div class="f6 tl" style="min-height:5rem;">
-        <p class="white bg-black-50">info</p>
-        <!-- <p class="white bg-black-50">
-        mail : skyl@me.com
-      </p> -->
+        <p @click="displayList = !displayList" class="white bg-black-50">
+          list
+        </p>
         <p
           v-if="currentLink.split(':')[0] == `https`"
           class=" mb0 pb2 white bg-black-50"
         >
-          {{ name }}
+          {{ getName(currentLink) }}
         </p>
         <p class="mb0 pb2 white bg-black-50">links: <a>skyl.fr</a></p>
 
@@ -36,6 +34,21 @@
           ></a>
         </p>
       </div>
+      <transition name="slide-fade1">
+        <div
+          v-if="displayList"
+          class="fr f6 tl"
+          style="min-height:5rem;  overflow-y: scroll;
+"
+        >
+          <br />
+          <span v-for="(item, index) in linksArr" :key="item.link">
+            <p @click="handlePClick(item.link)" class="white bg-black-50">
+              {{ item.name }}
+            </p>
+          </span>
+        </div>
+      </transition>
     </div>
   </div>
 </template>
@@ -59,32 +72,44 @@ export default {
         { link: "https://sikaili.github.io/p5js/blood-particles-2017/" },
         { link: "https://sikaili.github.io/p5js/c-syn/" },
         { link: "https://sikaili.github.io/p5js/happy-birthday-mon-zhu/" },
-        { link: "https://sikaili.github.io/p5js/blood-particles-2017/" },
         { link: "https://sikaili.github.io/p5js/eyes-sand-sound/" },
         { link: "https://sikaili.github.io/p5js/eyes-macro/" }
       ],
+      displayList: false,
       currentLink: ""
     };
   },
   methods: {
     send() {
-      let arr = this.dataObj["work"];
-      arr = arr.concat(this.links);
-      // console.log(arr);
-      const n = Math.floor(Math.random() * arr.length);
-      this.currentLink = arr[n].link;
+      const n = Math.floor(Math.random() * this.linksArr.length);
+      this.currentLink = this.linksArr[n].link;
       this.$root.$emit("itemDesOpen", this.currentLink);
-    }
-  },
-  computed: {
-    name: function() {
-      let dump = this.currentLink.split("//");
+    },
+    getName: function(link) {
+      let dump = link.split("//");
       if (dump[1].includes(`github`)) {
-        dump = this.currentLink.split("/");
+        dump = link.split("/");
         dump = dump[dump.length - 2];
       } else {
         dump = dump[1].split(".")[0];
       }
+      return dump;
+    },
+    handlePClick(link) {
+      this.currentLink = link;
+      this.$root.$emit("itemDesOpen", this.currentLink);
+      this.displayList = false;
+    }
+  },
+  computed: {
+    linksArr: function() {
+      const arr = this.dataObj["work"];
+      let dump = arr.concat(this.links);
+      dump.forEach(a => {
+        a.name = this.getName(a.link);
+      });
+      console.log(dump);
+      dump.sort((a, b) => a.name.localeCompare(b.name));
       return dump;
     }
   }
