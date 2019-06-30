@@ -49,7 +49,7 @@
       </p>
     </div>
     <transition name="slide-fade1">
-      <div v-if="displayList" class="overflow-y-scroll vh-70 f6 tl bg-white-30">
+      <div v-if="displayList" class="overflow-y-scroll vh-50 f6 tl bg-white-30">
         <span v-for="(item, index) in linksArr" :key="item.link">
           <p
             @click="handlePClick(item.link)"
@@ -93,10 +93,14 @@ export default {
     send() {
       const n = Math.floor(Math.random() * this.linksArr.length);
       this.currentLink = this.linksArr[n].link;
+      this.displayList = false;
       this.$root.$emit("itemDesOpen", this.currentLink);
     },
     getName: function(link) {
       let dump = link.split("//");
+      if (!dump[0].includes("https")) {
+        return "";
+      }
       if (dump[1].includes(`github`)) {
         dump = link.split("/");
         dump = dump[dump.length - 2];
