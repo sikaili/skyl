@@ -83,7 +83,6 @@
             </p>
             <br />
           </div>
-          x
         </div>
         <br />
         <span
