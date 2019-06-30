@@ -1,55 +1,65 @@
 <template>
-  <div class="cl">
-    <div class="fixed f3 tc left-1">
-      <br />
-      <span
-        @click="send"
-        class="w-100 f5 no-underline white bg-black-80 bg-animate hover-bg-white hover-black inline-flex items-center pa3 border-box"
+  <div class="fixed mw4 f3 tc left-1">
+    <br />
+    <span
+      @click="send"
+      class="w-100 f5 no-underline white bg-black-80 bg-animate hover-bg-white hover-black inline-flex items-center pa3 border-box"
+    >
+      <i class="tc icon ion-md-shuffle"></i>
+      <span class="pl1">Random </span>
+    </span>
+    <div class="f6 tl" style="min-height:5rem;">
+      <p
+        v-if="!currentLink"
+        @click="displayList = !displayList"
+        class="bg-animate hover-bg-white hover-black white bg-black-50"
       >
-        <i class="tc icon ion-md-shuffle"></i>
-        <span class="pl1">Random </span>
-      </span>
-      <div class="f6 tl" style="min-height:5rem;">
-        <p @click="displayList = !displayList" class="white bg-black-50">
-          list
-        </p>
-        <p
-          v-if="currentLink.split(':')[0] == `https`"
-          class=" mb0 pb2 white bg-black-50"
-        >
-          {{ getName(currentLink) }}
-        </p>
-        <p class="mb0 pb2 white bg-black-50">links: <a>skyl.fr</a></p>
+        list
+        <i
+          :class="
+            `white fr ma0 icon ion-md-arrow-drop-down ${
+              displayList ? ` ion-md-arrow-dropup` : ' ion-md-arrow-dropdown'
+            }`
+          "
+        ></i>
+      </p>
+      <p
+        v-if="currentLink.split(':')[0] == `https`"
+        @click="displayList = !displayList"
+        class="bg-animate hover-bg-white hover-black mb0 pb2 white bg-black-50"
+      >
+        {{ getName(currentLink) }}
+        <i
+          :class="
+            `white fr ma0 icon ion-md-arrow-drop-down ${
+              displayList ? ` ion-md-arrow-dropup` : ' ion-md-arrow-dropdown'
+            }`
+          "
+        ></i>
+      </p>
+      <p class="mb0 pb2 white bg-black-50">links: <a>skyl.fr</a></p>
 
-        <p class="ma0 pa0 f3 white bg-black-50">
-          <a target="_blank" href="https://github.com/sikaili"
-            ><i class="white mh1 icon ion-logo-github"></i
-          ></a>
-          <a target="_blank"
-            ><i class="white mh1 icon ion-logo-instagram"></i
-          ></a>
-          <a target="_blank"><i class="white mh1 icon ion-logo-twitter"></i></a>
-          <a href="mailto:skyl@me.com"
-            ><i class="white icon ion-ios-send"></i
-          ></a>
-        </p>
-      </div>
-      <transition name="slide-fade1">
-        <div
-          v-if="displayList"
-          class="fr f6 tl"
-          style="min-height:5rem;  overflow-y: scroll;
-"
-        >
-          <br />
-          <span v-for="(item, index) in linksArr" :key="item.link">
-            <p @click="handlePClick(item.link)" class="white bg-black-50">
-              {{ item.name }}
-            </p>
-          </span>
-        </div>
-      </transition>
+      <p class="ma0 pa0 f3 white bg-black-50">
+        <a target="_blank" href="https://github.com/sikaili"
+          ><i class="white mh1 icon ion-logo-github"></i
+        ></a>
+        <a target="_blank"><i class="white mh1 icon ion-logo-instagram"></i></a>
+        <a target="_blank"><i class="white mh1 icon ion-logo-twitter"></i></a>
+        <a href="mailto:skyl@me.com"><i class="white icon ion-ios-send"></i></a>
+      </p>
     </div>
+    <transition name="slide-fade1">
+      <div v-if="displayList" class="overflow-y-scroll vh-70 f6 tl bg-white-30">
+        <span v-for="(item, index) in linksArr" :key="item.link">
+          <p
+            @click="handlePClick(item.link)"
+            class="bg-animate hover-bg-white hover-black white bg-black-50"
+          >
+            {{ item.name }}
+          </p>
+        </span>
+      </div>
+    </transition>
   </div>
 </template>
 
