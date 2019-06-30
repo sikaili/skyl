@@ -105,6 +105,7 @@ export default {
       return `width:${
         this.$mq == "sm" ? screen.width * scale : this.width * scale
       }px;
+      filter: grayscale(100%);
       height:${this.height * scale}px;
       opacity:${inInfo ? 1 : 0.5};
       -moz-transform: scale(${1 / scale});

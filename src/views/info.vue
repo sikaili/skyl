@@ -11,8 +11,8 @@
     <div class="f6 tl" style="min-height:5rem;">
       <p
         v-if="!currentLink"
-        @click="displayList = !displayList"
-        class="bg-animate hover-bg-white hover-black white bg-black-50"
+        @click="toggle()"
+        class="bg-animate hover-bg-white hover-black white bg-black-60"
       >
         list
         <i
@@ -25,21 +25,21 @@
       </p>
       <p
         v-if="currentLink.split(':')[0] == `https`"
-        @click="displayList = !displayList"
-        class="bg-animate hover-bg-white hover-black mb0 pb2 white bg-black-50"
+        @click="toggle()"
+        class="pa2 bg-animate hover-bg-white hover-black mb0 pb2 white bg-black-60"
       >
         {{ getName(currentLink) }}
         <i
           :class="
-            `white fr ma0 icon ion-md-arrow-drop-down ${
+            `hover-black fr ma0 icon ion-md-arrow-drop-down ${
               displayList ? ` ion-md-arrow-dropup` : ' ion-md-arrow-dropdown'
             }`
           "
         ></i>
       </p>
-      <p class="mb0 pb2 white bg-black-50">links: <a>skyl.fr</a></p>
+      <p class="mb0 pb2 white bg-black-60">links: <a>skyl.fr</a></p>
 
-      <p class="ma0 pa0 f3 white bg-black-50">
+      <p class="ma0 pa0 f3 white bg-black-60">
         <a target="_blank" href="https://github.com/sikaili"
           ><i class="white mh1 icon ion-logo-github"></i
         ></a>
@@ -53,7 +53,7 @@
         <span v-for="(item, index) in linksArr" :key="item.link">
           <p
             @click="handlePClick(item.link)"
-            class="bg-animate hover-bg-white hover-black white bg-black-50"
+            class="bg-animate hover-bg-white hover-black white bg-black-60"
           >
             {{ item.name }}
           </p>
@@ -113,6 +113,20 @@ export default {
       this.currentLink = link;
       this.$root.$emit("itemDesOpen", this.currentLink);
       this.displayList = false;
+    },
+    toggle() {
+      if (this.displayList) {
+        return this.hide();
+      }
+      return this.show();
+    },
+    show() {
+      this.displayList = true;
+      setTimeout(() => document.addEventListener("click", this.hide), 0);
+    },
+    hide() {
+      this.displayList = false;
+      document.removeEventListener("click", this.hide);
     }
   },
   computed: {
