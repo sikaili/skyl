@@ -118,7 +118,7 @@ const data = {
       name: `Noise Draw`,
       year: 2018,
       des: `A tool I made, to draw perlin noise lines and make glichy sound at the same time.`,
-      link: `https://sikaili.github.io/p5js/noise-draw/`,
+      link: `https://noise-draw.skyl.fr`,
       credits: [
         {
           role: `Concept, Code`,
@@ -234,7 +234,7 @@ const data = {
       name: `Flower`,
       des: `A song.`,
       year: 2016,
-      link: `https://sikaili.github.io/p5js/hua/`,
+      link: `https://song.skyl.fr`,
       img: require(`@/assets/hua.jpg`),
       show: false,
       credits: [

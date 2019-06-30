@@ -58,7 +58,7 @@ export default {
         { link: "https://sikaili.github.io/p5js/e-minor/" },
         { link: "https://sikaili.github.io/p5js/blood-particles-2017/" },
         { link: "https://sikaili.github.io/p5js/c-syn/" },
-        { link: "https://sikaili.github.io/p5js/happy-birth-day-mon-zhu/" },
+        { link: "https://sikaili.github.io/p5js/happy-birthday-mon-zhu/" },
         { link: "https://sikaili.github.io/p5js/blood-particles-2017/" },
         { link: "https://sikaili.github.io/p5js/eyes-sand-sound/" },
         { link: "https://sikaili.github.io/p5js/eyes-macro/" }
