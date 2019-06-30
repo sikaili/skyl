@@ -160,13 +160,13 @@ export default {
     },
 
     goToPage(itemToEmit) {
-      // this.$router.push({
-      //   name: this.mName.toLowerCase(),
-      //   params: { id: itemToEmit }
-      // });
       this.$router.push({
-        path: `/${this.mNmae.toLowerCase()}/id:${itemToEmit}`
+        name: this.mName.toLowerCase(),
+        params: { id: itemToEmit }
       });
+      // this.$router.push({
+      //   path: `/${this.mName.toLowerCase()}/id:${itemToEmit}`
+      // });
     }
   }
 };
