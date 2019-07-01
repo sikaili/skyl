@@ -69,7 +69,6 @@ export default {
   name: "info",
   data() {
     return {
-      dataO: Object.assign(dataObj),
       links: [
         { link: "https://forces.skyl.fr" },
         { link: "https://k.skyl.fr" },
@@ -132,12 +131,13 @@ export default {
   },
   computed: {
     linksArr: function() {
-      const arr = [...this.dataO.work];
+      const dataO = JSON.parse(JSON.stringify(dataObj));
+      const arr = [...dataO.work];
       const dump = arr.concat(this.links);
       dump.forEach(a => {
         a.name = this.getName(a.link);
       });
-      console.log(dump);
+      // console.log(dump);
       dump.sort((a, b) => a.name.localeCompare(b.name));
       return dump;
     }
