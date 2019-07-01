@@ -26,7 +26,10 @@
           <div class="link ma0 pa0 bw0">
             <dl class="mt2 f6 lh-copy">
               <dt class="clip"></dt>
-              <dd class="f4 ml0 black truncate w-100">
+              <dd
+                class="f4 ml0 black truncate w-100"
+                style="overflow: hidden; white-space: nowrap;"
+              >
                 {{ item.name }}
                 <i
                   :class="
