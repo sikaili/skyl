@@ -69,12 +69,13 @@ export default {
   name: "info",
   data() {
     return {
-      dataObj: dataObj,
+      dataO: Object.assign(dataObj),
       links: [
         { link: "https://forces.skyl.fr" },
         { link: "https://k.skyl.fr" },
         { link: "https://data.skyl.fr" },
         { link: "https://sikaili.github.io/p5js/3d-terrain/" },
+        { link: "https://sikaili.github.io/p5js/toxic/" },
         { link: "https://sikaili.github.io/p5js/joker/" },
         { link: "https://sikaili.github.io/p5js/hua/" },
         { link: "https://sikaili.github.io/p5js/washed/" },
@@ -131,8 +132,8 @@ export default {
   },
   computed: {
     linksArr: function() {
-      const arr = this.dataObj["work"];
-      let dump = arr.concat(this.links);
+      const arr = [...this.dataO.work];
+      const dump = arr.concat(this.links);
       dump.forEach(a => {
         a.name = this.getName(a.link);
       });

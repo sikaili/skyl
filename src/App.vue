@@ -48,7 +48,6 @@ export default {
       a.split(":")[0] == `https`
         ? (this.link = a)
         : (this.link = this.linkDefault);
-
       // a is name
       // a ? (this.link = `/${a}/index.html`) : "";
     });
