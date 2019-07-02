@@ -95,7 +95,7 @@
         </span>
         <span
           v-if="item.link.split(':')[0] == `https`"
-          @click="$router.push({ path: '/info:0' })"
+          @click="$router.push({ path: '/play:0' })"
           class="f5 no-underline white bg-light-red bg-animate hover-bg-black hover-white inline-flex items-center pa3 border-box mr1"
         >
           <span class="pr1">Play!</span>

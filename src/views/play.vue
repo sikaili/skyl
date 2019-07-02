@@ -6,7 +6,7 @@
       class="w-100 f5 no-underline white bg-black-80 bg-animate hover-bg-white hover-black inline-flex items-center pa3 border-box"
     >
       <i class="tc icon ion-md-shuffle"></i>
-      <span class="pl1">Random </span>
+      <span class="pl1">Random</span>
     </span>
     <div class="f6 tl" style="min-height:5rem;">
       <p
@@ -43,14 +43,18 @@
       </p>
 
       <p class="ma0 pa0 f3 white bg-black-60">
-        <a target="_blank" href="https://github.com/sikaili"
-          ><i class="white mh1 icon ion-logo-github"></i
-        ></a>
-        <a target="_blank" href="https://www.instagram.com/skyl.fr/"
-          ><i class="white mh1 icon ion-logo-instagram"></i
-        ></a>
-        <a target="_blank"><i class="white mh1 icon ion-logo-twitter"></i></a>
-        <a href="mailto:skyl@me.com"><i class="white icon ion-ios-send"></i></a>
+        <a target="_blank" href="https://github.com/sikaili">
+          <i class="white mh1 icon ion-logo-github"></i>
+        </a>
+        <a target="_blank" href="https://www.instagram.com/skyl.fr/">
+          <i class="white mh1 icon ion-logo-instagram"></i>
+        </a>
+        <a target="_blank">
+          <i class="white mh1 icon ion-logo-twitter"></i>
+        </a>
+        <a href="mailto:skyl@me.com">
+          <i class="white icon ion-ios-send"></i>
+        </a>
       </p>
     </div>
     <transition name="slide-fade1">
@@ -74,7 +78,6 @@ export default {
   name: "play",
   data() {
     return {
-      itemName: this.$route.params.id,
       links: [
         { link: "https://forces.skyl.fr" },
         { link: "https://k.skyl.fr" },
@@ -122,6 +125,7 @@ export default {
       this.$root.$emit("itemDesOpen", this.currentLink);
       this.$router.replace({ path: `/play/${this.getName(this.currentLink)}` });
     },
+    // the right toggle
     toggle() {
       if (this.displayList) {
         return this.hide();
@@ -139,17 +143,19 @@ export default {
   },
   computed: {
     linksArr: function() {
-      const dataO = JSON.parse(JSON.stringify(dataObj));
-      const arr = [...dataO.work];
+      // deep copy dataObj
+      const data = JSON.parse(JSON.stringify(dataObj));
+      const arr = [...data.work];
       const dump = arr.concat(this.links);
       dump.forEach(a => {
         a.name = this.getName(a.link);
       });
+      // sort items by name using localeCompare
       dump.sort((a, b) => a.name.localeCompare(b.name));
       return dump;
     },
     startLink: function() {
-      let dump = this.linksArr.find(a => a.name == this.itemName);
+      let dump = this.linksArr.find(a => a.name == this.$route.params.id);
       if (!dump) {
         return "";
       }
@@ -160,7 +166,6 @@ export default {
     this.$nextTick(function() {
       // Code that will run only after the
       // entire view has been rendered
-      console.log(this.startLink);
       this.$root.$emit("itemDesOpen", this.startLink);
     });
   }

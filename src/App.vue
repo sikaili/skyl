@@ -35,6 +35,7 @@
 </template>
 
 <script>
+// eslint-disable-next-line
 document.ontouchmove = function(e) {
   return true;
 };
