@@ -95,7 +95,7 @@
         </span>
         <span
           v-if="item.link.split(':')[0] == `https`"
-          @click="$router.push({ path: `/play/${item.id}` })"
+          @click="play"
           class="f5 no-underline white bg-light-red bg-animate hover-bg-black hover-white inline-flex items-center pa3 border-box mr1"
         >
           <span class="pr1">Play!</span>
@@ -123,6 +123,10 @@ export default {
 
       this.$router.replace({ path: `/${this.$route.path.split("/")[1]}/` });
       // this.$router.go(-1);
+    },
+    play() {
+      this.$root.$emit("itemDesOpen", this.item.link);
+      this.$router.push({ path: `/play/${this.item.id}` });
     }
   },
   computed: {
