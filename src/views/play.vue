@@ -166,7 +166,9 @@ export default {
     this.$nextTick(function() {
       // Code that will run only after the
       // entire view has been rendered
-      this.$root.$emit("itemDesOpen", this.startLink);
+      if (this.startLink.split(":")[0].includes(`https`)) {
+        this.$root.$emit("itemDesOpen", this.startLink);
+      }
     });
   }
 };

@@ -38,7 +38,7 @@ export default new Router({
     },
     {
       path: "/play/",
-      redirect: "/play/0"
+      redirect: "/play/put-item-name-here"
     },
     {
       path: "/music",

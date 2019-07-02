@@ -234,7 +234,7 @@ const data = {
       name: `Flower`,
       des: `A song.`,
       year: 2016,
-      link: `https://song.skyl.fr`,
+      link: `https://sikaili.github.io/p5js/hua/`,
       img: require(`@/assets/hua.jpg`),
       show: false,
       credits: [
