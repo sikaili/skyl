@@ -2,7 +2,7 @@
   <div class="fixed mw4 f3 tc left-1">
     <br />
     <span
-      @click="send"
+      @click="randomLink"
       class="w-100 f5 no-underline white bg-black-80 bg-animate hover-bg-white hover-black inline-flex items-center pa3 border-box"
     >
       <i class="tc icon ion-md-shuffle"></i>
@@ -37,20 +37,25 @@
           "
         ></i>
       </p>
-      <p class="mb0 pb2 white bg-black-60">links: <a>skyl.fr</a></p>
+      <p class="mb0 pb2 white bg-black-60">
+        links:
+        <a :href="currentLink" target="_blank" class="link white">skyl.fr</a>
+      </p>
 
       <p class="ma0 pa0 f3 white bg-black-60">
         <a target="_blank" href="https://github.com/sikaili"
           ><i class="white mh1 icon ion-logo-github"></i
         ></a>
-        <a target="_blank"><i class="white mh1 icon ion-logo-instagram"></i></a>
+        <a target="_blank" href="https://www.instagram.com/skyl.fr/"
+          ><i class="white mh1 icon ion-logo-instagram"></i
+        ></a>
         <a target="_blank"><i class="white mh1 icon ion-logo-twitter"></i></a>
         <a href="mailto:skyl@me.com"><i class="white icon ion-ios-send"></i></a>
       </p>
     </div>
     <transition name="slide-fade1">
       <div v-if="displayList" class="overflow-y-scroll vh-50 f6 tl bg-white-30">
-        <span v-for="(item, index) in linksArr" :key="item.link">
+        <span v-for="item in linksArr" :key="item.link">
           <p
             @click="handlePClick(item.link)"
             class="bg-animate hover-bg-white hover-black white bg-black-60"
@@ -66,9 +71,10 @@
 <script>
 import dataObj from "@/data.js";
 export default {
-  name: "info",
+  name: "play",
   data() {
     return {
+      itemName: this.$route.params.id,
       links: [
         { link: "https://forces.skyl.fr" },
         { link: "https://k.skyl.fr" },
@@ -90,11 +96,12 @@ export default {
     };
   },
   methods: {
-    send() {
+    randomLink() {
       const n = Math.floor(Math.random() * this.linksArr.length);
       this.currentLink = this.linksArr[n].link;
       this.displayList = false;
       this.$root.$emit("itemDesOpen", this.currentLink);
+      this.$router.replace({ path: `/play/${this.getName(this.currentLink)}` });
     },
     getName: function(link) {
       let dump = link.split("//");
@@ -111,8 +118,9 @@ export default {
     },
     handlePClick(link) {
       this.currentLink = link;
-      this.$root.$emit("itemDesOpen", this.currentLink);
       this.displayList = false;
+      this.$root.$emit("itemDesOpen", this.currentLink);
+      this.$router.replace({ path: `/play/${this.getName(this.currentLink)}` });
     },
     toggle() {
       if (this.displayList) {
@@ -137,10 +145,24 @@ export default {
       dump.forEach(a => {
         a.name = this.getName(a.link);
       });
-      // console.log(dump);
       dump.sort((a, b) => a.name.localeCompare(b.name));
       return dump;
+    },
+    startLink: function() {
+      let dump = this.linksArr.find(a => a.name == this.itemName);
+      if (!dump) {
+        return "";
+      }
+      return dump.link;
     }
+  },
+  mounted() {
+    this.$nextTick(function() {
+      // Code that will run only after the
+      // entire view has been rendered
+      console.log(this.startLink);
+      this.$root.$emit("itemDesOpen", this.startLink);
+    });
   }
 };
 </script>

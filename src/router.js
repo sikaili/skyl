@@ -2,7 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 import draw from "./views/draw.vue";
 import work from "./views/work.vue";
-import info from "./views/info.vue";
+import play from "./views/play.vue";
 import music from "./views/music.vue";
 import page from "./views/page.vue";
 
@@ -32,9 +32,13 @@ export default new Router({
       component: page
     },
     {
-      path: "/info:id",
-      name: "info",
-      component: info
+      path: "/play/:id",
+      name: "play",
+      component: play
+    },
+    {
+      path: "/play/",
+      redirect: "/play/0"
     },
     {
       path: "/music",

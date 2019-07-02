@@ -88,7 +88,7 @@ export default {
       const scale = 1;
       return `width:${this.$mq == "sm" ? screen.width * scale : this.width}px;
       height:${this.height * scale}px;
-      opacity:${this.$route.path.includes("info") ? 1 : "1"};
+      opacity:${this.$route.path.includes("play") ? 1 : "1"};
       -moz-transform: scale(${1 / scale});
       -moz-transform-origin: 0 0;
       -o-transform: scale(${1 / scale});
@@ -99,7 +99,7 @@ export default {
     },
     getWidth2: function() {
       let scale = 1;
-      const inInfo = this.$route.path.includes("info");
+      const inInfo = this.$route.path.includes("play");
       inInfo && this.$mq == "sm" ? (scale = 2) : (scale = 1);
       return `width:${
         this.$mq == "sm" ? screen.width * scale : this.width * scale
