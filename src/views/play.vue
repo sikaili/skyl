@@ -82,17 +82,17 @@ export default {
         { link: "https://forces.skyl.fr" },
         { link: "https://k.skyl.fr" },
         { link: "https://data.skyl.fr" },
-        { link: "https://sikaili.github.io/p5js/3d-terrain/" },
-        { link: "https://sikaili.github.io/p5js/toxic/" },
-        { link: "https://sikaili.github.io/p5js/joker/" },
-        { link: "https://sikaili.github.io/p5js/hua/" },
-        { link: "https://sikaili.github.io/p5js/washed/" },
-        { link: "https://sikaili.github.io/p5js/e-minor/" },
-        { link: "https://sikaili.github.io/p5js/blood-particles-2017/" },
-        { link: "https://sikaili.github.io/p5js/c-syn/" },
-        { link: "https://sikaili.github.io/p5js/happy-birthday-mon-zhu/" },
-        { link: "https://sikaili.github.io/p5js/eyes-sand-sound/" },
-        { link: "https://sikaili.github.io/p5js/eyes-macro/" }
+        { link: "https://apps.skyl.fr/3d-terrain/" },
+        { link: "https://apps.skyl.fr/toxic/" },
+        { link: "https://apps.skyl.fr/joker/" },
+        { link: "https://apps.skyl.fr/hua/" },
+        { link: "https://apps.skyl.fr/washed/" },
+        { link: "https://apps.skyl.fr/e-minor/" },
+        { link: "https://apps.skyl.fr/blood-particles-2017/" },
+        { link: "https://apps.skyl.fr/c-syn/" },
+        { link: "https://apps.skyl.fr/happy-birthday-mon-zhu/" },
+        { link: "https://apps.skyl.fr/eyes-sand-sound/" },
+        { link: "https://apps.skyl.fr/eyes-macro/" }
       ],
       displayList: false,
       currentLink: ""
@@ -111,7 +111,7 @@ export default {
       if (!dump[0].includes("https")) {
         return "";
       }
-      if (dump[1].includes(`github`)) {
+      if (dump[1].includes(`apps`)) {
         dump = link.split("/");
         dump = dump[dump.length - 2];
       } else {

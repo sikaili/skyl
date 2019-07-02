@@ -150,7 +150,7 @@ const data = {
       name: `Dancers`,
       year: `2018`,
       des: `Music for 'The Ordinary Circus Girl', a VR short film by Fheel Concepts.`,
-      link: ``,
+      link: `https://apps.skyl.fr/dancers`,
       img: require(`@/assets/dancers.png`),
       credits: [
         {
