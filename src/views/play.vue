@@ -85,7 +85,6 @@ export default {
         { link: "https://apps.skyl.fr/3d-terrain/" },
         { link: "https://apps.skyl.fr/toxic/" },
         { link: "https://apps.skyl.fr/joker/" },
-        { link: "https://apps.skyl.fr/hua/" },
         { link: "https://apps.skyl.fr/washed/" },
         { link: "https://apps.skyl.fr/e-minor/" },
         { link: "https://apps.skyl.fr/blood-particles-2017/" },
@@ -145,7 +144,7 @@ export default {
     linksArr: function() {
       // deep copy dataObj
       const data = JSON.parse(JSON.stringify(dataObj));
-      const arr = [...data.work];
+      const arr = [...data.work].concat([...data.music]);
       const dump = arr.concat(this.links);
       dump.forEach(a => {
         a.name = this.getName(a.link);

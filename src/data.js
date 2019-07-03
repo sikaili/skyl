@@ -19,6 +19,7 @@ const data = {
       name: `Where's Jane`,
       year: 2019,
       des: `30 days of geolocation data was extracted from Jane's Facebook JSON file, and here is the visualization of it.`,
+      about: `Aujourd’hui, la collecte des données personnelles fait partie intégrante de l’expérience utilisateur sur Internet. En relation avec la RGPD et dans un souci de transparence et de clarté, 'Where’s Jane’ présente un programme de data-visualisation des données Facebook de l’utilisateur. Il s’agit de faire prendre conscience et de sensibiliser l’utilisateur à la quantité importante d’informations disponibles sur lui et comment le croisement de ces données peut permettre de dresser un profil de l’utilisateur. (French)`,
       link: `https://myss.skyl.fr`,
       img: require(`@/assets/where-is-joe.jpg`),
       credits: [
@@ -150,7 +151,7 @@ const data = {
       name: `Dancers`,
       year: `2018`,
       des: `Music for 'The Ordinary Circus Girl', a VR short film by Fheel Concepts.`,
-      link: `https://apps.skyl.fr/dancers`,
+      link: `https://apps.skyl.fr/dancers/`,
       img: require(`@/assets/dancers.png`),
       credits: [
         {
@@ -198,7 +199,7 @@ const data = {
     {
       name: `Saturation Chinoise`,
       year: `2018`,
-      link: `http://thecamp.fr/projects/plastic-arcade`,
+      link: `https://apps.skyl.fr/saturation-chinoise/`,
       des: `Music for the video game 'Plastic Arcade' I've been working on during my residency at thecamp, 80's style guitar riff & retro synth sound. There's a also chiptone remake done by 2080.`,
       img: require(`@/assets/saturation-chinoise.jpg`),
       show: false,
@@ -234,7 +235,7 @@ const data = {
       name: `Flower`,
       des: `A song.`,
       year: 2016,
-      link: `https://sikaili.github.io/p5js/hua/`,
+      link: `https://apps.skyl.fr/hua/`,
       img: require(`@/assets/hua.jpg`),
       show: false,
       credits: [
