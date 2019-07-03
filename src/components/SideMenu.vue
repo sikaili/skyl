@@ -39,20 +39,30 @@
       </p>
       <p class="mb0 pb2 white bg-black-60">
         links:
-        <a :href="currentLink" target="_blank" class="link white">skyl.fr</a>
+        <a
+          :href="currentLink"
+          target="_blank"
+          title="open in a new page"
+          class="link white"
+          >skyl.fr</a
+        >
       </p>
 
       <p class="ma0 pa0 f3 white bg-black-60">
         <a target="_blank" href="https://github.com/sikaili">
           <i class="white mh1 icon ion-logo-github"></i>
         </a>
-        <a target="_blank" href="https://www.instagram.com/skyl.fr/">
+        <a
+          target="_blank"
+          title="instagram"
+          href="https://www.instagram.com/skyl.fr/"
+        >
           <i class="white mh1 icon ion-logo-instagram"></i>
         </a>
         <a target="_blank">
           <i class="white mh1 icon ion-logo-twitter"></i>
         </a>
-        <a href="mailto:skyl@me.com">
+        <a href="mailto:skyl@me.com" title="mail">
           <i class="white icon ion-ios-send"></i>
         </a>
       </p>
