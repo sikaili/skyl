@@ -1,10 +1,10 @@
 <template>
-  <SideMenu :linksArr="linksArr"/>
+  <SideMenu :linksArr="linksArr" />
 </template>
 
 <script>
 import dataObj from "@/data.js";
-import SideMenu from "@/components/SideMenu.vue"
+import SideMenu from "@/components/SideMenu.vue";
 export default {
   name: "play",
   data() {
@@ -23,7 +23,7 @@ export default {
         { link: "https://apps.skyl.fr/happy-birthday-mon-zhu/" },
         { link: "https://apps.skyl.fr/eyes-sand-sound/" },
         { link: "https://apps.skyl.fr/eyes-macro/" }
-      ],
+      ]
     };
   },
   components: {
@@ -42,7 +42,7 @@ export default {
         dump = dump[1].split(".")[0];
       }
       return dump;
-    },
+    }
   },
   computed: {
     linksArr: function() {
@@ -61,8 +61,9 @@ export default {
       let dump = this.linksArr.find(a => a.name == this.$route.params.id);
       if (!dump) {
         return "";
+      } else {
+        return dump.link;
       }
-      return dump.link;
     }
   },
   mounted() {

@@ -268,7 +268,7 @@ arrayDump.map(obj => {
       .split(` `)
       .join(``)
       .toLowerCase();
-    const num = 10;
+    const num = 15;
     const arr = [];
     for (let i = 0; i < num; i++) {
       try {

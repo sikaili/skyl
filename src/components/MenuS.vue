@@ -46,9 +46,18 @@
                   <br />
                   <span
                     @click="goToPage(index)"
-                    class="f6 dim link ba bw2 ph3 pv1 mt3 dib black"
-                    >Read more...</span
+                    class="tc w4 f6 dim link ba bw2 ph2 pv1 mt3 dib black"
+                    >Read more..
+                  </span>
+                  <span
+                    v-if="item.link.split(':')[0] == `https`"
+                    @click="play(item)"
+                    class="fr tc w4 ml3 f6 link ba bw2 ph3 pv1 mt3 dib black dim"
                   >
+                    <i class="icon ion-md-return-right"></i>
+
+                    <span class="pr1"> Play!</span>
+                  </span>
                 </p>
               </blockquote>
               <div class="w-100 overflow-auto">
@@ -125,31 +134,14 @@ export default {
     };
   },
   methods: {
+    play(item) {
+      this.$root.$emit("itemDesOpen", item.link);
+      this.$router.push({ path: `/play/${item.id}` });
+    },
     handleClick(item) {
       this.items.filter(a => a != item).map(a => (a.show = false));
       item.show = !item.show;
       this.$root.$emit("selected", item.link);
-    },
-    // handleMouseIn(item, itemToEmit) {
-    //   if (this.items.some(a => a.show)) {
-    //     this.items.filter(a => a != item).map(a => (a.show = false));
-    //     item.show = true;
-    //   }
-    //   if (itemToEmit) {
-    //     this.load(itemToEmit);
-    //   }
-    // },
-    // handleMouseOut() {
-    //   this.abortLoad();
-    // },
-    abortLoad() {
-      let id = window.setTimeout(function() {}, 0);
-      while (id--) {
-        window.clearTimeout(id);
-      }
-      setTimeout(() => {
-        this.loadingAnimation = false;
-      }, 200);
     },
     load(itemToEmit) {
       this.loadingAnimation = true;
@@ -158,15 +150,11 @@ export default {
           (this.loadingAnimation = false);
       }, 1000);
     },
-
     goToPage(itemToEmit) {
       this.$router.push({
         name: this.mName.toLowerCase(),
         params: { id: itemToEmit }
       });
-      // this.$router.push({
-      //   path: `/${this.mName.toLowerCase()}/id:${itemToEmit}`
-      // });
     }
   }
 };

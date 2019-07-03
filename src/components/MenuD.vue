@@ -9,9 +9,7 @@
       @click="menuShow = !menuShow"
       class="fl bg-black-50 w-40 flex justify-end"
     >
-      <h1 class="ph5 f3 white tr">
-        {{ mName }}
-      </h1>
+      <h1 class="ph5 f3 white tr">{{ mName }}</h1>
     </div>
     <div v-if="menuShow" class="fl w-20 bg-white-80">
       <div class="flex flex-column justify-center">
@@ -68,9 +66,17 @@
                     <br />
                     <span
                       @click="goToPage(index)"
-                      class="f6 dim link ba bw2 ph3 pv1 mt3 dib black"
-                      >Read more...</span
+                      class="tc w4 f6 dim link ba bw2 ph2 pv1 mt3 dib black"
+                      >Read more..
+                    </span>
+                    <span
+                      v-if="w.link.split(':')[0] == `https`"
+                      @click="play(w)"
+                      class="tc w4 ml3 f6 link ba bw2 ph3 pv1 mt3 dib black dim"
                     >
+                      <span class="pr1">Play!</span>
+                      <i class="icon ion-md-return-right"></i>
+                    </span>
                   </p>
                 </blockquote>
                 <div class="w-100 overflow-auto">
@@ -86,9 +92,9 @@
                 >
                   <p class="truncate w-60">{{ person.role }}:</p>
                   <p class="truncate">
-                    <a target="_blank" class="ml3 black" :href="person.link">{{
-                      person.name
-                    }}</a>
+                    <a target="_blank" class="ml3 black" :href="person.link">
+                      {{ person.name }}
+                    </a>
                   </p>
                 </div>
               </div>
@@ -128,6 +134,10 @@ export default {
     };
   },
   methods: {
+    play(item) {
+      this.$root.$emit("itemDesOpen", item.link);
+      this.$router.push({ path: `/play/${item.id}` });
+    },
     handleClick(item) {
       this.items.filter(a => a != item).map(a => (a.show = false));
       item.show = !item.show;
