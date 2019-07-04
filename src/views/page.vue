@@ -64,7 +64,9 @@
           >
             <p class="w-40">{{ person.role }}:</p>
             <p>
-              <a class="black w-60" :href="person.link">{{ person.name }}</a>
+              <a target="_blank" class="black w-60" :href="person.link">{{
+                person.name
+              }}</a>
             </p>
           </div>
         </div>
@@ -77,7 +79,7 @@
           >
             <p class="truncate w-60 ma1">{{ person.role }}:</p>
             <p class="truncate ma0">
-              <a target="_blank" class="ml3 black" :href="person.link">{{
+              <a target="_blank" :href="person.link" class="ml3 black">{{
                 person.name
               }}</a>
             </p>
