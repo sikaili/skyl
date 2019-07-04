@@ -3,7 +3,7 @@
     <intro />
     <div v-if="menuShow" class="w-100 bg-white-80">
       <div
-        v-for="(item, index) in items"
+        v-for="item in items"
         :key="item.id"
         class="flex flex-column justify-center"
       >
