@@ -10,6 +10,7 @@ export default {
   data() {
     return {
       links: [
+        { link: "https://rain.skyl.fr" },
         { link: "https://forces.skyl.fr" },
         { link: "https://k.skyl.fr" },
         { link: "https://data.skyl.fr" },
@@ -22,7 +23,10 @@ export default {
         { link: "https://apps.skyl.fr/c-syn/" },
         { link: "https://apps.skyl.fr/happy-birthday-mon-zhu/" },
         { link: "https://apps.skyl.fr/eyes-sand-sound/" },
-        { link: "https://apps.skyl.fr/eyes-macro/" }
+        { link: "https://apps.skyl.fr/eyes-macro/" },
+        { link: "https://apps.skyl.fr/fractal-circles/" },
+        { link: "https://apps.skyl.fr/strange-eyes/" },
+        { link: "https://apps.skyl.fr/glitch/" }
       ]
     };
   },
