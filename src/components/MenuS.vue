@@ -2,15 +2,11 @@
   <div class="cl">
     <h1 class="tc autoM f4 b white">LI Sikai</h1>
     <p class="bg-black-10 tl white autoM f6" :class="$mq == `sm` ? `ph3` : ``">
-      I'm a creative technologist & interction designer based in Paris. I make
-      music and new media art.
+      Technologist, interction designer based in Paris, I make music and new
+      media art.
     </p>
     <div v-if="menuShow" class="w-100 bg-white-80">
-      <div
-        v-for="(item, index) in items"
-        :key="item.id"
-        class="flex flex-column justify-center"
-      >
+      <div v-for="(item, index) in items" :key="item.id" class="flex flex-column justify-center">
         <a
           href="#"
           @click="handleClick(item)"
@@ -47,8 +43,7 @@
                   <span
                     @click="goToPage(index)"
                     class="tc w4 f6 dim link ba bw2 ph2 pv1 mt3 dib black"
-                    >Read more..
-                  </span>
+                  >Read more..</span>
                   <span
                     v-if="item.link.split(':')[0] == `https`"
                     @click="play(item)"
@@ -56,7 +51,7 @@
                   >
                     <i class="icon ion-md-return-right"></i>
 
-                    <span class="pr1"> Play!</span>
+                    <span class="pr1">Play!</span>
                   </span>
                 </p>
               </blockquote>
@@ -65,8 +60,7 @@
                   :href="item.link"
                   target="_blank"
                   class="f7 truncate black lh-copy nowrap"
-                  >{{ item.link }}</a
-                >
+                >{{ item.link }}</a>
               </div>
               <img :src="item.img" :alt="item.name" class="w-100 dim" />
               <h4>Credits</h4>
@@ -78,9 +72,11 @@
               >
                 <p class="truncate w-60">{{ person.role }}:</p>
                 <p class="truncate">
-                  <a target="_blank" class="ml3 black" :href="person.link">{{
+                  <a target="_blank" class="ml3 black" :href="person.link">
+                    {{
                     person.name
-                  }}</a>
+                    }}
+                  </a>
                 </p>
                 <br />
               </div>
@@ -89,24 +85,14 @@
         </transition>
       </div>
     </div>
-    <div
-      v-show="alert"
-      class="flex items-center justify-center pa3 f6 ph3 bg-black-30 white"
-    >
-      <svg
-        class="w1"
-        data-icon="info"
-        viewBox="0 0 32 32"
-        style="fill:currentcolor"
-      >
+    <div v-show="alert" class="flex items-center justify-center pa3 f6 ph3 bg-black-30 white">
+      <svg class="w1" data-icon="info" viewBox="0 0 32 32" style="fill:currentcolor">
         <title>info icon</title>
         <path
           d="M16 0 A16 16 0 0 1 16 32 A16 16 0 0 1 16 0 M19 15 L13 15 L13 26 L19 26 z M16 6 A3 3 0 0 0 16 12 A3 3 0 0 0 16 6"
-        ></path>
+        />
       </svg>
-      <span class="lh-title ml3">
-        Please come back on a desktop for better expereince
-      </span>
+      <span class="lh-title ml3">Please come back on a desktop for better expereince</span>
       <p class="pl3" @click="alert = false">X</p>
     </div>
   </div>

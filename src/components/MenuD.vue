@@ -2,13 +2,10 @@
   <div class="cl">
     <h1 class="tc autoM f2 b white">LI Sikai</h1>
     <p class="bg-black-10 tl white autoM" :class="$mq == `sm` ? `ph3` : ``">
-      I'm a creative technologist & interction designer based in Paris. I make
-      music and new media art.
+      Technologist, interction designer based in Paris, I make music and new
+      media art.
     </p>
-    <div
-      @click="menuShow = !menuShow"
-      class="fl bg-black-50 w-40 flex justify-end"
-    >
+    <div @click="menuShow = !menuShow" class="fl bg-black-50 w-40 flex justify-end">
       <h1 class="ph5 f3 white tr">{{ mName }}</h1>
     </div>
     <div v-if="menuShow" class="fl w-20 bg-white-80">
@@ -45,9 +42,7 @@
     <div class="fl w-40 bg-white">
       <div>
         <transition name="loading">
-          <div v-show="loadingAnimation" class="loading bg-blue f3">
-            Loading...
-          </div>
+          <div v-show="loadingAnimation" class="loading bg-blue f3">Loading...</div>
         </transition>
         <div v-for="(w, index) in items" :key="mName + index">
           <transition name="slide-fade">
@@ -67,8 +62,7 @@
                     <span
                       @click="goToPage(index)"
                       class="tc w4 f6 dim link ba bw2 ph2 pv1 mt3 dib black"
-                      >Read more..
-                    </span>
+                    >Read more..</span>
                     <span
                       v-if="w.link.split(':')[0] == `https`"
                       @click="play(w)"
@@ -92,9 +86,7 @@
                 >
                   <p class="truncate w-60">{{ person.role }}:</p>
                   <p class="truncate">
-                    <a target="_blank" class="ml3 black" :href="person.link">
-                      {{ person.name }}
-                    </a>
+                    <a target="_blank" class="ml3 black" :href="person.link">{{ person.name }}</a>
                   </p>
                 </div>
               </div>
