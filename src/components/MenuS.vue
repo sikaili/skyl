@@ -1,10 +1,6 @@
 <template>
   <div class="cl">
-    <h1 class="tc autoM f4 b white">LI Sikai</h1>
-    <p class="bg-black-10 tl white autoM f6" :class="$mq == `sm` ? `ph3` : ``">
-      Technologist, interaction designer based in Paris, I make music and new
-      media art.
-    </p>
+    <intro />
     <div v-if="menuShow" class="w-100 bg-white-80">
       <div
         v-for="(item, index) in items"
@@ -45,7 +41,7 @@
                   {{ item.des }}
                   <br />
                   <span
-                    @click="goToPage(index)"
+                    @click="goToPage(item.id)"
                     class="tc w4 f6 dim link ba bw2 ph2 pv1 mt3 dib black"
                     >Read more..</span
                   >
@@ -113,8 +109,12 @@
 </template>
 
 <script>
+import intro from "@/components/Intro.vue";
 export default {
   name: "Menu",
+  components: {
+    intro
+  },
   props: {
     itemsprops: {
       type: Array,

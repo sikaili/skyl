@@ -135,7 +135,9 @@ export default {
       if (this.id > arr.length) {
         return "ERROR!";
       }
-      return arr[this.id];
+      let dump = arr.find(a => a.id == this.$route.params.id);
+
+      return dump;
     }
   }
 };

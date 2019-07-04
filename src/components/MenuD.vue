@@ -1,10 +1,6 @@
 <template>
   <div class="cl">
-    <h1 class="tc autoM f2 b white">LI Sikai</h1>
-    <p class="bg-black-10 tl white autoM" :class="$mq == `sm` ? `ph3` : ``">
-      Technologist, interaction designer based in Paris, I make music and new
-      media art.
-    </p>
+    <intro />
     <div
       @click="menuShow = !menuShow"
       class="fl bg-black-50 w-40 flex justify-end"
@@ -65,7 +61,7 @@
                     {{ w.des }}
                     <br />
                     <span
-                      @click="goToPage(index)"
+                      @click="goToPage(w.id)"
                       class="tc w4 f6 dim link ba bw2 ph2 pv1 mt3 dib black"
                       >Read more..</span
                     >
@@ -109,8 +105,12 @@
 <script>
 // eslint-disable-next-line no-unused-vars
 import { clearTimeout } from "timers";
+import intro from "@/components/Intro.vue";
 export default {
   name: "Menu",
+  components: {
+    intro
+  },
   mounted() {
     if (this.items.every(a => a.show == false)) {
       this.items[0].show = true;
