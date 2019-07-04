@@ -26,37 +26,15 @@
 
 <script>
 import VueGallery from "vue-gallery";
-
 export default {
+  props: {
+    drawings: {
+      type: Array,
+      required: true
+    }
+  },
   data: function() {
     return {
-      drawings: [
-        {
-          name: "a dream",
-          link: require("@/assets/1.jpg"),
-          id: 0
-        },
-        {
-          name: "Leg",
-          link: require("@/assets/6.jpg"),
-          id: 1
-        },
-        {
-          name: "supermarket",
-          link: require("@/assets/2.jpg"),
-          id: 2
-        },
-        {
-          name: "twist",
-          link: require("@/assets/5.jpg"),
-          id: 3
-        },
-        {
-          name: "mushroom",
-          link: require("@/assets/4.jpg"),
-          id: 4
-        }
-      ],
       index: null
     };
   },
