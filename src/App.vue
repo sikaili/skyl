@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <Head msg="Hello, I'm Sikai." />
-    <div class="back bw0" :style="getWidth">
+    <Head />
+    <div v-if="(iframe.show = true)" class="back bw0" :style="getWidth">
       <iframe
         class="back bw0"
         scrolling="no"
@@ -74,20 +74,21 @@ export default {
       item: "eyes",
       linkDefault: "https://eyes.skyl.fr",
       link: `https://eyes.skyl.fr`,
-      width: 0,
-      height: 0
+      iframe: { width: 0, height: 0, showIframe: true }
     };
   },
   methods: {
     handleResize() {
-      this.width = window.innerWidth;
+      this.iframe.width = window.innerWidth;
       this.height = window.innerHeight;
     }
   },
   computed: {
     getWidth: function() {
       const scale = 1;
-      return `width:${this.$mq == "sm" ? screen.width * scale : this.width}px;
+      return `width:${
+        this.$mq == "sm" ? screen.width * scale : this.iframe.width
+      }px;
       height:${this.height * scale}px;
       opacity:${this.$route.path.includes("play") ? 1 : "1"};
       -moz-transform: scale(${1 / scale});
@@ -103,7 +104,7 @@ export default {
       const inInfo = this.$route.path.includes("play");
       inInfo && this.$mq == "sm" ? (scale = 2) : (scale = 1);
       return `width:${
-        this.$mq == "sm" ? screen.width * scale : this.width * scale
+        this.$mq == "sm" ? screen.width * scale : this.iframe.width * scale
       }px;
       height:${this.height * scale}px;
       opacity:${inInfo ? 1 : 0.5};
