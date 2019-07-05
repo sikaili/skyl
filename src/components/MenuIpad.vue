@@ -5,7 +5,7 @@
       @click="menuShow = !menuShow"
       class="fl bg-black-50 w-10 flex justify-end"
     >
-      <h1 class="ph3 f4 white tr">{{ mName }}</h1>
+      <h1 class="ph3 f3 white tr"><i class="icon ion-md-close"></i></h1>
     </div>
     <div v-if="menuShow" class="fl w-40 bg-white-80">
       <div class="flex flex-column justify-center">
