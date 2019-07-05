@@ -21,13 +21,13 @@
             <dl class="mt2 f6 lh-copy">
               <dt class="clip"></dt>
               <dd
-                class="f4 ml0 black truncate w-100"
+                class="relative f4 ml0 black truncate w-100 ph2"
                 style="overflow: hidden; white-space: nowrap;"
               >
                 {{ item.name }}
                 <i
                   :class="
-                    `mr1 fr ma0 icon ion-md-arrow-dropright ${
+                    `absolute right-0 mr1 fr ma0 icon ion-md-arrow-dropright ${
                       item.show ? `mr3 black` : 'black-50'
                     }`
                   "
