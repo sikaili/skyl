@@ -45,10 +45,6 @@ export default {
         {
           name: "no escape",
           link: require("@/assets/drawings/7.jpg")
-        },
-        {
-          name: "stone",
-          link: require("@/assets/drawings/8.jpg")
         }
       ]
     };
