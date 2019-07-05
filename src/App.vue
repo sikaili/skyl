@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Head />
+    <TheHead />
     <div v-if="(iframe.show = true)" class="back bw0" :style="getWidth">
       <iframe
         class="back bw0"
@@ -40,7 +40,7 @@ document.ontouchmove = function(e) {
   return true;
 };
 
-import Head from "./components/Head.vue";
+import TheHead from "./components/TheHead.vue";
 export default {
   name: "app",
   mounted() {
@@ -67,7 +67,7 @@ export default {
     window.removeEventListener("resize", this.handleResize);
   },
   components: {
-    Head
+    TheHead
   },
   data() {
     return {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <gallery :images="images" :index="index" @close="index = null"></gallery>
+    <VueGallery :images="images" :index="index" @close="index = null" />
     <div class="bt bb b--black-20 cl">
       <div
         v-for="(drawing, imgIndex) in drawings"
@@ -39,7 +39,7 @@ export default {
     };
   },
   components: {
-    gallery: VueGallery
+    VueGallery
   },
   computed: {
     images: function() {

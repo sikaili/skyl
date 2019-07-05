@@ -1,18 +1,18 @@
 <template>
-  <MenuS v-if="$mq == `sm`" :itemsprops="items" mName="Work" />
-  <MenuD v-else :itemsprops="items" mName="Work" />
+  <MenuSmall v-if="$mq == `sm`" :itemsprops="items" mName="Work" />
+  <MenuDesktop v-else :itemsprops="items" mName="Work" />
 </template>
 
 <script>
-import MenuS from "@/components/MenuS.vue";
-import MenuD from "@/components/MenuD.vue";
+import MenuSmall from "@/components/MenuSmall.vue";
+import MenuDesktop from "@/components/MenuDesktop.vue";
 import dataObj from "@/data.js";
 
 export default {
   name: "work",
   components: {
-    MenuS,
-    MenuD
+    MenuSmall,
+    MenuDesktop
   },
   data() {
     return {
