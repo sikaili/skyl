@@ -4,11 +4,11 @@
     <div class="bt bb b--black-20 cl">
       <div
         v-for="(drawing, imgIndex) in drawings"
-        :key="drawing.id"
+        :key="imgIndex"
         class="center w-30 pa3 cl"
-        :class="$mq == `sm` ? `w-100` : `w-30`"
+        :class="$mq == `sm` ? `w-100` : `w-40`"
       >
-        <a @click="index = imgIndex" class="mt3 db link tc o-80">
+        <a @click="index = imgIndex" class="mt3 db link tc o-90">
           <img
             :src="drawing.link"
             alt="Frank Ocean Blonde Album Cover"
@@ -54,8 +54,8 @@ export default {
   margin: auto;
   border: solid rgba(255, 255, 255, 0.3) 30px;
   /* height: auto; */
-  max-width: 60%;
+  max-width: 95%;
   opacity: 0.9;
-  max-height: 70%;
+  max-height: 95%;
 }
 </style>
