@@ -197,6 +197,21 @@ const data = {
       ]
     },
     {
+      name: `Joker`,
+      year: `2018`,
+      link: `https://apps.skyl.fr/joker/`,
+      des: ``,
+      img: require(`@/assets/saturation-chinoise.jpg`),
+      show: false,
+      credits: [
+        {
+          role: `Composition & Production`,
+          name: `Sikai Li`,
+          link: `https://skyl.fr`
+        }
+      ]
+    },
+    {
       name: `Saturation Chinoise`,
       year: `2018`,
       link: `https://apps.skyl.fr/saturation-chinoise/`,

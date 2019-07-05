@@ -12,9 +12,9 @@ export default {
       links: [
         { link: "https://rain.skyl.fr" },
         { link: "https://forces.skyl.fr" },
-        { link: "https://k.skyl.fr" },
+        // { link: "https://k.skyl.fr" },
         { link: "https://data.skyl.fr" },
-        { link: "https://apps.skyl.fr/3d-terrain/" },
+        // { link: "https://apps.skyl.fr/3d-terrain/" },
         { link: "https://apps.skyl.fr/toxic/" },
         { link: "https://apps.skyl.fr/joker/" },
         { link: "https://apps.skyl.fr/washed/" },
