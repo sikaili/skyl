@@ -37,7 +37,7 @@
             <div class="ph4 pv3">
               <!-- <span class="f4 f1-ns b dib pr3">{{ item.name }}</span> -->
               <blockquote class="ph0 pb2 mb0 bb mh0 mt0">
-                <p class="lh-copy measure f6 ma0 black">
+                <p class="lh-copy f6 ma0 black">
                   {{ item.des }}
                   <br />
                   <span
