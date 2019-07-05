@@ -7,13 +7,11 @@
 
 <script>
 import Drawings from "@/components/Drawings.vue";
-import SideMenu from "@/components/SideMenu.vue";
 
 export default {
   name: "draw",
   components: {
-    Drawings,
-    SideMenu
+    Drawings
   },
   data() {
     return {
@@ -41,6 +39,10 @@ export default {
         {
           name: "up",
           link: require("@/assets/drawings/9.jpg")
+        },
+        {
+          name: "down",
+          link: require("@/assets/drawings/8.jpg")
         },
         {
           name: "no escape",

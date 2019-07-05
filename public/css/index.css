@@ -2,6 +2,14 @@
   font-family: 'Roboto Mono','Roboto Mono', monospace,'helvetica neue', helvetica, sans-serif;
   box-sizing: border-box !important;
 }
+p,a,span,h2,h3,dd{
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none;
+}
 
 #wrap {
 	position: fixed;
@@ -30,9 +38,6 @@ a:hover {
   background-color:rgba(250, 250, 250, 0.85);
 }
 
-.ba {
-  ba: 1px solid;
-}
 
 .cf:before,
 .cf:after {
@@ -83,10 +88,6 @@ a:hover {
   transition: color .15s ease-in;
 }
 
-.link:focus {
-  transition: color .15s ease-in;
-  ba: 1px dotted currentColor;
-}
 
 .w-50 {
   width: 50%;
