@@ -200,7 +200,7 @@ const data = {
       name: `Joker`,
       year: `2018`,
       link: `https://apps.skyl.fr/joker/`,
-      des: ``,
+      des: `未知的力量`,
       img: require(`@/assets/joker.jpg`),
       show: false,
       credits: [

@@ -13,7 +13,7 @@
     </div>
     <div
       v-if="grid == true"
-      class="mt3 center bt bb b--black-20 flex flex-wrap items-start"
+      class="mt3 center b--black-20 flex flex-wrap items-start"
       :class="$mq == `sm` ? `w-100` : `w-80`"
     >
       <div
@@ -34,7 +34,7 @@
         </a>
       </div>
     </div>
-    <div v-else class="bt bb b--black-20 cl">
+    <div v-else class="b--black-20 cl">
       <div
         v-for="(drawing, imgIndex) in drawings"
         :key="imgIndex"
@@ -68,7 +68,7 @@ export default {
   },
   data: function() {
     return {
-      grid: true,
+      grid: false,
       index: null
     };
   },
