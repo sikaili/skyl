@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <SideMenu /> -->
     <Drawings :drawings="drawings" />
   </div>
 </template>
@@ -71,11 +70,11 @@ export default {
         {
           name: "green 02",
           link: require("@/assets/drawings/lv2.jpg")
-        },
-        {
-          name: "cell",
-          link: require("@/assets/drawings/cell.jpg")
         }
+        // {
+        //   name: "cell",
+        //   link: require("@/assets/drawings/cell.jpg")
+        // }
         // {
         //   name: "cell",
         //   link: require("@/assets/drawings/up.jpg")
