@@ -2,15 +2,15 @@
   <div>
     <VueGallery :images="images" :index="index" @close="index = null" />
     <br />
-
-    <div @click="grid = !grid" class="mt4 fixed f2" style="z-index:1000;">
-      <span
-        class="pv2 ph3 no-underline white bg-black-50 bg-animate hover-bg-white hover-black inline-flex items-center border-box"
-      >
-        <i v-if="grid == false" class="icon ion-md-apps"></i>
-        <i v-else class="icon ion-md-menu"></i>
-      </span>
-    </div>
+    <span
+      @click="grid = !grid"
+      class="ph2 pv1 no-underline white bg-black-40 bg-animate hover-bg-black-80 hover-white inline-flex items-center border-box"
+      :class="$mq == `sm` ? `f4 ml3 mt0` : `fixed f2 ph3 mt4`"
+      style="z-index:1000;margin-bottom:-100px;"
+    >
+      <i v-if="grid == false" class="icon ion-md-apps"></i>
+      <i v-else class="icon ion-md-menu"></i>
+    </span>
     <div
       v-if="grid == true"
       class="mt3 center b--black-20 flex flex-wrap items-start"
@@ -44,7 +44,7 @@
         <a @click="index = imgIndex" class="mt3 db link tc o-90">
           <img
             :src="drawing.link"
-            alt="Frank Ocean Blonde Album Cover"
+            :alt="drawing.name"
             class="w-100 db dim ba bw5 white-50 border-box"
           />
           <dl class="mt2 f6 lh-copy">
@@ -53,6 +53,15 @@
           </dl>
         </a>
       </div>
+      <span
+        @click="scroll"
+        class="fl w-100 tc pa3 f2 center no-underline white bg-black-40 bg-animate hover-bg-black-80 hover-white border-box"
+        style="z-index:1000;"
+      >
+        <i class="icon ion-md-arrow-up"></i>
+      </span>
+      <br />
+      <br />
     </div>
   </div>
 </template>
@@ -66,14 +75,19 @@ export default {
       required: true
     }
   },
+  components: {
+    VueGallery
+  },
   data: function() {
     return {
       grid: false,
       index: null
     };
   },
-  components: {
-    VueGallery
+  methods: {
+    scroll() {
+      window.scrollTo(0, 0);
+    }
   },
   computed: {
     images: function() {
