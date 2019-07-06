@@ -201,7 +201,7 @@ const data = {
       year: `2018`,
       link: `https://apps.skyl.fr/joker/`,
       des: ``,
-      img: require(`@/assets/saturation-chinoise.jpg`),
+      img: require(`@/assets/joker.jpg`),
       show: false,
       credits: [
         {

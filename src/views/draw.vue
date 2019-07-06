@@ -47,6 +47,14 @@ export default {
         {
           name: "no escape",
           link: require("@/assets/drawings/7.jpg")
+        },
+        {
+          name: "the witch",
+          link: require("@/assets/drawings/10.jpg")
+        },
+        {
+          name: "the witch 02",
+          link: require("@/assets/drawings/11.jpg")
         }
       ]
     };
