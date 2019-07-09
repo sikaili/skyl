@@ -1,5 +1,5 @@
 <template>
-  <SideMenu :linksArr="linksArr" />
+  <SideMenu :linksArr="linksArr" :givenLink="startLink" />
 </template>
 
 <script>
