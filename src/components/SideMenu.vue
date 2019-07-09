@@ -111,7 +111,6 @@ export default {
     },
     getName: function(link) {
       let dump = this.linksArr.find(a => a.link == link);
-
       return dump.name;
     },
     handlePClick(link) {

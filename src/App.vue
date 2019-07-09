@@ -13,24 +13,7 @@
     <transition name="slide-fade1">
       <router-view />
     </transition>
-    <!-- <footer
-      class="tc pv1 black-50 bg-white-80"
-      style="position: fixed;
-    /* center the element */
-    right: 0;
-    left: 0;
-    bottom:0;
-    margin-right: auto;
-    margin-left: auto;
-    /* give it dimensions */
-    min-height: 1em;
-    width: 100%;"
-    >
-      <small class="f7 db helvetica"
-        >© 2019 <b class="dib ph2 link dim helvetica">Sikai Li</b> All Rights
-        Reserved</small
-      >
-    </footer> -->
+    <TheFooter v-if="footer" />
   </div>
 </template>
 
@@ -41,6 +24,8 @@ document.ontouchmove = function(e) {
 };
 
 import TheHead from "./components/TheHead.vue";
+import TheFooter from "./components/TheFooter.vue";
+
 export default {
   name: "app",
   mounted() {
@@ -61,26 +46,40 @@ export default {
   },
   created() {
     window.addEventListener("resize", this.handleResize);
+    window.addEventListener("scroll", this.handleScroll);
     this.handleResize();
   },
   destroyed() {
     window.removeEventListener("resize", this.handleResize);
+    window.removeEventListener("scroll", this.handleScroll);
   },
   components: {
-    TheHead
+    TheHead,
+    TheFooter
   },
   data() {
     return {
       item: "eyes",
       linkDefault: "https://eyes.skyl.fr",
       link: `https://eyes.skyl.fr`,
-      iframe: { width: 0, height: 0, showIframe: true }
+      iframe: { width: 0, height: 0, showIframe: true },
+      footer: true
     };
   },
   methods: {
     handleResize() {
       this.iframe.width = window.innerWidth;
       this.height = window.innerHeight;
+    },
+    handleScroll() {
+      let id = window.setTimeout(function() {}, 0);
+      while (id--) {
+        window.clearTimeout(id);
+      }
+      this.footer = false;
+      setTimeout(() => {
+        this.footer = true;
+      }, 800);
     }
   },
   computed: {
