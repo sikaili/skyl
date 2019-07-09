@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <TheHead />
+    <TheHead :link="link" />
     <div v-if="(iframe.show = true)" class="back bw0" :style="getWidth">
       <iframe
         class="back bw0"

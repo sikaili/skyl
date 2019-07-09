@@ -55,7 +55,7 @@ export default {
       const arr = [...data.work].concat([...data.music]);
       const dump = arr.concat(this.links);
       dump.forEach(a => {
-        a.name = this.getName(a.link);
+        a.id ? (a.name = a.id) : (a.name = this.getName(a.link));
       });
       // sort items by name using localeCompare
       dump.sort((a, b) => a.name.localeCompare(b.name));

@@ -281,7 +281,7 @@ arrayDump.map(obj => {
     !a.about ? (a.about = a.des) : ``;
     a[`id`] = a.name
       .split(` `)
-      .join(``)
+      .join(`-`)
       .toLowerCase();
     const num = 15;
     const arr = [];

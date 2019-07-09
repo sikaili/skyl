@@ -69,10 +69,10 @@
     </div>
     <transition name="slide-fade1">
       <div v-if="displayList" class="overflow-y-scroll vh-50 f6 tl bg-white-30">
-        <span v-for="item in linksArr" :key="item.link">
+        <span v-for="(item, index) in linksArr" :key="index">
           <p
             @click="handlePClick(item.link)"
-            class="bg-animate hover-bg-white hover-black white bg-black-60"
+            class="ph1 bg-animate hover-bg-white hover-black white bg-black-60"
           >
             {{ item.name }}
           </p>
@@ -110,17 +110,9 @@ export default {
       this.$router.replace({ path: `/play/${this.getName(this.currentLink)}` });
     },
     getName: function(link) {
-      let dump = link.split("//");
-      if (!dump[0].includes("https")) {
-        return "";
-      }
-      if (dump[1].includes(`apps`)) {
-        dump = link.split("/");
-        dump = dump[dump.length - 2];
-      } else {
-        dump = dump[1].split(".")[0];
-      }
-      return dump;
+      let dump = this.linksArr.find(a => a.link == link);
+
+      return dump.name;
     },
     handlePClick(link) {
       this.currentLink = link;

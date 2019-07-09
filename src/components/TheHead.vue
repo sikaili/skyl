@@ -4,7 +4,7 @@
       <router-link :class="style" to="/work" exact>Work</router-link>
       <router-link :class="style" to="/music">Music</router-link>
       <router-link :class="style" to="/drawings">Drawings</router-link>
-      <router-link :class="style" to="/play">Play!</router-link>
+      <router-link :class="style" :to="/play/">Play!</router-link>
     </div>
   </div>
 </template>
@@ -12,6 +12,12 @@
 <script>
 export default {
   name: "Head",
+  props: {
+    link: {
+      type: String,
+      default: "0"
+    }
+  },
   data() {
     return {
       class: {
@@ -27,6 +33,9 @@ export default {
       } else {
         return this.class.mdPlus;
       }
+    },
+    play() {
+      return `/play/${this.link}/`;
     }
   },
   methods: {
