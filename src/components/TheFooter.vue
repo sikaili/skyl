@@ -1,6 +1,6 @@
 <template>
   <footer
-    class="tc pv1 black-50 bg-white-50"
+    class="tc pv1 black bg-white-50 hover-bg-white"
     style="position: fixed;
     /* center the element */
     right: 0;

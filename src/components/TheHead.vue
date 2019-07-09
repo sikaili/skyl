@@ -15,7 +15,7 @@ export default {
   props: {
     link: {
       type: String,
-      default: "0"
+      default: "https://eyes.skyl.fr"
     }
   },
   data() {
@@ -35,14 +35,7 @@ export default {
       }
     },
     play() {
-      return "/play/0";
-    }
-  },
-  methods: {
-    navigate: function(name) {
-      if (this.$route.name == name) {
-        this.$router.push({ path: `/info:0` });
-      }
+      return `/play/${this.link.split("//")[1].split(".")[0]}`;
     }
   }
 };

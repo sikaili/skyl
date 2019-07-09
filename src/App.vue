@@ -13,7 +13,9 @@
     <transition name="slide-fade1">
       <router-view />
     </transition>
-    <TheFooter v-if="footer" />
+    <transition name="slide-fade1">
+      <TheFooter v-if="footer" />
+    </transition>
   </div>
 </template>
 
