@@ -55,7 +55,7 @@
       </div>
       <span
         @click="scroll"
-        class="fl w-100 tc pa3 f2 center no-underline white bg-black-40 bg-animate hover-bg-black-80 hover-white border-box"
+        class="fl w-100  mt5 tc pb5 pt3 f2 center no-underline black bg-white bg-animate hover-bg-black hover-white border-box"
         style="z-index:1000;"
       >
         <i class="icon ion-md-arrow-up"></i>

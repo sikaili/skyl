@@ -89,12 +89,17 @@ export default {
     linksArr: {
       type: Array,
       required: true
+    },
+    givenLink: {
+      type: String,
+      required: false,
+      default: ""
     }
   },
   data() {
     return {
       displayList: false,
-      currentLink: ""
+      currentLink: this.givenLink
     };
   },
   methods: {

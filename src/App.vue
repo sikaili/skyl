@@ -13,8 +13,8 @@
     <transition name="slide-fade1">
       <router-view />
     </transition>
-    <footer
-      class="fixed tc pv1 white-50"
+    <!-- <footer
+      class="tc pv1 black-50 bg-white-80"
       style="position: fixed;
     /* center the element */
     right: 0;
@@ -26,11 +26,11 @@
     min-height: 1em;
     width: 100%;"
     >
-      <small class="f7 db tc"
-        >© 2019 <b class="dib ph2 link light-gray dim ttu">sikai li</b> All
-        Rights Reserved</small
+      <small class="f7 db helvetica"
+        >© 2019 <b class="dib ph2 link dim helvetica">Sikai Li</b> All Rights
+        Reserved</small
       >
-    </footer>
+    </footer> -->
   </div>
 </template>
 
