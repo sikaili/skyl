@@ -5,7 +5,6 @@ import work from "./views/work.vue";
 import play from "./views/play.vue";
 import music from "./views/music.vue";
 import page from "./views/page.vue";
-
 Vue.use(Router);
 
 export default new Router({
