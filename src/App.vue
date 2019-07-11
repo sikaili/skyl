@@ -81,7 +81,7 @@ export default {
       this.footer = false;
       setTimeout(() => {
         this.footer = true;
-      }, 800);
+      }, 2000);
     }
   },
   computed: {
