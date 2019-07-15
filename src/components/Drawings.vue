@@ -11,6 +11,7 @@
       <i v-if="grid == false" class="icon ion-md-apps"></i>
       <i v-else class="icon ion-md-menu"></i>
     </span>
+    <!-- grid -->
     <div
       v-if="grid == true"
       class="mt3 center b--black-20 flex flex-wrap items-start"
@@ -25,7 +26,8 @@
           <img
             :src="drawing.link"
             :alt="drawing.name"
-            class="db dim bw0 ba bw5 black-50 border-box"
+            class="db dim bw0 ba black-50 border-box"
+            :class="$mq == `sm` ? `bw1` : `bw5`"
           />
           <dl class="mt2 f6 lh-copy">
             <dt class="clip">Title</dt>
@@ -34,6 +36,7 @@
         </a>
       </div>
     </div>
+    <!-- list -->
     <div v-else class="b--black-20 cl">
       <div
         v-for="(drawing, imgIndex) in drawings"
@@ -53,6 +56,7 @@
           </dl>
         </a>
       </div>
+      <!-- back to 0 0 -->
       <span
         @click="scroll"
         class="fl w-100  mt5 tc pb5 pt3 f2 center no-underline black bg-white bg-animate hover-bg-black hover-white border-box"
