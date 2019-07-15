@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "vue": "^2.6.10",
+    "vue-analytics": "^5.17.0",
     "vue-gallery": "^2.0.0",
     "vue-mq": "^1.0.1",
     "vue-router": "^3.0.6"
