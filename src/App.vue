@@ -1,13 +1,13 @@
 <template>
   <div id="app">
     <TheHead :link="link" />
-    <div v-if="(iframe.show = true)" class="back bw0" :style="getWidth">
+    <div v-if="(iframe.show = true)" class="back bw0" :style="divStyle">
       <iframe
         class="back bw0"
         scrolling="no"
         scroll="no"
         :src="link"
-        :style="getWidth2"
+        :style="iframeStyle"
       ></iframe>
     </div>
     <transition name="slide-fade1">
@@ -85,7 +85,7 @@ export default {
     }
   },
   computed: {
-    getWidth: function() {
+    divStyle: function() {
       const scale = 1;
       return `width:${
         this.$mq == "sm" ? screen.width * scale : this.iframe.width
@@ -100,7 +100,7 @@ export default {
       -webkit-transform-origin: 0 0;
       `;
     },
-    getWidth2: function() {
+    iframeStyle: function() {
       let scale = 1;
       const inInfo = this.$route.path.includes("play");
       inInfo && this.$mq == "sm" ? (scale = 2) : (scale = 1);
@@ -108,7 +108,7 @@ export default {
         this.$mq == "sm" ? screen.width * scale : this.iframe.width * scale
       }px;
       height:${this.height * scale}px;
-      opacity:${inInfo ? 1 : 0.5};
+      opacity:${inInfo ? 1 : 0.4};
       -moz-transform: scale(${1 / scale});
       -moz-transform-origin: 0 0;
       -o-transform: scale(${1 / scale});
