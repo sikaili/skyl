@@ -55,7 +55,7 @@
         <a
           target="_blank"
           title="instagram"
-          href="https://www.instagram.com/skyl.fr/"
+          href="https://www.instagram.com/skylfr/"
         >
           <i class="white mh1 icon ion-logo-instagram"></i>
         </a>
