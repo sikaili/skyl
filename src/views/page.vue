@@ -6,7 +6,10 @@
       v-show="$mq !== 'sm'"
       class="fl w-20 vh-100 flex items-start justify-end"
     ></div>
-    <div class="fl w-80 mw7 bg-white-90" :class="$mq == `sm` ? `w-100` : ''">
+    <div
+      class="ml-auto mr-auto w-80 mw7 bg-white-90"
+      :class="$mq == `sm` ? `w-100` : ''"
+    >
       <i
         @click="back"
         class="fr right-0 pr2 f2 icon ion-md-close gray c-animate hover-black"
