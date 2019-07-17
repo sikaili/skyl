@@ -5,7 +5,7 @@ Personal portfolio site project, a place to showcase what I did, interactive ani
 1er version (on branch p5):
    
     Overview :
-    
+
         A simple html css page with an interactive canvas background, as the number of projects grows, it becomes kind of tiring to manually do the maintenance and updates, also the need of a presentation page is getting obvious, so I started to design a second version with more features, while keeping the simplicity & geometric feeling of this first version.
 
 2nd version (on branch vue):
@@ -30,6 +30,7 @@ Personal portfolio site project, a place to showcase what I did, interactive ani
         All fetching data from the JSON file so no editing work needed.
 
     Compromises :
+    
         As for the showcase of the animations, both in background and in the 'play !' page, I used iframe to go to the archived projects, as they were written in 'global mode' I didn’t find a way to implement them locally in Vue (I’m not planning to re-write thousands lines of code in instance mode). 
 
 
