@@ -35,6 +35,7 @@ Personal portfolio site project, a place to showcase what I did, interactive ani
 
 
 
+
 ## Project setup
 ```
 npm install
