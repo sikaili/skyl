@@ -3,8 +3,9 @@
 Personal portfolio site project, a place to showcase what I did, interactive animations, music, drawings and so on.
 
 1er version (on branch p5):
-
+   
     Overview :
+    
         A simple html css page with an interactive canvas background, as the number of projects grows, it becomes kind of tiring to manually do the maintenance and updates, also the need of a presentation page is getting obvious, so I started to design a second version with more features, while keeping the simplicity & geometric feeling of this first version.
 
 2nd version (on branch vue):
