@@ -1,5 +1,5 @@
 <template>
-  <div class="ma5 ph5 pv5 bg-white-70">
+  <div class="ma5 pa5 bg-white-70">
     <h1 class="fw3">Expérience Professionnelle</h1>
     <section class="pv3">
       <h1>
@@ -80,6 +80,14 @@
         ]"
       />
     </section>
+    <h1 class="fw3">Expositions & Concerts</h1>
+    <TextContent
+      v-for="expo in expos"
+      :key="expo.title"
+      :title="expo.title"
+      :caption="expo.place"
+      :content="expo.content"
+    />
   </div>
 </template>
 
@@ -87,12 +95,14 @@
 import Card from "@/components/Card.vue";
 import Table from "@/components/Table.vue";
 import SecondList from "@/components/SecondList.vue";
+import TextContent from "@/components/TextContent.vue";
 
 export default {
   components: {
     Card,
     Table,
-    SecondList
+    SecondList,
+    TextContent
   },
   data() {
     return {
@@ -118,7 +128,8 @@ Participation aux workshops avec les clients, SNCF, Airbus, LVMH, etc…`,
           text: ``,
           number: null
         }
-      }
+      },
+      expos: traiteText(expos)
     };
   },
   methods: {
@@ -126,6 +137,40 @@ Participation aux workshops avec les clients, SNCF, Airbus, LVMH, etc…`,
       return str.split(";");
     }
   }
+};
+
+const expos = `SIANA, 2019@
+Évry, France@
+En relation avec la RGPD et dans un souci de transparence et de clarté, Datalaxy présente un programme de datavisualisation des données Facebook de l’utilisateur.
+
+Le Cube, 2019@
+Issy-les-Moulineaux, France@
+Exposition de la majeure Id-DIM, un projet sur la sensibilisation d’utilisation de données personnelles.
+
+Mains d’Œuvres, 2018@
+Saint-Ouen, France@
+Une exposition augmentée avec trois réalisations au thème de 'Traverser la mer sans que le ciel ne le sache'. 
+
+Cité de la Musique de Marseille, 2017@
+Marseille, France @
+Tintamarres #7 Tintamarres #8, Composition musique concrète et performance : "Machine 1-10" "CB2" .
+
+Le Printemps de Bourges, 2016@
+Bourges, France 
+Jouer au Printemps de Bourges Scène Berry, concours 'Printemps des Grandes Écoles'. `;
+const traiteText = str => {
+  const arr = str.split(".");
+  const dump = [];
+  arr.map(a => {
+    const arr1 = a.split("@");
+    const e = {
+      title: arr1[0],
+      place: arr1[1],
+      content: arr1[2]
+    };
+    dump.push(e);
+  });
+  return dump;
 };
 </script>
 
