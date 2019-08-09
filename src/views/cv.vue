@@ -4,7 +4,7 @@
       @click="$router.go(-1)"
       class="fr right-0 pr2 f2 icon ion-md-close gray c-animate hover-black"
     ></i>
-    <div :class="$mq !== `lg` ? 'pv3 ph1' : 'pa5'">
+    <div :class="$mq !== `lg` ? 'pv4 mb5 ph1' : 'pa5'">
       <h1 class="fw3">Expérience Professionnelle</h1>
       <section class="pv2">
         <h1>
@@ -12,8 +12,9 @@
           <span class="f5">Paris, Janvier 2019 – Juillet 2019</span>
         </h1>
         <h3>
-          Développeur, UX/UI au sein d’une équipe agile de 3 personnes,
-          réalisations de site/SPA à la demande des clients internes.
+          Développeur JS, UX/UI au sein d’une équipe agile de 4 personnes,
+          réalisation de sites/Single-page Applications à la demande des clients
+          internes.
         </h3>
         <h4 class="mt4 mb3">Responsabilités occupées :</h4>
         <ul class="lh-copy bt mt0">
@@ -51,7 +52,7 @@
         </h3>
         <div class="flex flex-row">
           <Card
-            caption="Kobini: 'Plastic Arcade', quand le jeu vidéo devient écolo"
+            caption="Konbini: 'Plastic Arcade', quand le jeu vidéo devient écolo"
             link="https://www.konbini.com/fr/gaming/video-plastic-arcade-quand-le-jeu-video-devient-ecolo/"
             :img="require(`@/assets/plastic-arcade.png`)"
           />
@@ -94,14 +95,7 @@
         :caption="expo.place"
         :content="expo.content"
       />
-      <span
-        @click="$router.go(-1)"
-        class="f5 no-underline white bg-black-40 bg-animate hover-bg-black hover-white inline-flex items-center pa3 border-box mr1"
-      >
-        <i class="icon ion-md-return-left"></i>
-
-        <span class="pl1">Return</span>
-      </span>
+      <ButtonGoBack />
     </div>
   </div>
 </template>
@@ -111,13 +105,15 @@ import Card from "@/components/Card.vue";
 import Table from "@/components/Table.vue";
 import SecondList from "@/components/SecondList.vue";
 import TextContent from "@/components/TextContent.vue";
+import ButtonGoBack from "@/components/ButtonGoBack.vue";
 
 export default {
   components: {
     Card,
     Table,
     SecondList,
-    TextContent
+    TextContent,
+    ButtonGoBack
   },
   data() {
     return {

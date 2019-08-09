@@ -1,11 +1,6 @@
 <template>
   <div>
     <h1 class="tc pa2">{{ item.name }}</h1>
-
-    <div
-      v-show="$mq !== 'sm'"
-      class="fl w-20 vh-100 flex items-start justify-end"
-    ></div>
     <div
       class="ml-auto mr-auto w-80 mw7 bg-white-90"
       :class="$mq == `sm` ? `w-100` : ''"
@@ -74,14 +69,7 @@
           </div>
         </div>
         <br />
-        <span
-          @click="back"
-          class="f5 no-underline white bg-black-40 bg-animate hover-bg-black hover-white inline-flex items-center pa3 border-box mr1"
-        >
-          <i class="icon ion-md-return-left"></i>
-
-          <span class="pl1">Return</span>
-        </span>
+        <ButtonGoBack @click="back" />
         <span
           v-if="item.link.split(':')[0] == `https`"
           @click="play"
@@ -98,8 +86,13 @@
 
 <script>
 import obj from "@/data.js";
+import ButtonGoBack from "@/components/ButtonGoBack.vue";
+
 export default {
   name: "page",
+  components: {
+    ButtonGoBack
+  },
   data() {
     return {
       obj: obj,
