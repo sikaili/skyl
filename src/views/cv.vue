@@ -13,10 +13,14 @@
       <h4 class="mt4 mb3">Responsabilités occupées :</h4>
       <ul class="lh-copy bt mt0">
         <SecondList
-          v-for="(mission, i) in missions"
+          v-for="(mission, i) in splitText(orange.firstMissons)"
           :key="i"
           :item="mission"
-          :children="i == rawChildren.number ? childMissons : ''"
+          :children="
+            i == orange.secondMissons.number
+              ? splitText(orange.secondMissons.text)
+              : []
+          "
         />
       </ul>
       <h4 class="mt4 mb3">Environnement Technique :</h4>
@@ -35,9 +39,10 @@
         <span class="f5">April 2018 - Novembre 2018</span>
       </h1>
       <h3>
-        Hiver à thecamp. Une résidence collaborative dont l'objectif est
-        d’explorer de nouvelles solutions pour un futur désirable. Co-fondateur
-        d’une série de jeux-videos parlant de la pollution plastique.
+        Hiver à thecamp, co-créateur de 'Plastic Arcade’, une série de
+        jeux-videos parlant de la pollution plastique, dans une résidence
+        collaborative dont l'objectif est d’explorer de nouvelles solutions pour
+        un futur désirable.
       </h3>
       <div class="flex flex-row">
         <Card
@@ -51,23 +56,19 @@
           :img="require(`@/assets/plastic-arcade-24.png`)"
         />
       </div>
-      <ul class="lh-copy">
-        <li>
-          Différentes séances de 'Proof of Concept', avec les experts du domaine
-          et le grand publique
-        </li>
-        <li>
-          Prototypage des idées jeux-videos en Javascript (p5.js et Canvas API)
-        </li>
-        <ul>
-          <li>Prototypage UI en utilisant Tachyons CSS et Bootstrap</li>
-        </ul>
-        <li>
-          Création de différentes installations art numérique, développement des
-          animations en Javascript, définir l’interaction avec Kinect, Leap
-          Motion, Arduino...
-        </li>
-        <li>Design d’interaction, design sonore pour les jeux-vidéos</li>
+      <h4 class="mt4 mb3">Responsabilités occupées :</h4>
+
+      <ul class="lh-copy bt mt0">
+        <SecondList
+          v-for="(mission, i) in splitText(thecamp.firstMissons)"
+          :key="i"
+          :item="mission"
+          :children="
+            i == thecamp.secondMissons.number
+              ? splitText(thecamp.secondMissons.text)
+              : []
+          "
+        />
       </ul>
       <h4 class="mt4 mb3">Environnement Technique :</h4>
       <Table
@@ -95,25 +96,34 @@ export default {
   },
   data() {
     return {
-      rawMissions: `Analyse des besoins clients et les transformer en wireframe;
+      orange: {
+        firstMissons: `Analyse des besoins clients et les transformer en wireframe;
 Accompagnement des clients sur la conception d’interface, UX/UI;
 Construction de Single-page Application en Vue.js;
 Modifications et Maintenance des sites existants (jQuery ou autres technologies)`,
-      rawChildren: {
-        text: `Prototypage en utilisant Tachyons CSS et Bootstrap;
+        secondMissons: {
+          text: `Prototypage en utilisant Tachyons CSS et Bootstrap;
 Responsive Design & Adaptive Design, avec Vue MQ;
 State management centralisé avec Vuex;
 Utilisation de Vue Analytics pour faciliter la connection entre Vue Router et Google Analytics`,
-        number: 2
+          number: 2
+        }
+      },
+      thecamp: {
+        firstMissons: `Prototypage des idées d'interactions en Javascript (p5.js et Canvas API);
+Création d’installations art numérique, réalisation des animations en Javascript, développer des interactions avec Kinect, Leap Motion, Arduino;
+Séances de 'Proof of Concept' avec des experts du domaine;
+Participation aux workshops avec les clients, SNCF, Airbus, LVMH, etc…`,
+        secondMissons: {
+          text: ``,
+          number: null
+        }
       }
     };
   },
-  computed: {
-    missions() {
-      return this.rawMissions.split(";");
-    },
-    childMissons() {
-      return this.rawChildren.text.split(";");
+  methods: {
+    splitText(str) {
+      return str.split(";");
     }
   }
 };

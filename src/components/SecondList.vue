@@ -1,9 +1,9 @@
 <template>
   <div>
-    <li>
+    <li @click="show = !show">
       {{ item }}
     </li>
-    <ul v-if="children">
+    <ul v-if="children && show">
       <li v-for="child in children" :key="child">{{ child }}</li>
     </ul>
   </div>
@@ -16,6 +16,11 @@ export default {
       type: String
     },
     children: { type: Array }
+  },
+  data() {
+    return {
+      show: true
+    };
   }
 };
 </script>

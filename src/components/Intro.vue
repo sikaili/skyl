@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @click="$router.push('cv')">
     <h1 :class="$mq == `sm` ? style.s.h1 : style.d.h1">LI Sikai</h1>
     <p :class="$mq == `sm` ? style.s.p : style.d.p">
       Technologist, interaction designer based in Paris, I make music & new
