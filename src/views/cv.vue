@@ -1,93 +1,108 @@
 <template>
-  <div class="ma5 pa5 bg-white-70">
-    <h1 class="fw3">Expérience Professionnelle</h1>
-    <section class="pv3">
-      <h1>
-        Orange
-        <span class="f5">Janvier 2019 – Juillet 2019</span>
-      </h1>
-      <h3>
-        Développeur, UX/UI au sein d’une équipe agile de 3 personnes,
-        réalisations de site/SPA à la demande des clients internes.
-      </h3>
-      <h4 class="mt4 mb3">Responsabilités occupées :</h4>
-      <ul class="lh-copy bt mt0">
-        <SecondList
-          v-for="(mission, i) in splitText(orange.firstMissons)"
-          :key="i"
-          :item="mission"
-          :children="
-            i == orange.secondMissons.number
-              ? splitText(orange.secondMissons.text)
-              : []
-          "
+  <div class="bg-white-70" :class="$mq !== `lg` ? 'ma0' : 'ma6 mt4'">
+    <i
+      @click="$router.go(-1)"
+      class="fr right-0 pr2 f2 icon ion-md-close gray c-animate hover-black"
+    ></i>
+    <div :class="$mq !== `lg` ? 'pv3 ph1' : 'pa5'">
+      <h1 class="fw3">Expérience Professionnelle</h1>
+      <section class="pv2">
+        <h1>
+          Orange
+          <span class="f5">Paris, Janvier 2019 – Juillet 2019</span>
+        </h1>
+        <h3>
+          Développeur, UX/UI au sein d’une équipe agile de 3 personnes,
+          réalisations de site/SPA à la demande des clients internes.
+        </h3>
+        <h4 class="mt4 mb3">Responsabilités occupées :</h4>
+        <ul class="lh-copy bt mt0">
+          <SecondList
+            v-for="(mission, i) in splitText(orange.firstMissons)"
+            :key="i"
+            :item="mission"
+            :children="
+              i == orange.secondMissons.number
+                ? splitText(orange.secondMissons.text)
+                : []
+            "
+          />
+        </ul>
+        <h4 class="mt4 mb3">Environnement Technique :</h4>
+        <Table
+          :categories="['Langages', 'Librairies', 'Outils & Plug-ins']"
+          :content="[
+            'Javascript, CSS, HTML, PHP',
+            'Vue.js, P5.js, jQuery, Bootstrap, Tachyons, Symfony',
+            'Git, Gulp, Visual Studio, Vue CLI, Vetur, Emmet, ESLint, Prettier, Babel, Sketch, Adobe Suite'
+          ]"
         />
-      </ul>
-      <h4 class="mt4 mb3">Environnement Technique :</h4>
-      <Table
-        :categories="['Langages', 'Librairies', 'Outils & Plug-ins']"
-        :content="[
-          'Javascript, CSS, HTML, PHP',
-          'Vue.js, P5.js, jQuery, Bootstrap, Tachyons, Symfony',
-          'Git, Gulp, Visual Studio, Vue CLI, Vetur, Emmet, ESLint, Prettier, Babel, Sketch, Adobe Suite'
-        ]"
-      />
-    </section>
-    <section class="pv3">
-      <h1>
-        thecamp
-        <span class="f5">April 2018 - Novembre 2018</span>
-      </h1>
-      <h3>
-        Hiver à thecamp, co-créateur de 'Plastic Arcade’, une série de
-        jeux-videos parlant de la pollution plastique, dans une résidence
-        collaborative dont l'objectif est d’explorer de nouvelles solutions pour
-        un futur désirable.
-      </h3>
-      <div class="flex flex-row">
-        <Card
-          caption="Kobini: 'Plastic Arcade', quand le jeu vidéo devient écolo"
-          link="https://www.konbini.com/fr/gaming/video-plastic-arcade-quand-le-jeu-video-devient-ecolo/"
-          :img="require(`@/assets/plastic-arcade.png`)"
-        />
-        <Card
-          caption="France 24: Sensibiliser à la pollution plastique grâce au jeu vidéo"
-          link="https://www.france24.com/fr/video/20181002-sensibiliser-a-pollution-plastique-grace-jeu-video-plastic-arcade-a-the-camp"
-          :img="require(`@/assets/plastic-arcade-24.png`)"
-        />
-      </div>
-      <h4 class="mt4 mb3">Responsabilités occupées :</h4>
+      </section>
+      <section class="pv3">
+        <h1>
+          thecamp
+          <span class="f5">Aix-en-Provence, April 2018 - Novembre 2018</span>
+        </h1>
+        <h3>
+          Hiver à thecamp, co-créateur de 'Plastic Arcade’, une série de
+          jeux-videos parlant de la pollution plastique, dans une résidence
+          collaborative dont l'objectif est d’explorer de nouvelles solutions
+          pour un futur désirable.
+        </h3>
+        <div class="flex flex-row">
+          <Card
+            caption="Kobini: 'Plastic Arcade', quand le jeu vidéo devient écolo"
+            link="https://www.konbini.com/fr/gaming/video-plastic-arcade-quand-le-jeu-video-devient-ecolo/"
+            :img="require(`@/assets/plastic-arcade.png`)"
+          />
+          <Card
+            caption="France 24: Sensibiliser à la pollution plastique grâce au jeu vidéo"
+            link="https://www.france24.com/fr/video/20181002-sensibiliser-a-pollution-plastique-grace-jeu-video-plastic-arcade-a-the-camp"
+            :img="require(`@/assets/plastic-arcade-24.png`)"
+          />
+        </div>
+        <h4 class="mt4 mb3">Responsabilités occupées :</h4>
 
-      <ul class="lh-copy bt mt0">
-        <SecondList
-          v-for="(mission, i) in splitText(thecamp.firstMissons)"
-          :key="i"
-          :item="mission"
-          :children="
-            i == thecamp.secondMissons.number
-              ? splitText(thecamp.secondMissons.text)
-              : []
-          "
+        <ul class="lh-copy bt mt0">
+          <SecondList
+            v-for="(mission, i) in splitText(thecamp.firstMissons)"
+            :key="i"
+            :item="mission"
+            :children="
+              i == thecamp.secondMissons.number
+                ? splitText(thecamp.secondMissons.text)
+                : []
+            "
+          />
+        </ul>
+        <h4 class="mt4 mb3">Environnement Technique :</h4>
+        <Table
+          :categories="['Langages', 'Librairies', 'Outils & Plug-ins']"
+          :content="[
+            'Javascript, CSS, HTML',
+            'p5.js, d3.js, Arduino',
+            'Git, Gulp, Visual Studio, Arduino IDE, Processing IDE, Unity'
+          ]"
         />
-      </ul>
-      <h4 class="mt4 mb3">Environnement Technique :</h4>
-      <Table
-        :categories="['Langages', 'Librairies', 'Outils & Plug-ins']"
-        :content="[
-          'Javascript, CSS, HTML',
-          'p5.js, d3.js, Arduino',
-          'Git, Gulp, Visual Studio, Arduino IDE, Processing IDE, Unity'
-        ]"
+      </section>
+      <h1 class="fw3">Expositions & Concerts</h1>
+      <TextContent
+        class="pv2"
+        v-for="expo in expos"
+        :key="expo.title"
+        :title="expo.title"
+        :caption="expo.place"
+        :content="expo.content"
       />
-    </section>
-    <h1 class="fw3">Expositions & Concerts</h1>
-    <TextContent
-      v-for="expo in expos"
-      :key="expo.title"
-      :title="expo.title"
-      :caption="expo.place"
-      :content="expo.content"
-    />
+      <span
+        @click="$router.go(-1)"
+        class="f5 no-underline white bg-black-40 bg-animate hover-bg-black hover-white inline-flex items-center pa3 border-box mr1"
+      >
+        <i class="icon ion-md-return-left"></i>
+
+        <span class="pl1">Return</span>
+      </span>
+    </div>
   </div>
 </template>
 
@@ -152,11 +167,11 @@ Saint-Ouen, France@
 Une exposition augmentée avec trois réalisations au thème de 'Traverser la mer sans que le ciel ne le sache'. 
 
 Cité de la Musique de Marseille, 2017@
-Marseille, France @
+Marseille, France@
 Tintamarres #7 Tintamarres #8, Composition musique concrète et performance : "Machine 1-10" "CB2" .
 
 Le Printemps de Bourges, 2016@
-Bourges, France 
+Bourges, France@
 Jouer au Printemps de Bourges Scène Berry, concours 'Printemps des Grandes Écoles'. `;
 const traiteText = str => {
   const arr = str.split(".");
@@ -184,5 +199,10 @@ ul li {
 }
 span {
   font-weight: 400;
+}
+@media (max-width: 600px) {
+  html {
+    font-size: 10px;
+  }
 }
 </style>

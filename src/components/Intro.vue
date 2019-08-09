@@ -1,7 +1,12 @@
 <template>
-  <div @click="$router.push('cv')">
-    <h1 :class="$mq == `sm` ? style.s.h1 : style.d.h1">LI Sikai</h1>
-    <p :class="$mq == `sm` ? style.s.p : style.d.p">
+  <div>
+    <h1
+      @click="$router.push('cv')"
+      :class="$mq == `sm` ? style.s.h1 : style.d.h1"
+    >
+      LI Sikai
+    </h1>
+    <p @click="$router.push('cv')" :class="$mq == `sm` ? style.s.p : style.d.p">
       Technologist, interaction designer based in Paris, I make music & new
       media art.
     </p>
@@ -25,4 +30,13 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+h1,
+p {
+  cursor: pointer;
+}
+h1:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s ease-in;
+}
+</style>

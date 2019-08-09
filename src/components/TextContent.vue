@@ -1,5 +1,5 @@
 <template>
-  <div class="mb4">
+  <div>
     <h3>
       {{ title }}
     </h3>

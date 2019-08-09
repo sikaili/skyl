@@ -14,22 +14,6 @@
         @click="back"
         class="fr right-0 pr2 f2 icon ion-md-close gray c-animate hover-black"
       ></i>
-      <!-- <span
-        @click="back"
-        class="fl ml1 mt1 f5 no-underline white bg-black-40 bg-animate hover-bg-black hover-white inline-flex items-center pa1 border-box mr1"
-      >
-        <i class="icon ion-md-return-left"></i>
-
-        <span class="pl1">Return</span>
-      </span>
-      <span
-        v-if="item.link.split(':')[0] == `https`"
-        @click="$router.push({ path: '/info:0' })"
-        class="fl mt1 f5 no-underline white bg-light-red bg-animate hover-bg-black hover-white inline-flex items-center pa1 border-box mr1"
-      >
-        <span class="pr1">Play!</span>
-        <i class="icon ion-md-return-right"></i>
-      </span> -->
       <div
         class="flex-row justify-center items-start tl"
         :class="$mq == `sm` ? `ma2 pa3 mb5 pb5` : `pa5`"
