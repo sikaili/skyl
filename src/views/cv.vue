@@ -30,29 +30,14 @@
         <li>Accompagnement des clients sur la conception d’interface, UX/UI</li>
       </ul>
       <h4 class="mt4 mb3">Environnement Technique :</h4>
-      <table class="f6 w-100 mw8 center bt" cellspacing>
-        <tbody class="lh-copy">
-          <tr>
-            <td class="pv3 pr3 bb b--black-20">Langages</td>
-            <td class="b pv3 pr3 bb b--black-20">
-              Javascript, CSS, HTML, PHP/Symfony
-            </td>
-          </tr>
-          <tr>
-            <td class="pv3 pr3 bb b--black-20">Librairies</td>
-            <td class="b pv3 pr3 bb b--black-20">
-              Vue.js, P5.js, jQuery, Bootstrap, Tachyons, Symfony
-            </td>
-          </tr>
-          <tr>
-            <td class="pv3 pr3 bb b--black-20">Outils & Plug-ins</td>
-            <td class="b pv3 pr3 bb b--black-20">
-              Git, Gulp, Visual Studio, Vue CLI, Vetur, Emmet, ESLint, Prettier,
-              Babel
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <Table
+        :categories="['Langages', 'Librairies', 'Outils & Plug-ins']"
+        :content="[
+          'Javascript, CSS, HTML, PHP',
+          'Vue.js, P5.js, jQuery, Bootstrap, Tachyons, Symfony',
+          'Git, Gulp, Visual Studio, Vue CLI, Vetur, Emmet, ESLint, Prettier, Babel, Sketch, Adobe Suite'
+        ]"
+      />
     </section>
     <section class="pv3">
       <h1>
@@ -64,16 +49,17 @@
         d’explorer de nouvelles solutions pour un futur désirable. Co-fondateur
         d’une série de jeux-videos parlant de la pollution plastique.
       </h3>
-      <div class="w-100">
-        <div class="w-40 card pa3 ba bw0 border-box">
-          <img :src="require(`@/assets/plastic-arcade.png`)" />
-          <p>Kobini: "Plastic Arcade", quand le jeu vidéo devient écolo</p>
-          <span
-            @click="goToPage(item.id)"
-            class="tc w4 f6 dim link ba bw2 ph2 pv1 mt3 dib black"
-            >Read more..</span
-          >
-        </div>
+      <div class="flex flex-row">
+        <Card
+          caption='Kobini: "Plastic Arcade", quand le jeu vidéo devient écolo'
+          link="https://www.konbini.com/fr/gaming/video-plastic-arcade-quand-le-jeu-video-devient-ecolo/"
+          :img="require(`@/assets/plastic-arcade.png`)"
+        />
+        <Card
+          caption='Kobini: "Plastic Arcade", quand le jeu vidéo devient écolo'
+          link="https://www.konbini.com/fr/gaming/video-plastic-arcade-quand-le-jeu-video-devient-ecolo/"
+          :img="require(`@/assets/plastic-arcade.png`)"
+        />
       </div>
       <ul class="lh-copy">
         <li>
@@ -93,42 +79,36 @@
         </li>
         <li>Design d’interaction, design sonore pour les jeux-vidéos</li>
       </ul>
-
-      <table class="f6 w-100 mw8 center" cellspacing>
-        <tbody class="lh-copy">
-          <tr>
-            <td class="pv3 pr3 bb b--black-20">Langages</td>
-            <td class="b pv3 pr3 bb b--black-20">Javascript, CSS, HTML</td>
-          </tr>
-          <tr>
-            <td class="pv3 pr3 bb b--black-20">Librairies</td>
-            <td class="b pv3 pr3 bb b--black-20">p5.js, d3.js, Arduino</td>
-          </tr>
-          <tr>
-            <td class="pv3 pr3 bb b--black-20">Outils & Plug-ins</td>
-            <td class="b pv3 pr3 bb b--black-20">
-              Git, Gulp, Visual Studio, Arduino IDE, Processing IDE, Unity
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <h4 class="mt4 mb3">Environnement Technique :</h4>
+      <Table
+        :categories="['Langages', 'Librairies', 'Outils & Plug-ins']"
+        :content="[
+          'Javascript, CSS, HTML',
+          'p5.js, d3.js, Arduino',
+          'Git, Gulp, Visual Studio, Arduino IDE, Processing IDE, Unity'
+        ]"
+      />
     </section>
   </div>
 </template>
 
 <script>
-export default {};
+import Card from "@/components/Card.vue";
+import Table from "@/components/Table.vue";
+
+export default {
+  components: {
+    Card,
+    Table
+  }
+};
 </script>
 
 <style scoped>
 * {
   font-family: "Helvetica Neue", sans-serif;
 }
-.card:hover {
-  box-sizing: border-box;
-  border-width: 1px;
-  transition: border-width 0.15s;
-}
+
 ul li {
   padding: 0.5rem 0;
 }
