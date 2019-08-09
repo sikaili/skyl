@@ -12,22 +12,12 @@
       </h3>
       <h4 class="mt4 mb3">Responsabilités occupées :</h4>
       <ul class="lh-copy bt mt0">
-        <li>Analyse des besoins clients et les transformer en wireframe</li>
-        <li>Construction de Single-page Application en Vue.js</li>
-        <ul>
-          <li>Prototypage UI en utilisant Tachyons CSS et Bootstrap</li>
-          <li>Responsive Design & Adaptive Design avec Vue MQ</li>
-          <li>State management centralisé avec Vuex</li>
-          <li>
-            Utilisation de Vue Analytics pour faciliter la connection entre Vue
-            Router et Google Analytics
-          </li>
-        </ul>
-        <li>
-          Modifications et Maintenance des sites existants (jQuery ou autres
-          technologies)
-        </li>
-        <li>Accompagnement des clients sur la conception d’interface, UX/UI</li>
+        <SecondList
+          v-for="(mission, i) in missions"
+          :key="i"
+          :item="mission"
+          :children="i == rawChildren.number ? childMissons : ''"
+        />
       </ul>
       <h4 class="mt4 mb3">Environnement Technique :</h4>
       <Table
@@ -51,14 +41,14 @@
       </h3>
       <div class="flex flex-row">
         <Card
-          caption='Kobini: "Plastic Arcade", quand le jeu vidéo devient écolo'
+          caption="Kobini: 'Plastic Arcade', quand le jeu vidéo devient écolo"
           link="https://www.konbini.com/fr/gaming/video-plastic-arcade-quand-le-jeu-video-devient-ecolo/"
           :img="require(`@/assets/plastic-arcade.png`)"
         />
         <Card
-          caption='Kobini: "Plastic Arcade", quand le jeu vidéo devient écolo'
-          link="https://www.konbini.com/fr/gaming/video-plastic-arcade-quand-le-jeu-video-devient-ecolo/"
-          :img="require(`@/assets/plastic-arcade.png`)"
+          caption="France 24: Sensibiliser à la pollution plastique grâce au jeu vidéo"
+          link="https://www.france24.com/fr/video/20181002-sensibiliser-a-pollution-plastique-grace-jeu-video-plastic-arcade-a-the-camp"
+          :img="require(`@/assets/plastic-arcade-24.png`)"
         />
       </div>
       <ul class="lh-copy">
@@ -95,11 +85,36 @@
 <script>
 import Card from "@/components/Card.vue";
 import Table from "@/components/Table.vue";
+import SecondList from "@/components/SecondList.vue";
 
 export default {
   components: {
     Card,
-    Table
+    Table,
+    SecondList
+  },
+  data() {
+    return {
+      rawMissions: `Analyse des besoins clients et les transformer en wireframe;
+Accompagnement des clients sur la conception d’interface, UX/UI;
+Construction de Single-page Application en Vue.js;
+Modifications et Maintenance des sites existants (jQuery ou autres technologies)`,
+      rawChildren: {
+        text: `Prototypage en utilisant Tachyons CSS et Bootstrap;
+Responsive Design & Adaptive Design, avec Vue MQ;
+State management centralisé avec Vuex;
+Utilisation de Vue Analytics pour faciliter la connection entre Vue Router et Google Analytics`,
+        number: 2
+      }
+    };
+  },
+  computed: {
+    missions() {
+      return this.rawMissions.split(";");
+    },
+    childMissons() {
+      return this.rawChildren.text.split(";");
+    }
   }
 };
 </script>
