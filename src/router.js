@@ -6,6 +6,8 @@ import work from "./views/work.vue";
 import play from "./views/play.vue";
 import music from "./views/music.vue";
 import page from "./views/page.vue";
+import cv from "./views/cv.vue";
+
 Vue.use(Router);
 
 const router = new Router({
@@ -50,6 +52,11 @@ const router = new Router({
       path: "/music/:id",
       name: "music",
       component: page
+    },
+    {
+      path: "/cv",
+      name: "cv/",
+      component: cv
     }
   ]
 });

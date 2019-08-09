@@ -34,6 +34,7 @@ export default {
         return this.class.mdPlus;
       }
     },
+    // link for navigation
     play() {
       return `/play/${this.link.split("//")[1].split(".")[0]}`;
     }
