@@ -86,18 +86,16 @@
           ]"
         />
       </section>
-      <h1 class="fw3">Expositions & Concerts</h1>
+      <h1 class="fw3 mv4">Expositions & Concerts</h1>
       <TextContent
-        class="pv2"
         v-for="expo in expos"
         :key="expo.title"
         :title="expo.title"
         :caption="expo.place"
         :content="expo.content"
       />
-      <h1 class="fw3">Formations</h1>
+      <h1 class="fw3 mt5 mb4">Formations</h1>
       <TextContent
-        class="pv2"
         v-for="formation in formations"
         :key="formation.title"
         :title="formation.title"

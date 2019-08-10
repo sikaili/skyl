@@ -1,5 +1,5 @@
 <template functional>
-  <a href="props.link" target="_blank" class="mh3">
+  <a :href="props.link" target="_blank" class="mh3">
     <div class="relative card pa3 bg-white-30 border-box">
       <img :src="props.img" />
       <p class="pb4">{{ props.caption }}</p>

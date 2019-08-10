@@ -1,5 +1,5 @@
 <template functional>
-  <div>
+  <div class="mt4">
     <h3>
       {{ props.title }}
     </h3>
@@ -19,6 +19,6 @@
 }
 p,
 h3 {
-  margin: 10px 0 0 0;
+  margin: 12px 0 0 0;
 }
 </style>
