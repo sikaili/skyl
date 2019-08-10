@@ -33,4 +33,8 @@ export default {
   font-family: "Helvetica Neue", sans-serif;
   line-height: 1rem;
 }
+p,
+h3 {
+  margin: 10px 0 0 0;
+}
 </style>

@@ -95,7 +95,16 @@
         :caption="expo.place"
         :content="expo.content"
       />
-      <ButtonGoBack />
+      <h1 class="fw3">Formations</h1>
+      <TextContent
+        class="pv2"
+        v-for="formation in formations"
+        :key="formation.title"
+        :title="formation.title"
+        :caption="formation.place"
+        :content="formation.content"
+      />
+      <ButtonGoBack class="mv5" />
     </div>
   </div>
 </template>
@@ -140,7 +149,8 @@ Participation aux workshops avec les clients, SNCF, Airbus, LVMH, etc…`,
           number: null
         }
       },
-      expos: traiteText(expos)
+      expos: traiteText(expos),
+      formations: traiteText(formations)
     };
   },
   methods: {
@@ -169,6 +179,26 @@ Tintamarres #7 Tintamarres #8, Composition musique concrète et performance : "M
 Le Printemps de Bourges, 2016@
 Bourges, France@
 Jouer au Printemps de Bourges Scène Berry, concours 'Printemps des Grandes Écoles'. `;
+const formations = `IMT-BS + Télécom SudParis, 2018 - 2019@
+Évry, France@
+Post-Diplôme, BAC+5, Spécialisation "Inventivités Digitales": parcours multidisciplinaire et collaboratif à mi-chemin entre Management, Design et Ingénierie.
+
+École Supérieure d'Art et de Design de Marseille, 2016 - 2018@
+Marseille, France@
+BAC+5 Technologies Web, Codage, Design d’Interface (UX/UI), Design d’Interaction, Design Génératif.
+
+Dongguan University of Technology, 2011 - 2015 @
+Dongguan, Chine@
+BAC+4, Informatique, Conception Industrielle, l'école est en partenariat avec CNAM.
+
+École de Design Nantes Atlantique, 2016@
+Nantes, France@
+BAC+3, Technologies Web, Codage, Design d’Interface (UX/UI), Design d’Interaction.
+
+Université de Poitiers, 2015@
+Poitiers, France@
+Apprentissage de la langue française, littérature, histoire, culture
+`;
 const traiteText = str => {
   const arr = str.split(".");
   const dump = [];
