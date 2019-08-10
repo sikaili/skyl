@@ -1,32 +1,16 @@
-<template>
+<template functional>
   <div>
     <h3>
-      {{ title }}
+      {{ props.title }}
     </h3>
     <p class="black-50">
-      {{ caption }}
+      {{ props.caption }}
     </p>
     <p>
-      {{ content }}
+      {{ props.content }}
     </p>
   </div>
 </template>
-
-<script>
-export default {
-  props: {
-    title: {
-      type: String
-    },
-    caption: {
-      type: String
-    },
-    content: {
-      type: String
-    }
-  }
-};
-</script>
 
 <style scoped>
 * {

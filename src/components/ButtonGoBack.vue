@@ -1,4 +1,4 @@
-<template>
+<template funcional>
   <span
     @click="$router.go(-1)"
     class="f5 no-underline white bg-black-40 bg-animate hover-bg-black hover-white inline-flex items-center pa3 border-box mr1"
@@ -8,9 +8,3 @@
     <span class="pl1">Return</span>
   </span></template
 >
-
-<script>
-export default {};
-</script>
-
-<style></style>

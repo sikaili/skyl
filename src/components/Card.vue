@@ -1,33 +1,14 @@
-<template>
-  <div @click="open" class="relative card pa3 mh3 bg-white-30 border-box">
-    <img :src="img" />
-    <p class="pb4">{{ caption }}</p>
-    <span class="tc w4 f6 dim link ba bw2 ph2 pv1 mt3 dib black"
-      >Read more..</span
-    >
-  </div>
+<template functional>
+  <a href="props.link" target="_blank" class="mh3">
+    <div class="relative card pa3 bg-white-30 border-box">
+      <img :src="props.img" />
+      <p class="pb4">{{ props.caption }}</p>
+      <span class="tc w4 f6 dim link ba bw2 ph2 pv1 mt3 dib black"
+        >Read more..</span
+      >
+    </div>
+  </a>
 </template>
-
-<script>
-export default {
-  props: {
-    link: {
-      type: String
-    },
-    caption: {
-      type: String
-    },
-    img: {
-      type: String
-    }
-  },
-  methods: {
-    open() {
-      window.open(this.link);
-    }
-  }
-};
-</script>
 
 <style scoped>
 .card {
@@ -35,7 +16,12 @@ export default {
 }
 .card:hover {
   background-color: rgba(255, 255, 255, 0.7);
-  transition: background-color 0.15s ease-in;
+  transition: background-color 1s ease-in;
+}
+a,
+a:hover {
+  color: black;
+  text-decoration: none;
 }
 span {
   position: absolute;
