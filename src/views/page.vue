@@ -69,7 +69,7 @@
           </div>
         </div>
         <br />
-        <ButtonGoBack @click="back" />
+        <ButtonGoBack />
         <span
           v-if="item.link.split(':')[0] == `https`"
           @click="play"
@@ -86,7 +86,7 @@
 
 <script>
 import ButtonGoBack from "@/components/ButtonGoBack.vue";
-
+import { mapActions } from "vuex";
 export default {
   name: "page",
   components: {
@@ -99,14 +99,13 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["setLink"]),
     back() {
       // this.$router.go(-1);
-
       this.$router.replace({ path: `/${this.$route.path.split("/")[1]}/` });
-      // this.$router.go(-1);
     },
     play() {
-      this.$root.$emit("itemDesOpen", this.item.link);
+      this.setLink(this.item.link);
       this.$router.push({ path: `/play/${this.item.id}` });
     }
   },

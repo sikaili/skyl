@@ -25,7 +25,9 @@ const actions = {
     context.commit("TOGGLE_ITEM", payload);
   },
   setLink(context, payload) {
-    context.commit("SET_LINK", payload);
+    if (payload.includes("https")) {
+      context.commit("SET_LINK", payload);
+    }
   }
 };
 const getters = {

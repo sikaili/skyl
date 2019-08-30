@@ -108,7 +108,6 @@ import { clearTimeout } from "timers";
 import intro from "@/components/Intro.vue";
 import { mapGetters, mapActions } from "vuex";
 export default {
-  name: "Menu",
   components: {
     intro
   },
@@ -132,8 +131,12 @@ export default {
   },
   computed: {
     ...mapGetters({
-      items: `workItems`
-    })
+      musicItems: `musicItems`,
+      workItems: "workItems"
+    }),
+    items() {
+      return this[this.name + "Items"];
+    }
   },
   methods: {
     ...mapActions(["setLink", "toggleItem"]),

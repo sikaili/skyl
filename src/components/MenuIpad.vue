@@ -52,7 +52,7 @@
             <div
               class="fl w-100 w-100-ns tl ma0"
               v-show="w.show && menuShow"
-              @mouseenter="handleMouseIn(w, w.link)"
+              @mouseenter="handleMouseIn(w.link)"
               @mouseleave="handleMouseOut()"
             >
               <div class="pa4">
@@ -134,8 +134,12 @@ export default {
   },
   computed: {
     ...mapGetters({
-      items: `workItems`
-    })
+      musicItems: `musicItems`,
+      workItems: "workItems"
+    }),
+    items() {
+      return this[this.name + "Items"];
+    }
   },
   methods: {
     ...mapActions(["setLink", "toggleItem"]),

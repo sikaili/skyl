@@ -132,8 +132,12 @@ export default {
   },
   computed: {
     ...mapGetters({
-      items: `workItems`
-    })
+      musicItems: `musicItems`,
+      workItems: "workItems"
+    }),
+    items() {
+      return this[this.name + "Items"];
+    }
   },
   methods: {
     ...mapActions(["setLink", "toggleItem"]),
