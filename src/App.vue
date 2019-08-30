@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <p>{{ link }}</p>
     <TheHead :link="link" />
     <div v-if="(iframe.show = true)" class="back bw0" :style="divStyle">
       <iframe
@@ -31,18 +32,18 @@ import { store } from "@/store.js";
 export default {
   name: "app",
   mounted() {
-    this.$root.$on("itemDesOpen", a => {
-      // a is link
-      a.split(":")[0] == `https`
-        ? (this.link = a)
-        : (this.link = this.linkDefault);
-    });
-    this.$root.$on("selected", a => {
-      // a is link
-      a.split(":")[0] == `https`
-        ? (this.link = a)
-        : (this.link = this.linkDefault);
-    });
+    // this.$root.$on("itemDesOpen", a => {
+    //   // a is link
+    //   a.split(":")[0] == `https`
+    //     ? (this.link = a)
+    //     : (this.link = this.linkDefault);
+    // });
+    // this.$root.$on("selected", a => {
+    //   // a is link
+    //   a.split(":")[0] == `https`
+    //     ? (this.link = a)
+    //     : (this.link = this.linkDefault);
+    // });
   },
   created() {
     window.addEventListener("resize", this.handleResize);
@@ -60,7 +61,6 @@ export default {
   data() {
     return {
       item: "eyes",
-      link: store.state.activeLink,
       iframe: { width: 0, height: 0, showIframe: true },
       footer: true
     };
@@ -82,6 +82,9 @@ export default {
     }
   },
   computed: {
+    link() {
+      return store.state.activeLink;
+    },
     divStyle: function() {
       const scale = 1;
       return `width:${

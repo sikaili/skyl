@@ -160,11 +160,11 @@ export default {
         this.loadingAnimation = false;
       }, 200);
     },
-    load(itemToEmit) {
+    load(link) {
       this.loadingAnimation = true;
       setTimeout(() => {
-        this.$root.$emit("itemDesOpen", itemToEmit),
-          (this.loadingAnimation = false);
+        store.setActiveLink(link);
+        this.loadingAnimation = false;
       }, 1000);
     },
 

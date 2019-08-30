@@ -4,7 +4,7 @@ export const store = {
   state: {
     work: seedData.work,
     music: seedData.music,
-    activeLink: "https://eyes.skyl.fr"
+    activeLink: ""
   },
   getActiveItem(categorie) {
     return this.state[categorie].find(item => item.show);
@@ -14,7 +14,10 @@ export const store = {
       item == itemObj ? (item.show = true) : (item.show = false);
     });
   },
-  setActiveLink(link) {}
+  setActiveLink(link) {
+    link == this.state.activeLink ? "" : (this.state.activeLink = link);
+    console.log(this.state.activeLink);
+  }
 };
 
 // export default {
