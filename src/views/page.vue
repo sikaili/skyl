@@ -85,7 +85,7 @@
 </template>
 
 <script>
-import obj from "@/data.js";
+import { store } from "@/store.js";
 import ButtonGoBack from "@/components/ButtonGoBack.vue";
 
 export default {
@@ -95,7 +95,7 @@ export default {
   },
   data() {
     return {
-      obj: obj,
+      obj: store.state,
       id: this.$route.params.id
     };
   },

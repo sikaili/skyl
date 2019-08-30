@@ -9,7 +9,7 @@ import MenuSmall from "@/components/MenuSmall.vue";
 import MenuDesktop from "@/components/MenuDesktop.vue";
 import MenuIpad from "@/components/MenuIpad.vue";
 
-import dataObj from "@/data.js";
+import { store } from "@/store.js";
 
 export default {
   name: "work",
@@ -20,7 +20,7 @@ export default {
   },
   data() {
     return {
-      items: dataObj.work
+      items: store.state.work
     };
   }
 };

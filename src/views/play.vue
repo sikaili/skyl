@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import dataObj from "@/data.js";
+import { store } from "@/store.js";
 import SideMenu from "@/components/SideMenu.vue";
 export default {
   name: "play",
@@ -51,7 +51,7 @@ export default {
   computed: {
     linksArr: function() {
       // deep copy dataObj
-      const data = JSON.parse(JSON.stringify(dataObj));
+      const data = JSON.parse(JSON.stringify(store.state));
       const arr = [...data.work].concat([...data.music]);
       const dump = arr.concat(this.links);
       dump.forEach(a => {
