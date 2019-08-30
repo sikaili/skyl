@@ -106,16 +106,14 @@
 // eslint-disable-next-line no-unused-vars
 import { clearTimeout } from "timers";
 import intro from "@/components/Intro.vue";
-import { store } from "@/store.js";
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "Menu",
   components: {
     intro
   },
   mounted() {
-    if (this.items.every(a => a.show == false)) {
-      this.items[0].show = true;
-    }
+    this.toggleItem({ name: this.mName.toLowerCase(), obj: this.items[0] });
   },
   props: {
     itemsprops: {
@@ -123,25 +121,32 @@ export default {
       required: true
     },
     mName: {
-      type: String
+      type: String,
+      required: true
     }
   },
   data() {
     return {
       style: null,
-      items: this.itemsprops,
       menuShow: true,
       loadingAnimation: false,
       bwhite: "bg-white"
     };
   },
+  computed: {
+    categorie: "work",
+    ...mapGetters({
+      items: `workItems`
+    })
+  },
   methods: {
+    ...mapActions(["setLink", "toggleItem"]),
     play(item) {
       this.$root.$emit("itemDesOpen", item.link);
       this.$router.push({ path: `/play/${item.id}` });
     },
     handleClick(item) {
-      store.setActiveItem(this.mName.toLowerCase(), item);
+      this.toggleItem({ name: this.mName.toLowerCase(), obj: item });
     },
     handleMouseIn(itemToEmit) {
       if (itemToEmit) {
@@ -163,11 +168,10 @@ export default {
     load(link) {
       this.loadingAnimation = true;
       setTimeout(() => {
-        store.setActiveLink(link);
+        this.setLink(link);
         this.loadingAnimation = false;
       }, 1000);
     },
-
     goToPage(itemToEmit) {
       this.$router.push({
         name: this.mName.toLowerCase(),

@@ -85,7 +85,6 @@
 </template>
 
 <script>
-import { store } from "@/store.js";
 import ButtonGoBack from "@/components/ButtonGoBack.vue";
 
 export default {
@@ -95,8 +94,8 @@ export default {
   },
   data() {
     return {
-      obj: store.state,
-      id: this.$route.params.id
+      id: this.$route.params.id,
+      obj: this.$store.state
     };
   },
   methods: {
@@ -118,7 +117,6 @@ export default {
         return "ERROR!";
       }
       let dump = arr.find(a => a.id == this.$route.params.id);
-
       return dump;
     }
   }

@@ -12,7 +12,7 @@ const state = {
 const mutations = {
   TOGGLE_ITEM(state, payload) {
     state[payload.name].map(item => {
-      item == payload ? (item.show = true) : (item.show = false);
+      item == payload.obj ? (item.show = true) : (item.show = false);
     });
   },
   SET_LINK(state, link) {

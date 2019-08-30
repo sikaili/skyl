@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <p>{{ link }}</p>
     <TheHead :link="link" />
     <div v-if="(iframe.show = true)" class="back bw0" :style="divStyle">
       <iframe
@@ -25,25 +24,11 @@
 document.ontouchmove = function(e) {
   return true;
 };
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters } from "vuex";
 import TheHead from "./components/TheHead.vue";
 import TheFooter from "./components/TheFooter.vue";
 export default {
   name: "app",
-  mounted() {
-    // this.$root.$on("itemDesOpen", a => {
-    //   // a is link
-    //   a.split(":")[0] == `https`
-    //     ? (this.link = a)
-    //     : (this.link = this.linkDefault);
-    // });
-    // this.$root.$on("selected", a => {
-    //   // a is link
-    //   a.split(":")[0] == `https`
-    //     ? (this.link = a)
-    //     : (this.link = this.linkDefault);
-    // });
-  },
   created() {
     window.addEventListener("resize", this.handleResize);
     window.addEventListener("scroll", this.handleScroll);
