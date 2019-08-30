@@ -50,7 +50,7 @@
             <div
               class="fl w-100 w-100-ns tl ma0"
               v-show="w.show && menuShow"
-              @mouseenter="handleMouseIn(w, w.link)"
+              @mouseenter="handleMouseIn(w.link)"
               @mouseleave="handleMouseOut()"
             >
               <div class="pa4">
@@ -106,6 +106,7 @@
 // eslint-disable-next-line no-unused-vars
 import { clearTimeout } from "timers";
 import intro from "@/components/Intro.vue";
+import { store } from "@/store.js";
 export default {
   name: "Menu",
   components: {
@@ -140,14 +141,9 @@ export default {
       this.$router.push({ path: `/play/${item.id}` });
     },
     handleClick(item) {
-      this.items.filter(a => a != item).map(a => (a.show = false));
-      item.show = !item.show;
+      store.setActiveItem(this.mName.toLowerCase(), item);
     },
-    handleMouseIn(item, itemToEmit) {
-      if (this.items.some(a => a.show)) {
-        this.items.filter(a => a != item).map(a => (a.show = false));
-        item.show = true;
-      }
+    handleMouseIn(itemToEmit) {
       if (itemToEmit) {
         this.load(itemToEmit);
       }

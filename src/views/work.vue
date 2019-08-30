@@ -10,7 +10,7 @@ import MenuDesktop from "@/components/MenuDesktop.vue";
 import MenuIpad from "@/components/MenuIpad.vue";
 
 import { store } from "@/store.js";
-
+console.log(store.getActiveItem("work"));
 export default {
   name: "work",
   components: {

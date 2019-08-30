@@ -27,7 +27,7 @@ document.ontouchmove = function(e) {
 
 import TheHead from "./components/TheHead.vue";
 import TheFooter from "./components/TheFooter.vue";
-
+import { store } from "@/store.js";
 export default {
   name: "app",
   mounted() {
@@ -36,8 +36,6 @@ export default {
       a.split(":")[0] == `https`
         ? (this.link = a)
         : (this.link = this.linkDefault);
-      // a is name
-      // a ? (this.link = `/${a}/index.html`) : "";
     });
     this.$root.$on("selected", a => {
       // a is link
@@ -62,8 +60,7 @@ export default {
   data() {
     return {
       item: "eyes",
-      linkDefault: "https://eyes.skyl.fr",
-      link: `https://eyes.skyl.fr`,
+      link: store.state.activeLink,
       iframe: { width: 0, height: 0, showIframe: true },
       footer: true
     };
