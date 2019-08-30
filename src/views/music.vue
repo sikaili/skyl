@@ -11,7 +11,6 @@ import MenuSmall from "@/components/MenuSmall.vue";
 import MenuDesktop from "@/components/MenuDesktop.vue";
 import MenuIpad from "@/components/MenuIpad.vue";
 
-import { store } from "@/store.js";
 export default {
   name: "music",
   components: {
@@ -21,7 +20,7 @@ export default {
   },
   data() {
     return {
-      items: store.state.music
+      items: []
     };
   }
 };

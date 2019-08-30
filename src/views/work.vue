@@ -8,9 +8,7 @@
 import MenuSmall from "@/components/MenuSmall.vue";
 import MenuDesktop from "@/components/MenuDesktop.vue";
 import MenuIpad from "@/components/MenuIpad.vue";
-
-import { store } from "@/store.js";
-console.log(store.getActiveItem("work"));
+import { mapGetters } from "vuex";
 export default {
   name: "work",
   components: {
@@ -18,10 +16,10 @@ export default {
     MenuDesktop,
     MenuIpad
   },
-  data() {
-    return {
-      items: store.state.work
-    };
+  computed: {
+    ...mapGetters({
+      items: "workItems"
+    })
   }
 };
 </script>

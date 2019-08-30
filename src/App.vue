@@ -25,10 +25,9 @@
 document.ontouchmove = function(e) {
   return true;
 };
-
+import { mapGetters, mapActions } from "vuex";
 import TheHead from "./components/TheHead.vue";
 import TheFooter from "./components/TheFooter.vue";
-import { store } from "@/store.js";
 export default {
   name: "app",
   mounted() {
@@ -82,9 +81,7 @@ export default {
     }
   },
   computed: {
-    link() {
-      return store.state.activeLink;
-    },
+    ...mapGetters(["link"]),
     divStyle: function() {
       const scale = 1;
       return `width:${

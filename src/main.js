@@ -1,7 +1,9 @@
 import Vue from "vue";
 import App from "./App.vue";
+import store from "./store";
 import router from "./router";
 import VueMq from "vue-mq";
+
 Vue.use(VueMq, {
   breakpoints: {
     // default breakpoints - customize this
@@ -16,5 +18,6 @@ Vue.config.productionTip = false;
 
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount("#app");
