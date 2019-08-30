@@ -108,48 +108,45 @@
 // eslint-disable-next-line no-unused-vars
 import { clearTimeout } from "timers";
 import intro from "@/components/Intro.vue";
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "Menu",
   components: {
     intro
   },
   mounted() {
-    if (this.items.every(a => a.show == false)) {
-      this.items[0].show = true;
-    }
+    this.toggleItem({ name: this.mName.toLowerCase(), obj: this.items[0] });
   },
   props: {
-    itemsprops: {
-      type: Array,
-      required: true
-    },
     mName: {
-      type: String
+      type: String,
+      required: true
     }
   },
   data() {
     return {
+      name: this.mName.toLowerCase(),
       style: null,
-      items: this.itemsprops,
       menuShow: true,
       loadingAnimation: false,
       bwhite: "bg-white"
     };
   },
+  computed: {
+    ...mapGetters({
+      items: `workItems`
+    })
+  },
   methods: {
+    ...mapActions(["setLink", "toggleItem"]),
     play(item) {
-      this.$root.$emit("itemDesOpen", item.link);
+      this.setLink(item.link);
       this.$router.push({ path: `/play/${item.id}` });
     },
     handleClick(item) {
-      this.items.filter(a => a != item).map(a => (a.show = false));
-      item.show = !item.show;
+      this.toggleItem({ name: this.name, obj: item });
     },
-    handleMouseIn(item, itemToEmit) {
-      if (this.items.some(a => a.show)) {
-        this.items.filter(a => a != item).map(a => (a.show = false));
-        item.show = true;
-      }
+    handleMouseIn(itemToEmit) {
       if (itemToEmit) {
         this.load(itemToEmit);
       }
@@ -166,17 +163,16 @@ export default {
         this.loadingAnimation = false;
       }, 200);
     },
-    load(itemToEmit) {
+    load(link) {
       this.loadingAnimation = true;
       setTimeout(() => {
-        this.$root.$emit("itemDesOpen", itemToEmit),
-          (this.loadingAnimation = false);
+        this.setLink(link);
+        this.loadingAnimation = false;
       }, 1000);
     },
-
     goToPage(itemToEmit) {
       this.$router.push({
-        name: this.mName.toLowerCase(),
+        name: this.name,
         params: { id: itemToEmit }
       });
     }

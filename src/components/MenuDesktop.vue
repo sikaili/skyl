@@ -116,10 +116,6 @@ export default {
     this.toggleItem({ name: this.mName.toLowerCase(), obj: this.items[0] });
   },
   props: {
-    itemsprops: {
-      type: Array,
-      required: true
-    },
     mName: {
       type: String,
       required: true
@@ -127,6 +123,7 @@ export default {
   },
   data() {
     return {
+      name: this.mName.toLowerCase(),
       style: null,
       menuShow: true,
       loadingAnimation: false,
@@ -134,7 +131,6 @@ export default {
     };
   },
   computed: {
-    categorie: "work",
     ...mapGetters({
       items: `workItems`
     })
@@ -142,11 +138,11 @@ export default {
   methods: {
     ...mapActions(["setLink", "toggleItem"]),
     play(item) {
-      this.$root.$emit("itemDesOpen", item.link);
+      this.setLink(item.link);
       this.$router.push({ path: `/play/${item.id}` });
     },
     handleClick(item) {
-      this.toggleItem({ name: this.mName.toLowerCase(), obj: item });
+      this.toggleItem({ name: this.name, obj: item });
     },
     handleMouseIn(itemToEmit) {
       if (itemToEmit) {
@@ -174,7 +170,7 @@ export default {
     },
     goToPage(itemToEmit) {
       this.$router.push({
-        name: this.mName.toLowerCase(),
+        name: this.name,
         params: { id: itemToEmit }
       });
     }

@@ -1,7 +1,7 @@
 <template>
-  <MenuSmall v-if="$mq == `sm`" :itemsprops="items" mName="Work" />
-  <MenuIpad v-else-if="$mq == `md`" :itemsprops="items" mName="Work" />
-  <MenuDesktop v-else mName="work" />
+  <MenuSmall v-if="$mq == `sm`" mName="Work" />
+  <MenuIpad v-else-if="$mq == `md`" mName="Work" />
+  <MenuDesktop v-else mName="Work" />
 </template>
 
 <script>

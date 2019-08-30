@@ -110,16 +110,14 @@
 
 <script>
 import intro from "@/components/Intro.vue";
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   name: "Menu",
   components: {
     intro
   },
   props: {
-    itemsprops: {
-      type: Array,
-      required: true
-    },
     mName: {
       type: String
     }
@@ -127,15 +125,20 @@ export default {
   data() {
     return {
       alert: true,
-      items: this.itemsprops,
       menuShow: true,
       loadingAnimation: false,
       bwhite: "bg-white"
     };
   },
+  computed: {
+    ...mapGetters({
+      items: `workItems`
+    })
+  },
   methods: {
+    ...mapActions(["setLink", "toggleItem"]),
     play(item) {
-      this.$root.$emit("itemDesOpen", item.link);
+      this.setLink(item.link);
       this.$router.push({ path: `/play/${item.id}` });
     },
     handleClick(item) {
