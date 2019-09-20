@@ -124,6 +124,7 @@ export default {
   },
   data() {
     return {
+      name: this.mName.toLowerCase(),
       alert: true,
       menuShow: true,
       loadingAnimation: false,

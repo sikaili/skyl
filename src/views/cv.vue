@@ -102,7 +102,7 @@
         :caption="formation.place"
         :content="formation.content"
       />
-      <ButtonGoBack class="mv5" />
+      <ButtonGoBack @click="$router.replace({ path: '/' })" class="mv5" />
     </div>
   </div>
 </template>
