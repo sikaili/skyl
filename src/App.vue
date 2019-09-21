@@ -46,13 +46,16 @@ export default {
     return {
       item: "eyes",
       iframe: { width: 0, height: 0, showIframe: true },
-      footer: true
+      footer: true,
+      height: window.innerHeight
     };
   },
   methods: {
     handleResize() {
       this.iframe.width = window.innerWidth;
-      this.height = window.innerHeight;
+      this.$nextTick(() => {
+        this.height = window.innerHeight;
+      });
     },
     handleScroll() {
       let id = window.setTimeout(function() {}, 0);
@@ -69,11 +72,9 @@ export default {
     ...mapGetters(["link"]),
     divStyle: function() {
       const scale = 1;
-      let width;
-      window.innerWidth > window.innerHeight
-        ? (width = screen.height)
-        : (width = screen.width);
-      return `width:${this.$mq == "sm" ? width * scale : this.iframe.width}px;
+      return `width:${
+        this.$mq == "sm" ? screen.width * scale : this.iframe.width
+      }px;
       height:${this.height * scale}px;
       opacity:${this.$route.path.includes("play") ? 1 : "1"};
       -moz-transform: scale(${1 / scale});
@@ -86,14 +87,10 @@ export default {
     },
     iframeStyle: function() {
       let scale = 1;
-      let width;
-      window.innerWidth > window.innerHeight
-        ? (width = screen.height)
-        : (width = screen.width);
       const inPlay = this.$route.path.includes("play");
       inPlay && this.$mq == "sm" ? (scale = 2) : (scale = 1);
       return `width:${
-        this.$mq == "sm" ? width * scale : this.iframe.width * scale
+        this.$mq == "sm" ? screen.width * scale : this.iframe.width * scale
       }px;
       height:${this.height * scale}px;
       opacity:${inPlay ? 1 : 0.4};
