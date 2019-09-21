@@ -69,9 +69,11 @@ export default {
     ...mapGetters(["link"]),
     divStyle: function() {
       const scale = 1;
-      return `width:${
-        this.$mq == "sm" ? screen.width * scale : this.iframe.width
-      }px;
+      let width;
+      window.innerWidth > window.innerHeight
+        ? (width = screen.height)
+        : (width = screen.width);
+      return `width:${this.$mq == "sm" ? width * scale : this.iframe.width}px;
       height:${this.height * scale}px;
       opacity:${this.$route.path.includes("play") ? 1 : "1"};
       -moz-transform: scale(${1 / scale});
@@ -84,13 +86,17 @@ export default {
     },
     iframeStyle: function() {
       let scale = 1;
-      const inInfo = this.$route.path.includes("play");
-      inInfo && this.$mq == "sm" ? (scale = 2) : (scale = 1);
+      let width;
+      window.innerWidth > window.innerHeight
+        ? (width = screen.height)
+        : (width = screen.width);
+      const inPlay = this.$route.path.includes("play");
+      inPlay && this.$mq == "sm" ? (scale = 2) : (scale = 1);
       return `width:${
-        this.$mq == "sm" ? screen.width * scale : this.iframe.width * scale
+        this.$mq == "sm" ? width * scale : this.iframe.width * scale
       }px;
       height:${this.height * scale}px;
-      opacity:${inInfo ? 1 : 0.4};
+      opacity:${inPlay ? 1 : 0.4};
       -moz-transform: scale(${1 / scale});
       -moz-transform-origin: 0 0;
       -o-transform: scale(${1 / scale});

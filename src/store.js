@@ -32,6 +32,9 @@ const actions = {
 };
 const getters = {
   activeItem(state, categorie) {
+    if (!state[categorie]) {
+      return;
+    }
     return state[categorie].find(item => item.show);
   },
   workItems(state) {

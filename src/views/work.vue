@@ -1,6 +1,6 @@
 <template>
   <MenuSmall v-if="$mq == `sm`" mName="Work" />
-  <MenuIpad v-else-if="$mq == `md`" mName="Work" />
+  <MenuIpad v-else-if="$mq == `md` || ipad" mName="Work" />
   <MenuDesktop v-else mName="Work" />
 </template>
 
@@ -14,6 +14,11 @@ export default {
     MenuSmall,
     MenuDesktop,
     MenuIpad
+  },
+  computed: {
+    ipad() {
+      return navigator.userAgent.match(/Tablet|iPad/i);
+    }
   }
 };
 </script>

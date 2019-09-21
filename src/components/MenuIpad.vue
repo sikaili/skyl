@@ -49,12 +49,7 @@
         </transition>
         <div v-for="(w, index) in items" :key="mName + index">
           <transition name="slide-fade">
-            <div
-              class="fl w-100 w-100-ns tl ma0"
-              v-show="w.show && menuShow"
-              @mouseenter="handleMouseIn(w.link)"
-              @mouseleave="handleMouseOut()"
-            >
+            <div class="fl w-100 w-100-ns tl ma0" v-show="w.show && menuShow">
               <div class="pa4">
                 <span class="f4 f1-ns b dib pr3">{{ w.name }}</span>
                 <b class="dib bg-blue">{{ w.year }}</b>
@@ -148,31 +143,9 @@ export default {
       this.$router.push({ path: `/play/${item.id}` });
     },
     handleClick(item) {
-      this.toggleItem({ name: this.name, obj: item });
-    },
-    handleMouseIn(itemToEmit) {
-      if (itemToEmit) {
-        this.load(itemToEmit);
-      }
-    },
-    handleMouseOut() {
-      this.abortLoad();
-    },
-    abortLoad() {
-      let id = window.setTimeout(function() {}, 0);
-      while (id--) {
-        window.clearTimeout(id);
-      }
-      setTimeout(() => {
-        this.loadingAnimation = false;
-      }, 200);
-    },
-    load(link) {
-      this.loadingAnimation = true;
-      setTimeout(() => {
-        this.setLink(link);
-        this.loadingAnimation = false;
-      }, 1000);
+      this.items.filter(a => a != item).map(a => (a.show = false));
+      item.show = !item.show;
+      this.setLink(item.link);
     },
     goToPage(itemToEmit) {
       this.$router.push({

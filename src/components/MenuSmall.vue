@@ -149,7 +149,7 @@ export default {
     handleClick(item) {
       this.items.filter(a => a != item).map(a => (a.show = false));
       item.show = !item.show;
-      this.$root.$emit("selected", item.link);
+      this.setLink(item.link);
     },
     load(itemToEmit) {
       this.loadingAnimation = true;

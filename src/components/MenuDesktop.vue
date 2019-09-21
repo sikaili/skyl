@@ -165,6 +165,7 @@ export default {
       }, 200);
     },
     load(link) {
+      if (link.split(":")[0] !== "https") return;
       this.loadingAnimation = true;
       setTimeout(() => {
         this.setLink(link);
