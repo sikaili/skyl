@@ -20,7 +20,7 @@
                 {{ item.name }}
                 <i
                   :class="
-                    `fixed right-1 fr ma0 icon ion-md-arrow-drop-down ${
+                    `absolute right-1 fr ma0 icon ion-md-arrow-drop-down ${
                       item.show
                         ? `black ion-md-arrow-dropup`
                         : 'black-50 ion-md-arrow-dropdown'

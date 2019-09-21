@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <TheHead :link="link" />
-    <div v-if="(iframe.show = true)" class="back bw0" :style="divStyle">
+    <div v-if="(showIframe = true)" class="back bw0" :style="divStyle">
       <iframe
         class="back bw0"
         scrolling="no"
@@ -32,11 +32,14 @@ export default {
   created() {
     window.addEventListener("resize", this.handleResize);
     window.addEventListener("scroll", this.handleScroll);
+    window.addEventListener("orientationchange", this.handleResize);
+
     this.handleResize();
   },
   destroyed() {
     window.removeEventListener("resize", this.handleResize);
     window.removeEventListener("scroll", this.handleScroll);
+    window.removeEventListener("orientationchange", this.handleResize);
   },
   components: {
     TheHead,
@@ -45,17 +48,16 @@ export default {
   data() {
     return {
       item: "eyes",
-      iframe: { width: 0, height: 0, showIframe: true },
       footer: true,
-      height: window.innerHeight
+      width: 0,
+      height: 0,
+      showIframe: true
     };
   },
   methods: {
     handleResize() {
-      this.iframe.width = window.innerWidth;
-      this.$nextTick(() => {
-        this.height = window.innerHeight;
-      });
+      this.width = window.innerWidth;
+      this.height = window.innerHeight;
     },
     handleScroll() {
       let id = window.setTimeout(function() {}, 0);
@@ -72,9 +74,7 @@ export default {
     ...mapGetters(["link"]),
     divStyle: function() {
       const scale = 1;
-      return `width:${
-        this.$mq == "sm" ? screen.width * scale : this.iframe.width
-      }px;
+      return `width:${this.$mq == "sm" ? screen.width * scale : this.width}px;
       height:${this.height * scale}px;
       opacity:${this.$route.path.includes("play") ? 1 : "1"};
       -moz-transform: scale(${1 / scale});
@@ -90,7 +90,7 @@ export default {
       const inPlay = this.$route.path.includes("play");
       inPlay && this.$mq == "sm" ? (scale = 2) : (scale = 1);
       return `width:${
-        this.$mq == "sm" ? screen.width * scale : this.iframe.width * scale
+        this.$mq == "sm" ? screen.width * scale : this.width * scale
       }px;
       height:${this.height * scale}px;
       opacity:${inPlay ? 1 : 0.4};
