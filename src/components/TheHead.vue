@@ -1,15 +1,17 @@
 <template>
   <div class="cl">
     <div class="flex justify-center bg-white-50">
-      <router-link :class="style" to="/work" exact>Work</router-link>
-      <router-link :class="style" to="/music">Music</router-link>
-      <router-link :class="style" to="/drawings">Drawings</router-link>
-      <router-link :class="style" :to="play">Play!</router-link>
+      <router-link :class="classBySize" to="/work" exact>Work</router-link>
+      <router-link :class="classBySize" to="/music">Music</router-link>
+      <router-link :class="classBySize" to="/drawings">Drawings</router-link>
+      <router-link :class="classBySize" :to="play">Play!</router-link>
     </div>
   </div>
 </template>
 
 <script>
+let mql = window.matchMedia("(prefers-color-scheme: dark)");
+
 export default {
   name: "Head",
   props: {
@@ -27,7 +29,7 @@ export default {
     };
   },
   computed: {
-    style: function() {
+    classBySize: function() {
       if (this.$mq == "sm") {
         return this.class.sm;
       } else {
@@ -43,6 +45,11 @@ export default {
 </script>
 
 <style>
+.bg-white-50 {
+  background-color: var(--bg-color);
+  color: var(--color);
+}
+
 .min {
   min-width: 5rem;
   max-width: 10rem;
@@ -54,7 +61,7 @@ export default {
   margin-right: auto;
 }
 .router-link-active {
-  background: white;
+  background: var(--bg-color-white);
   text-decoration: line-through;
 }
 </style>

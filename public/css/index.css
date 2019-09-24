@@ -2,6 +2,7 @@
   font-family: 'Roboto Mono','Roboto Mono', monospace,'helvetica neue', helvetica, sans-serif;
   box-sizing: border-box !important;
 }
+
 p,a,span,h2,h3,dd{
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
@@ -9,6 +10,22 @@ p,a,span,h2,h3,dd{
        -moz-user-select: none; /* Firefox */
         -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none;
+}
+
+:root {
+  --bg-color-white:white;
+  --bg-color: rgba(255, 255, 255, 0.5);
+  --bg-hover:rgba(250, 250, 250, 0.85);
+  --color: black;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root{
+    --bg-color-white: black;
+    --bg-color: rgba(0, 0, 0, 0.5);
+    --color: white;
+    --bg-hover:rgba(0,0,0, 0.85);
+  }
 }
 
 #wrap {
@@ -35,7 +52,7 @@ p,a,span,h2,h3,dd{
 }
 a:hover {
   text-decoration: line-through;
-  background-color:rgba(250, 250, 250, 0.85);
+  background-color: var(--bg-hover);
 }
 
 
