@@ -88,7 +88,7 @@
                 >
                   <p class="truncate w-60">{{ person.role }}:</p>
                   <p class="truncate">
-                    <a target="_blank" class="ml3 black" :href="person.link">
+                    <a target="_blank" class="ml3 black-90" :href="person.link">
                       {{ person.name }}
                     </a>
                   </p>
@@ -182,6 +182,9 @@ export default {
 };
 </script>
 <style>
+span.black {
+  color: black;
+}
 .loading {
   width: 100%;
   height: 30px;

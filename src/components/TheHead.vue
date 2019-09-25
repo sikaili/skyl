@@ -61,7 +61,7 @@ export default {
   margin-right: auto;
 }
 .router-link-active {
-  background: var(--bg-color-white);
+  background: var(--bg-white-80);
   text-decoration: line-through;
 }
 </style>

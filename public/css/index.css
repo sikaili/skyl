@@ -17,14 +17,19 @@ p,a,span,h2,h3,dd{
   --bg-color: rgba(255, 255, 255, 0.5);
   --bg-hover:rgba(250, 250, 250, 0.85);
   --color: black;
+  --bg-white-80: rgba(255,255,255,0.8);
+  --bg-black-10: rgba(0,0,0,0.1);
 }
 
 @media (prefers-color-scheme: dark) {
   :root{
     --bg-color-white: black;
     --bg-color: rgba(0, 0, 0, 0.5);
-    --color: white;
-    --bg-hover:rgba(0,0,0, 0.85);
+    --color: #ddd;
+    --bg-hover:rgba(0,0,0, 0.5);
+    --bg-white-80: rgba(0,0,0,0.6);
+    --bg-black-10: rgba(255,255,255,0.3);
+
   }
 }
 
@@ -119,7 +124,13 @@ a:hover {
 }
 
 .black {
-  color: #000;
+  color: var(--color);
+}
+.bg-white-80{
+  background-color: var(--bg-white-80);
+}
+.bg-black-10{
+  background-color: var(--bg-black-10);
 }
 
 .gray {
