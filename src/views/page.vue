@@ -69,7 +69,7 @@
           </div>
         </div>
         <br />
-        <ButtonGoBack />
+        <ButtonGoBack @click="back" />
         <span
           v-if="item.link.split(':')[0] == `https`"
           @click="play"

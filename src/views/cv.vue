@@ -1,10 +1,14 @@
 <template>
-  <div class="bg-white-70" :class="$mq !== `lg` ? 'ma0' : 'ma6 mt4'">
+  <div class="bg-white-70 fr" :class="$mq !== `lg` ? 'ma0' : 'ma6 mt4 mw8'">
     <i
       @click="$router.go(-1)"
       class="fr right-0 pr2 f2 icon ion-md-close gray c-animate hover-black"
     ></i>
-    <div :class="$mq !== `lg` ? 'pv4 mb5 ph1' : 'pa5'">
+    <div
+      :class="
+        $mq !== `lg` ? 'pv4 mb5 ph1' : 'pa5 flex justify-center flex-column'
+      "
+    >
       <h1 class="fw3">Expérience Professionnelle</h1>
       <section class="pv2">
         <h1>
@@ -102,7 +106,7 @@
         :caption="formation.place"
         :content="formation.content"
       />
-      <ButtonGoBack @click="$router.replace({ path: '/' })" class="mv5" />
+      <ButtonGoBack @click="$router.go(-1)" class="mv5" />
     </div>
   </div>
 </template>
