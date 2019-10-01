@@ -2,11 +2,14 @@
   <div>
     <h1
       @click="shellMxn.installApp()"
-      :class="$mq == `sm` ? style.s.h1 : style.d.h1"
+      :class="$mq == `sm` ? style.mobile.h1 : style.desktop.h1"
     >
       LI Sikai
     </h1>
-    <p @click="$router.push('cv')" :class="$mq == `sm` ? style.s.p : style.d.p">
+    <p
+      @click="$router.push('cv')"
+      :class="$mq == `sm` ? style.mobile.p : style.desktop.p"
+    >
       Technologist, interaction designer based in Paris, I make music & new
       media art.
     </p>
@@ -21,11 +24,11 @@ export default {
   data() {
     return {
       style: {
-        s: {
+        mobile: {
           h1: "tc autoM f4 b white",
           p: "bg-black-10 tl white autoM f6 ph3"
         },
-        d: { h1: "tc autoM f2 b white", p: "bg-black-10 tl white autoM" }
+        desktop: { h1: "tc autoM f2 b white", p: "bg-black-10 tl white autoM" }
       }
     };
   },

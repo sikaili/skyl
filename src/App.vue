@@ -1,19 +1,19 @@
 <template>
   <div id="app">
     <TheHead :link="link" />
-    <div v-if="(showIframe = true)" class="back bw0" :style="divStyle">
+    <div v-if="(showIframe = true)" class="back bw0" :style="iframeContainer">
       <iframe
         class="back bw0"
         scrolling="no"
         scroll="no"
         :src="link"
-        :style="iframeStyle"
+        :style="canvas"
       ></iframe>
     </div>
-    <transition name="slide-fade1">
+    <transition name="slide-fade-main">
       <router-view />
     </transition>
-    <transition name="slide-fade1">
+    <transition name="slide-fade-main">
       <TheFooter v-if="footer && $mq == `lg`" />
     </transition>
   </div>
@@ -72,7 +72,7 @@ export default {
   },
   computed: {
     ...mapGetters(["link"]),
-    divStyle: function() {
+    iframeContainer: function() {
       const scale = 1;
       return `width:${this.$mq == "sm" ? screen.width * scale : this.width}px;
       height:${this.height * scale}px;
@@ -85,7 +85,7 @@ export default {
       -webkit-transform-origin: 0 0;
       `;
     },
-    iframeStyle: function() {
+    canvas: function() {
       let scale = 1;
       const inPlay = this.$route.path.includes("play");
       inPlay && this.$mq == "sm" ? (scale = 2) : (scale = 1);
@@ -107,13 +107,13 @@ export default {
 </script>
 
 <style>
-.slide-fade1-enter-active {
+.slide-fade-main-enter-active {
   transition: all 0.2s ease;
 }
-.slide-fade1-leave-active {
+.slide-fade-main-leave-active {
   transition: all 0s;
 }
-.slide-fade1-enter, .slide-fade1-leave-to
+.slide-fade-main-enter, .slide-fade-main-leave-to
 /* .slide-fade-leave-active below version 2.1.8 */ {
   transform: translateY(-30px);
   opacity: 0;
