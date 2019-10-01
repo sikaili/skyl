@@ -80,7 +80,6 @@
         </span>
       </div>
     </div>
-    <!-- <img :src="require('@/assets/2.png')" class="back iframe idiv" /> -->
   </div>
 </template>
 
@@ -94,14 +93,12 @@ export default {
   },
   data() {
     return {
-      id: this.$route.params.id,
-      obj: this.$store.state
+      id: this.$route.params.id
     };
   },
   methods: {
     ...mapActions(["setLink"]),
     back() {
-      // this.$router.go(-1);
       this.$router.replace({ path: `/${this.$route.path.split("/")[1]}/` });
     },
     play() {
@@ -111,11 +108,11 @@ export default {
   },
   computed: {
     item: function() {
-      const arr = this.obj[this.$route.path.split("/")[1]];
-      if (this.id > arr.length) {
+      const itemsArray = this.$store.state[this.$route.path.split("/")[1]];
+      if (this.id > itemsArray.length) {
         return "ERROR!";
       }
-      let dump = arr.find(a => a.id == this.$route.params.id);
+      let dump = itemsArray.find(a => a.id == this.$route.params.id);
       return dump;
     }
   }
