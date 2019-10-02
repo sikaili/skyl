@@ -22,9 +22,3 @@ window.vm = new Vue({
   store,
   render: h => h(App)
 }).$mount("#app");
-
-window.addEventListener("beforeinstallprompt", e => {
-  e.preventDefault();
-  console.log(e);
-  window.vm.deferredInstallPrompt = e;
-});
