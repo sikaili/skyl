@@ -19,7 +19,7 @@ export default {
         { link: "https://apps.skyl.fr/e-minor/" },
         { link: "https://apps.skyl.fr/blood-particles-2017/" },
         { link: "https://apps.skyl.fr/c-syn/" },
-        // { link: "https://apps.skyl.fr/happy-birthday-mon-zhu/" },
+        { link: "https://apps.skyl.fr/p/" },
         { link: "https://apps.skyl.fr/eyes-sand-sound/" },
         { link: "https://apps.skyl.fr/eyes-macro/" },
         { link: "https://apps.skyl.fr/fractal-circles/" },
