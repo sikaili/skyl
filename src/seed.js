@@ -3,7 +3,7 @@ export const seedData = {
     {
       name: `Ocean Loop`,
       des: `An audio-visual experiment about ocean plastic pollution, randomly generated graphics, sound of plastic particles.`,
-      link: `https://ocean.skylstudio.com`,
+      link: `https://apps.skyl.fr/plastic-ocean`,
       img: require(`@/assets/plastic-ocean1.jpg`),
       year: 2019,
       credits: [
@@ -147,70 +147,70 @@ export const seedData = {
     // }
   ],
   music: [
-    {
-      name: `Dancers`,
-      year: `2018`,
-      des: `Music for 'The Ordinary Circus Girl', a VR short film by Fheel Concepts.`,
-      link: `https://apps.skyl.fr/dancers/`,
-      img: require(`@/assets/dancers.png`),
-      credits: [
-        {
-          role: `Composition & Production`,
-          name: `Sikai Li`,
-          link: `https://skyl.fr`
-        },
-        {
-          role: `Commission`,
-          name: `Corinne Linder`,
-          link: `https://www.fheelconcepts.com`
-        },
-        {
-          role: `Samples`,
-          name: `Fheel Concepts`,
-          link: `https://www.fheelconcepts.com`
-        },
-        {
-          role: `Music for VR Film`,
-          name: `The Ordinary Circus Girl`
-        }
-      ],
-      show: false
-    },
-    {
-      name: `Plastic Ocean`,
-      year: `2018`,
-      des: `A piece of electroacoustic music, sound recorded from plastic objects.`,
-      link: ``,
-      img: require(`@/assets/plastic-ocean.jpg`),
-      show: false,
-      credits: [
-        {
-          role: `Composition & Production`,
-          name: `Sikai Li`,
-          link: `https://skyl.fr`
-        },
-        {
-          role: `Host`,
-          name: `thecamp`,
-          link: `https://www.thecamp.fr`
-        }
-      ]
-    },
-    {
-      name: `Joker`,
-      year: `2018`,
-      link: `https://apps.skyl.fr/joker/`,
-      des: `未知的力量`,
-      img: require(`@/assets/joker.jpg`),
-      show: false,
-      credits: [
-        {
-          role: `Composition & Production`,
-          name: `Sikai Li`,
-          link: `https://skyl.fr`
-        }
-      ]
-    },
+    // {
+    //   name: `Dancers`,
+    //   year: `2018`,
+    //   des: `Music for 'The Ordinary Circus Girl', a VR short film by Fheel Concepts.`,
+    //   link: `https://apps.skyl.fr/dancers/`,
+    //   img: require(`@/assets/dancers.png`),
+    //   credits: [
+    //     {
+    //       role: `Composition & Production`,
+    //       name: `Sikai Li`,
+    //       link: `https://skyl.fr`
+    //     },
+    //     {
+    //       role: `Commission`,
+    //       name: `Corinne Linder`,
+    //       link: `https://www.fheelconcepts.com`
+    //     },
+    //     {
+    //       role: `Samples`,
+    //       name: `Fheel Concepts`,
+    //       link: `https://www.fheelconcepts.com`
+    //     },
+    //     {
+    //       role: `Music for VR Film`,
+    //       name: `The Ordinary Circus Girl`
+    //     }
+    //   ],
+    //   show: false
+    // },
+    // {
+    //   name: `Plastic Ocean`,
+    //   year: `2018`,
+    //   des: `A piece of electroacoustic music, sound recorded from plastic objects.`,
+    //   link: ``,
+    //   img: require(`@/assets/plastic-ocean.jpg`),
+    //   show: false,
+    //   credits: [
+    //     {
+    //       role: `Composition & Production`,
+    //       name: `Sikai Li`,
+    //       link: `https://skyl.fr`
+    //     },
+    //     {
+    //       role: `Host`,
+    //       name: `thecamp`,
+    //       link: `https://www.thecamp.fr`
+    //     }
+    //   ]
+    // },
+    // {
+    //   name: `Joker`,
+    //   year: `2018`,
+    //   link: `https://apps.skyl.fr/joker/`,
+    //   des: `未知的力量`,
+    //   img: require(`@/assets/joker.jpg`),
+    //   show: false,
+    //   credits: [
+    //     {
+    //       role: `Composition & Production`,
+    //       name: `Sikai Li`,
+    //       link: `https://skyl.fr`
+    //     }
+    //   ]
+    // },
     {
       name: `Saturation Chinoise`,
       year: `2018`,

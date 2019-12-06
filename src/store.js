@@ -7,7 +7,7 @@ Vue.use(Vuex);
 const state = {
   work: seedData.work,
   music: seedData.music,
-  activeLink: "https://apps.skyl.fr/p"
+  activeLink: "https://eyes.skyl.fr"
 };
 const mutations = {
   TOGGLE_ITEM(state, payload) {
