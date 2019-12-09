@@ -74,7 +74,7 @@ export default {
       // Code that will run only after the
       // entire view has been rendered
       if (this.startLink.split(":")[0].includes(`https`)) {
-        this.$root.$emit("itemDesOpen", this.startLink);
+        this.$store.dispatch("setLink", this.startLink);
       }
     });
   }
