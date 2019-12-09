@@ -1,5 +1,5 @@
 <template>
-  <SideMenu :linksArr="linksArr" :givenLink="startLink" />
+  <SideMenu :linksArr="linksArr" :givenLink="lauchLink" />
 </template>
 
 <script>
@@ -34,33 +34,35 @@ export default {
   },
   methods: {
     getName: function(link) {
-      let dump = link.split("//");
-      if (!dump[0].includes("https")) {
+      let nameStr = link.split("//");
+      if (!nameStr[0].includes("https")) {
         return "";
       }
-      if (dump[1].includes(`apps`)) {
-        dump = link.split("/");
-        dump = dump[dump.length - 2];
+      // links from apps github host
+      if (nameStr[1].includes(`apps`)) {
+        nameStr = link.split("/");
+        nameStr = nameStr[nameStr.length - 2];
+        // links from subdomain
       } else {
-        dump = dump[1].split(".")[0];
+        nameStr = nameStr[1].split(".")[0];
       }
-      return dump;
+      return nameStr;
     }
   },
   computed: {
     linksArr: function() {
       // deep copy dataObj
       const data = JSON.parse(JSON.stringify(this.$store.state));
-      const arr = [...data.work].concat([...data.music]);
-      const dump = arr.concat(this.links);
-      dump.forEach(a => {
-        a.id ? (a.name = a.id) : (a.name = this.getName(a.link));
+      const dataAllCategories = [...data.work].concat([...data.music]);
+      const linksArr = dataAllCategories.concat(this.links);
+      linksArr.forEach(item => {
+        item.id ? (item.name = item.id) : (item.name = this.getName(item.link));
       });
       // sort items by name using localeCompare
-      dump.sort((a, b) => a.name.localeCompare(b.name));
-      return dump;
+      linksArr.sort((a, b) => a.name.localeCompare(b.name));
+      return linksArr;
     },
-    startLink: function() {
+    lauchLink: function() {
       let dump = this.linksArr.find(a => a.name == this.$route.params.id);
       if (!dump) {
         return "";
@@ -71,10 +73,8 @@ export default {
   },
   mounted() {
     this.$nextTick(function() {
-      // Code that will run only after the
-      // entire view has been rendered
-      if (this.startLink.split(":")[0].includes(`https`)) {
-        this.$store.dispatch("setLink", this.startLink);
+      if (this.lauchLink.split(":")[0].includes(`https`)) {
+        this.$store.dispatch("setLink", this.lauchLink);
       }
     });
   }

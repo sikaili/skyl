@@ -151,13 +151,6 @@ export default {
       item.show = !item.show;
       this.setLink(item.link);
     },
-    load(itemToEmit) {
-      this.loadingAnimation = true;
-      setTimeout(() => {
-        this.$root.$emit("itemDesOpen", itemToEmit),
-          (this.loadingAnimation = false);
-      }, 1000);
-    },
     goToPage(itemToEmit) {
       this.$router.push({
         name: this.mName.toLowerCase(),
