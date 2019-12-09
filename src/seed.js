@@ -147,6 +147,21 @@ export const seedData = {
     // }
   ],
   music: [
+    {
+      name: `P`,
+      year: `2019`,
+      des: `Speed up a single sound object, move and compose your own combination`,
+      link: `https://apps.skyl.fr/p/`,
+      img: require(`@/assets/p.png`),
+      credits: [
+        {
+          role: `Code`,
+          name: `Sikai Li`,
+          link: `https://skyl.fr`
+        }
+      ],
+      show: false
+    },
     // {
     //   name: `Dancers`,
     //   year: `2018`,
