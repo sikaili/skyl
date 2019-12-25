@@ -59,7 +59,7 @@
                   </span>
                 </p>
               </blockquote>
-              <div class="w-100 overflow-auto">
+              <div class="w-100 overflow-auto mb2">
                 <a
                   :href="item.link"
                   target="_blank"
