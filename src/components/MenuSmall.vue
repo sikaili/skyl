@@ -1,5 +1,5 @@
 <template>
-  <div class="cl">
+  <div class="Menu cl">
     <intro />
     <div v-if="menuShow" class="w-100 bg-white-80">
       <div

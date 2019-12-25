@@ -1,5 +1,5 @@
 <template>
-  <div class="cl">
+  <div class="Menu cl">
     <intro />
     <div
       @click="menuShow = !menuShow"
