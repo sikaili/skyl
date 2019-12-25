@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <Drawings :drawings="drawings" />
-  </div>
+  <Drawings :drawings="drawings" />
 </template>
 
 <script>

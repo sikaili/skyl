@@ -5,7 +5,7 @@
       @click="menuShow = !menuShow"
       class="fl bg-black-50 w-40 flex justify-end"
     >
-      <h1 class="ph5 f3 white tr">{{ mName }}</h1>
+      <h1 class="ph5 f3 white tr">{{ type }}</h1>
     </div>
     <div v-if="menuShow" class="fl w-20 bg-white-80">
       <div class="flex flex-column justify-center">
@@ -45,7 +45,7 @@
             Loading...
           </div>
         </transition>
-        <div v-for="(w, index) in items" :key="mName + index">
+        <div v-for="(w, index) in items" :key="type + index">
           <transition name="slide-fade">
             <div
               class="fl w-100 w-100-ns tl ma0"
@@ -112,17 +112,17 @@ export default {
     intro
   },
   mounted() {
-    this.toggleItem({ name: this.mName.toLowerCase(), obj: this.items[0] });
+    this.toggleItem({ name: this.type.toLowerCase(), obj: this.items[0] });
   },
   props: {
-    mName: {
+    type: {
       type: String,
       required: true
     }
   },
   data() {
     return {
-      name: this.mName.toLowerCase(),
+      name: this.type.toLowerCase(),
       style: null,
       menuShow: true,
       loadingAnimation: false,

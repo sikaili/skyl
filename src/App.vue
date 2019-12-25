@@ -20,8 +20,7 @@
 </template>
 
 <script>
-// eslint-disable-next-line
-document.ontouchmove = function(e) {
+document.ontouchmove = function(e) { //eslint-disable-line
   return true;
 };
 import { mapGetters } from "vuex";
@@ -33,7 +32,6 @@ export default {
     window.addEventListener("resize", this.handleResize);
     window.addEventListener("scroll", this.handleScroll);
     window.addEventListener("orientationchange", this.handleResize);
-
     this.handleResize();
   },
   destroyed() {
@@ -47,7 +45,6 @@ export default {
   },
   data() {
     return {
-      item: "eyes",
       footer: true,
       width: 0,
       height: 0,
@@ -113,8 +110,8 @@ export default {
 .slide-fade-main-leave-active {
   transition: all 0s;
 }
-.slide-fade-main-enter, .slide-fade-main-leave-to
-/* .slide-fade-leave-active below version 2.1.8 */ {
+.slide-fade-main-enter,
+.slide-fade-main-leave-to {
   transform: translateY(-30px);
   opacity: 0;
 }

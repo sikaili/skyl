@@ -47,7 +47,7 @@
             Loading...
           </div>
         </transition>
-        <div v-for="(w, index) in items" :key="mName + index">
+        <div v-for="(w, index) in items" :key="type + index">
           <transition name="slide-fade">
             <div class="fl w-100 w-100-ns tl ma0" v-show="w.show && menuShow">
               <div class="pa4">
@@ -110,17 +110,17 @@ export default {
     intro
   },
   mounted() {
-    this.toggleItem({ name: this.mName.toLowerCase(), obj: this.items[0] });
+    this.toggleItem({ name: this.type.toLowerCase(), obj: this.items[0] });
   },
   props: {
-    mName: {
+    type: {
       type: String,
       required: true
     }
   },
   data() {
     return {
-      name: this.mName.toLowerCase(),
+      name: this.type.toLowerCase(),
       style: null,
       menuShow: true,
       loadingAnimation: false,

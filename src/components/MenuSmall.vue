@@ -1,7 +1,7 @@
 <template>
   <div class="Menu cl">
     <intro />
-    <div v-if="menuShow" class="w-100 bg-white-80">
+    <div class="Menu__items w-100 bg-white-80" v-if="menuShow">
       <div
         v-for="item in items"
         :key="item.id"
@@ -33,7 +33,10 @@
           </div>
         </a>
         <transition name="slide-fade">
-          <div class="bg-black-10 w-100 tl ma0" v-show="item.show">
+          <div
+            class="Menu__details bg-black-10 w-100 tl ma0"
+            v-show="item.show"
+          >
             <div class="ph4 pv3">
               <!-- <span class="f4 f1-ns b dib pr3">{{ item.name }}</span> -->
               <blockquote class="ph0 pb2 mb0 bb mh0 mt0">
@@ -100,10 +103,10 @@
           d="M16 0 A16 16 0 0 1 16 32 A16 16 0 0 1 16 0 M19 15 L13 15 L13 26 L19 26 z M16 6 A3 3 0 0 0 16 12 A3 3 0 0 0 16 6"
         />
       </svg>
-      <span class="lh-title ml3"
+      <span class="MenuSmall__Notification lh-title ml3"
         >Please come back on a desktop for better expereince</span
       >
-      <p class="pl3" @click="alert = false">X</p>
+      <p class="pl3" @click="disableNotification()">X</p>
     </div>
   </div>
 </template>
@@ -118,14 +121,14 @@ export default {
     intro
   },
   props: {
-    mName: {
+    type: {
       type: String
     }
   },
   data() {
     return {
-      name: this.mName.toLowerCase(),
-      alert: true,
+      name: this.type.toLowerCase(),
+      alert: !localStorage.getItem("propose-desktop"),
       menuShow: true,
       loadingAnimation: false,
       bwhite: "bg-white"
@@ -146,6 +149,10 @@ export default {
       this.setLink(item.link);
       this.$router.push({ path: `/play/${item.id}` });
     },
+    disableNotification() {
+      localStorage.setItem("propose-desktop", true);
+      this.alert = false;
+    },
     handleClick(item) {
       this.items.filter(a => a != item).map(a => (a.show = false));
       item.show = !item.show;
@@ -153,7 +160,7 @@ export default {
     },
     goToPage(itemToEmit) {
       this.$router.push({
-        name: this.mName.toLowerCase(),
+        name: this.type.toLowerCase(),
         params: { id: itemToEmit }
       });
     }
