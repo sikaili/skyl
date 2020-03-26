@@ -14,7 +14,7 @@
         <a
           href="#"
           @click="handleClick(item)"
-          v-for="(item, n) in items"
+          v-for="(item, n) in menuItems"
           :key="item.id + n"
           class="pa1 tc link"
           :class="item.show ? 'router-link-active' : ''"
@@ -47,7 +47,7 @@
             Loading...
           </div>
         </transition>
-        <div v-for="(w, index) in items" :key="type + index">
+        <div v-for="(w, index) in menuItems" :key="type + index">
           <transition name="slide-fade">
             <div class="fl w-100 w-100-ns tl ma0" v-show="w.show && menuShow">
               <div class="pa4">
@@ -110,7 +110,7 @@ export default {
     intro
   },
   mounted() {
-    this.toggleItem({ name: this.type.toLowerCase(), obj: this.items[0] });
+    this.toggleItem({ name: this.type.toLowerCase(), obj: this.menuItems[0] });
   },
   props: {
     type: {
@@ -132,7 +132,7 @@ export default {
       musicItems: `musicItems`,
       workItems: "workItems"
     }),
-    items() {
+    menuItems() {
       return this[this.name + "Items"];
     }
   },
@@ -143,7 +143,7 @@ export default {
       this.$router.push({ path: `/play/${item.id}` });
     },
     handleClick(item) {
-      this.items.filter(a => a != item).map(a => (a.show = false));
+      this.menuItems.filter(a => a != item).map(a => (a.show = false));
       item.show = !item.show;
       this.setLink(item.link);
     },

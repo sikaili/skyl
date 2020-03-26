@@ -1,7 +1,7 @@
 import Vuex from "vuex";
 import Vue from "vue";
 import { seedData } from "@/seed.js";
-
+console.log(JSON.stringify(seedData));
 Vue.use(Vuex);
 
 const state = {

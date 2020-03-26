@@ -1,9 +1,9 @@
 <template>
   <div class="Menu cl">
     <intro />
-    <div class="Menu__items w-100 bg-white-80" v-if="menuShow">
+    <div class="Menu__menuItems w-100 bg-white-80" v-if="menuShow">
       <div
-        v-for="item in items"
+        v-for="item in menuItems"
         :key="item.id"
         class="flex flex-column justify-center"
       >
@@ -90,7 +90,7 @@
     </div>
     <div
       v-show="alert"
-      class="flex items-center justify-center pa3 f6 ph3 bg-black-30 white"
+      class="flex menuItems-center justify-center pa3 f6 ph3 bg-black-30 white"
     >
       <svg
         class="w1"
@@ -139,7 +139,7 @@ export default {
       musicItems: `musicItems`,
       workItems: "workItems"
     }),
-    items() {
+    menuItems() {
       return this[this.name + "Items"];
     }
   },
@@ -154,7 +154,7 @@ export default {
       this.alert = false;
     },
     handleClick(item) {
-      this.items.filter(a => a != item).map(a => (a.show = false));
+      this.menuItems.filter(a => a != item).map(a => (a.show = false));
       item.show = !item.show;
       this.setLink(item.link);
     },
