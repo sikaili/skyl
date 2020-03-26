@@ -25,7 +25,8 @@ export default {
         { link: "https://apps.skyl.fr/fractal-circles/" },
         { link: "https://apps.skyl.fr/strange-eyes/" },
         { link: "https://apps.skyl.fr/glitch/" },
-        { link: "https://apps.skyl.fr/wind/" }
+        { link: "https://apps.skyl.fr/wind/" },
+        { link: "https://apps.skyl.fr/corogo/" }
       ]
     };
   },
