@@ -1,3 +1,3 @@
 import shellMxn from "@/js/mixins/shell";
-
-export { shellMxn };
+import * as data from "@/js/mixins/data";
+export { shellMxn, data };
