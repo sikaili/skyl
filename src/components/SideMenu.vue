@@ -92,9 +92,11 @@ export default {
       return dump && dump.name ? dump.name : "list";
     },
     handlePClick(link) {
-      this.displayList = false;
-      this.setActiveLink(link);
-      this.$router.replace({ params: { id: this.getName(this.activeLink) } });
+      if (link != this.activeLink) {
+        this.displayList = false;
+        this.setActiveLink(link);
+        this.$router.replace({ params: { id: this.getName(this.activeLink) } });
+      }
     },
     // the right toggle
     toggle() {
