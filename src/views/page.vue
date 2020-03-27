@@ -6,7 +6,7 @@
       :class="$mq == `sm` ? `w-100` : ''"
     >
       <i
-        @click="back"
+        @click="back()"
         class="fr right-0 pr2 f2 icon ion-md-close gray c-animate hover-black"
       ></i>
       <div
@@ -69,7 +69,14 @@
           </div>
         </div>
         <br />
-        <ButtonGoBack @click="back" />
+        <span
+          class="f5 no-underline white bg-black-40 bg-animate hover-bg-black hover-white inline-flex items-center pa3 border-box mr1"
+          @click="back()"
+        >
+          <i class="icon ion-md-return-left"></i>
+
+          <span class="pl1">Return</span>
+        </span>
         <span
           v-if="item.link.split(':')[0] == `https`"
           @click="play"
@@ -84,13 +91,9 @@
 </template>
 
 <script>
-import ButtonGoBack from "@/components/ButtonGoBack.vue";
 import { mapActions } from "vuex";
 export default {
   name: "page",
-  components: {
-    ButtonGoBack
-  },
   data() {
     return {
       id: this.$route.params.id

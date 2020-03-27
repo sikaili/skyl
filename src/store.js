@@ -1,13 +1,12 @@
 import Vuex from "vuex";
 import Vue from "vue";
-// import { seedData } from "@/seed.js";
-// console.log(JSON.stringify(seedData));
+import { seedData } from "@/seed.js";
 
 Vue.use(Vuex);
 
 const state = {
-  work: [],
-  music: [],
+  work: seedData.work,
+  music: seedData.music,
   activeLink: "https://eyes.skyl.fr",
   loading: true
 };

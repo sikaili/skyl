@@ -37,13 +37,15 @@ export default {
       this.$router.push({ path: `/play/${item.id}` });
     },
     setItemActive(item, options) {
+      this.$router
+        .push({ name: this.name, params: { id: item.id } })
+        .catch(err => {});
       if (options === "touchScreen") {
         this.menuItems.filter(a => a != item).map(a => (a.show = false));
         item.show = !item.show;
         this.setActiveLink(item.link);
       } else {
         this.toggleItem({ name: this.name, obj: item });
-        this.$router.push({ name: this.name, params: { id: item.id } });
       }
     },
     handleMouseIn(itemToEmit) {

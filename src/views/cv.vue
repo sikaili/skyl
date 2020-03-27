@@ -106,7 +106,14 @@
         :caption="formation.place"
         :content="formation.content"
       />
-      <ButtonGoBack @click="$router.go(-1)" class="mv5" />
+      <span
+        class="f5 no-underline white bg-black-40 bg-animate hover-bg-black hover-white inline-flex items-center pa3 border-box mr1"
+        @click="$router.go(-1)"
+      >
+        <i class="icon ion-md-return-left"></i>
+
+        <span class="pl1">Return</span>
+      </span>
     </div>
   </div>
 </template>
@@ -116,15 +123,13 @@ import Card from "@/components/Card.vue";
 import Table from "@/components/Table.vue";
 import SecondList from "@/components/SecondList.vue";
 import TextContent from "@/components/TextContent.vue";
-import ButtonGoBack from "@/components/ButtonGoBack.vue";
 
 export default {
   components: {
     Card,
     Table,
     SecondList,
-    TextContent,
-    ButtonGoBack
+    TextContent
   },
   data() {
     return {

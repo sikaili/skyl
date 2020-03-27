@@ -8,7 +8,6 @@
         class="flex flex-column justify-center"
       >
         <a
-          href="#"
           @click="setItemActive(item, 'touchScreen')"
           class="pa1 tc link"
           :class="item.show ? 'router-link-active' : ''"
