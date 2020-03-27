@@ -40,12 +40,11 @@ export default {
       if (options === "touchScreen") {
         this.menuItems.filter(a => a != item).map(a => (a.show = false));
         item.show = !item.show;
-        this.$router.push({ name: this.name, params: { id: item.id } });
         this.setActiveLink(item.link);
+      } else {
+        this.toggleItem({ name: this.name, obj: item });
+        this.$router.push({ name: this.name, params: { id: item.id } });
       }
-      this.toggleItem({ name: this.name, obj: item });
-      this.$router.push({ name: this.name, params: { id: item.id } });
-      this.setActiveLink(item.link);
     },
     handleMouseIn(itemToEmit) {
       if (itemToEmit) {

@@ -12,7 +12,7 @@
     <div v-if="menuShow" class="fl w-40 bg-white-80">
       <div class="flex flex-column justify-center">
         <a
-          @click="setItemActive(item, 'toucheScreen')"
+          @click="setItemActive(item, 'touchScreen')"
           v-for="(item, n) in menuItems"
           :key="item.id + n"
           class="pa1 tc link"

@@ -9,7 +9,7 @@
       >
         <a
           href="#"
-          @click="setItemActive(item)"
+          @click="setItemActive(item, 'touchScreen')"
           class="pa1 tc link"
           :class="item.show ? 'router-link-active' : ''"
         >
@@ -134,11 +134,6 @@ export default {
     disableNotification() {
       localStorage.setItem("propose-desktop", true);
       this.alert = false;
-    },
-    setItemActive(item) {
-      this.menuItems.filter(a => a != item).map(a => (a.show = false));
-      item.show = !item.show;
-      this.setActiveLink(item.link);
     }
   }
 };
