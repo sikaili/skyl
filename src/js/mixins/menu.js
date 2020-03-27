@@ -30,8 +30,16 @@ export default {
       return this.type.toLowerCase();
     }
   },
+  created() {
+    if (this.$mq !== "sm") {
+      this.toggleItem({
+        name: this.name,
+        obj: this.menuItems[0]
+      });
+    }
+  },
   methods: {
-    ...mapActions(["setActiveLink", "toggleItem"]),
+    ...mapActions(["setActiveLink", "toggleItem", "changeLoadingState"]),
     play(item) {
       this.setActiveLink(item.link);
       this.$router.push({ path: `/play/${item.id}` });

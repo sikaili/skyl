@@ -1,5 +1,5 @@
 <template>
-  <SideMenu :linksArr="links" />
+  <SideMenu />
 </template>
 
 <script>
@@ -17,22 +17,22 @@ export default {
   },
   created() {
     dataMxn.getData("./data/links.json").then(res => {
-      let links = res;
+      let extraIframeLinks = res;
+      // get all links
       const data = JSON.parse(JSON.stringify(this.$store.state));
-      const dataAllCategories = [...data.work].concat([...data.music]);
-      const linksArr = dataAllCategories.concat(links);
-      linksArr.forEach(item => {
+      const linksFromProjects = [...data.work].concat([...data.music]);
+      const allIframeLinks = linksFromProjects.concat(extraIframeLinks);
+      allIframeLinks.forEach(item => {
         item.id
           ? (item.name = item.id)
           : (item.name = this.getNameFromLink(item.link));
       });
+      allIframeLinks.filter(iframeObject => iframeObject.name);
       // sort items by name using localeCompare
-      linksArr.sort((a, b) => a.name.localeCompare(b.name));
-      this.$store.dispatch("setIframeItems", linksArr);
-      let dump = linksArr.find(a => a.name == this.$route.params.id);
-      if (dump.link && dump.link.split(":")[0].includes(`https`)) {
-        this.$store.dispatch("setActiveLink", dump.link);
-      }
+      allIframeLinks.sort((a, b) => a.name.localeCompare(b.name));
+      this.$store.dispatch("setIframeItems", allIframeLinks);
+      let dump = allIframeLinks.find(a => a.name == this.$route.params.id);
+      if (dump && dump.link) this.$store.dispatch("setActiveLink", dump.link);
     });
   },
   methods: {

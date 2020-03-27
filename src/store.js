@@ -1,6 +1,6 @@
 import Vuex from "vuex";
 import Vue from "vue";
-import { seedData } from "@/seed.js";
+import { seedData, allIframeLinks } from "@/seed.js";
 
 Vue.use(Vuex);
 
@@ -9,7 +9,7 @@ const state = {
   music: seedData.music,
   activeLink: "https://eyes.skyl.fr",
   loading: true,
-  iframeItems: []
+  iframeItems: allIframeLinks
 };
 const mutations = {
   TOGGLE_ITEM(state, payload) {

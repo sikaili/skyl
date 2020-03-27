@@ -103,8 +103,8 @@
         />
       </svg>
       <span class="MenuSmall__Notification lh-title ml3"
-        >Please come back on a desktop for better expereince</span
-      >
+        >Please come back on a desktop for better expereince
+      </span>
       <p class="pl3" @click="disableNotification()">X</p>
     </div>
   </div>

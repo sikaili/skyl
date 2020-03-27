@@ -82,10 +82,10 @@ export default {
     ...mapActions(["setActiveLink"]),
     randomLink() {
       const n = Math.floor(Math.random() * this.iframeItems.length);
-      this.activeLink = this.iframeItems[n].link;
+      const link = this.iframeItems[n].link;
       this.displayList = false;
-      this.setActiveLink(this.activeLink);
-      this.$router.replace({ params: { id: this.getName(this.activeLink) } });
+      this.setActiveLink(link);
+      this.$router.replace({ params: { id: this.getName(link) } });
     },
     getName: function(link) {
       let dump = this.iframeItems.find(a => a.link == link);
