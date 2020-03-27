@@ -99,7 +99,10 @@ export default {
   methods: {
     ...mapActions(["setActiveLink"]),
     back() {
-      this.$router.replace({ path: `/${this.$route.params.category}/` });
+      this.$router.push({
+        name: this.$route.params.category,
+        params: this.$route.params.id
+      });
     },
     play() {
       this.setActiveLink(this.item.link);
@@ -109,7 +112,6 @@ export default {
   computed: {
     item: function() {
       const itemsArray = this.$store.state[this.$route.params.category];
-      console.log(itemsArray);
       if (this.id > itemsArray.length) {
         return "ERROR!";
       }

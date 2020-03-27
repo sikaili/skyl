@@ -58,12 +58,12 @@
           <Card
             caption="Konbini: 'Plastic Arcade', quand le jeu vidéo devient écolo"
             link="https://www.konbini.com/fr/gaming/video-plastic-arcade-quand-le-jeu-video-devient-ecolo/"
-            :img="require(`@/assets/plastic-arcade.png`)"
+            :img="require(`@/assets/img/plastic-arcade.png`)"
           />
           <Card
             caption="France 24: Sensibiliser à la pollution plastique grâce au jeu vidéo"
             link="https://www.france24.com/fr/video/20181002-sensibiliser-a-pollution-plastique-grace-jeu-video-plastic-arcade-a-the-camp"
-            :img="require(`@/assets/plastic-arcade-24.png`)"
+            :img="require(`@/assets/img/plastic-arcade-24.png`)"
           />
         </div>
         <h4 class="mt4 mb3">Responsabilités occupées :</h4>

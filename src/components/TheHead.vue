@@ -10,8 +10,6 @@
 </template>
 
 <script>
-let mql = window.matchMedia("(prefers-color-scheme: dark)");
-
 export default {
   name: "Head",
   props: {
@@ -35,10 +33,6 @@ export default {
       } else {
         return this.class.mdPlus;
       }
-    },
-    // link for navigation
-    play() {
-      // return `/play/${this.link.split("//")[1].split(".")[0]}`;
     }
   }
 };

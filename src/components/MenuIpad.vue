@@ -12,8 +12,7 @@
     <div v-if="menuShow" class="fl w-40 bg-white-80">
       <div class="flex flex-column justify-center">
         <a
-          href="#"
-          @click="handleClick(item)"
+          @click="setItemActive(item, 'toucheScreen')"
           v-for="(item, n) in menuItems"
           :key="item.id + n"
           class="pa1 tc link"
@@ -58,7 +57,7 @@
                     {{ w.des }}
                     <br />
                     <span
-                      @click="goToPage(w.id)"
+                      @click="goToPage(w)"
                       class="tc w4 f6 dim link ba bw2 ph2 pv1 mt3 dib black"
                       >Read more..</span
                     >
@@ -100,66 +99,28 @@
 </template>
 
 <script>
-// eslint-disable-next-line no-unused-vars
-import { clearTimeout } from "timers";
-import intro from "@/components/Intro.vue";
-import { mapGetters, mapActions } from "vuex";
+import { menuMxn } from "@/js/mixins";
 export default {
   name: "Menu",
-  components: {
-    intro
-  },
   props: {
     type: {
       type: String,
       required: true
     }
   },
-  watch: {
-    loading(loading) {
-      if (loading === false) {
-        this.toggleItem({
-          name: this.type.toLowerCase(),
-          obj: this.menuItems[0]
-        });
-      }
-    }
-  },
   data() {
     return {
-      name: this.type.toLowerCase(),
       style: null,
       menuShow: true,
       loadingAnimation: false,
       bwhite: "bg-white"
     };
   },
-  computed: {
-    ...mapGetters({
-      musicItems: "musicItems",
-      workItems: "workItems",
-      loading: "loading"
-    }),
-    menuItems() {
-      return this[this.name + "Items"];
-    }
-  },
+  mixins: [menuMxn],
   methods: {
-    ...mapActions(["setActiveLink", "toggleItem"]),
     play(item) {
       this.setActiveLink(item.link);
       this.$router.push({ path: `/play/${item.id}` });
-    },
-    handleClick(item) {
-      this.menuItems.filter(a => a != item).map(a => (a.show = false));
-      item.show = !item.show;
-      this.setActiveLink(item.link);
-    },
-    goToPage(itemToEmit) {
-      this.$router.push({
-        name: this.name,
-        params: { id: itemToEmit }
-      });
     }
   }
 };

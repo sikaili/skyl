@@ -9,7 +9,7 @@
       >
         <a
           href="#"
-          @click="handleClick(item)"
+          @click="setItemActive(item)"
           class="pa1 tc link"
           :class="item.show ? 'router-link-active' : ''"
         >
@@ -44,7 +44,7 @@
                   {{ item.des }}
                   <br />
                   <span
-                    @click="goToPage(item.id)"
+                    @click="goToPage(item)"
                     class="tc w4 f6 dim link ba bw2 ph2 pv1 mt3 dib black"
                     >Read more..</span
                   >
@@ -112,57 +112,33 @@
 </template>
 
 <script>
-import intro from "@/components/Intro.vue";
-import { mapGetters, mapActions } from "vuex";
+import { menuMxn } from "@/js/mixins";
 
 export default {
   name: "Menu",
-  components: {
-    intro
-  },
   props: {
     type: {
       type: String
     }
   },
+  mixins: [menuMxn],
   data() {
     return {
-      name: this.type.toLowerCase(),
       alert: !localStorage.getItem("propose-desktop"),
       menuShow: true,
       loadingAnimation: false,
       bwhite: "bg-white"
     };
   },
-  computed: {
-    ...mapGetters({
-      musicItems: `musicItems`,
-      workItems: "workItems"
-    }),
-    menuItems() {
-      return this[this.name + "Items"];
-    }
-  },
   methods: {
-    ...mapActions(["setActiveLink", "toggleItem"]),
-    play(item) {
-      this.setActiveLink(item.link);
-      this.$router.push({ path: `/play/${item.id}` });
-    },
     disableNotification() {
       localStorage.setItem("propose-desktop", true);
       this.alert = false;
     },
-    handleClick(item) {
+    setItemActive(item) {
       this.menuItems.filter(a => a != item).map(a => (a.show = false));
       item.show = !item.show;
       this.setActiveLink(item.link);
-    },
-    goToPage(itemToEmit) {
-      this.$router.push({
-        name: this.type.toLowerCase(),
-        params: { id: itemToEmit }
-      });
     }
   }
 };

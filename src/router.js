@@ -25,18 +25,18 @@ const router = new Router({
     {
       path: "/work/:id?",
       name: "work",
-      component: work
-      // children: [
-      //   {
-      //     path: "profile",
-      //     component: play
-      //   },
-      //   {
-      //     path: "details",
-      //     component: page
-      //   },
-      //   { path: "", component: work }
-      // ]
+      component: work,
+      children: [
+        {
+          path: "play",
+          component: play
+        },
+        {
+          path: "details",
+          component: page
+        },
+        { path: "", component: work }
+      ]
     },
     {
       path: "/page/:category/:id?",

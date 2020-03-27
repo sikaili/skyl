@@ -21593,7 +21593,7 @@ p5.prototype.saveTable = function (table, filename, options) {
 }; // end saveTable()
 
 /**
- *  Generate a blob of file data as a url to prepare for download.
+ *  Generate a blob of file .vue a url to prepare for download.
  *  Accepts an array of data, a filename, and an extension (optional).
  *  This is a private function because it does not do any formatting,
  *  but it is used by saveStrings, saveJSON, saveTable etc.

@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { data as dataMxn } from "@/js/mixins";
+import { dataMxn } from "@/js/mixins";
 import SideMenu from "@/components/SideMenu.vue";
 export default {
   name: "play",

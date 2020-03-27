@@ -10,7 +10,7 @@
     <div v-if="menuShow" class="fl w-20 bg-white-80">
       <div class="flex flex-column justify-center">
         <a
-          @click="handleClick(item)"
+          @click="setItemActive(item)"
           v-for="(item, n) in menuItems"
           :key="item.id + n"
           class="pa1 tc link"
@@ -102,93 +102,22 @@
 </template>
 
 <script>
-// eslint-disable-next-line no-unused-vars
-import { clearTimeout } from "timers";
-import intro from "@/components/Intro.vue";
-import { mapGetters, mapActions } from "vuex";
+import { menuMxn } from "@/js/mixins";
 export default {
-  components: {
-    intro
-  },
   props: {
     type: {
       type: String,
       required: true
     }
   },
-  watch: {
-    loading(loading) {
-      if (loading === false) {
-        this.toggleItem({
-          name: this.type.toLowerCase(),
-          obj: this.menuItems[0]
-        });
-      }
-    }
-  },
+  mixins: [menuMxn],
   data() {
     return {
-      name: this.type.toLowerCase(),
       style: null,
       menuShow: true,
       loadingAnimation: false,
       bwhite: "bg-white"
     };
-  },
-  computed: {
-    ...mapGetters({
-      musicItems: "musicItems",
-      workItems: "workItems",
-      loading: "loading"
-    }),
-    menuItems() {
-      return this[this.name + "Items"];
-    }
-  },
-  methods: {
-    ...mapActions(["setActiveLink", "toggleItem"]),
-    play(item) {
-      this.setActiveLink(item.link);
-      this.$router.push({ path: `/play/${item.id}` });
-    },
-    handleClick(item) {
-      console.log(this.$route);
-      this.toggleItem({ name: this.name, obj: item });
-      this.$router.push({ name: this.name, params: { id: item.id } });
-      console.log(this.$route);
-    },
-    handleMouseIn(itemToEmit) {
-      if (itemToEmit) {
-        this.load(itemToEmit);
-      }
-    },
-    handleMouseOut() {
-      this.abortLoad();
-    },
-    abortLoad() {
-      let id = window.setTimeout(function() {}, 0);
-      while (id--) {
-        window.clearTimeout(id);
-      }
-      setTimeout(() => {
-        this.loadingAnimation = false;
-      }, 200);
-    },
-    load(link) {
-      if (link.split(":")[0] !== "https") return;
-      this.loadingAnimation = true;
-      setTimeout(() => {
-        this.setActiveLink(link);
-        this.loadingAnimation = false;
-      }, 1000);
-    },
-    goToPage(item) {
-      // this.$router.push({
-      //   name: this.name,
-      //   params: { id: itemToEmit }
-      // });
-      this.$router.push({ path: `/page/${this.name}/${item.id}` });
-    }
   }
 };
 </script>
