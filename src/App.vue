@@ -24,13 +24,14 @@ document.ontouchmove = function(e) { //eslint-disable-line
   return true;
 };
 import { mapGetters } from "vuex";
-import { data as dataMxn } from "@/js/mixins/";
+import { dataMxn } from "@/js/mixins/";
 import TheHead from "./components/TheHead.vue";
 import TheFooter from "./components/TheFooter.vue";
 export default {
   name: "app",
   created() {
     dataMxn.getData("./data/work.json").then(data => {
+      data = dataMxn.addMedia(data);
       this.$store.dispatch("updateProjectsFeed", data);
     });
     window.addEventListener("resize", this.handleResize);

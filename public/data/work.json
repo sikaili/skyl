@@ -3,24 +3,21 @@
     "name": "Ocean Loop",
     "des": "An audio-visual experiment about ocean plastic pollution, randomly generated graphics, sound of plastic particles.",
     "link": "https://apps.skyl.fr/plastic-ocean",
-    "img": "/img/plastic-ocean1.459008b2.jpg",
+    "img": "/img/covers/plastic-ocean1.jpg",
     "year": 2019,
     "credits": [{
       "role": "Concept, Sound, Code",
       "name": "Sikai Li",
       "link": "https://skyl.fr"
     }],
-    "show": false,
-    "about": "An audio-visual experiment about ocean plastic pollution, randomly generated graphics, sound of plastic particles.",
-    "id": "ocean-loop",
-    "imgs": ["/img/ocean-loop_0.c2d5d62c.jpg", "/img/ocean-loop_1.f83682de.jpg", "/img/ocean-loop_2.cd33ca7d.jpg", "/img/ocean-loop_3.3e867d11.jpg"]
+    "show": false
   }, {
     "name": "Where's Jane",
     "year": 2019,
     "des": "30 days of geolocation data was extracted from Jane's Facebook JSON file, and here is the visualization of it.",
     "about": "Aujourd’hui, la collecte des données personnelles fait partie intégrante de l’expérience utilisateur sur Internet. En relation avec la RGPD et dans un souci de transparence et de clarté, 'Where’s Jane’ présente un programme de data-visualisation des données Facebook de l’utilisateur. Il s’agit de faire prendre conscience et de sensibiliser l’utilisateur à la quantité importante d’informations disponibles sur lui et comment le croisement de ces données peut permettre de dresser un profil de l’utilisateur. (French)",
     "link": "https://myss.skyl.fr",
-    "img": "/img/where-is-joe.39c37ddc.jpg",
+    "img": "/img/covers/where-is-joe.jpg",
     "credits": [{
       "role": "Concept, Development",
       "name": "Sikai Li",
@@ -33,16 +30,14 @@
       "role": "Communication",
       "name": "Yasmine Ben Khaled, Solène Pyrizok, Mathilde Zajac"
     }],
-    "show": false,
-    "id": "where's-jane",
-    "imgs": ["/img/where's-jane_0.c29c07ba.jpg", "/img/where's-jane_1.9804ae3b.jpg", "/img/where's-jane_2.fcdd0716.jpg", "/img/where's-jane_3.abc2fd74.jpg", "/img/where's-jane_4.c5e4c8fd.jpg", "/img/where's-jane_5.4242d641.jpg"]
+    "show": false
   }, {
     "name": "Plastic Arcade",
     "year": "2018",
     "link": "http://thecamp.fr/projects/plastic-arcade",
     "des": "A playfull arcade cabinet raising awareness about plastic pollution",
     "about": "Plastic Arcade wants to raise awareness about plastic pollution by turning the systems that create the problem into easily understandable, high-impact video games. Using the arcade cabinet seemed like a natural way to touch the nostalgic fiber in each of us, parents and children alike. By creating several arcade games, each exploring a specific aspect of the plastic pollution problem, we aim to shake people into reflecting and connecting on a personal level to one of the largest issues concerning our civilization today.",
-    "img": "/img/plastic-arcade.e7861702.png",
+    "img": "/img/covers/plastic-arcade.png",
     "numberOfPhotos": 5,
     "show": false,
     "credits": [{
@@ -61,15 +56,13 @@
       "role": "Host",
       "name": "thecamp",
       "link": "https://www.thecamp.fr"
-    }],
-    "id": "plastic-arcade",
-    "imgs": ["/img/plastic-arcade_0.9c0163b2.jpg", "/img/plastic-arcade_1.02e08612.jpg", "/img/plastic-arcade_2.8db895c9.jpg", "/img/plastic-arcade_3.d57a52b2.jpg", "/img/plastic-arcade_4.64fcdad8.jpg"]
+    }]
   }, {
     "name": "Eyes",
     "year": 2018,
     "des": "The 5000 most common Chinese characters sorted by frequency, displayed or hidden on the same page. Cute brother is watching you.",
     "link": "https://eyes.skyl.fr",
-    "img": "/img/eyes.52931cbb.png",
+    "img": "/img/covers/eyes.png",
     "show": false,
     "credits": [{
       "role": "Concept, Sound, Code",
@@ -79,16 +72,13 @@
       "role": "Host",
       "name": "thecamp",
       "link": "https://thecamp.fr"
-    }],
-    "about": "The 5000 most common Chinese characters sorted by frequency, displayed or hidden on the same page. Cute brother is watching you.",
-    "id": "eyes",
-    "imgs": ["/img/eyes_0.f86afb10.jpg", "/img/eyes_3.17b2a1b3.jpg", "/img/eyes_8.803955bf.jpg", "/img/eyes_10.c6030021.jpg"]
+    }]
   }, {
     "name": "Unsustainable",
     "year": "2018",
     "des": "Particles trying to get bigger and bigger, each collision triggers a random sequence of the poem.",
     "link": "https://unsustainable.skyl.fr",
-    "img": "/img/unsustainable.15bfebf0.jpg",
+    "img": "/img/covers/unsustainable.jpg",
     "show": false,
     "credits": [{
       "role": "Concept, Sound, Code",
@@ -98,10 +88,7 @@
       "role": "Poem",
       "name": "Ryan Dzelzkalns",
       "link": "https://www.ryandz.com"
-    }],
-    "about": "Particles trying to get bigger and bigger, each collision triggers a random sequence of the poem.",
-    "id": "unsustainable",
-    "imgs": ["/img/unsustainable_0.15bfebf0.jpg", "/img/unsustainable_2.041bd99f.jpg", "/img/unsustainable_3.43bc292d.jpg", "/img/unsustainable_4.b8b862c7.jpg", "/img/unsustainable_5.0c4e6488.jpg", "/img/unsustainable_6.a289a611.jpg"]
+    }]
   }, {
     "name": "Noise Draw",
     "year": 2017,
@@ -112,32 +99,27 @@
       "name": "Sikai Li",
       "link": "https://skyl.fr"
     }],
-    "img": "/img/draw.c7648ea0.png",
-    "show": false,
-    "about": "A tool I made, to draw perlin noise lines and make glichy sound at the same time.",
-    "id": "noise-draw",
-    "imgs": ["/img/noise-draw_0.e5e61113.jpg", "/img/noise-draw_1.3edc98c5.jpg", "/img/noise-draw_2.ab5e28ee.jpg", "/img/noise-draw_3.cfde7c02.jpg", "/img/noise-draw_4.c0e47960.jpg", "/img/noise-draw_5.b40996c0.jpg", "/img/noise-draw_6.c798b1ae.jpg", "/img/noise-draw_7.cf48afb4.jpg", "/img/noise-draw_8.152e2036.jpg"]
+    "img": "/img/covers/draw.png",
+    "show": false
   }],
   "music": [{
     "name": "P",
     "year": "2019",
     "des": "Speed up a single sound object, move and compose your own combination",
     "link": "https://apps.skyl.fr/p/",
-    "img": "/img/p.97180b23.png",
+    "img": "/img/covers/p.png",
     "credits": [{
       "role": "Code",
       "name": "Sikai Li",
       "link": "https://skyl.fr"
     }],
-    "show": false,
-    "about": "Speed up a single sound object, move and compose your own combination",
-    "id": "p"
+    "show": false
   }, {
     "name": "Saturation Chinoise",
     "year": "2018",
     "link": "https://apps.skyl.fr/saturation-chinoise/",
     "des": "Music for the video game 'Plastic Arcade' I've been working on during my residency at thecamp, 80's style guitar riff & retro synth sound. There's a also chiptone remake done by 2080.",
-    "img": "/img/saturation-chinoise.556fdc0d.jpg",
+    "img": "/img/covers/saturation-chinoise.jpg",
     "show": false,
     "credits": [{
       "role": "Composition & Production",
@@ -159,15 +141,13 @@
       "role": "Music for Game",
       "name": "Plastic Arcade",
       "link": "https://www.hivers.fr/hive-2/projects/plastic-arcade/"
-    }],
-    "about": "Music for the video game 'Plastic Arcade' I've been working on during my residency at thecamp, 80's style guitar riff & retro synth sound. There's a also chiptone remake done by 2080.",
-    "id": "saturation-chinoise"
+    }]
   }, {
     "name": "Flower",
     "des": "A song.",
     "year": 2016,
     "link": "https://apps.skyl.fr/hua/",
-    "img": "/img/hua.d977cb8c.jpg",
+    "img": "/img/covers/hua.jpg",
     "show": false,
     "credits": [{
       "role": "Composition & Production",
@@ -177,9 +157,6 @@
       "role": "Post-Production",
       "name": "AB Studio",
       "link": ""
-    }],
-    "about": "A song.",
-    "id": "flower",
-    "imgs": ["/img/flower_0.d977cb8c.jpg", "/img/flower_2.a0c45312.jpg", "/img/flower_3.0abe0f22.jpg"]
+    }]
   }]
 }
