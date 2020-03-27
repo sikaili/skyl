@@ -4,7 +4,12 @@
       <router-link :class="classBySize" to="/work">Work</router-link>
       <router-link :class="classBySize" to="/music">Music</router-link>
       <router-link :class="classBySize" to="/drawings">Drawings</router-link>
-      <router-link :class="classBySize" to="/play">Play!</router-link>
+      <router-link
+        :class="classBySize"
+        :to="{ name: 'play', params: { id: $route.params.id } }"
+      >
+        Play!
+      </router-link>
     </div>
   </div>
 </template>

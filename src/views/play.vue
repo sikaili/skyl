@@ -1,5 +1,5 @@
 <template>
-  <SideMenu :linksArr="linksArr" :givenLink="lauchLink" />
+  <SideMenu :linksArr="links" />
 </template>
 
 <script>
@@ -15,42 +15,28 @@ export default {
   components: {
     SideMenu
   },
-  computed: {
-    linksArr: function() {
-      // deep copy dataObj
+  created() {
+    dataMxn.getData("./data/links.json").then(res => {
+      let links = res;
       const data = JSON.parse(JSON.stringify(this.$store.state));
       const dataAllCategories = [...data.work].concat([...data.music]);
-      const linksArr = dataAllCategories.concat(this.links);
+      const linksArr = dataAllCategories.concat(links);
       linksArr.forEach(item => {
-        item.id ? (item.name = item.id) : (item.name = this.getName(item.link));
+        item.id
+          ? (item.name = item.id)
+          : (item.name = this.getNameFromLink(item.link));
       });
       // sort items by name using localeCompare
       linksArr.sort((a, b) => a.name.localeCompare(b.name));
-      return linksArr;
-    },
-    lauchLink: function() {
-      let dump = this.linksArr.find(a => a.name == this.$route.params.id);
-      if (!dump) {
-        return "";
-      } else {
-        return dump.link;
-      }
-    }
-  },
-  created() {
-    dataMxn.getData("./data/links.json").then(res => {
-      this.links = res;
-    });
-  },
-  mounted() {
-    this.$nextTick(function() {
-      if (this.lauchLink.split(":")[0].includes(`https`)) {
-        this.$store.dispatch("setActiveLink", this.lauchLink);
+      this.$store.dispatch("setIframeItems", linksArr);
+      let dump = linksArr.find(a => a.name == this.$route.params.id);
+      if (dump.link && dump.link.split(":")[0].includes(`https`)) {
+        this.$store.dispatch("setActiveLink", dump.link);
       }
     });
   },
   methods: {
-    getName: function(link) {
+    getNameFromLink: function(link) {
       let nameStr = link.split("//");
       if (!nameStr[0].includes("https")) {
         return "";

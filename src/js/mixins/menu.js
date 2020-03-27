@@ -71,7 +71,7 @@ export default {
       setTimeout(() => {
         this.setActiveLink(link);
         this.loadingAnimation = false;
-      }, 1000);
+      }, 1500);
     },
     goToPage(item) {
       this.$router.push({ path: `/page/${this.name}/${item.id}` });

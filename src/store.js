@@ -8,7 +8,8 @@ const state = {
   work: seedData.work,
   music: seedData.music,
   activeLink: "https://eyes.skyl.fr",
-  loading: true
+  loading: true,
+  iframeItems: []
 };
 const mutations = {
   TOGGLE_ITEM(state, payload) {
@@ -19,6 +20,9 @@ const mutations = {
   },
   SET_ACTIVE_LINK(state, link) {
     link == state.activeLink ? "" : (state.activeLink = link);
+  },
+  SET_IFRAME_ITEMS(state, payload) {
+    state.iframeItems = payload;
   },
   CHANG_LOADING_STATE(state, loading) {
     state.loading = loading;
@@ -44,6 +48,9 @@ const actions = {
       context.commit("SET_ACTIVE_LINK", payload);
     }
   },
+  setIframeItems(context, payload) {
+    context.commit("SET_IFRAME_ITEMS", payload);
+  },
   changeLoadingState(context, payload) {
     context.commit("CHANG_LOADING_STATE", payload);
   }
@@ -63,6 +70,9 @@ const getters = {
   },
   activeLink(state) {
     return state.activeLink;
+  },
+  iframeItems(state) {
+    return state.iframeItems;
   },
   loading(state) {
     return state.loading;

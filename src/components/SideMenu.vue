@@ -10,25 +10,10 @@
     </span>
     <div class="f6 tl" style="min-height:5rem;">
       <p
-        v-if="!currentLink"
         @click="toggle()"
         class="pa2 bg-animate hover-bg-white hover-black mb0 pb2 white bg-black-60"
       >
-        list
-        <i
-          :class="
-            `hover-black fr ma0 icon ion-md-arrow-drop-down ${
-              displayList ? ` ion-md-arrow-dropup` : ' ion-md-arrow-dropdown'
-            }`
-          "
-        ></i>
-      </p>
-      <p
-        v-if="currentLink.split(':')[0] == `https`"
-        @click="toggle()"
-        class="pa2 bg-animate hover-bg-white hover-black mb0 pb2 white bg-black-60"
-      >
-        {{ getName(currentLink) }}
+        {{ getName(activeLink) }}
         <i
           :class="
             `hover-black fr ma0 icon ion-md-arrow-drop-down ${
@@ -40,7 +25,7 @@
       <p class="mb0 pb2 white bg-black-60">
         links:
         <a
-          :href="currentLink"
+          :href="activeLink"
           target="_blank"
           title="open in a new page"
           class="link white"
@@ -69,7 +54,7 @@
     </div>
     <transition name="slide-fade1">
       <div v-if="displayList" class="overflow-y-scroll vh-50 f6 tl bg-white-30">
-        <span v-for="(item, index) in linksArr" :key="index">
+        <span v-for="(item, index) in iframeItems" :key="index">
           <p
             @click="handlePClick(item.link)"
             class="ph1 bg-animate hover-bg-white hover-black white bg-black-60"
@@ -82,44 +67,34 @@
   </div>
 </template>
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "SideMenu",
-  props: {
-    linksArr: {
-      type: Array,
-      required: true
-    },
-    givenLink: {
-      type: String,
-      required: false,
-      default: ""
-    }
-  },
   data() {
     return {
-      displayList: false,
-      currentLink: this.givenLink
+      displayList: false
     };
+  },
+  computed: {
+    ...mapGetters({ activeLink: "activeLink", iframeItems: "iframeItems" })
   },
   methods: {
     ...mapActions(["setActiveLink"]),
     randomLink() {
-      const n = Math.floor(Math.random() * this.linksArr.length);
-      this.currentLink = this.linksArr[n].link;
+      const n = Math.floor(Math.random() * this.iframeItems.length);
+      this.activeLink = this.iframeItems[n].link;
       this.displayList = false;
-      this.setActiveLink(this.currentLink);
-      this.$router.replace({ path: `/play/${this.getName(this.currentLink)}` });
+      this.setActiveLink(this.activeLink);
+      this.$router.replace({ params: { id: this.getName(this.activeLink) } });
     },
     getName: function(link) {
-      let dump = this.linksArr.find(a => a.link == link);
-      return dump.name;
+      let dump = this.iframeItems.find(a => a.link == link);
+      return dump && dump.name ? dump.name : "list";
     },
     handlePClick(link) {
-      this.currentLink = link;
       this.displayList = false;
-      this.setActiveLink(this.currentLink);
-      this.$router.replace({ path: `/play/${this.getName(this.currentLink)}` });
+      this.setActiveLink(link);
+      this.$router.replace({ params: { id: this.getName(this.activeLink) } });
     },
     // the right toggle
     toggle() {

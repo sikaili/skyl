@@ -140,7 +140,7 @@ span.black {
   opacity: 0 0.15s;
 }
 .loading-enter-active {
-  transition: all 1s;
+  transition: all 1.5s;
 }
 .loading-leave-active {
   transition: all 0s;
