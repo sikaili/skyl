@@ -10,7 +10,6 @@
     <div v-if="menuShow" class="fl w-20 bg-white-80">
       <div class="flex flex-column justify-center">
         <a
-          href="#"
           @click="handleClick(item)"
           v-for="(item, n) in menuItems"
           :key="item.id + n"
@@ -155,7 +154,7 @@ export default {
     handleClick(item) {
       console.log(this.$route);
       this.toggleItem({ name: this.name, obj: item });
-      this.$router.push(item.id);
+      this.$router.push({ name: this.name, params: { id: item.id } });
       console.log(this.$route);
     },
     handleMouseIn(itemToEmit) {
