@@ -1,12 +1,12 @@
 <template>
   <div id="app">
-    <TheHead :link="link" />
+    <TheHead />
     <div v-if="(showIframe = true)" class="back bw0" :style="iframeContainer">
       <iframe
         class="back bw0"
         scrolling="no"
         scroll="no"
-        :src="link"
+        :src="activeLink"
         :style="canvas"
       ></iframe>
     </div>
@@ -24,11 +24,15 @@ document.ontouchmove = function(e) { //eslint-disable-line
   return true;
 };
 import { mapGetters } from "vuex";
+import { data as dataMxn } from "@/js/mixins/";
 import TheHead from "./components/TheHead.vue";
 import TheFooter from "./components/TheFooter.vue";
 export default {
   name: "app",
   created() {
+    dataMxn.getData("./data/work.json").then(data => {
+      this.$store.dispatch("updateProjectsFeed", data);
+    });
     window.addEventListener("resize", this.handleResize);
     window.addEventListener("scroll", this.handleScroll);
     window.addEventListener("orientationchange", this.handleResize);
@@ -68,7 +72,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["link"]),
+    ...mapGetters(["activeLink"]),
     iframeContainer: function() {
       const scale = 1;
       return `width:${this.$mq == "sm" ? screen.width * scale : this.width}px;

@@ -109,13 +109,20 @@ export default {
   components: {
     intro
   },
-  mounted() {
-    this.toggleItem({ name: this.type.toLowerCase(), obj: this.menuItems[0] });
-  },
   props: {
     type: {
       type: String,
       required: true
+    }
+  },
+  watch: {
+    loading(loading) {
+      if (loading === false) {
+        this.toggleItem({
+          name: this.type.toLowerCase(),
+          obj: this.menuItems[0]
+        });
+      }
     }
   },
   data() {
@@ -129,23 +136,24 @@ export default {
   },
   computed: {
     ...mapGetters({
-      musicItems: `musicItems`,
-      workItems: "workItems"
+      musicItems: "musicItems",
+      workItems: "workItems",
+      loading: "loading"
     }),
     menuItems() {
       return this[this.name + "Items"];
     }
   },
   methods: {
-    ...mapActions(["setLink", "toggleItem"]),
+    ...mapActions(["setActiveLink", "toggleItem"]),
     play(item) {
-      this.setLink(item.link);
+      this.setActiveLink(item.link);
       this.$router.push({ path: `/play/${item.id}` });
     },
     handleClick(item) {
       this.menuItems.filter(a => a != item).map(a => (a.show = false));
       item.show = !item.show;
-      this.setLink(item.link);
+      this.setActiveLink(item.link);
     },
     goToPage(itemToEmit) {
       this.$router.push({

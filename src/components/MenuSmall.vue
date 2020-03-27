@@ -144,9 +144,9 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["setLink", "toggleItem"]),
+    ...mapActions(["setActiveLink", "toggleItem"]),
     play(item) {
-      this.setLink(item.link);
+      this.setActiveLink(item.link);
       this.$router.push({ path: `/play/${item.id}` });
     },
     disableNotification() {
@@ -156,7 +156,7 @@ export default {
     handleClick(item) {
       this.menuItems.filter(a => a != item).map(a => (a.show = false));
       item.show = !item.show;
-      this.setLink(item.link);
+      this.setActiveLink(item.link);
     },
     goToPage(itemToEmit) {
       this.$router.push({

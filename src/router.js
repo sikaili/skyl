@@ -15,8 +15,7 @@ const router = new Router({
     {
       path: "/",
       name: "home",
-      redirect: "/work",
-      component: work
+      redirect: "/work/"
     },
     {
       path: "/drawings",
@@ -24,34 +23,35 @@ const router = new Router({
       component: draw
     },
     {
-      path: "/work",
-      name: "work/",
+      path: "/work/:id?",
+      name: "work",
       component: work
+      // children: [
+      //   {
+      //     path: "profile",
+      //     component: play
+      //   },
+      //   {
+      //     path: "details",
+      //     component: page
+      //   },
+      //   { path: "", component: work }
+      // ]
     },
     {
-      path: "/work/:id",
-      name: "work",
+      path: "/page/:category/:id?",
+      name: "contentPage",
       component: page
     },
     {
-      path: "/play/:id",
+      path: "/play/:id?",
       name: "play",
       component: play
     },
     {
-      path: "/play/",
-      redirect: "/play/0"
-    },
-    {
-      path: "/music",
-      name: "music/",
-      component: music
-    },
-
-    {
-      path: "/music/:id",
+      path: "/music/:id?",
       name: "music",
-      component: page
+      component: music
     },
     {
       path: "/cv",

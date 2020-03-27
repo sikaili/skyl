@@ -61,7 +61,7 @@
                     {{ w.des }}
                     <br />
                     <span
-                      @click="goToPage(w.id)"
+                      @click="goToPage(w)"
                       class="tc w4 f6 dim link ba bw2 ph2 pv1 mt3 dib black"
                       >Read more..</span
                     >
@@ -111,13 +111,20 @@ export default {
   components: {
     intro
   },
-  mounted() {
-    this.toggleItem({ name: this.type.toLowerCase(), obj: this.menuItems[0] });
-  },
   props: {
     type: {
       type: String,
       required: true
+    }
+  },
+  watch: {
+    loading(loading) {
+      if (loading === false) {
+        this.toggleItem({
+          name: this.type.toLowerCase(),
+          obj: this.menuItems[0]
+        });
+      }
     }
   },
   data() {
@@ -131,21 +138,25 @@ export default {
   },
   computed: {
     ...mapGetters({
-      musicItems: `musicItems`,
-      workItems: "workItems"
+      musicItems: "musicItems",
+      workItems: "workItems",
+      loading: "loading"
     }),
     menuItems() {
       return this[this.name + "Items"];
     }
   },
   methods: {
-    ...mapActions(["setLink", "toggleItem"]),
+    ...mapActions(["setActiveLink", "toggleItem"]),
     play(item) {
-      this.setLink(item.link);
+      this.setActiveLink(item.link);
       this.$router.push({ path: `/play/${item.id}` });
     },
     handleClick(item) {
+      console.log(this.$route);
       this.toggleItem({ name: this.name, obj: item });
+      this.$router.push(item.id);
+      console.log(this.$route);
     },
     handleMouseIn(itemToEmit) {
       if (itemToEmit) {
@@ -168,15 +179,16 @@ export default {
       if (link.split(":")[0] !== "https") return;
       this.loadingAnimation = true;
       setTimeout(() => {
-        this.setLink(link);
+        this.setActiveLink(link);
         this.loadingAnimation = false;
       }, 1000);
     },
-    goToPage(itemToEmit) {
-      this.$router.push({
-        name: this.name,
-        params: { id: itemToEmit }
-      });
+    goToPage(item) {
+      // this.$router.push({
+      //   name: this.name,
+      //   params: { id: itemToEmit }
+      // });
+      this.$router.push({ path: `/page/${this.name}/${item.id}` });
     }
   }
 };

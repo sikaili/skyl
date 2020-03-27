@@ -45,7 +45,7 @@ export default {
   mounted() {
     this.$nextTick(function() {
       if (this.lauchLink.split(":")[0].includes(`https`)) {
-        this.$store.dispatch("setLink", this.lauchLink);
+        this.$store.dispatch("setActiveLink", this.lauchLink);
       }
     });
   },

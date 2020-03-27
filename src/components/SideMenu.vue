@@ -103,12 +103,12 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["setLink"]),
+    ...mapActions(["setActiveLink"]),
     randomLink() {
       const n = Math.floor(Math.random() * this.linksArr.length);
       this.currentLink = this.linksArr[n].link;
       this.displayList = false;
-      this.setLink(this.currentLink);
+      this.setActiveLink(this.currentLink);
       this.$router.replace({ path: `/play/${this.getName(this.currentLink)}` });
     },
     getName: function(link) {
@@ -118,7 +118,7 @@ export default {
     handlePClick(link) {
       this.currentLink = link;
       this.displayList = false;
-      this.setLink(this.currentLink);
+      this.setActiveLink(this.currentLink);
       this.$router.replace({ path: `/play/${this.getName(this.currentLink)}` });
     },
     // the right toggle

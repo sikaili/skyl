@@ -1,10 +1,10 @@
 <template>
   <div class="cl">
     <div class="flex justify-center bg-white-50">
-      <router-link :class="classBySize" to="/work" exact>Work</router-link>
+      <router-link :class="classBySize" to="/work">Work</router-link>
       <router-link :class="classBySize" to="/music">Music</router-link>
       <router-link :class="classBySize" to="/drawings">Drawings</router-link>
-      <router-link :class="classBySize" :to="play">Play!</router-link>
+      <router-link :class="classBySize" to="/play">Play!</router-link>
     </div>
   </div>
 </template>
@@ -38,7 +38,7 @@ export default {
     },
     // link for navigation
     play() {
-      return `/play/${this.link.split("//")[1].split(".")[0]}`;
+      // return `/play/${this.link.split("//")[1].split(".")[0]}`;
     }
   }
 };

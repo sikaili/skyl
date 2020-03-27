@@ -97,18 +97,19 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["setLink"]),
+    ...mapActions(["setActiveLink"]),
     back() {
-      this.$router.replace({ path: `/${this.$route.path.split("/")[1]}/` });
+      this.$router.replace({ path: `/${this.$route.params.category}/` });
     },
     play() {
-      this.setLink(this.item.link);
+      this.setActiveLink(this.item.link);
       this.$router.push({ path: `/play/${this.item.id}` });
     }
   },
   computed: {
     item: function() {
-      const itemsArray = this.$store.state[this.$route.path.split("/")[1]];
+      const itemsArray = this.$store.state[this.$route.params.category];
+      console.log(itemsArray);
       if (this.id > itemsArray.length) {
         return "ERROR!";
       }
