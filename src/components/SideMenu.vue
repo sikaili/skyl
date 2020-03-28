@@ -53,7 +53,7 @@
         >
           <i class="white mh1 icon ion-logo-twitter"></i>
         </a>
-        <a href="mailto:skyl@me.com" title="mail">
+        <a href="mailto:contact@sikai.li" title="mail">
           <i class="white icon ion-ios-send"></i>
         </a>
       </p>
