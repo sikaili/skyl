@@ -138,6 +138,9 @@ export default {
 };
 </script>
 <style>
+svg.w1 {
+  max-height: 44px;
+}
 .loading {
   width: 100%;
   height: 30px;
