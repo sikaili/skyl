@@ -7,7 +7,7 @@ Vue.use(Vuex);
 const state = {
   work: seedData.work,
   music: seedData.music,
-  activeLink: "https://eyes.skyl.fr",
+  activeItem: { name: "eyes", link: "https://eyes.skyl.fr" },
   loading: true,
   iframeItems: allIframeLinks
 };
@@ -18,8 +18,8 @@ const mutations = {
       item == payload.obj ? (item.show = true) : (item.show = false);
     });
   },
-  SET_ACTIVE_LINK(state, link) {
-    link == state.activeLink ? "" : (state.activeLink = link);
+  SET_ACTIVE_ITEM(state, item) {
+    item == state.activeItem ? "" : (state.activeItem = item);
   },
   SET_IFRAME_ITEMS(state, payload) {
     state.iframeItems = payload;
@@ -43,10 +43,9 @@ const actions = {
   toggleItem(context, payload) {
     context.commit("TOGGLE_ITEM", payload);
   },
-  setActiveLink(context, payload) {
-    if (payload.includes("https")) {
-      context.commit("SET_ACTIVE_LINK", payload);
-    }
+  setActiveItem(context, payload) {
+    if (payload.link.includes("https://"))
+      context.commit("SET_ACTIVE_ITEM", payload);
   },
   setIframeItems(context, payload) {
     context.commit("SET_IFRAME_ITEMS", payload);
@@ -56,23 +55,17 @@ const actions = {
   }
 };
 const getters = {
-  activeItem(state, categorie) {
-    if (!state[categorie]) {
-      return;
-    }
-    return state[categorie].find(item => item.show);
+  activeItem(state) {
+    return state.activeItem;
+  },
+  iframeItems(state) {
+    return state.iframeItems;
   },
   workItems(state) {
     return state.work;
   },
   musicItems(state) {
     return state.music;
-  },
-  activeLink(state) {
-    return state.activeLink;
-  },
-  iframeItems(state) {
-    return state.iframeItems;
   },
   loading(state) {
     return state.loading;

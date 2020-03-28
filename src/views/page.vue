@@ -100,7 +100,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["setActiveLink"]),
+    ...mapActions(["setactiveItem"]),
     back() {
       this.$router.push({
         name: this.$route.params.category,
@@ -108,7 +108,7 @@ export default {
       });
     },
     play() {
-      this.setActiveLink(this.item.link);
+      this.setactiveItem(this.item);
       this.$router.push({ path: `/play/${this.item.id}` });
     }
   },

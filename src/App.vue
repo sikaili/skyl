@@ -6,7 +6,7 @@
         class="back bw0"
         scrolling="no"
         scroll="no"
-        :src="activeLink"
+        :src="activeItem.link"
         :style="canvas"
       ></iframe>
     </div>
@@ -73,7 +73,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["activeLink"]),
+    ...mapGetters(["activeItem"]),
     iframeContainer: function() {
       const scale = 1;
       return `width:${this.$mq == "sm" ? screen.width * scale : this.width}px;

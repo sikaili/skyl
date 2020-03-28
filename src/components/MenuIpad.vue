@@ -119,7 +119,7 @@ export default {
   mixins: [menuMxn],
   methods: {
     play(item) {
-      this.setActiveLink(item.link);
+      this.setActiveItem({ link: item.link, id: item.id });
       this.$router.push({ path: `/play/${item.id}` });
     }
   }

@@ -2,7 +2,7 @@
   <div class="fixed mw4 f3 tc left-1">
     <br />
     <span
-      @click="randomLink"
+      @click="randomIframe"
       class="w-100 f5 no-underline white bg-black-80 bg-animate hover-bg-white hover-black inline-flex items-center pa3 border-box"
     >
       <i class="tc icon ion-md-shuffle"></i>
@@ -13,7 +13,7 @@
         @click="toggle()"
         class="pa2 bg-animate hover-bg-white hover-black mb0 pb2 white bg-black-60"
       >
-        {{ getName(activeLink) }}
+        {{ activeItem.id ? activeItem.id : "list" }}
         <i
           :class="
             `hover-black fr ma0 icon ion-md-arrow-drop-down ${
@@ -25,7 +25,7 @@
       <p class="mb0 pb2 white bg-black-60">
         links:
         <a
-          :href="activeLink"
+          :href="activeItem.link"
           target="_blank"
           title="open in a new page"
           class="link white"
@@ -44,7 +44,13 @@
         >
           <i class="white mh1 icon ion-logo-instagram"></i>
         </a>
-        <a target="_blank">
+        <a
+          target="_blank"
+          rel="canonical"
+          :href="
+            'https://twitter.com/intent/tweet?url=https://skyl.fr' + $route.path
+          "
+        >
           <i class="white mh1 icon ion-logo-twitter"></i>
         </a>
         <a href="mailto:skyl@me.com" title="mail">
@@ -56,10 +62,10 @@
       <div v-if="displayList" class="overflow-y-scroll vh-50 f6 tl bg-white-30">
         <span v-for="(item, index) in iframeItems" :key="index">
           <p
-            @click="handlePClick(item.link)"
+            @click="handlePClick(item)"
             class="ph1 bg-animate hover-bg-white hover-black white bg-black-60"
           >
-            {{ item.name }}
+            {{ item.id }}
           </p>
         </span>
       </div>
@@ -76,26 +82,25 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({ activeLink: "activeLink", iframeItems: "iframeItems" })
+    ...mapGetters({
+      activeItem: "activeItem",
+      iframeItems: "iframeItems"
+    })
   },
   methods: {
-    ...mapActions(["setActiveLink"]),
-    randomLink() {
+    ...mapActions(["setActiveItem"]),
+    randomIframe() {
       const n = Math.floor(Math.random() * this.iframeItems.length);
-      const link = this.iframeItems[n].link;
+      const item = this.iframeItems[n];
       this.displayList = false;
-      this.setActiveLink(link);
-      this.$router.replace({ params: { id: this.getName(link) } });
+      this.setActiveItem(item);
+      this.$router.replace({ params: { id: item.id } });
     },
-    getName: function(link) {
-      let dump = this.iframeItems.find(a => a.link == link);
-      return dump && dump.name ? dump.name : "list";
-    },
-    handlePClick(link) {
-      if (link != this.activeLink) {
+    handlePClick(item) {
+      if (item != this.activeItem) {
         this.displayList = false;
-        this.setActiveLink(link);
-        this.$router.replace({ params: { id: this.getName(this.activeLink) } });
+        this.setActiveItem(item);
+        this.$router.replace({ params: { id: this.activeItem.id } });
       }
     },
     // the right toggle

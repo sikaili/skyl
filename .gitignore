@@ -20,3 +20,4 @@ deploy.sh
 *.njsproj
 *.sln
 *.sw?
+*.cache

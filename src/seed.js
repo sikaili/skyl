@@ -257,17 +257,13 @@ const data = JSON.parse(JSON.stringify(seedData));
 const linksFromProjects = [...data.work].concat([...data.music]);
 let allIframeLinks = linksFromProjects.concat(extraIframeLinks);
 allIframeLinks.forEach(item => {
-  item.id ? (item.name = item.id) : (item.name = getNameFromLink(item.link));
+  item.id ? "" : (item.id = getNameFromLink(item.link));
 });
 allIframeLinks = allIframeLinks.map(iframeObject => {
-  return { name: iframeObject.name, link: iframeObject.link };
+  return { id: iframeObject.id, link: iframeObject.link };
 });
-allIframeLinks.filter(iframeObject => iframeObject.name);
+allIframeLinks.filter(iframeObject => iframeObject.id);
 // sort items by name using localeCompare
-allIframeLinks.sort((a, b) => a.name.localeCompare(b.name));
-// console.log(allIframeLinks);
-// this.$store.dispatch("setIframeItems", allIframeLinks);
-// let dump = allIframeLinks.find(a => a.name == this.$route.params.id);
-// if (dump.link) this.$store.dispatch("setActiveLink", dump.link);
+allIframeLinks.sort((a, b) => a.id.localeCompare(b.id));
 
 export { seedData, allIframeLinks };
