@@ -9,7 +9,13 @@
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "matter-js": "^0.14.2",
+    "node-sass": "^4.13.1",
+    "p5": "^1.0.0",
     "register-service-worker": "^1.7.1",
+    "sass-loader": "^8.0.2",
+    "tone": "^13.8.25",
     "vue": "^2.6.11",
     "vue-analytics": "^5.22.1",
     "vue-gallery": "^2.0.1",

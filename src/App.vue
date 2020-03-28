@@ -1,14 +1,17 @@
 <template>
   <div id="app">
     <TheHead />
-    <div v-if="(showIframe = true)" class="back bw0" :style="iframeContainer">
+    <div class="back bw0" :style="iframeContainer">
       <iframe
+        v-if="showIframe"
         class="back bw0"
         scrolling="no"
         scroll="no"
         :src="activeItem.link"
         :style="canvas"
+        :key="showIframe"
       ></iframe>
+      <Canvas v-else :key="showIframe" />
     </div>
     <transition name="slide-fade-main">
       <router-view />
@@ -27,6 +30,7 @@ import { mapGetters } from "vuex";
 // import { dataMxn } from "@/js/mixins/";
 import TheHead from "./components/TheHead.vue";
 import TheFooter from "./components/TheFooter.vue";
+import Canvas from "./components/Canvas.vue";
 export default {
   name: "app",
   created() {
@@ -46,14 +50,15 @@ export default {
   },
   components: {
     TheHead,
-    TheFooter
+    TheFooter,
+    Canvas
   },
   data() {
     return {
       footer: true,
       width: 0,
       height: 0,
-      showIframe: true
+      showIframe: false
     };
   },
   methods: {
