@@ -18,10 +18,16 @@ export default {
   },
   mounted() {
     p5.disableFriendlyErrors = true;
+    if (this.current) {
     this.canvas = new p5(this.current, 'canvasContainer'); //eslint-disable-line
+      this.started = true;
+    }
   },
   destroyed() {
-    this.canvas.stop();
+    if (this.canvas && this.canvas.stop) {
+      this.canvas.stop();
+      this.canvas = null;
+    }
   }
 };
 </script>

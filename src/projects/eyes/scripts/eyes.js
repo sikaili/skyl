@@ -55,7 +55,7 @@ export default function eyes(sk) {
   let table;
 
   sk.preload = () => {
-    table = sk.loadTable("assets/hanziDB.csv", "csv", "header");
+    table = sk.loadTable("/assets/hanziDB.csv", "csv", "header");
     console.log(table);
   };
 

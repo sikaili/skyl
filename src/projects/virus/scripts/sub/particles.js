@@ -14,11 +14,11 @@ export default class Particle {
       this.id = virus.id;
     }
     this.body = Bodies.circle(x, y, this.r / 1.4);
-    Body.setMass(this.body, 3 / scale);
+    Body.setMass(this.body, 5 / scale);
     if (virus) {
       Body.applyForce(this.body, this.body.position, {
-        x: Math.random() / 1000,
-        y: Math.random() / 1000
+        x: Math.random() / 10,
+        y: Math.random() / 10
       });
     }
   }
@@ -41,9 +41,9 @@ export default class Particle {
         !particle.immu
       ) {
         if (this.fill[3] > 200 && this.id) {
-          this.samplers[this.id].volume.value =
+          this.samplers[this.id % 3].volume.value =
             -3 - 100 / (this.r + this.fill[3] / 5);
-          this.samplers[this.id].triggerAttack(this.fill[2]);
+          this.samplers[this.id % 3].triggerAttack(this.fill[2]);
         }
         setTimeout(() => {
           particle = this.infection(particle);
@@ -96,8 +96,8 @@ export default class Particle {
     if (Math.random() > 0.3) {
       this.updating = true;
       const force = {
-        x: (Math.random() - 0.5) * 0.05,
-        y: (Math.random() - 0.5) * 0.06
+        x: (Math.random() - 0.5) * 0.09,
+        y: (Math.random() - 0.5) * 0.09
       };
       Body.applyForce(this.body, this.body.position, force);
     }
@@ -105,13 +105,13 @@ export default class Particle {
 
   display(sk) {
     // console.log(this.body.angularVelocity);
-    if (this.body.angularVelocity < 0.005) {
+    if (this.body.angularVelocity < 0.02) {
       this.updating = false;
     }
     if (this.died) {
-      Body.applyForce(this.body, this.body.position, { x: 0, y: 0.01 });
+      Body.applyForce(this.body, this.body.position, { x: 0, y: 0.05 });
     } else if (this.immu) {
-      Body.applyForce(this.body, this.body.position, { x: 0, y: -0.0003 });
+      Body.applyForce(this.body, this.body.position, { x: 0, y: -0.003 });
     }
     sk.push();
     sk.translate(this.body.position.x, this.body.position.y);

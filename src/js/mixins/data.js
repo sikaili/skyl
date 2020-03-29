@@ -2,6 +2,11 @@ import axios from "axios";
 const is404 = res => {
   return res.response && res.response.status === 404;
 };
+
+// dataMxn.getData("./data/work.json").then(data => {
+//   data = dataMxn.addMedia(data);
+//   this.$store.dispatch("updateProjectsFeed", data);
+// });
 const getData = (endpoint, options) => {
   return axios
     .get(endpoint, {

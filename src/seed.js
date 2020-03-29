@@ -1,4 +1,6 @@
 import links from "@/assets/JSON/links.json";
+import sketches from "@/assets/JSON/sketches.json";
+
 const seedData = {
   work: [
     {
@@ -263,6 +265,7 @@ allIframeLinks = allIframeLinks.map(iframeObject => {
   return { id: iframeObject.id, link: iframeObject.link };
 });
 allIframeLinks.filter(iframeObject => iframeObject.id);
+allIframeLinks = allIframeLinks.concat(sketches);
 // sort items by name using localeCompare
 allIframeLinks.sort((a, b) => a.id.localeCompare(b.id));
 
