@@ -269,4 +269,9 @@ allIframeLinks = allIframeLinks.concat(sketches);
 // sort items by name using localeCompare
 allIframeLinks.sort((a, b) => a.id.localeCompare(b.id));
 
+if (!navigator.onLine) {
+  console.log("OFFLINE");
+  allIframeLinks = allIframeLinks.filter(a => a.type === "sketch");
+}
+
 export { seedData, allIframeLinks };

@@ -7,7 +7,7 @@ Vue.use(Vuex);
 const state = {
   work: seedData.work,
   music: seedData.music,
-  activeItem: { name: "eyes", link: "https://eyes.skyl.fr" },
+  activeItem: {},
   loading: true,
   iframeItems: allIframeLinks
 };

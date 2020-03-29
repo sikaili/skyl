@@ -130,6 +130,7 @@ export default {
     }
   },
   created() {
+    this.$store.dispatch("setActiveItem", { id: "eyes", type: "sketch" });
     window.addEventListener("resize", this.handleResize);
     window.addEventListener("scroll", this.handleScroll);
     window.addEventListener("orientationchange", this.handleResize);
