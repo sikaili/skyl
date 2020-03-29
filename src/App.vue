@@ -11,7 +11,7 @@
         :style="canvas"
         :key="showIframe"
       ></iframe>
-      <Canvas v-else :key="showIframe" />
+      <Canvas :current="current" v-else :key="key" />
     </div>
     <transition name="slide-fade-main">
       <router-view />
@@ -31,6 +31,9 @@ import { mapGetters } from "vuex";
 import TheHead from "./components/TheHead.vue";
 import TheFooter from "./components/TheFooter.vue";
 import Canvas from "./components/Canvas.vue";
+import virus from "@/projects/virus/scripts/virus.js";
+import eyes from "@/projects/eyes";
+
 export default {
   name: "app",
   created() {
@@ -42,6 +45,14 @@ export default {
     window.addEventListener("scroll", this.handleScroll);
     window.addEventListener("orientationchange", this.handleResize);
     this.handleResize();
+    setInterval(() => {
+      this.key = Math.random().toFixed(2);
+      if (this.current == virus) {
+        this.current = eyes;
+      } else {
+        this.current = virus;
+      }
+    }, 10000);
   },
   destroyed() {
     window.removeEventListener("resize", this.handleResize);
@@ -58,7 +69,11 @@ export default {
       footer: true,
       width: 0,
       height: 0,
-      showIframe: false
+      showIframe: false,
+      virus: virus,
+      eyes: eyes,
+      current: null,
+      key: 0
     };
   },
   methods: {

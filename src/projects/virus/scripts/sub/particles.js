@@ -1,28 +1,5 @@
 import { Bodies, Body } from "matter-js";
-import Tone from "tone";
 import calDistance from "../utils/calDistance";
-import E3 from "../../sound/chasing.mp3";
-import D3 from "../../sound/light.mp3";
-
-const sampler2 = new Tone.Sampler(
-  { D3 },
-  {
-    onload: () => {
-      this.isLoaded = true;
-    }
-  }
-).chain(new Tone.Volume(-12), Tone.Master);
-const samplers = [];
-for (let i = 0; i < 3; i += 1) {
-  samplers[i] = new Tone.Sampler(
-    { E3 },
-    {
-      onload: () => {
-        this.isLoaded = true;
-      }
-    }
-  ).chain(new Tone.Volume(-15), Tone.Master);
-}
 export default class Particle {
   constructor(x, y, virus, number) {
     const scale = 200 / number;
@@ -64,9 +41,9 @@ export default class Particle {
         !particle.immu
       ) {
         if (this.fill[3] > 200 && this.id) {
-          samplers[this.id].volume.value =
+          this.samplers[this.id].volume.value =
             -3 - 100 / (this.r + this.fill[3] / 5);
-          samplers[this.id].triggerAttack(this.fill[2]);
+          this.samplers[this.id].triggerAttack(this.fill[2]);
         }
         setTimeout(() => {
           particle = this.infection(particle);
@@ -82,7 +59,7 @@ export default class Particle {
             }
             if (Math.random() > 0.97 && particle.fill[3] > 100) {
               particle.died = true;
-              sampler2.triggerAttack(130 + (particle.r - 20) * 2);
+              this.sampler2.triggerAttack(130 + (particle.r - 20) * 2);
             }
           }, 3000);
         }, (1500 / this.fill[3]) ** 2);
@@ -112,7 +89,7 @@ export default class Particle {
   }
 
   triggerAttack() {
-    sampler2.triggerAttack(130 + (this.r - 20) * 2);
+    this.sampler2.triggerAttack(130 + (this.r - 20) * 2);
   }
 
   changePos() {

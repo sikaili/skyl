@@ -1,9 +1,10 @@
 import Tone from "tone";
 import { Engine, World, Bodies, MouseConstraint, Mouse } from "matter-js";
 import Particle from "./sub/particles";
+import E3 from "../sound/chasing.mp3";
+import D3 from "../sound/light.mp3";
 
-const sketch = instance => {
-  let sk = instance;
+const sketch = sk => {
   const divNode = document.querySelector("#canvasContainer");
   const engine = Engine.create();
   const setBordersAndMouse = () => {
@@ -43,11 +44,13 @@ const sketch = instance => {
   };
 
   sk.stop = () => {
+    Particle.prototype.sampler2.dispose();
+    Particle.prototype.samplers.map(a => a.dispose());
     Tone.context.suspend();
     World.clear(engine.world);
     Engine.clear(engine);
     sk.remove();
-    particles.map(a => (a = null));
+    particles = particles.map(a => {});
   };
 
   // save and get last
@@ -63,7 +66,7 @@ const sketch = instance => {
 
   let looping = true;
 
-  const particles = [];
+  let particles = [];
   const positions = [];
   let virusNo = 3;
   const deathByDay = [];
@@ -75,6 +78,26 @@ const sketch = instance => {
   };
   let touched = false;
   sk.setup = () => {
+    Particle.prototype.sampler2 = new Tone.Sampler(
+      { D3 },
+      {
+        onload: () => {
+          this.isLoaded = true;
+        }
+      }
+    ).chain(new Tone.Volume(-12), Tone.Master);
+
+    Particle.prototype.samplers = [];
+    for (let i = 0; i < 3; i += 1) {
+      Particle.prototype.samplers[i] = new Tone.Sampler(
+        { E3 },
+        {
+          onload: () => {
+            this.isLoaded = true;
+          }
+        }
+      ).chain(new Tone.Volume(-15), Tone.Master);
+    }
     sk.createCanvas(sk.windowWidth, sk.windowHeight);
     setBordersAndMouse(sk);
     sk.scaleRef = (sk.width + sk.height) / 2;
