@@ -4,6 +4,7 @@
 
 <script>
 import virus from "@/projects/virus/scripts/virus.js";
+import { main as eyes } from "@/projects/eyes";
 import * as p5 from "p5";
 
 export default {
@@ -17,7 +18,7 @@ export default {
   },
   mounted() {
     p5.disableFriendlyErrors = true;
-    this.canvas = new p5(virus, 'canvasContainer'); //eslint-disable-line
+    this.canvas = new p5(eyes, 'canvasContainer'); //eslint-disable-line
   },
   destroyed() {
     this.canvas.stop();
