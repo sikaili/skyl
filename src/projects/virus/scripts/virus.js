@@ -2,8 +2,8 @@ import Tone from "tone";
 import { Engine, World, Bodies, MouseConstraint, Mouse } from "matter-js";
 import Particle from "./sub/particles";
 
-const s = instance => {
-  const sk = instance;
+const sketch = instance => {
+  let sk = instance;
   const divNode = document.querySelector("#canvasContainer");
   const engine = Engine.create();
   const setBordersAndMouse = () => {
@@ -43,10 +43,11 @@ const s = instance => {
   };
 
   sk.stop = () => {
+    Tone.context.suspend();
     World.clear(engine.world);
     Engine.clear(engine);
-    Tone.context.close();
     sk.remove();
+    particles.map(a => (a = null));
   };
 
   // save and get last
@@ -195,7 +196,6 @@ const s = instance => {
   };
 
   const setListeners = (divNode, sk) => { //eslint-disable-line
-    console.log(divNode);
     divNode.addEventListener(
       "click",
       async () => {
@@ -260,4 +260,4 @@ const s = instance => {
   setListeners(divNode, sk);
 };
 
-export default s;
+export default sketch;
