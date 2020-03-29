@@ -32,33 +32,10 @@ import TheHead from "./components/TheHead.vue";
 import TheFooter from "./components/TheFooter.vue";
 import Canvas from "./components/Canvas.vue";
 import virus from "@/projects/virus/scripts/virus.js";
-import eyes from "@/projects/eyes";
+import eyes from "@/projects/eyes/eyes";
 
 export default {
   name: "app",
-  created() {
-    // dataMxn.getData("./data/work.json").then(data => {
-    //   data = dataMxn.addMedia(data);
-    //   this.$store.dispatch("updateProjectsFeed", data);
-    // });
-    window.addEventListener("resize", this.handleResize);
-    window.addEventListener("scroll", this.handleScroll);
-    window.addEventListener("orientationchange", this.handleResize);
-    this.handleResize();
-    setInterval(() => {
-      this.key = Math.random().toFixed(2);
-      if (this.current == virus) {
-        this.current = eyes;
-      } else {
-        this.current = virus;
-      }
-    }, 10000);
-  },
-  destroyed() {
-    window.removeEventListener("resize", this.handleResize);
-    window.removeEventListener("scroll", this.handleScroll);
-    window.removeEventListener("orientationchange", this.handleResize);
-  },
   components: {
     TheHead,
     TheFooter,
@@ -72,25 +49,9 @@ export default {
       showIframe: false,
       virus: virus,
       eyes: eyes,
-      current: null,
+      current: eyes,
       key: 0
     };
-  },
-  methods: {
-    handleResize() {
-      this.width = window.innerWidth;
-      this.height = window.innerHeight;
-    },
-    handleScroll() {
-      let id = window.setTimeout(function() {}, 0);
-      while (id--) {
-        window.clearTimeout(id);
-      }
-      this.footer = false;
-      setTimeout(() => {
-        this.footer = true;
-      }, 2000);
-    }
   },
   computed: {
     ...mapGetters(["activeItem"]),
@@ -124,6 +85,45 @@ export default {
       -webkit-transform-origin: 0 0;
       `;
     }
+  },
+  methods: {
+    handleResize() {
+      this.width = window.innerWidth;
+      this.height = window.innerHeight;
+    },
+    handleScroll() {
+      let id = window.setTimeout(function() {}, 0);
+      while (id--) {
+        window.clearTimeout(id);
+      }
+      this.footer = false;
+      setTimeout(() => {
+        this.footer = true;
+      }, 2000);
+    }
+  },
+  created() {
+    // dataMxn.getData("./data/work.json").then(data => {
+    //   data = dataMxn.addMedia(data);
+    //   this.$store.dispatch("updateProjectsFeed", data);
+    // });
+    window.addEventListener("resize", this.handleResize);
+    window.addEventListener("scroll", this.handleScroll);
+    window.addEventListener("orientationchange", this.handleResize);
+    this.handleResize();
+    setInterval(() => {
+      this.key = Math.random().toFixed(2);
+      if (this.current == virus) {
+        this.current = eyes;
+      } else {
+        this.current = virus;
+      }
+    }, 10000);
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.handleResize);
+    window.removeEventListener("scroll", this.handleScroll);
+    window.removeEventListener("orientationchange", this.handleResize);
   }
 };
 </script>
