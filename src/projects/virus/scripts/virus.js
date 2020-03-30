@@ -23,8 +23,8 @@ const sketch = sk => {
   sk.stop = () => {
     sk.noLoop();
     Runner.stop(runner);
-    Engine.clear(engine);
     World.clear(engine.world, false, true);
+    Engine.clear(engine);
     runner = null;
     engine = null;
     Tone.context.suspend();
@@ -66,7 +66,13 @@ const sketch = sk => {
     ).chain(new Tone.Volume(-15), Tone.Master);
   }
 
-  let engine = Engine.create();
+  let options = {
+    positionIterations: 5,
+    velocityIterations: 3,
+    constraintIterations: 1,
+    enableSleeping: true
+  };
+  let engine = Engine.create(options);
   const setBordersAndMouse = () => {
     const border1 = Bodies.rectangle(0, 0, 10, 4000, {
       isStatic: true
