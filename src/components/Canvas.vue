@@ -23,7 +23,7 @@ export default {
       this.loaded = this.current;
     }
   },
-  destroyed() {
+  beforeDestroy() {
     if (this.canvas && this.canvas.stop) {
       this.canvas.stop();
       this.canvas = null;

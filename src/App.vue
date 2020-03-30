@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <TheHead />
-    <div class="back bw0" :style="iframeContainer">
+    <div class="back bw0" :style="iframeContainer" :key="key + 2">
       <iframe
         v-if="activeItem.type !== 'sketch'"
         class="back bw0"
@@ -11,7 +11,7 @@
         :style="iframeStyle"
         :key="key + 1"
       ></iframe>
-      <Canvas v-else :style="canvas" :current="current" :key="key" />
+      <Canvas v-else :current="current" :key="key" />
     </div>
     <transition name="slide-fade-main">
       <router-view />
@@ -59,17 +59,19 @@ export default {
   computed: {
     ...mapGetters(["activeItem"]),
     iframeContainer: function() {
-      const scale = 1;
-      return `width:${this.$mq == "sm" ? screen.width * scale : this.width}px;
-      height:${this.height * scale}px;
-      opacity:${this.$route.path.includes("play") ? 1 : "1"};
-      -moz-transform: scale(${1 / scale});
+      if (!this.activeItem.type) {
+        return `width:${this.$mq == "sm" ? screen.width : this.width}px;
+      height:${this.height}px;
+      opacity:${this.$route.path.includes("play") ? 1 : ""};
+      -moz-transform: scale(1);
       -moz-transform-origin: 0 0;
-      -o-transform: scale(${1 / scale});
+      -o-transform: scale(1);
       -o-transform-origin: 0 0;
-      -webkit-transform: scale(${1 / scale});
+      -webkit-transform: scale(1);
       -webkit-transform-origin: 0 0;
       `;
+      }
+      return `opacity:${this.$route.path.includes("play") ? 1 : ""}`;
     },
     iframeStyle: function() {
       let scale = 1;

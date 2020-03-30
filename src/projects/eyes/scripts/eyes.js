@@ -234,28 +234,17 @@ const eyes = dd => {
 
   const playSound = (x, y) => {
     if (loading == false) {
-      // sampler0.triggerAttack(440);
-      const num = Math.floor(Math.random() * 5);
-      const pan = dd.constrain(dd.map(x, 0, dd.width / sx, -1, 1), -1, 1);
+      // const num = Math.floor(Math.random() * 5);
+      // const pan = dd.constrain(dd.map(x, 0, dd.width / sx, -1, 1), -1, 1);
       const rate =
         (Math.floor((dd.height / sy - y / 2) / 5) + Math.floor(x / 3)) *
         0.618 *
         0.618 *
         0.618;
       if (reverse1 == 0) {
-        // sound[num].pan(pan);
         sampler0.triggerAttack(rate * 440 + 10);
       } else if (reverse1 == 1) {
         sampler1.triggerAttack(rate * 440 + 10);
-
-        // soundR[num].pan(pan);
-        // soundR[num].rate(
-        //   (Math.floor((dd.height / sy - 1 - y / 2) / 5) + Math.floor(x / 3)) *
-        //     0.618 *
-        //     0.618 *
-        //     0.618
-        // );
-        // soundR[num].play();
       }
     }
   };
