@@ -1,8 +1,18 @@
 import Tone from "tone";
-import { Engine, World, Bodies, MouseConstraint, Mouse } from "matter-js";
+import {
+  Engine,
+  World,
+  Bodies,
+  MouseConstraint,
+  Runner,
+  Mouse
+} from "matter-js";
 import Particle from "./sub/particles";
 import E3 from "../sound/chasing.mp3";
 import D3 from "../sound/light.mp3";
+
+console.log("import virus");
+
 const sketch = sk => {
   const divNode = document.querySelector("#canvasContainer");
 
@@ -11,11 +21,15 @@ const sketch = sk => {
   };
 
   sk.stop = () => {
+    sk.noLoop();
+    Runner.stop(runner);
+    Engine.clear(engine);
+    World.clear(engine.world, false, true);
+    runner = null;
+    engine = null;
+    Tone.context.suspend();
     Particle.prototype.sampler2.dispose();
     Particle.prototype.samplers.map(a => a.dispose());
-    Tone.context.suspend();
-    World.clear(engine.world);
-    Engine.clear(engine);
     sk.remove();
     particles = [];
   };
@@ -52,7 +66,7 @@ const sketch = sk => {
     ).chain(new Tone.Volume(-15), Tone.Master);
   }
 
-  const engine = Engine.create();
+  let engine = Engine.create();
   const setBordersAndMouse = () => {
     const border1 = Bodies.rectangle(0, 0, 10, 4000, {
       isStatic: true
@@ -83,6 +97,7 @@ const sketch = sk => {
     ]);
   };
   engine.world.gravity.y = 0;
+  let runner = Engine.run(engine);
 
   let looping = true;
   let particles = [];
@@ -97,6 +112,7 @@ const sketch = sk => {
 
   sk.setup = () => {
     sk.createCanvas(sk.windowWidth, sk.windowHeight);
+    console.log("setup virus");
     setBordersAndMouse(sk);
     sk.scaleRef = (sk.width + sk.height) / 2;
     sk.background(0);
@@ -119,7 +135,6 @@ const sketch = sk => {
   };
 
   sk.draw = () => {
-    Engine.update(engine);
     sk.background(200, 200, 200);
     sk.noFill();
     particles.forEach(particle => {

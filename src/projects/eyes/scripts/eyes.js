@@ -1,8 +1,9 @@
 import Tone from "tone";
-import F3 from "@/projects/eyes/sound/light.mp3";
-import E3 from "@/projects/eyes/sound/bouton_reverb.mp3";
-
-export default function eyes(sk) {
+import F3 from "../sound/light.mp3";
+import E3 from "../sound/bouton_reverb.mp3";
+console.log("import eyes");
+const eyes = dd => {
+  const divNode = document.querySelector("#canvasContainer");
   const sampler0 = new Tone.Sampler(
     { F3 },
     {
@@ -20,82 +21,77 @@ export default function eyes(sk) {
     }
   ).chain(new Tone.Volume(-12), Tone.Master);
   sampler0.add("A3", "/sound/chasing.mp3");
+  // let textReceived = `击洋误钟亡鲜异室异急热助型推包商收王接声东建感像即争爱带光受反任门度报则清未支尽章密兰游沉托舰鱼均销笔亡钟亡肉嘴姆嘴圣择剧楚评皇室异急异皇买靠楚编赶词鲜诗湾误洋读阳若略范款减诗洲防研写供族研笑称列族流飞风兵列选飞风企称难东声做且难东声做权且飞风留施续红网继尼施留网送尼调改深吗响调深吗虽响红连步调功红八调红续武续微哪男效男哪射若值射超啊冲啊哥啊冲超索胡压竟银压竟免啊冷细巴细预止严考巴预脑诉严止冷层刘烈户层刘妈疑脑拿注器注较周消台单却界影器消叫听白今叫今叫白结却切白却院单却反界让院却反识须照罗增防族值千防青族值千防青防千愿落青例九字落愿例九例细严仅照具照仅容影语容语站友树坚善央善拿跟周消视远清听才结反界让识具须落九罗候识达带爱增随族供列写流运笑备飞权做务权企选族防千愿细谁益冲啊洋误洋烈杂误诗鲜词藏吉索供写选供仍男钱破继句竟略若益止诉底器越器照写称备兵飞且权`;
+  // textReceived = textReceived.split("");
+  const recentItemNo = 0;
   let touched = false;
-  let delegate;
-  let callback;
-  let textReceived = `击洋误钟亡鲜异室异急热助型推包商收王接声东建感像即争爱带光受反任门度报则清未支尽章密兰游沉托舰鱼均销笔亡钟亡肉嘴姆嘴圣择剧楚评皇室异急异皇买靠楚编赶词鲜诗湾误洋读阳若略范款减诗洲防研写供族研笑称列族流飞风兵列选飞风企称难东声做且难东声做权且飞风留施续红网继尼施留网送尼调改深吗响调深吗虽响红连步调功红八调红续武续微哪男效男哪射若值射超啊冲啊哥啊冲超索胡压竟银压竟免啊冷细巴细预止严考巴预脑诉严止冷层刘烈户层刘妈疑脑拿注器注较周消台单却界影器消叫听白今叫今叫白结却切白却院单却反界让院却反识须照罗增防族值千防青族值千防青防千愿落青例九字落愿例九例细严仅照具照仅容影语容语站友树坚善央善拿跟周消视远清听才结反界让识具须落九罗候识达带爱增随族供列写流运笑备飞权做务权企选族防千愿细谁益冲啊洋误洋烈杂误诗鲜词藏吉索供写选供仍男钱破继句竟略若益止诉底器越器照写称备兵飞且权`;
-  textReceived = textReceived.split("");
-  const divNode = document.querySelector("#canvasContainer");
-  let recentItemNo = 0;
-  let scaleX = 50;
-  let back,
-    backR,
-    letterF,
-    letterFR,
-    letterFSR,
-    letterFS,
-    eyeF,
-    recS,
-    recF,
-    eyeS,
-    eyeBS;
+  const scaleX = 50;
+  let back;
+  let backR;
+  let letterF;
+  let letterFR;
+  let letterFSR;
+  let letterFS;
+  let eyeF;
+  let recS;
+  let recF;
+  let eyeS;
+  let eyeBS;
   let xoff = 0;
   let yoff = 0;
   let state = -1;
   let scale1 = 1;
   let scale2 = 1.2;
-  let texts = [];
-  let mp = [];
+  const texts = [];
+  const mp = [];
   mp[-1] = { x: -1, y: -1, text: "我" };
-  let sx, sy;
+  let sx;
+  let sy;
   let loading = false;
-  let loading1 = true;
-  let loading2 = true;
+  const loading1 = true;
+  const loading2 = true;
   let reverse1 = 0;
   let table;
 
-  sk.preload = () => {
-    table = sk.loadTable("/assets/hanziDB.csv", "csv", "header");
+  dd.preload = () => {
+    table = dd.loadTable("/assets/hanziDB.csv", "csv", "header");
   };
 
-  sk.stop = () => {
+  dd.stop = () => {
+    table = undefined;
+    dd.noLoop();
+    sampler0.dispose();
+    sampler1.dispose();
     Tone.context.suspend();
-    sk.remove();
-  };
-  sk.start = () => {
-    sk.loop();
+    dd.remove();
   };
 
-  sk.setup = () => {
-    // sk.noLoop();
-    for (var mm = 0; mm < 6; mm++) {
-      // sk.loadSound("assets/A" + mm + ".m4a", songLoad);
-    }
-    for (let t = 6; t < 12; t++) {
-      // sk.loadSound("assets/A" + mm + ".m4a", songLoadR);
-    }
+  dd.start = () => {
+    dd.loop();
+  };
+
+  dd.setup = () => {
+    dd.createCanvas(dd.windowWidth, dd.windowHeight);
+    console.log("setup eyes");
+
     for (let e = 0; e < 5000; e++) {
-      let m = sk.split(table.getString(e, 0), ";");
+      const m = dd.split(table.getString(e, 0), ";");
       texts[e] = m[1];
     }
-    // sk.frameRate(30);
-    sk.pixelDensity(1);
-    sk.createCanvas(sk.windowWidth, sk.windowHeight);
-
-    if (sk.width < 1500) {
-      scale1 = 1500 / sk.width;
+    if (dd.width < 1500) {
+      scale1 = 1500 / dd.width;
     }
-    scale2 = ((1334 * 750) / (sk.width * sk.height)) * 1.8;
-    if (sk.width > 1600) {
+    scale2 = ((1334 * 750) / (dd.width * dd.height)) * 1.8;
+    if (dd.width > 1600) {
       scale2 = 4;
     }
     sx = 150 / scale2;
     sy = 150 / scale2;
-    sk.mouseX = sk.width / 2;
-    sk.mouseY = sk.height * 0.3;
+    dd.mouseX = dd.width / 2;
+    dd.mouseY = dd.height * 0.3;
   };
 
-  sk.draw = () => {
+  dd.draw = () => {
     if (loading && loading1 == false && loading2 == false) {
       loading = false;
     }
@@ -105,94 +101,88 @@ export default function eyes(sk) {
       sy = 150 / scale2;
     }
 
-    Color(Math.floor((sk.frameCount / 150) % 3));
+    Color(Math.floor((dd.frameCount / 150) % 3));
     GeneArray();
-    if (sk.frameCount % 2 == 0) {
+    if (dd.frameCount % 2 == 0) {
       if (state == 1 && Math.random() > 0.95) {
-        sk.background(backR);
+        dd.background(backR);
       }
-      sk.background(back);
+      dd.background(back);
       RandomBackground();
     }
     displayHighLightedText();
     // "+""-"
-    Eye(sk.width / 2 - 400 / scale1, sk.height / 2 - sk.height * 0.1, "+");
-    Eye(sk.width / 2 + 400 / scale1, sk.height / 2 - sk.height * 0.1, "-");
-    if (delegate === 5) {
-      callback(sx);
-      sk.clear();
-      sk.remove();
-    }
-    if (delegate === 3 && sk.frameCount % 2 == 0) {
-      let text = mp.map(a => a.text);
-      text = text.join("");
-      callback(text);
-    }
+    Eye(dd.width / 2 - 400 / scale1, dd.height / 2 - dd.height * 0.1, "+");
+    Eye(dd.width / 2 + 400 / scale1, dd.height / 2 - dd.height * 0.1, "-");
   };
 
   const displayHighLightedText = () => {
-    // traite array, draw sk.rect and texts highlight;
+    // traite array, draw dd.rect and texts highlight;
     for (let e = 0; e < mp.length; e++) {
-      sk.push();
+      dd.push();
 
-      let nx = mp[e].x;
-      let ny = mp[e].y;
-      sk.translate(nx * sx, ny * sy);
+      const nx = mp[e].x;
+      const ny = mp[e].y;
+      dd.translate(nx * sx, ny * sy);
       // text random size +
       if (e == mp.length - 1) {
-        sk.scale(sk.random(2, 2.2));
+        dd.scale(dd.random(2, 2.2));
       } else {
-        sk.scale(sk.random(1, 1.0 + e / mp.length / 10));
+        dd.scale(dd.random(1, 1.0 + e / mp.length / 10));
       }
       // rect background
-      sk.stroke(recS);
-      sk.strokeWeight(2);
-      sk.fill(recF);
-      sk.rect(0, 0, sx, sy);
+      dd.stroke(recS);
+      dd.strokeWeight(2);
+      dd.fill(recF);
+      dd.rect(0, 0, sx, sy);
       // text high lighted
-      sk.fill(letterFR);
-      sk.noStroke();
-      sk.textSize(140 / scale2);
-      sk.text(mp[e].text, 0, sy * 0.85);
-      sk.pop();
+      dd.fill(letterFR);
+      dd.noStroke();
+      dd.textSize(140 / scale2);
+      dd.text(mp[e].text, 0, sy * 0.85);
+      dd.pop();
     }
   };
 
   const GeneArray = () => {
-    let dump = textReceived.map(txt => {
-      return {
-        text: txt,
-        x: calculatePosition(txt).x,
-        y: calculatePosition(txt).y
-      };
-    });
+    let dump;
+    // if (textReceived) {
+    //   dump = textReceived.map(txt => {
+    //     return {
+    //       text: txt,
+    //       x: calculatePosition(txt).x,
+    //       y: calculatePosition(txt).y
+    //     };
+    //   });
+    // }
 
-    let p = dump[recentItemNo];
+    // let p = dump[recentItemNo];
+    let p;
     // if there is a existant array
     // if (mp1) {
     //   mp = mp1;
     // }
-    if (!sk.keyIsPressed) {
+    if (!dd.keyIsPressed) {
       p = {
-        x: Math.floor(Math.abs(sk.mouseX / sx)),
-        y: Math.floor(Math.abs(sk.mouseY / sy))
+        x: Math.floor(Math.abs(dd.mouseX / sx)),
+        y: Math.floor(Math.abs(dd.mouseY / sy))
       };
-      let distance = Math.sqrt(
+      const distance = Math.sqrt(
         (p.x - mp[mp.length - 1].x) * (p.x - mp[mp.length - 1].x) +
           (p.y - mp[mp.length - 1].y) * (p.y - mp[mp.length - 1].y)
       );
       if (distance > 0) {
-        p.text = texts[Math.floor((sk.width / scaleX) * p.y + p.x)];
+        p.text = texts[Math.floor((dd.width / scaleX) * p.y + p.x)];
         mp.push(p);
-        // sk.mouseX = sk.constrain(p.x * sx, 0, sk.width);
-        // sk.mouseY = sk.constrain(p.y * sy, 0, sk.height);
+        // dd.mouseX = dd.constrain(p.x * sx, 0, dd.width);
+        // dd.mouseY = dd.constrain(p.y * sy, 0, dd.height);
         // Select & Play Sound
         playSound(p.x, p.y);
       }
     }
 
     // Array Length Control
-    let eee = ((sk.width * sk.height) / (sx * sy)) * 0.22;
+    const eee = ((dd.width * dd.height) / (sx * sy)) * 0.22;
     if (mp.length > Math.floor(eee)) {
       setTimeout(function() {
         if (mp.length > 1) {
@@ -200,43 +190,43 @@ export default function eyes(sk) {
         }
       }, 1500);
     }
-    if (mp.length > (sk.width * sk.height) / (sx * sy)) {
-      mp.splice((sk.width * sk.height) / (sx * sy) - 5, 5);
+    if (mp.length > (dd.width * dd.height) / (sx * sy)) {
+      mp.splice((dd.width * dd.height) / (sx * sy) - 5, 5);
     }
-    if (sk.touches.length > 1) {
+    if (dd.touches.length > 1) {
       mp.splice(0, 1 + scale2 * scale2);
     }
   };
 
   const calculatePosition = letter => {
-    let no = texts.indexOf(letter);
-    let y = Math.floor(no / (sk.width / scaleX));
-    let x = Math.ceil(no % (sk.width / scaleX));
+    const no = texts.indexOf(letter);
+    const y = Math.floor(no / (dd.width / scaleX));
+    const x = Math.ceil(no % (dd.width / scaleX));
     return { x, y };
   };
 
   const RandomBackground = () => {
-    sk.textSize(140 / scale2);
-    sk.fill(letterF);
-    for (let x = 0; x < sk.width; x += sx) {
-      for (let y = 0; y < sk.height; y += sy) {
+    dd.textSize(140 / scale2);
+    dd.fill(letterF);
+    for (let x = 0; x < dd.width; x += sx) {
+      for (let y = 0; y < dd.height; y += sy) {
         if (Math.random() > 0.6) {
           if (Math.random() > 0.8) {
-            sk.fill(letterFS);
-            sk.text(texts[Math.floor(Math.random() * 1000)], x, y + sy * 0.85);
+            dd.fill(letterFS);
+            dd.text(texts[Math.floor(Math.random() * 1000)], x, y + sy * 0.85);
           } else {
-            sk.fill(letterFSR);
-            sk.text(texts[Math.floor(Math.random() * 200)], x, y + sy * 0.85);
+            dd.fill(letterFSR);
+            dd.text(texts[Math.floor(Math.random() * 200)], x, y + sy * 0.85);
           }
         } else {
           if (Math.random() > 0.99) {
-            sk.push();
-            sk.noStroke();
-            sk.fill(120, 70, 120);
-            sk.rect(x, y + sy, sx, sy);
-            sk.pop();
+            dd.push();
+            dd.noStroke();
+            dd.fill(120, 70, 120);
+            dd.rect(x, y + sy, sx, sy);
+            dd.pop();
           }
-          sk.text("我", x, y + sy * 0.85);
+          dd.text("我", x, y + sy * 0.85);
         }
       }
     }
@@ -245,10 +235,10 @@ export default function eyes(sk) {
   const playSound = (x, y) => {
     if (loading == false) {
       // sampler0.triggerAttack(440);
-      let num = Math.floor(Math.random() * 5);
-      let pan = sk.constrain(sk.map(x, 0, sk.width / sx, -1, 1), -1, 1);
-      let rate =
-        (Math.floor((sk.height / sy - y / 2) / 5) + Math.floor(x / 3)) *
+      const num = Math.floor(Math.random() * 5);
+      const pan = dd.constrain(dd.map(x, 0, dd.width / sx, -1, 1), -1, 1);
+      const rate =
+        (Math.floor((dd.height / sy - y / 2) / 5) + Math.floor(x / 3)) *
         0.618 *
         0.618 *
         0.618;
@@ -260,7 +250,7 @@ export default function eyes(sk) {
 
         // soundR[num].pan(pan);
         // soundR[num].rate(
-        //   (Math.floor((sk.height / sy - 1 - y / 2) / 5) + Math.floor(x / 3)) *
+        //   (Math.floor((dd.height / sy - 1 - y / 2) / 5) + Math.floor(x / 3)) *
         //     0.618 *
         //     0.618 *
         //     0.618
@@ -272,174 +262,174 @@ export default function eyes(sk) {
 
   const Color = x => {
     if (x == 1) {
-      back = sk.color(8, 61, 169);
-      backR = sk.color(255, 255, 100);
-      letterF = sk.color(120, 80, 80);
-      letterFS = sk.color(120, 80, 80);
-      letterFSR = sk.color(40, 50, 30);
-      letterFR = sk.color(0);
-      eyeF = sk.color(75, 0, 0);
-      eyeS = sk.color(215, 120, 30);
-      eyeBS = sk.color(200, 200, 250);
-      recS = sk.color(0, 0);
-      recF = sk.color(218, 65, 103);
+      back = dd.color(8, 61, 169);
+      backR = dd.color(255, 255, 100);
+      letterF = dd.color(120, 80, 80);
+      letterFS = dd.color(120, 80, 80);
+      letterFSR = dd.color(40, 50, 30);
+      letterFR = dd.color(0);
+      eyeF = dd.color(75, 0, 0);
+      eyeS = dd.color(215, 120, 30);
+      eyeBS = dd.color(200, 200, 250);
+      recS = dd.color(0, 0);
+      recF = dd.color(218, 65, 103);
       reverse1 = 1;
     } else if (x == 0) {
-      back = sk.color(255);
-      backR = sk.color(0);
-      letterF = sk.color(80, 120, 80);
-      letterFS = sk.color(40, 50, 40);
-      letterFSR = sk.color(180, 175, 180);
-      eyeF = sk.color(255);
-      eyeS = sk.color(40, 50, 40);
-      eyeBS = sk.color(0);
-      letterFR = sk.color(255);
-      recS = sk.color(255);
-      recF = sk.color(0);
+      back = dd.color(255);
+      backR = dd.color(0);
+      letterF = dd.color(80, 120, 80);
+      letterFS = dd.color(40, 50, 40);
+      letterFSR = dd.color(180, 175, 180);
+      eyeF = dd.color(255);
+      eyeS = dd.color(40, 50, 40);
+      eyeBS = dd.color(0);
+      letterFR = dd.color(255);
+      recS = dd.color(255);
+      recF = dd.color(0);
       reverse1 = 0;
     } else if (x == 2) {
-      back = sk.color(0);
-      backR = sk.color(255);
-      letterF = sk.color(80, 120, 80);
-      letterFS = sk.color(120, 80, 120);
-      letterFSR = sk.color(40, 50, 40);
-      letterFR = sk.color(0);
-      eyeF = sk.color(0);
-      eyeS = sk.color(250, 200, 250);
-      eyeBS = sk.color(200, 250, 200);
-      recS = sk.color(0, 0);
-      recF = sk.color(250, 200, 250);
+      back = dd.color(0);
+      backR = dd.color(255);
+      letterF = dd.color(80, 120, 80);
+      letterFS = dd.color(120, 80, 120);
+      letterFSR = dd.color(40, 50, 40);
+      letterFR = dd.color(0);
+      eyeF = dd.color(0);
+      eyeS = dd.color(250, 200, 250);
+      eyeBS = dd.color(200, 250, 200);
+      recS = dd.color(0, 0);
+      recF = dd.color(250, 200, 250);
       reverse1 = 1;
     }
   };
 
   function Eye(x, y, tx) {
-    sk.push();
-    sk.stroke(eyeS);
+    dd.push();
+    dd.stroke(eyeS);
     let rr = 120 / scale1;
     let r = 100 / scale1;
-    let per = 200 / scale1;
+    const per = 200 / scale1;
     let ii = 1;
-    //touched
+    // touched
     if (state == 1) {
-      rr = rr * 1.2;
-      r = r * 1.15;
-      ii = ii * 1.15;
+      rr *= 1.2;
+      r *= 1.15;
+      ii *= 1.15;
     }
-    sk.translate(x, y);
-    sk.beginShape();
-    sk.vertex((-(sk.PI - 0.1) * per) / 2, 0);
-    sk.strokeWeight(7);
-    //above line
-    for (let theta1 = 0.05; theta1 < sk.PI - 0.05; theta1 += 0.1) {
-      let n2 = sk.map(Math.sin(sk.frameCount / 20), -1, 1, -5, 5);
-      let yy2 =
+    dd.translate(x, y);
+    dd.beginShape();
+    dd.vertex((-(dd.PI - 0.1) * per) / 2, 0);
+    dd.strokeWeight(5);
+    // above line
+    for (let theta1 = 0.05; theta1 < dd.PI - 0.05; theta1 += 0.1) {
+      const n2 = dd.map(Math.sin(dd.frameCount / 20), -1, 1, -5, 5);
+      const yy2 =
         ((-rr * 13) / 12) * Math.sin(theta1) +
-        sk.random(-5, 5) / scale1 -
-        Math.abs(sk.mouseY - sk.height / 2) / 200;
-      let yy3 = rr * Math.sin(theta1);
-      sk.vertex(theta1 * per - ((sk.PI - 0.1) * per) / 2 + n2, yy2 + n2);
+        dd.random(-5, 5) / scale1 -
+        Math.abs(dd.mouseY - dd.height / 2) / 60;
+      const yy3 = rr * Math.sin(theta1);
+      dd.vertex(theta1 * per - ((dd.PI - 0.1) * per) / 2 + n2, yy2 + n2);
       if (Math.random() > 0.999) {
-        sk.vertex(
-          theta1 * per - ((sk.PI - 0.1) * per) / 2 + n2,
+        dd.vertex(
+          theta1 * per - ((dd.PI - 0.1) * per) / 2 + n2,
           yy2 - (Math.random() + 1) * 20
         );
       }
       if (Math.random() > 0.98) {
-        sk.vertex(theta1 * per - ((sk.PI - 0.1) * per) / 2 + n2, yy3);
+        dd.vertex(theta1 * per - ((dd.PI - 0.1) * per) / 2 + n2, yy3);
       }
     }
-    sk.fill(eyeF);
+    dd.fill(eyeF);
     // below line
-    for (let theta11 = sk.PI - 0.05; theta11 > 0.05; theta11 -= 0.1) {
-      let n21 = sk.map(Math.sin(sk.frameCount / 20), -1, 1, -5, 5);
-      let yy21 = ((-rr * 13) / 12) * Math.sin(theta11) + sk.random(-5, 5);
-      sk.vertex(theta11 * per - ((sk.PI - 0.1) * per) / 2 + n21, -yy21);
+    for (let theta11 = dd.PI - 0.05; theta11 > 0.05; theta11 -= 0.1) {
+      const n21 = dd.map(Math.sin(dd.frameCount / 20), -1, 1, -5, 5);
+      const yy21 = ((-rr * 13) / 12) * Math.sin(theta11) + dd.random(-5, 5);
+      dd.vertex(theta11 * per - ((dd.PI - 0.1) * per) / 2 + n21, -yy21);
     }
-    sk.vertex((-(sk.PI - 0.1) * per) / 2, 0);
-    sk.endShape();
+    dd.vertex((-(dd.PI - 0.1) * per) / 2, 0);
+    dd.endShape();
     // TEXT +-
-    sk.textSize(180 / scale1 + Math.random() * 20);
-    sk.strokeWeight(20);
+    dd.textSize(180 / scale1 + Math.random() * 20);
+    dd.strokeWeight(15);
     if (Math.random() > 0.7) {
-      sk.stroke(eyeS);
+      dd.stroke(eyeS);
     } else {
-      sk.stroke(eyeBS);
+      dd.stroke(eyeBS);
     }
-    sk.text(
+    dd.text(
       tx,
-      -20 - (sk.mouseX - sk.width / 2) / 30,
-      -rr - (0.9 * rr) / sk.constrain(scale1, 1.3, 100)
+      -20 - (dd.mouseX - dd.width / 2) / 30,
+      -rr - (0.9 * rr) / dd.constrain(scale1, 1.3, 100)
     );
-    sk.strokeWeight(1);
-    sk.noFill();
-    sk.beginShape();
+    dd.strokeWeight(1);
+    dd.noFill();
+    dd.beginShape();
     yoff += 0.1;
-    for (let i = 0; i < 2 * sk.PI + 0.01; i += 0.005) {
-      sk.stroke(eyeBS);
-      //black OUT LINE
-      let n1 = sk.noise(xoff, yoff);
-      let x1 =
+    for (let i = 0; i < 2 * dd.PI + 0.01; i += 0.005) {
+      dd.stroke(eyeBS);
+      // black OUT LINE
+      const n1 = dd.noise(xoff, yoff);
+      const x1 =
         r * Math.sin(i) +
-        sk.map(n1, 0, 1, -10, 10) / scale1 +
-        (sk.mouseX - sk.width / 2) / 13;
-      let y1 =
+        dd.map(n1, 0, 1, -10, 10) / scale1 +
+        (dd.mouseX - dd.width / 2) / 13;
+      const y1 =
         r * Math.cos(i) +
-        sk.map(n1, 0, 1, -20, 10) / scale1 +
-        (sk.mouseY - sk.height / 2) / 25;
+        dd.map(n1, 0, 1, -20, 10) / scale1 +
+        (dd.mouseY - dd.height / 2) / 25;
       // y1 = 0;
       xoff += 0.008;
-      sk.vertex(x1, y1);
+      dd.vertex(x1, y1);
       // EYE LINES, WHITE SPOT MOVING
       if (Math.random() > 0.4) {
-        sk.vertex(
-          (x1 / 2.5) * ii + (sk.mouseX - sk.width / 2) / 25,
-          y1 / 2 + (sk.mouseY - sk.height / 2) / 25
+        dd.vertex(
+          (x1 / 2.5) * ii + (dd.mouseX - dd.width / 2) / 25,
+          y1 / 2 + (dd.mouseY - dd.height / 2) / 25
         );
       }
     }
-    sk.endShape();
-    sk.pop();
+    dd.endShape();
+    dd.pop();
   }
 
-  sk.handleTouchStarted = () => {
+  dd.handleTouchStarted = () => {
     if (
-      sk.mouseX < sk.width / 2 - 400 / scale1 + 60 &&
-      sk.mouseX > sk.width / 2 - 400 / scale1 - 60 &&
-      sk.mouseY < 0.4 * sk.height + 35 &&
-      sk.mouseY > 0.4 * sk.height - 300 / scale1
+      dd.mouseX < dd.width / 2 - 400 / scale1 + 60 &&
+      dd.mouseX > dd.width / 2 - 400 / scale1 - 60 &&
+      dd.mouseY < 0.4 * dd.height + 35 &&
+      dd.mouseY > 0.4 * dd.height - 300 / scale1
     ) {
       scale2 *= 1.5;
-      sx = sx / 1.5;
-      sy = sy / 1.5;
+      sx /= 1.5;
+      sy /= 1.5;
     }
     if (
-      sk.mouseX < sk.width / 2 + 400 / scale1 + 60 &&
-      sk.mouseX > sk.width / 2 + 400 / scale1 - 60 &&
-      sk.mouseY < 0.4 * sk.height + 35 &&
-      sk.mouseY > 0.4 * sk.height - 300 / scale1
+      dd.mouseX < dd.width / 2 + 400 / scale1 + 60 &&
+      dd.mouseX > dd.width / 2 + 400 / scale1 - 60 &&
+      dd.mouseY < 0.4 * dd.height + 35 &&
+      dd.mouseY > 0.4 * dd.height - 300 / scale1
     ) {
       scale2 /= 1.5;
-      sx = sx * 1.5;
-      sy = sy * 1.5;
+      sx *= 1.5;
+      sy *= 1.5;
     }
     state = 1;
   };
 
-  sk.handleTouchEnded = () => {
+  dd.handleTouchEnded = () => {
     state = 0;
   };
 
-  sk.windowResized = () => {
-    sk.resizeCanvas(sk.windowWidth, sk.windowHeight);
+  dd.windowResized = () => {
+    dd.resizeCanvas(dd.windowWidth, dd.windowHeight);
   };
 
-  const setListeners = (divNode, sk) => { //eslint-disable-line
+  const setListeners = (divNode, dd) => { //eslint-disable-line
     divNode.addEventListener(
       "click",
       async () => {
         await Tone.start();
-        sk.start();
+        dd.start();
       },
       { once: true, passive: false }
     );
@@ -447,14 +437,14 @@ export default function eyes(sk) {
       "touchstart",
       async () => {
         await Tone.start();
-        sk.start();
+        dd.start();
       },
       { once: true, passive: false }
     );
     divNode.addEventListener(
       "touchstart",
       () => {
-        sk.handleTouchStarted();
+        dd.handleTouchStarted();
         touched = true;
       },
       {
@@ -465,7 +455,7 @@ export default function eyes(sk) {
     divNode.addEventListener(
       "mousedown",
       () => {
-        sk.handleTouchStarted();
+        dd.handleTouchStarted();
         touched = true;
       },
       {
@@ -473,11 +463,11 @@ export default function eyes(sk) {
       }
     );
 
-    divNode.addEventListener("touchend", sk.handleTouchEnd, {
+    divNode.addEventListener("touchend", dd.handleTouchEnded, {
       passive: false
     });
 
-    divNode.addEventListener("mouseup", sk.handleTouchEnd, {
+    divNode.addEventListener("mouseup", dd.handleTouchEnded, {
       passive: false
     });
 
@@ -497,6 +487,7 @@ export default function eyes(sk) {
       { passive: false }
     );
   };
+  setListeners(divNode, dd);
+};
 
-  setListeners(divNode, sk);
-}
+export default eyes;

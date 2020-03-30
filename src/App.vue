@@ -40,7 +40,6 @@ export default {
   },
   watch: {
     activeItem(val) {
-      this.key = Math.random().toFixed(2);
       if (val.type === "sketch") {
         this.changeSketch(val.id);
       }

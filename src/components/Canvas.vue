@@ -12,21 +12,22 @@ export default {
   },
   data() {
     return {
-      started: false,
+      loaded: null,
       canvas: null
     };
   },
   mounted() {
     p5.disableFriendlyErrors = true;
-    if (this.current) {
-    this.canvas = new p5(this.current, 'canvasContainer'); //eslint-disable-line
-      this.started = true;
+    if (this.current && !this.canvas && this.loaded !== this.current) {
+      this.canvas = new p5(this.current, 'canvasContainer'); //eslint-disable-line
+      this.loaded = this.current;
     }
   },
   destroyed() {
     if (this.canvas && this.canvas.stop) {
       this.canvas.stop();
       this.canvas = null;
+      this.loaded = null;
     }
   }
 };

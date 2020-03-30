@@ -1,5 +1,17 @@
 {
   "projects": {
     "default": "sikai-li"
+  },
+  "targets": {
+    "sikai-li": {
+      "hosting": {
+        "beta.skyl.fr": [
+          "sikaili"
+        ],
+        "skyl.fr": [
+          "sikai-li"
+        ]
+      }
+    }
   }
 }

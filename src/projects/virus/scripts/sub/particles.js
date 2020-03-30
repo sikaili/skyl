@@ -14,11 +14,11 @@ export default class Particle {
       this.id = virus.id;
     }
     this.body = Bodies.circle(x, y, this.r / 1.4);
-    Body.setMass(this.body, 5 / scale);
+    Body.setMass(this.body, 3 / scale);
     if (virus) {
       Body.applyForce(this.body, this.body.position, {
-        x: Math.random() / 10,
-        y: Math.random() / 10
+        x: Math.random() / 1000,
+        y: Math.random() / 1000
       });
     }
   }
@@ -96,8 +96,8 @@ export default class Particle {
     if (Math.random() > 0.3) {
       this.updating = true;
       const force = {
-        x: (Math.random() - 0.5) * 0.09,
-        y: (Math.random() - 0.5) * 0.09
+        x: (Math.random() - 0.5) * 0.05,
+        y: (Math.random() - 0.5) * 0.06
       };
       Body.applyForce(this.body, this.body.position, force);
     }
@@ -105,13 +105,13 @@ export default class Particle {
 
   display(sk) {
     // console.log(this.body.angularVelocity);
-    if (this.body.angularVelocity < 0.02) {
+    if (this.body.angularVelocity < 0.005) {
       this.updating = false;
     }
     if (this.died) {
-      Body.applyForce(this.body, this.body.position, { x: 0, y: 0.05 });
+      Body.applyForce(this.body, this.body.position, { x: 0, y: 0.01 });
     } else if (this.immu) {
-      Body.applyForce(this.body, this.body.position, { x: 0, y: -0.003 });
+      Body.applyForce(this.body, this.body.position, { x: 0, y: -0.0003 });
     }
     sk.push();
     sk.translate(this.body.position.x, this.body.position.y);
