@@ -1,12 +1,12 @@
 import Tone from "tone";
-import F3 from "./sound/light.mp3";
+import F4 from "./sound/ling.mp3";
 import E3 from "./sound/bouton_reverb.mp3";
 console.log("import p");
 
 export default function(instance) {
   const divNode = document.querySelector("#canvasContainer");
   const sampler0 = new Tone.Sampler(
-    { F3 },
+    { F4, E3 },
     {
       onload: () => {
         this.isLoaded = true;
@@ -20,14 +20,15 @@ export default function(instance) {
         this.isLoaded = true;
       }
     }
-  ).chain(new Tone.Volume(-12), Tone.Master);
+  ).chain(new Tone.Volume(-14), Tone.Master);
+  const meter = new Tone.Meter();
+  Tone.Master.connect(meter);
   const sk = instance;
   let intervalX;
   let intervalY;
   const RotateObjects = [];
   let luckyNo;
   let loading = true;
-  const sound = [];
   sk.stop = () => {
     sk.noLoop();
     sk.remove();
@@ -128,6 +129,9 @@ export default function(instance) {
         sk.fill(color);
         sk.ellipse(0, 0, this.rCircle, this.rCircle);
         this.playble = true;
+        setTimeout(() => {
+          this.playble = false;
+        }, 3000);
       }
       if (this.playble) {
         sk.fill(0, this.id, this.id * 2);
@@ -171,7 +175,8 @@ export default function(instance) {
       ).sort()[0];
       luckyNo = RotateObjects.indexOf(min);
     }
-    const level = 0.03;
+    const level = NaN;
+    // console.log(level);
     sk.background(150, 50 * (1 + level * 200), 200);
     for (let i = 0; i < RotateObjects.length; i += 1) {
       const obj = RotateObjects[i];
@@ -181,12 +186,13 @@ export default function(instance) {
       }
       if (!loading) {
         if (
-          sk.calcDistance(sk.mouseX, sk.mouseY, obj.x, obj.y) < 100 &&
+          sk.calcDistance(sk.mouseX, sk.mouseY, obj.x, obj.y) < 75 &&
           obj.playble
         ) {
           obj.bigger();
           obj.rot = true;
-          sampler0.triggerAttack(obj.id * 10);
+          sampler0.triggerAttack(obj.id * 5);
+          sampler1.triggerAttack(obj.y);
         } else {
           obj.rot = false;
         }
@@ -223,7 +229,6 @@ export default function(instance) {
     "click",
     async () => {
       await Tone.start();
-      sk.start();
     },
     { once: true, passive: false }
   );
@@ -232,7 +237,6 @@ export default function(instance) {
     "touchstart",
     async () => {
       await Tone.start();
-      sk.start();
     },
     { once: true, passive: false }
   );

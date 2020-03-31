@@ -35,6 +35,7 @@ const sketch = sk => {
       a = undefined;
     });
     particles = [];
+    console.log("virus killed");
   };
 
   // save and get last
