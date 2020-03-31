@@ -3,8 +3,13 @@
 </template>
 
 <script>
-import * as p5 from "p5";
-
+import p5 from "p5";
+let current;
+const changeSketch = name => {
+  import("./../projects/" + name + "/" + name + ".js").then(module => {
+    current = new p5(module.default, 'canvasContainer'); //eslint-disable-line
+  });
+};
 export default {
   name: "Canvas",
   props: {
@@ -12,23 +17,26 @@ export default {
   },
   data() {
     return {
-      loaded: null,
-      canvas: null
+      loaded: null
     };
   },
   mounted() {
-    p5.disableFriendlyErrors = true;
-    if (this.current && !this.canvas && this.loaded !== this.current) {
-      this.canvas = new p5(this.current, 'canvasContainer'); //eslint-disable-line
-      this.loaded = this.current;
-    }
+    this.$nextTick(() => {
+      if (this.current && this.current !== this.loaded) {
+        p5.disableFriendlyErrors = true;
+        changeSketch(this.current);
+        this.loaded = this.current;
+      }
+    });
   },
   beforeDestroy() {
-    if (this.canvas && this.canvas.stop) {
-      this.canvas.stop();
-      this.canvas = null;
+    if (current) {
+      current.stop();
       this.loaded = null;
     }
+  },
+  destroyed() {
+    current = null;
   }
 };
 </script>

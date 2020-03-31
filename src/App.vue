@@ -11,7 +11,7 @@
         :style="iframeStyle"
         :key="key + 1"
       ></iframe>
-      <Canvas v-else :current="current" :key="key" />
+      <Canvas v-else :current="activeItem.id" :key="activeItem.id" />
     </div>
     <transition name="slide-fade-main">
       <router-view />
@@ -19,6 +19,7 @@
     <transition name="slide-fade-main">
       <TheFooter v-if="footer && $mq == `lg`" />
     </transition>
+    <!-- <div id="canvasContainer"></div> -->
   </div>
 </template>
 
@@ -30,7 +31,7 @@ import { mapGetters } from "vuex";
 import TheHead from "./components/TheHead.vue";
 import TheFooter from "./components/TheFooter.vue";
 import Canvas from "./components/Canvas.vue";
-
+// import p5 from "p5";
 export default {
   name: "app",
   components: {
@@ -38,20 +39,12 @@ export default {
     TheFooter,
     Canvas
   },
-  watch: {
-    activeItem(val) {
-      if (val.type === "sketch") {
-        this.changeSketch(val.id);
-      }
-    }
-  },
   data() {
     return {
       footer: true,
       width: 0,
       height: 0,
       showIframe: false,
-      current: null,
       key: 0,
       sketches: {}
     };
@@ -109,12 +102,6 @@ export default {
     }
   },
   methods: {
-    changeSketch(name) {
-      import("./projects/" + name + "/scripts/" + name + ".js").then(module => {
-        this.key = Math.random().toFixed(2);
-        this.current = module.default;
-      });
-    },
     handleResize() {
       this.width = window.innerWidth;
       this.height = window.innerHeight;
@@ -131,11 +118,14 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch("setActiveItem", { id: "eyes", type: "sketch" });
+    this.$store.dispatch("setActiveItem", { id: "virus", type: "sketch" });
     window.addEventListener("resize", this.handleResize);
     window.addEventListener("scroll", this.handleScroll);
     window.addEventListener("orientationchange", this.handleResize);
     this.handleResize();
+  },
+  mounted() {
+    // let m = new p5(p, "canvasContainer");
   },
   destroyed() {
     window.removeEventListener("resize", this.handleResize);
@@ -156,5 +146,16 @@ export default {
 .slide-fade-main-leave-to {
   transform: translateY(-30px);
   opacity: 0;
+}
+canvas.p5Canvas {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 0 0 0;
+}
+
+body {
+  padding: 0 0 0 0;
+  margin: 0 0 0 0;
 }
 </style>

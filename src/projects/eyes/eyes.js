@@ -1,6 +1,6 @@
 import Tone from "tone";
-import F3 from "../sound/light.mp3";
-import E3 from "../sound/bouton_reverb.mp3";
+import F3 from "./sound/light.mp3";
+import E3 from "./sound/bouton_reverb.mp3";
 console.log("import eyes");
 const eyes = dd => {
   const divNode = document.querySelector("#canvasContainer");
@@ -42,7 +42,7 @@ const eyes = dd => {
   let state = -1;
   let scale1 = 1;
   let scale2 = 1.2;
-  const texts = [];
+  let texts = [];
   const mp = [];
   mp[-1] = { x: -1, y: -1, text: "我" };
   let sx;
@@ -53,17 +53,119 @@ const eyes = dd => {
   let reverse1 = 0;
   let table;
 
+  class Eye {
+    constructor(x, y, tx) {
+      this.x = x;
+      this.y = y;
+      this.tx = tx;
+    }
+    display() {
+      dd.push();
+      dd.stroke(eyeS);
+      let rr = 120 / scale1;
+      let r = 100 / scale1;
+      const per = 200 / scale1;
+      let ii = 1;
+      // touched
+      if (state == 1) {
+        rr *= 1.2;
+        r *= 1.15;
+        ii *= 1.15;
+      }
+      dd.translate(this.x, this.y);
+      dd.beginShape();
+      dd.vertex((-(dd.PI - 0.1) * per) / 2, 0);
+      dd.strokeWeight(5);
+      // above line
+      for (let theta1 = 0.05; theta1 < dd.PI - 0.05; theta1 += 0.1) {
+        const n2 = dd.map(Math.sin(dd.frameCount / 20), -1, 1, -5, 5);
+        const yy2 =
+          ((-rr * 13) / 12) * Math.sin(theta1) +
+          dd.random(-5, 5) / scale1 -
+          Math.abs(dd.mouseY - dd.height / 2) / 60;
+        const yy3 = rr * Math.sin(theta1);
+        dd.vertex(theta1 * per - ((dd.PI - 0.1) * per) / 2 + n2, yy2 + n2);
+        if (Math.random() > 0.999) {
+          dd.vertex(
+            theta1 * per - ((dd.PI - 0.1) * per) / 2 + n2,
+            yy2 - (Math.random() + 1) * 20
+          );
+        }
+        if (Math.random() > 0.98) {
+          dd.vertex(theta1 * per - ((dd.PI - 0.1) * per) / 2 + n2, yy3);
+        }
+      }
+      dd.fill(eyeF);
+      // below line
+      for (let theta11 = dd.PI - 0.05; theta11 > 0.05; theta11 -= 0.1) {
+        const n21 = dd.map(Math.sin(dd.frameCount / 20), -1, 1, -5, 5);
+        const yy21 = ((-rr * 13) / 12) * Math.sin(theta11) + dd.random(-5, 5);
+        dd.vertex(theta11 * per - ((dd.PI - 0.1) * per) / 2 + n21, -yy21);
+      }
+      dd.vertex((-(dd.PI - 0.1) * per) / 2, 0);
+      dd.endShape();
+      // TEXT +-
+      dd.textSize(180 / scale1 + Math.random() * 20);
+      dd.strokeWeight(15);
+      if (Math.random() > 0.7) {
+        dd.stroke(eyeS);
+      } else {
+        dd.stroke(eyeBS);
+      }
+      dd.text(
+        this.tx,
+        -20 - (dd.mouseX - dd.width / 2) / 30,
+        -rr - (0.9 * rr) / dd.constrain(scale1, 1.3, 100)
+      );
+      dd.strokeWeight(1);
+      dd.noFill();
+      dd.beginShape();
+      yoff += 0.1;
+      for (let i = 0; i < 2 * dd.PI + 0.01; i += 0.005) {
+        dd.stroke(eyeBS);
+        // black OUT LINE
+        const n1 = dd.noise(xoff, yoff);
+        const x1 =
+          r * Math.sin(i) +
+          dd.map(n1, 0, 1, -10, 10) / scale1 +
+          (dd.mouseX - dd.width / 2) / 13;
+        const y1 =
+          r * Math.cos(i) +
+          dd.map(n1, 0, 1, -20, 10) / scale1 +
+          (dd.mouseY - dd.height / 2) / 25;
+        // y1 = 0;
+        xoff += 0.008;
+        dd.vertex(x1, y1);
+        // EYE LINES, WHITE SPOT MOVING
+        if (Math.random() > 0.4) {
+          dd.vertex(
+            (x1 / 2.5) * ii + (dd.mouseX - dd.width / 2) / 25,
+            y1 / 2 + (dd.mouseY - dd.height / 2) / 25
+          );
+        }
+      }
+      dd.endShape();
+      dd.pop();
+    }
+  }
+
   dd.preload = () => {
     table = dd.loadTable("/assets/hanziDB.csv", "csv", "header");
   };
 
   dd.stop = () => {
-    table = undefined;
+    dd.stopped = true;
+    dd.eyeRight = null;
     dd.noLoop();
+    texts = [];
+    dd.eyeLeft = null;
+    table = undefined;
     sampler0.dispose();
     sampler1.dispose();
     Tone.context.suspend();
     dd.remove();
+    Object.entries(prop => delete dd[prop]);
+    console.log("eyes is killed");
   };
 
   dd.start = () => {
@@ -71,7 +173,8 @@ const eyes = dd => {
   };
 
   dd.setup = () => {
-    dd.createCanvas(dd.windowWidth, dd.windowHeight);
+    const canvas = dd.createCanvas(dd.windowWidth, dd.windowHeight);
+    canvas.id = Math.random().toFixed(2);
     console.log("setup eyes");
 
     for (let e = 0; e < 5000; e++) {
@@ -89,6 +192,17 @@ const eyes = dd => {
     sy = 150 / scale2;
     dd.mouseX = dd.width / 2;
     dd.mouseY = dd.height * 0.3;
+
+    dd.eyeLeft = new Eye(
+      dd.width / 2 - 400 / scale1,
+      dd.height / 2 - dd.height * 0.1,
+      "+"
+    );
+    dd.eyeRight = new Eye(
+      dd.width / 2 + 400 / scale1,
+      dd.height / 2 - dd.height * 0.1,
+      "-"
+    );
   };
 
   dd.draw = () => {
@@ -112,8 +226,10 @@ const eyes = dd => {
     }
     displayHighLightedText();
     // "+""-"
-    Eye(dd.width / 2 - 400 / scale1, dd.height / 2 - dd.height * 0.1, "+");
-    Eye(dd.width / 2 + 400 / scale1, dd.height / 2 - dd.height * 0.1, "-");
+    if (dd.eyeRight) {
+      dd.eyeRight.display();
+      dd.eyeLeft.display();
+    }
   };
 
   const displayHighLightedText = () => {
@@ -145,7 +261,6 @@ const eyes = dd => {
   };
 
   const GeneArray = () => {
-    let dump;
     // if (textReceived) {
     //   dump = textReceived.map(txt => {
     //     return {
@@ -157,12 +272,12 @@ const eyes = dd => {
     // }
 
     // let p = dump[recentItemNo];
-    let p;
     // if there is a existant array
     // if (mp1) {
     //   mp = mp1;
     // }
-    if (!dd.keyIsPressed) {
+    if (!dd.keyIsPressed && dd.mouseMove) {
+      let p;
       p = {
         x: Math.floor(Math.abs(dd.mouseX / sx)),
         y: Math.floor(Math.abs(dd.mouseY / sy))
@@ -174,10 +289,9 @@ const eyes = dd => {
       if (distance > 0) {
         p.text = texts[Math.floor((dd.width / scaleX) * p.y + p.x)];
         mp.push(p);
-        // dd.mouseX = dd.constrain(p.x * sx, 0, dd.width);
-        // dd.mouseY = dd.constrain(p.y * sy, 0, dd.height);
-        // Select & Play Sound
         playSound(p.x, p.y);
+      } else {
+        p = undefined;
       }
     }
 
@@ -206,27 +320,33 @@ const eyes = dd => {
   };
 
   const RandomBackground = () => {
-    dd.textSize(140 / scale2);
-    dd.fill(letterF);
-    for (let x = 0; x < dd.width; x += sx) {
-      for (let y = 0; y < dd.height; y += sy) {
-        if (Math.random() > 0.6) {
-          if (Math.random() > 0.8) {
-            dd.fill(letterFS);
-            dd.text(texts[Math.floor(Math.random() * 1000)], x, y + sy * 0.85);
+    if (!dd.stopped) {
+      dd.textSize(140 / scale2);
+      dd.fill(letterF);
+      for (let x = 0; x < dd.width; x += sx) {
+        for (let y = 0; y < dd.height; y += sy) {
+          if (Math.random() > 0.6) {
+            if (Math.random() > 0.8) {
+              dd.fill(letterFS);
+              dd.text(
+                texts[Math.floor(Math.random() * 1000)],
+                x,
+                y + sy * 0.85
+              );
+            } else {
+              dd.fill(letterFSR);
+              dd.text(texts[Math.floor(Math.random() * 200)], x, y + sy * 0.85);
+            }
           } else {
-            dd.fill(letterFSR);
-            dd.text(texts[Math.floor(Math.random() * 200)], x, y + sy * 0.85);
+            if (Math.random() > 0.99) {
+              dd.push();
+              dd.noStroke();
+              dd.fill(120, 70, 120);
+              dd.rect(x, y + sy, sx, sy);
+              dd.pop();
+            }
+            dd.text("我", x, y + sy * 0.85);
           }
-        } else {
-          if (Math.random() > 0.99) {
-            dd.push();
-            dd.noStroke();
-            dd.fill(120, 70, 120);
-            dd.rect(x, y + sy, sx, sy);
-            dd.pop();
-          }
-          dd.text("我", x, y + sy * 0.85);
         }
       }
     }
@@ -291,95 +411,6 @@ const eyes = dd => {
       reverse1 = 1;
     }
   };
-
-  function Eye(x, y, tx) {
-    dd.push();
-    dd.stroke(eyeS);
-    let rr = 120 / scale1;
-    let r = 100 / scale1;
-    const per = 200 / scale1;
-    let ii = 1;
-    // touched
-    if (state == 1) {
-      rr *= 1.2;
-      r *= 1.15;
-      ii *= 1.15;
-    }
-    dd.translate(x, y);
-    dd.beginShape();
-    dd.vertex((-(dd.PI - 0.1) * per) / 2, 0);
-    dd.strokeWeight(5);
-    // above line
-    for (let theta1 = 0.05; theta1 < dd.PI - 0.05; theta1 += 0.1) {
-      const n2 = dd.map(Math.sin(dd.frameCount / 20), -1, 1, -5, 5);
-      const yy2 =
-        ((-rr * 13) / 12) * Math.sin(theta1) +
-        dd.random(-5, 5) / scale1 -
-        Math.abs(dd.mouseY - dd.height / 2) / 60;
-      const yy3 = rr * Math.sin(theta1);
-      dd.vertex(theta1 * per - ((dd.PI - 0.1) * per) / 2 + n2, yy2 + n2);
-      if (Math.random() > 0.999) {
-        dd.vertex(
-          theta1 * per - ((dd.PI - 0.1) * per) / 2 + n2,
-          yy2 - (Math.random() + 1) * 20
-        );
-      }
-      if (Math.random() > 0.98) {
-        dd.vertex(theta1 * per - ((dd.PI - 0.1) * per) / 2 + n2, yy3);
-      }
-    }
-    dd.fill(eyeF);
-    // below line
-    for (let theta11 = dd.PI - 0.05; theta11 > 0.05; theta11 -= 0.1) {
-      const n21 = dd.map(Math.sin(dd.frameCount / 20), -1, 1, -5, 5);
-      const yy21 = ((-rr * 13) / 12) * Math.sin(theta11) + dd.random(-5, 5);
-      dd.vertex(theta11 * per - ((dd.PI - 0.1) * per) / 2 + n21, -yy21);
-    }
-    dd.vertex((-(dd.PI - 0.1) * per) / 2, 0);
-    dd.endShape();
-    // TEXT +-
-    dd.textSize(180 / scale1 + Math.random() * 20);
-    dd.strokeWeight(15);
-    if (Math.random() > 0.7) {
-      dd.stroke(eyeS);
-    } else {
-      dd.stroke(eyeBS);
-    }
-    dd.text(
-      tx,
-      -20 - (dd.mouseX - dd.width / 2) / 30,
-      -rr - (0.9 * rr) / dd.constrain(scale1, 1.3, 100)
-    );
-    dd.strokeWeight(1);
-    dd.noFill();
-    dd.beginShape();
-    yoff += 0.1;
-    for (let i = 0; i < 2 * dd.PI + 0.01; i += 0.005) {
-      dd.stroke(eyeBS);
-      // black OUT LINE
-      const n1 = dd.noise(xoff, yoff);
-      const x1 =
-        r * Math.sin(i) +
-        dd.map(n1, 0, 1, -10, 10) / scale1 +
-        (dd.mouseX - dd.width / 2) / 13;
-      const y1 =
-        r * Math.cos(i) +
-        dd.map(n1, 0, 1, -20, 10) / scale1 +
-        (dd.mouseY - dd.height / 2) / 25;
-      // y1 = 0;
-      xoff += 0.008;
-      dd.vertex(x1, y1);
-      // EYE LINES, WHITE SPOT MOVING
-      if (Math.random() > 0.4) {
-        dd.vertex(
-          (x1 / 2.5) * ii + (dd.mouseX - dd.width / 2) / 25,
-          y1 / 2 + (dd.mouseY - dd.height / 2) / 25
-        );
-      }
-    }
-    dd.endShape();
-    dd.pop();
-  }
 
   dd.handleTouchStarted = () => {
     if (
@@ -471,6 +502,20 @@ const eyes = dd => {
     divNode.addEventListener(
       "touchmove",
       ev => {
+        dd.mouseMove = true;
+        ev.preventDefault();
+      },
+      { passive: false }
+    );
+
+    divNode.addEventListener(
+      "mousemove",
+      ev => {
+        if (dd.timer) clearTimeout(dd.timer);
+        dd.timer = setTimeout(() => {
+          dd.mouseMove = false;
+        }, 100);
+        dd.mouseMove = true;
         ev.preventDefault();
       },
       { passive: false }

@@ -127,7 +127,7 @@ export default class Particle {
 
     if (this.died) {
       sk.fill(0);
-      sk.rect(0, 0, this.r * 2);
+      sk.rect(0, 0, this.r * 2, this.r * 2);
     } else {
       sk.ellipse(0, 0, this.r * 2);
     }

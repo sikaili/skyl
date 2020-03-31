@@ -8,8 +8,8 @@ import {
   Mouse
 } from "matter-js";
 import Particle from "./sub/particles";
-import E3 from "../sound/chasing.mp3";
-import D3 from "../sound/light.mp3";
+import E3 from "./sound/chasing.mp3";
+import D3 from "./sound/light.mp3";
 
 console.log("import virus");
 
@@ -31,6 +31,9 @@ const sketch = sk => {
     Particle.prototype.sampler2.dispose();
     Particle.prototype.samplers.map(a => a.dispose());
     sk.remove();
+    particles.map(a => {
+      a = undefined;
+    });
     particles = [];
   };
 
