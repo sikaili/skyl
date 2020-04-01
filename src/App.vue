@@ -118,7 +118,7 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch("setActiveItem", { id: "virus", type: "sketch" });
+    // this.$store.dispatch("setActiveItem", { id: "virus", type: "sketch" });
     window.addEventListener("resize", this.handleResize);
     window.addEventListener("scroll", this.handleScroll);
     window.addEventListener("orientationchange", this.handleResize);

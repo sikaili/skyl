@@ -26,15 +26,18 @@ export default function(instance) {
   const sk = instance;
   let intervalX;
   let intervalY;
-  const RotateObjects = [];
+  const rotateObjects = [];
   let luckyNo;
   let loading = true;
   sk.stop = () => {
     sk.noLoop();
-    sk.remove();
-    RotateObjects.map(a => {
+    rotateObjects.map(a => {
       a = undefined;
     });
+    sampler0.dispose();
+    sampler1.dispose();
+    Tone.context.suspend();
+    sk.remove();
     Object.entries(prop => delete sk[prop]);
     console.log("p is killed");
   };
@@ -158,7 +161,7 @@ export default function(instance) {
     let number = 0;
     for (let i = 0; i < sk.width + intervalX; i += intervalX) {
       for (let t = 0; t < sk.height + intervalY; t += intervalY) {
-        RotateObjects[number] = new RotateObject(i, t, intervalX);
+        rotateObjects[number] = new RotateObject(i, t, intervalX);
         number += 1;
       }
     }
@@ -170,16 +173,18 @@ export default function(instance) {
   sk.draw = () => {
     let fps = sk.frameRate();
     if (sk.keyIsPressed) {
-      const min = RotateObjects.filter(
-        obj => sk.calcDistance(obj.x, obj.y, sk.mouseX, sk.mouseY) < intervalX
-      ).sort()[0];
-      luckyNo = RotateObjects.indexOf(min);
+      const min = rotateObjects
+        .filter(
+          obj => sk.calcDistance(obj.x, obj.y, sk.mouseX, sk.mouseY) < intervalX
+        )
+        .sort()[0];
+      luckyNo = rotateObjects.indexOf(min);
     }
     const level = NaN;
     // console.log(level);
     sk.background(150, 50 * (1 + level * 200), 200);
-    for (let i = 0; i < RotateObjects.length; i += 1) {
-      const obj = RotateObjects[i];
+    for (let i = 0; i < rotateObjects.length; i += 1) {
+      const obj = rotateObjects[i];
       obj.update(sk.mouseX, sk.mouseY);
       if (obj.mode === "inside") {
         sk.vertex(obj.x, obj.y);
@@ -203,18 +208,20 @@ export default function(instance) {
         obj.display();
       }
     }
-    sk.push();
-    sk.fill(255);
-    sk.stroke(0);
-    sk.text("FPS: " + fps.toFixed(2), 10, sk.height - 10);
-    sk.pop();
+    // sk.push();
+    // sk.fill(255);
+    // sk.stroke(0);
+    // sk.text("FPS: " + fps.toFixed(2), 10, sk.height - 10);
+    // sk.pop();
   };
 
   sk.handleTouchStarted = () => {
-    const min = RotateObjects.filter(
-      obj => sk.calcDistance(obj.x, obj.y, sk.mouseX, sk.mouseY) < intervalX
-    ).sort()[0];
-    luckyNo = RotateObjects.indexOf(min);
+    const min = rotateObjects
+      .filter(
+        obj => sk.calcDistance(obj.x, obj.y, sk.mouseX, sk.mouseY) < intervalX
+      )
+      .sort()[0];
+    luckyNo = rotateObjects.indexOf(min);
   };
 
   sk.windowResized = () => {

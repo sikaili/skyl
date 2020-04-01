@@ -16,7 +16,7 @@ const router = new Router({
     {
       path: "/",
       name: "home",
-      redirect: "/work/"
+      redirect: "/work"
     },
     {
       path: "/drawings",

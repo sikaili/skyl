@@ -75,10 +75,10 @@ const eyes = dd => {
       dd.translate(this.x, this.y);
       dd.beginShape();
       dd.vertex((-(dd.PI - 0.1) * per) / 2, 0);
-      dd.strokeWeight(5);
+      dd.strokeWeight(dd.width < 700 ? 3 : 5);
       // above line
       for (let theta1 = 0.05; theta1 < dd.PI - 0.05; theta1 += 0.1) {
-        const n2 = dd.map(Math.sin(dd.frameCount / 20), -1, 1, -5, 5);
+        const n2 = dd.map(Math.sin(dd.frameCount / 40), -1, 1, -3, 3);
         const yy2 =
           ((-rr * 13) / 12) * Math.sin(theta1) +
           dd.random(-5, 5) / scale1 -
@@ -91,22 +91,22 @@ const eyes = dd => {
             yy2 - (Math.random() + 1) * 20
           );
         }
-        if (Math.random() > 0.98) {
+        if (Math.random() > 0.99) {
           dd.vertex(theta1 * per - ((dd.PI - 0.1) * per) / 2 + n2, yy3);
         }
       }
       dd.fill(eyeF);
       // below line
       for (let theta11 = dd.PI - 0.05; theta11 > 0.05; theta11 -= 0.1) {
-        const n21 = dd.map(Math.sin(dd.frameCount / 20), -1, 1, -5, 5);
-        const yy21 = ((-rr * 13) / 12) * Math.sin(theta11) + dd.random(-5, 5);
+        const n21 = dd.map(Math.sin(dd.frameCount / 30), -1, 1, -5, 5);
+        const yy21 = ((-rr * 13) / 12) * Math.sin(theta11) + dd.random(-3, 3);
         dd.vertex(theta11 * per - ((dd.PI - 0.1) * per) / 2 + n21, -yy21);
       }
       dd.vertex((-(dd.PI - 0.1) * per) / 2, 0);
       dd.endShape();
       // TEXT +-
-      dd.textSize(180 / scale1 + Math.random() * 20);
-      dd.strokeWeight(15);
+      dd.textSize(180 / scale1 + Math.random() * 10);
+      dd.strokeWeight(dd.width < 700 ? 10 : 20);
       if (Math.random() > 0.7) {
         dd.stroke(eyeS);
       } else {
@@ -338,7 +338,7 @@ const eyes = dd => {
               dd.text(texts[Math.floor(Math.random() * 200)], x, y + sy * 0.85);
             }
           } else {
-            if (Math.random() > 0.99) {
+            if (Math.random() > 0.99 && dd.frameCount % 2 === 0) {
               dd.push();
               dd.noStroke();
               dd.fill(120, 70, 120);

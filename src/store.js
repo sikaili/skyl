@@ -7,7 +7,7 @@ Vue.use(Vuex);
 const state = {
   work: seedData.work,
   music: seedData.music,
-  activeItem: {},
+  activeItem: { id: "eyes", type: "sketch" },
   loading: true,
   iframeItems: allIframeLinks
 };
@@ -46,7 +46,7 @@ const actions = {
   setActiveItem(context, payload) {
     if (payload.type === "sketch") {
       context.commit("SET_ACTIVE_ITEM", payload);
-    } else if (payload.link.includes("https://")) {
+    } else if (payload && payload.link.includes("https://")) {
       context.commit("SET_ACTIVE_ITEM", payload);
     }
   },

@@ -145,7 +145,7 @@ const seedData = {
       year: "2019",
       des:
         "Speed up a single sound object, move and compose your own combination",
-      link: "https://apps.skyl.fr/p/",
+      link: "https://skyl.fr/play/p/",
       img: "/img/covers/p.png",
       credits: [
         {
@@ -265,7 +265,17 @@ allIframeLinks = allIframeLinks.map(iframeObject => {
   return { id: iframeObject.id, link: iframeObject.link };
 });
 allIframeLinks.filter(iframeObject => iframeObject.id);
-allIframeLinks = allIframeLinks.concat(sketches);
+for (let i = 0; i < allIframeLinks.length; i++) {
+  for (let t = 0; t < sketches.length; t++) {
+    if (sketches[t].id == allIframeLinks[i].id) {
+      allIframeLinks[i].type = "sketch";
+      sketches.splice(t, 1);
+    }
+  }
+}
+if (sketches.length > 0) {
+  allIframeLinks = allIframeLinks.concat(sketches);
+}
 // sort items by name using localeCompare
 allIframeLinks.sort((a, b) => a.id.localeCompare(b.id));
 
