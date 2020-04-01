@@ -209,8 +209,8 @@ const eyes = dd => {
     if (loading && loading1 == false && loading2 == false) {
       loading = false;
     }
-    if (scale2 > 9 || scale2 < 0.3) {
-      scale2 = 2;
+    if (scale2 > 12 || scale2 < 0.8) {
+      scale2 = dd.width > 700 ? 3 : 5;
       sx = 150 / scale2;
       sy = 150 / scale2;
     }
@@ -419,9 +419,9 @@ const eyes = dd => {
       dd.mouseY < 0.4 * dd.height + 35 &&
       dd.mouseY > 0.4 * dd.height - 300 / scale1
     ) {
-      scale2 *= 1.5;
-      sx /= 1.5;
-      sy /= 1.5;
+      scale2 *= 1.2;
+      sx /= 1.2;
+      sy /= 1.2;
     }
     if (
       dd.mouseX < dd.width / 2 + 400 / scale1 + 60 &&
@@ -429,9 +429,9 @@ const eyes = dd => {
       dd.mouseY < 0.4 * dd.height + 35 &&
       dd.mouseY > 0.4 * dd.height - 300 / scale1
     ) {
-      scale2 /= 1.5;
-      sx *= 1.5;
-      sy *= 1.5;
+      scale2 /= 1.2;
+      sx *= 1.2;
+      sy *= 1.2;
     }
     state = 1;
   };
