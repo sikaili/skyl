@@ -1,11 +1,15 @@
 import Tone from "tone";
+import decomp from "poly-decomp";
+window.decomp = decomp;
+
 import {
   Engine,
   World,
   Bodies,
   MouseConstraint,
   Runner,
-  Mouse
+  Mouse,
+  Vertices
 } from "matter-js";
 import Particle from "./sub/particles";
 import E3 from "./sound/chasing.mp3";
@@ -35,6 +39,7 @@ const sketch = sk => {
       a = undefined;
     });
     particles = [];
+    window.decomp = undefined;
     console.log("virus killed");
   };
 
@@ -71,9 +76,9 @@ const sketch = sk => {
   }
 
   let options = {
-    positionIterations: 5,
-    velocityIterations: 3,
-    constraintIterations: 1,
+    positionIterations: 6,
+    velocityIterations: 4,
+    constraintIterations: 2,
     enableSleeping: true
   };
   let engine = Engine.create(options);
@@ -119,7 +124,7 @@ const sketch = sk => {
     text: `virus ${virusNo}`
   };
   let touched = false;
-
+  let shapes = [];
   sk.setup = () => {
     sk.createCanvas(sk.windowWidth, sk.windowHeight);
     console.log("setup virus");
@@ -151,14 +156,23 @@ const sketch = sk => {
       if (!particle.updating) {
         particle.contagion(particles);
       }
-      if (touched) {
-        particle.changePos();
+      if (touched && sk.trigger) {
+        particle.mouseForceTrigger({ x: sk.mouseX, y: sk.mouseY });
       }
       particle.display(sk);
     });
+    if (touched) {
+      sk.push();
+      sk.stroke(0);
+      sk.line(sk.pmouseX, sk.pmouseY, sk.mouseX, sk.mouseY);
+      sk.pop();
+    }
     // curso
     sk.push();
     sk.fill([...cursor.color.slice(0, 3), 100]);
+    shapes.forEach(shape => {
+      shape.display();
+    });
     sk.ellipse(sk.mouseX, sk.mouseY, cursor.r);
   };
 
@@ -186,9 +200,44 @@ const sketch = sk => {
     }, 50);
   };
 
+  class Shape {
+    constructor(points, center) {
+      this.points = points;
+      this.center = center;
+    }
+    display() {
+      sk.push();
+      sk.fill(0);
+      sk.stroke(0);
+      sk.translate(this.center.x, this.center.y);
+      sk.beginShape();
+      this.points.map(point => {
+        sk.vertex(point.x, point.y);
+      });
+      sk.endShape();
+      sk.pop();
+    }
+  }
+
   sk.handleTouchEnd = ev => {
-    touched = false;
     ev.preventDefault();
+    // add shape
+    let center = Vertices.centre(sk.staticBodyVertex);
+    let arr = sk.staticBodyVertex.map(point => {
+      return { x: point.x - center.x, y: point.y - center.y };
+    });
+
+    if (sk.staticBodyVertex.length > 5) {
+      let stop = Bodies.fromVertices(center.x, center.y, [arr], {
+        isStatic: true
+      });
+      World.add(engine.world, stop);
+      let stopShape = new Shape(arr, center);
+      shapes.push(stopShape);
+    }
+
+    touched = false;
+
     if (virusNo > 0 && sk.mouseX + sk.mouseY > 10) {
       sk.addVirus();
       virusNo -= 1;
@@ -256,6 +305,11 @@ const sketch = sk => {
       "touchstart",
       () => {
         touched = true;
+        sk.staticBodyVertex = [];
+        sk.trigger = true;
+        setTimeout(() => {
+          sk.trigger = false;
+        }, 300);
       },
       {
         passive: false
@@ -291,6 +345,7 @@ const sketch = sk => {
     divNode.addEventListener(
       "touchmove",
       ev => {
+        sk.staticBodyVertex.push({ x: sk.mouseX, y: sk.mouseY });
         ev.preventDefault();
       },
       { passive: false }

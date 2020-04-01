@@ -92,14 +92,25 @@ export default class Particle {
     this.sampler2.triggerAttack(130 + (this.r - 20) * 2);
   }
 
-  changePos() {
+  mouseForceTrigger(pos) {
     if (Math.random() > 0.3) {
       this.updating = true;
-      const force = {
-        x: (Math.random() - 0.5) * 0.05,
-        y: (Math.random() - 0.5) * 0.06
-      };
-      Body.applyForce(this.body, this.body.position, force);
+      let force;
+      if (
+        calDistance(pos.x, pos.y, this.body.position.x, this.body.position.y) <
+        50
+      ) {
+        force = {
+          x: (pos.x - this.body.position.x) * -0.00001,
+          y: (pos.y - this.body.position.y) * -0.00001
+        };
+      } else {
+        force = {
+          x: Math.random() * 0.003,
+          y: Math.random() * 0.003
+        };
+      }
+      Body.applyForce(this.body, pos, force);
     }
   }
 

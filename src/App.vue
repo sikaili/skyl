@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <TheHead />
-    <div class="back bw0" :style="iframeContainer" :key="key + 2">
+    <div class="back bw0" :style="iframeContainer" :key="key">
       <iframe
         v-if="activeItem.type !== 'sketch'"
         class="back bw0"
@@ -11,7 +11,7 @@
         :style="iframeStyle"
         :key="key + 1"
       ></iframe>
-      <Canvas v-else :current="activeItem.id" :key="activeItem.id" />
+      <Canvas v-else :current="activeItem.id" :key="key + 2" />
     </div>
     <transition name="slide-fade-main">
       <router-view />
@@ -38,6 +38,11 @@ export default {
     TheHead,
     TheFooter,
     Canvas
+  },
+  watch: {
+    activeItem() {
+      this.key = Math.random().toFixed();
+    }
   },
   data() {
     return {
@@ -118,7 +123,11 @@ export default {
     }
   },
   created() {
-    // this.$store.dispatch("setActiveItem", { id: "virus", type: "sketch" });
+    const id = this.$route.params.id;
+    const iframeItem = this.$store.state.iframeItems.find(
+      item => item.id === id
+    ) || { id: "eyes", type: "sketch" };
+    this.$store.dispatch("setActiveItem", iframeItem);
     window.addEventListener("resize", this.handleResize);
     window.addEventListener("scroll", this.handleScroll);
     window.addEventListener("orientationchange", this.handleResize);

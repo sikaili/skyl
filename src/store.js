@@ -7,7 +7,7 @@ Vue.use(Vuex);
 const state = {
   work: seedData.work,
   music: seedData.music,
-  activeItem: { id: "eyes", type: "sketch" },
+  activeItem: {},
   loading: true,
   iframeItems: allIframeLinks
 };
