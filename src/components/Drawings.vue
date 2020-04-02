@@ -82,7 +82,7 @@ export default {
   components: {
     VueGallery
   },
-  data: function() {
+  data() {
     return {
       grid: false,
       index: null
@@ -94,7 +94,7 @@ export default {
     }
   },
   computed: {
-    images: function() {
+    images() {
       return this.drawings.map(a => a.link);
     }
   }

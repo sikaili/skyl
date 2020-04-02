@@ -19,7 +19,6 @@
     <transition name="slide-fade-main">
       <TheFooter v-if="footer && $mq == `lg`" />
     </transition>
-    <!-- <div id="canvasContainer"></div> -->
   </div>
 </template>
 
@@ -31,18 +30,12 @@ import { mapGetters } from "vuex";
 import TheHead from "./components/TheHead.vue";
 import TheFooter from "./components/TheFooter.vue";
 import Canvas from "./components/Canvas.vue";
-// import p5 from "p5";
 export default {
   name: "app",
   components: {
     TheHead,
     TheFooter,
     Canvas
-  },
-  watch: {
-    activeItem() {
-      this.key = Math.random().toFixed();
-    }
   },
   data() {
     return {
@@ -54,9 +47,14 @@ export default {
       sketches: {}
     };
   },
+  watch: {
+    activeItem() {
+      this.key = Math.random().toFixed(2);
+    }
+  },
   computed: {
     ...mapGetters(["activeItem"]),
-    iframeContainer: function() {
+    iframeContainer() {
       if (!this.activeItem.type) {
         return `width:${this.$mq == "sm" ? screen.width : this.width}px;
       height:${this.height}px;
@@ -71,7 +69,7 @@ export default {
       }
       return `opacity:${this.$route.path.includes("play") ? 1 : ""}`;
     },
-    iframeStyle: function() {
+    iframeStyle() {
       let scale = 1;
       const inPlay = this.$route.path.includes("play");
       inPlay && this.$mq == "sm" ? (scale = 2) : (scale = 1);
@@ -88,7 +86,7 @@ export default {
       -webkit-transform-origin: 0 0;
       `;
     },
-    canvas: function() {
+    canvas() {
       let scale = 1;
       const inPlay = this.$route.path.includes("play");
       inPlay && this.$mq == "sm" ? (scale = 1) : (scale = 1);
@@ -123,6 +121,9 @@ export default {
     }
   },
   created() {
+    this.$root.$on("refreshCanvas", () => {
+      this.key = Math.random().toFixed(2);
+    });
     const id = this.$route.params.id;
     const iframeItem = this.$store.state.iframeItems.find(
       item => item.id === id
@@ -132,9 +133,6 @@ export default {
     window.addEventListener("scroll", this.handleScroll);
     window.addEventListener("orientationchange", this.handleResize);
     this.handleResize();
-  },
-  mounted() {
-    // let m = new p5(p, "canvasContainer");
   },
   destroyed() {
     window.removeEventListener("resize", this.handleResize);

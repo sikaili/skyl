@@ -53,15 +53,17 @@ const sketch = sk => {
     localStorage.setItem(key, JSON.stringify(item));
     localStorage.setItem("last-key", key);
   };
-
+  let meter = new Tone.Meter();
   Particle.prototype.sampler2 = new Tone.Sampler(
     { D3 },
     {
       onload: () => {
-        this.isLoaded = true;
+        sk.isLoaded = true;
       }
     }
-  ).chain(new Tone.Volume(-12), Tone.Master);
+  )
+    .chain(new Tone.Volume(-12), Tone.Master)
+    .connect(meter);
 
   Particle.prototype.samplers = [];
   for (let i = 0; i < 3; i += 1) {
@@ -69,7 +71,7 @@ const sketch = sk => {
       { E3 },
       {
         onload: () => {
-          this.isLoaded = true;
+          sk.isLoaded = true;
         }
       }
     ).chain(new Tone.Volume(-15), Tone.Master);
@@ -150,6 +152,7 @@ const sketch = sk => {
   };
 
   sk.draw = () => {
+    // console.log(meter.getLevel());
     sk.background(200, 200, 200);
     sk.noFill();
     particles.forEach(particle => {
@@ -163,7 +166,8 @@ const sketch = sk => {
     });
     if (touched) {
       sk.push();
-      sk.stroke(0);
+      sk.stroke(0, 200);
+      sk.strokeWeight(10);
       sk.line(sk.pmouseX, sk.pmouseY, sk.mouseX, sk.mouseY);
       sk.pop();
     }
@@ -214,7 +218,10 @@ const sketch = sk => {
       sk.rotate(this.body.angle);
       sk.beginShape();
       this.points.map(point => {
-        sk.vertex(point.x - this.center.x, point.y - this.center.y);
+        sk.vertex(
+          point.x - this.center.x - sk.noise(point.x + sk.frameCount / 20) * 15,
+          point.y - this.center.y - sk.noise(point.y + sk.frameCount / 30) * 15
+        );
       });
       sk.endShape();
       sk.pop();
@@ -230,15 +237,23 @@ const sketch = sk => {
     });
     if (sk.staticBodyVertex && sk.staticBodyVertex.length > 5) {
       let stop = Bodies.fromVertices(center.x, center.y, [arr], {
-        isStatic: false,
+        isStatic: true,
         density: 3
       });
-      console.log(stop);
-      World.add(engine.world, stop);
-      for (let i = 1; i < stop.parts.length; i++) {
-        let body = stop.parts[i];
-        let stopShape = new Shape(body);
-        shapes.push(stopShape);
+      if (stop) {
+        if (stop.parts.length > 1) {
+          for (let i = 1; i < stop.parts.length; i++) {
+            let body = stop.parts[i];
+            let stopShape = new Shape(body);
+            shapes.push(stopShape);
+          }
+          World.add(engine.world, stop);
+        } else if (stop.parts.length === 1) {
+          let body = stop.parts[0];
+          let stopShape = new Shape(body);
+          shapes.push(stopShape);
+          World.add(engine.world, stop);
+        }
       }
     }
 

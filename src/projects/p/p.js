@@ -216,12 +216,14 @@ export default function(instance) {
   };
 
   sk.handleTouchStarted = () => {
-    const min = rotateObjects
-      .filter(
-        obj => sk.calcDistance(obj.x, obj.y, sk.mouseX, sk.mouseY) < intervalX
-      )
-      .sort()[0];
-    luckyNo = rotateObjects.indexOf(min);
+    if (Math.random() > 0.5) {
+      const min = rotateObjects
+        .filter(
+          obj => sk.calcDistance(obj.x, obj.y, sk.mouseX, sk.mouseY) < intervalX
+        )
+        .sort()[0];
+      luckyNo = rotateObjects.indexOf(min);
+    }
   };
 
   sk.windowResized = () => {
