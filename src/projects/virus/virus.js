@@ -201,18 +201,20 @@ const sketch = sk => {
   };
 
   class Shape {
-    constructor(points, center) {
-      this.points = points;
-      this.center = center;
+    constructor(body) {
+      this.points = body.vertices;
+      this.center = body.position;
+      this.body = body;
     }
     display() {
       sk.push();
       sk.fill(0);
       sk.stroke(0);
-      sk.translate(this.center.x, this.center.y);
+      sk.translate(this.body.position.x, this.body.position.y);
+      sk.rotate(this.body.angle);
       sk.beginShape();
       this.points.map(point => {
-        sk.vertex(point.x, point.y);
+        sk.vertex(point.x - this.center.x, point.y - this.center.y);
       });
       sk.endShape();
       sk.pop();
@@ -226,14 +228,18 @@ const sketch = sk => {
     let arr = sk.staticBodyVertex.map(point => {
       return { x: point.x - center.x, y: point.y - center.y };
     });
-
-    if (sk.staticBodyVertex.length > 5) {
+    if (sk.staticBodyVertex && sk.staticBodyVertex.length > 5) {
       let stop = Bodies.fromVertices(center.x, center.y, [arr], {
-        isStatic: true
+        isStatic: false,
+        density: 3
       });
+      console.log(stop);
       World.add(engine.world, stop);
-      let stopShape = new Shape(arr, center);
-      shapes.push(stopShape);
+      for (let i = 1; i < stop.parts.length; i++) {
+        let body = stop.parts[i];
+        let stopShape = new Shape(body);
+        shapes.push(stopShape);
+      }
     }
 
     touched = false;
@@ -309,7 +315,7 @@ const sketch = sk => {
         sk.trigger = true;
         setTimeout(() => {
           sk.trigger = false;
-        }, 300);
+        }, 150);
       },
       {
         passive: false
@@ -320,6 +326,11 @@ const sketch = sk => {
       "mousedown",
       () => {
         touched = true;
+        sk.staticBodyVertex = [];
+        sk.trigger = true;
+        setTimeout(() => {
+          sk.trigger = false;
+        }, 100);
       },
       {
         passive: false
@@ -346,6 +357,15 @@ const sketch = sk => {
       "touchmove",
       ev => {
         sk.staticBodyVertex.push({ x: sk.mouseX, y: sk.mouseY });
+        ev.preventDefault();
+      },
+      { passive: false }
+    );
+    divNode.addEventListener(
+      "mousemove",
+      ev => {
+        if (sk.staticBodyVertex)
+          sk.staticBodyVertex.push({ x: sk.mouseX, y: sk.mouseY });
         ev.preventDefault();
       },
       { passive: false }

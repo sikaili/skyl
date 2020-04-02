@@ -13,7 +13,7 @@ export default class Particle {
       this.r *= 2;
       this.id = virus.id;
     }
-    this.body = Bodies.circle(x, y, this.r / 1.4);
+    this.body = Bodies.circle(x, y, this.r / 1.3);
     Body.setMass(this.body, 3 / scale);
     if (virus) {
       Body.applyForce(this.body, this.body.position, {
@@ -101,8 +101,8 @@ export default class Particle {
         50
       ) {
         force = {
-          x: (pos.x - this.body.position.x) * -0.00001,
-          y: (pos.y - this.body.position.y) * -0.00001
+          x: (pos.x - this.body.position.x) * -0.0001,
+          y: (pos.y - this.body.position.y) * -0.0001
         };
       } else {
         force = {

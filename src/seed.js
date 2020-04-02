@@ -54,7 +54,7 @@ const seedData = {
         "A playfull arcade cabinet raising awareness about plastic pollution",
       about:
         "Plastic Arcade wants to raise awareness about plastic pollution by turning the systems that create the problem into easily understandable, high-impact video games. Using the arcade cabinet seemed like a natural way to touch the nostalgic fiber in each of us, parents and children alike. By creating several arcade games, each exploring a specific aspect of the plastic pollution problem, we aim to shake people into reflecting and connecting on a personal level to one of the largest issues concerning our civilization today.",
-      img: "/img/covers/plastic-arcade.png",
+      img: "/img/covers/plastic-arcade.jpg",
       numberOfPhotos: 5,
       show: false,
       credits: [

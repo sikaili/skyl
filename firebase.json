@@ -1,6 +1,6 @@
 {
   "hosting": [ {
-      "target": "beta.skyl.fr",
+      "target": "alpha.skyl.fr",
       "public": "dist",
       "ignore": [
         "firebase.json",
