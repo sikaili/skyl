@@ -266,6 +266,9 @@ allIframeLinks = allIframeLinks.map(iframeObject => {
 });
 allIframeLinks.filter(iframeObject => iframeObject.id);
 for (let i = 0; i < allIframeLinks.length; i++) {
+  if (!allIframeLinks[i].link.includes("https")) {
+    allIframeLinks.splice(i, 1);
+  }
   for (let t = 0; t < sketches.length; t++) {
     if (sketches[t].id == allIframeLinks[i].id) {
       allIframeLinks[i].type = "sketch";

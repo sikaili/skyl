@@ -22,6 +22,7 @@ const mutations = {
     if (typeof item === "string") {
       item = state.iframeItems.find(obj => obj.id === item);
     }
+    if (item.link && !item.link.includes("https")) return;
     item === state.activeItem ? "" : (state.activeItem = item);
   },
   SET_IFRAME_ITEMS(state, payload) {

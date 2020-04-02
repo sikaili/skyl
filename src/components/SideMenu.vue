@@ -111,6 +111,12 @@ export default {
     },
     restart() {
       this.$root.$emit("refreshCanvas", true);
+      setTimeout(() => {
+        this.actionButton = "Random";
+      }, 500);
+      setTimeout(() => {
+        this.actionButton = "Restart";
+      }, 5000);
     },
     randomIframe() {
       const n = Math.floor(Math.random() * this.iframeItems.length);

@@ -1,5 +1,4 @@
 // eslint-disable-next-line no-unused-vars
-import { clearTimeout } from "timers";
 import { mapGetters, mapActions } from "vuex";
 import intro from "@/components/Intro.vue";
 
