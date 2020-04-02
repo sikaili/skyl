@@ -49,7 +49,7 @@
             <div
               class="fl w-100 w-100-ns tl ma0"
               v-show="w.show && menuShow"
-              @mouseenter="handleMouseIn(w.link)"
+              @mouseenter="handleMouseIn(w)"
               @mouseleave="handleMouseOut()"
             >
               <div class="pa4">

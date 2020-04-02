@@ -2,7 +2,7 @@
   <div class="fixed mw4 f3 tc left-1">
     <br />
     <span
-      @click="randomIframe"
+      @click="handleClickActionButton()"
       class="w-100 f5 no-underline white bg-black-80 bg-animate hover-bg-white hover-black inline-flex items-center pa3 border-box"
     >
       <i
@@ -94,29 +94,29 @@ export default {
     })
   },
   mounted() {
-    setTimeout(() => {
-      this.actionButton = "Restart";
-    }, 5000);
+    this.setActionButton();
   },
   methods: {
     ...mapActions({
       setActiveItem: "setActiveItem"
     }),
+    setActionButton() {
+      clearTimeout(this.timeOut);
+      this.actionButton = "Random";
+      this.timeOut = setTimeout(() => {
+        this.actionButton = "Restart";
+      }, 4000);
+    },
     handleClickActionButton() {
       if (this.actionButton === "Random") {
         this.randomIframe();
       } else if (this.actionButton === "Restart") {
         this.restart();
       }
+      this.setActionButton();
     },
     restart() {
       this.$root.$emit("refreshCanvas", true);
-      setTimeout(() => {
-        this.actionButton = "Random";
-      }, 500);
-      setTimeout(() => {
-        this.actionButton = "Restart";
-      }, 5000);
     },
     randomIframe() {
       const n = Math.floor(Math.random() * this.iframeItems.length);
@@ -130,6 +130,7 @@ export default {
         this.displayList = false;
         this.$store.dispatch("setActiveItem", item);
         this.$router.replace({ params: { id: this.activeItem.id } });
+        this.setActionButton();
       }
     },
     toggle() {
