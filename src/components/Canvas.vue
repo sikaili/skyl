@@ -20,7 +20,7 @@ export default {
       loaded: null
     };
   },
-  mounted() {
+  created() {
     this.$nextTick(() => {
       if (this.current && this.current !== this.loaded) {
         p5.disableFriendlyErrors = true;
