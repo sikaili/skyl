@@ -113,7 +113,7 @@ export default {
     }
   },
   computed: {
-    item: function() {
+    item() {
       const itemsArray = this.$store.state[this.$route.params.category];
       if (this.id > itemsArray.length) {
         return "ERROR!";

@@ -7,7 +7,7 @@ Vue.use(Vuex);
 const state = {
   work: seedData.work,
   music: seedData.music,
-  activeItem: { name: "eyes", link: "https://eyes.skyl.fr" },
+  activeItem: {},
   loading: true,
   iframeItems: allIframeLinks
 };
@@ -19,7 +19,11 @@ const mutations = {
     });
   },
   SET_ACTIVE_ITEM(state, item) {
-    item == state.activeItem ? "" : (state.activeItem = item);
+    if (typeof item === "string") {
+      item = state.iframeItems.find(obj => obj.id === item);
+    }
+    if (item.link && !item.link.includes("https")) return;
+    item === state.activeItem ? "" : (state.activeItem = item);
   },
   SET_IFRAME_ITEMS(state, payload) {
     state.iframeItems = payload;
@@ -44,8 +48,11 @@ const actions = {
     context.commit("TOGGLE_ITEM", payload);
   },
   setActiveItem(context, payload) {
-    if (payload.link.includes("https://"))
-      context.commit("SET_ACTIVE_ITEM", payload);
+    // if (payload.type === "sketch") {
+    //   context.commit("SET_ACTIVE_ITEM", payload);
+    // } else if (payload && payload.link.includes("https://")) {
+    context.commit("SET_ACTIVE_ITEM", payload);
+    // }
   },
   setIframeItems(context, payload) {
     context.commit("SET_IFRAME_ITEMS", payload);

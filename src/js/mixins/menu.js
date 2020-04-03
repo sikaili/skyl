@@ -1,5 +1,4 @@
 // eslint-disable-next-line no-unused-vars
-import { clearTimeout } from "timers";
 import { mapGetters, mapActions } from "vuex";
 import intro from "@/components/Intro.vue";
 
@@ -73,11 +72,11 @@ export default {
         this.loadingAnimation = false;
       }, 200);
     },
-    load(link) {
-      if (link.split(":")[0] !== "https") return;
+    load(item) {
+      if (item.link.split(":")[0] !== "https") return;
       this.loadingAnimation = true;
       setTimeout(() => {
-        this.setActiveItem(link);
+        this.setActiveItem(item);
         this.loadingAnimation = false;
       }, 1500);
     },

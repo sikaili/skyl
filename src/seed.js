@@ -1,4 +1,6 @@
 import links from "@/assets/JSON/links.json";
+import sketches from "@/assets/JSON/sketches.json";
+
 const seedData = {
   work: [
     {
@@ -52,7 +54,7 @@ const seedData = {
         "A playfull arcade cabinet raising awareness about plastic pollution",
       about:
         "Plastic Arcade wants to raise awareness about plastic pollution by turning the systems that create the problem into easily understandable, high-impact video games. Using the arcade cabinet seemed like a natural way to touch the nostalgic fiber in each of us, parents and children alike. By creating several arcade games, each exploring a specific aspect of the plastic pollution problem, we aim to shake people into reflecting and connecting on a personal level to one of the largest issues concerning our civilization today.",
-      img: "/img/covers/plastic-arcade.png",
+      img: "/img/covers/plastic-arcade.jpg",
       numberOfPhotos: 5,
       show: false,
       credits: [
@@ -143,7 +145,7 @@ const seedData = {
       year: "2019",
       des:
         "Speed up a single sound object, move and compose your own combination",
-      link: "https://apps.skyl.fr/p/",
+      link: "https://skyl.fr/play/p/",
       img: "/img/covers/p.png",
       credits: [
         {
@@ -263,7 +265,26 @@ allIframeLinks = allIframeLinks.map(iframeObject => {
   return { id: iframeObject.id, link: iframeObject.link };
 });
 allIframeLinks.filter(iframeObject => iframeObject.id);
+for (let i = 0; i < allIframeLinks.length; i++) {
+  if (!allIframeLinks[i].link.includes("https")) {
+    allIframeLinks.splice(i, 1);
+  }
+  for (let t = 0; t < sketches.length; t++) {
+    if (sketches[t].id == allIframeLinks[i].id) {
+      allIframeLinks[i].type = "sketch";
+      sketches.splice(t, 1);
+    }
+  }
+}
+if (sketches.length > 0) {
+  allIframeLinks = allIframeLinks.concat(sketches);
+}
 // sort items by name using localeCompare
 allIframeLinks.sort((a, b) => a.id.localeCompare(b.id));
+
+if (!navigator.onLine) {
+  console.log("OFFLINE");
+  allIframeLinks = allIframeLinks.filter(a => a.type === "sketch");
+}
 
 export { seedData, allIframeLinks };

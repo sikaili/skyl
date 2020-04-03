@@ -13,11 +13,11 @@ export default {
     SideMenu
   },
   mounted() {
-    const id = this.$route.params.id;
-    const iframeItem = this.$store.state.iframeItems.find(
-      item => item.id === id
-    );
-    if (iframeItem) this.$store.dispatch("setActiveItem", iframeItem);
+    // const id = this.$route.params.id;
+    // const iframeItem = this.$store.state.iframeItems.find(
+    //   item => item.id === id
+    // );
+    // if (iframeItem) this.$store.dispatch("setActiveItem", iframeItem);
   }
 };
 </script>

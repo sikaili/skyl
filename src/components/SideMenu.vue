@@ -2,11 +2,15 @@
   <div class="fixed mw4 f3 tc left-1">
     <br />
     <span
-      @click="randomIframe"
+      @click="handleClickActionButton()"
       class="w-100 f5 no-underline white bg-black-80 bg-animate hover-bg-white hover-black inline-flex items-center pa3 border-box"
     >
-      <i class="tc icon ion-md-shuffle"></i>
-      <span class="pl1">Random</span>
+      <i
+        :class="
+          `tc icon ion-md-${actionButton === 'Random' ? 'shuffle' : 'refresh'}`
+        "
+      ></i>
+      <span class="pl1">{{ actionButton }}</span>
     </span>
     <div class="f6 tl" style="min-height:5rem;">
       <p
@@ -63,7 +67,7 @@
         <span v-for="(item, index) in iframeItems" :key="index">
           <p
             @click="handlePClick(item)"
-            class="ph1 bg-animate hover-bg-white hover-black white bg-black-60"
+            class="listItem ph1 bg-animate hover-bg-white hover-black white bg-black-60"
           >
             {{ item.id }}
           </p>
@@ -78,7 +82,9 @@ export default {
   name: "SideMenu",
   data() {
     return {
-      displayList: false
+      displayList: false,
+      time: Date.now(),
+      actionButton: "Random"
     };
   },
   computed: {
@@ -87,8 +93,31 @@ export default {
       iframeItems: "iframeItems"
     })
   },
+  mounted() {
+    this.setActionButton();
+  },
   methods: {
-    ...mapActions(["setActiveItem"]),
+    ...mapActions({
+      setActiveItem: "setActiveItem"
+    }),
+    setActionButton() {
+      clearTimeout(this.timeOut);
+      this.actionButton = "Random";
+      this.timeOut = setTimeout(() => {
+        this.actionButton = "Restart";
+      }, 4000);
+    },
+    handleClickActionButton() {
+      if (this.actionButton === "Random") {
+        this.randomIframe();
+      } else if (this.actionButton === "Restart") {
+        this.restart();
+      }
+      this.setActionButton();
+    },
+    restart() {
+      this.$root.$emit("refreshCanvas", true);
+    },
     randomIframe() {
       const n = Math.floor(Math.random() * this.iframeItems.length);
       const item = this.iframeItems[n];
@@ -97,13 +126,13 @@ export default {
       this.$router.replace({ params: { id: item.id } });
     },
     handlePClick(item) {
-      if (item != this.activeItem) {
+      if (item !== this.activeItem) {
         this.displayList = false;
-        this.setActiveItem(item);
+        this.$store.dispatch("setActiveItem", item);
         this.$router.replace({ params: { id: this.activeItem.id } });
+        this.setActionButton();
       }
     },
-    // the right toggle
     toggle() {
       if (this.displayList) {
         return this.hide();
@@ -125,5 +154,9 @@ export default {
 <style scoped>
 a:hover {
   background-color: black;
+}
+.listItem {
+  line-height: 30px;
+  margin: 4px 0;
 }
 </style>
