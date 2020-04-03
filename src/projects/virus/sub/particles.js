@@ -1,5 +1,5 @@
-import { Bodies, Body } from "matter-js";
-import calDistance from "../utils/calDistance";
+import { Bodies, Body } from 'matter-js';
+import calDistance from '../utils/calDistance';
 
 export default class Particle {
   constructor(x, y, virus, number) {
@@ -19,31 +19,30 @@ export default class Particle {
     if (virus) {
       Body.applyForce(this.body, this.body.position, {
         x: Math.random() / 1000,
-        y: Math.random() / 1000
+        y: Math.random() / 1000,
       });
     }
   }
 
   contagion(particles) {
-    particles.forEach(particle => {
+    particles.forEach((particle) => {
       const distance = calDistance(
         particle.body.position.x,
         this.body.position.x,
         particle.body.position.y,
-        this.body.position.y
+        this.body.position.y,
       );
       // contagion
       if (
-        distance < (this.r + particle.r) / 1.2 &&
-        this.virus &&
-        !particle.virus &&
-        Math.random() > 0.8 &&
-        !this.updating &&
-        !particle.immu
+        distance < (this.r + particle.r) / 1.2
+        && this.virus
+        && !particle.virus
+        && Math.random() > 0.8
+        && !this.updating
+        && !particle.immu
       ) {
         if (this.fill[3] > 200 && this.id) {
-          this.samplers[this.id % 3].volume.value =
-            -3 - 100 / (this.r + this.fill[3] / 5);
+          this.samplers[this.id % 3].volume.value = -3 - 100 / (this.r + this.fill[3] / 5);
           this.samplers[this.id % 3].triggerAttack(40 + this.fill[2]);
         }
         setTimeout(() => {
@@ -66,13 +65,13 @@ export default class Particle {
         }, (1500 / this.fill[3]) ** 2);
         // virus vs virus
       } else if (
-        distance < (this.r + particle.r) / 1.2 &&
-        this.virus &&
-        particle.virus &&
-        particle.id !== this.id
+        distance < (this.r + particle.r) / 1.2
+        && this.virus
+        && particle.virus
+        && particle.id !== this.id
       ) {
         particle.fill = particle.fill.map(
-          (color, index) => (color + this.fill[index]) / 2
+          (color, index) => (color + this.fill[index]) / 2,
         );
       }
     });
@@ -84,7 +83,7 @@ export default class Particle {
     particle.mother = { position: this.body.position };
     particle.fill = [
       ...this.fill.slice(0, 3),
-      Math.abs(this.fill[3] - 30) + 10
+      Math.abs(this.fill[3] - 30) + 10,
     ];
     return particle;
   }
@@ -98,17 +97,17 @@ export default class Particle {
       this.updating = true;
       let force;
       if (
-        calDistance(pos.x, pos.y, this.body.position.x, this.body.position.y) <
-        50
+        calDistance(pos.x, pos.y, this.body.position.x, this.body.position.y)
+        < 50
       ) {
         force = {
           x: (pos.x - this.body.position.x) * -0.0001,
-          y: (pos.y - this.body.position.y) * -0.0001
+          y: (pos.y - this.body.position.y) * -0.0001,
         };
       } else {
         force = {
           x: Math.random() * 0.003,
-          y: Math.random() * 0.003
+          y: Math.random() * 0.003,
         };
       }
       Body.applyForce(this.body, pos, force);
@@ -148,14 +147,14 @@ export default class Particle {
     sk.pop();
     sk.push();
     if (
-      this.mother &&
-      calDistance(
+      this.mother
+      && calDistance(
         this.mother.position.x,
         this.body.position.x,
         this.mother.position.y,
-        this.body.position.y
-      ) <
-        this.r * 3
+        this.body.position.y,
+      )
+        < this.r * 3
     ) {
       sk.strokeWeight(this.r / 2);
       sk.stroke([...this.fill.slice(0, 4)]);
@@ -163,7 +162,7 @@ export default class Particle {
         this.body.position.x,
         this.body.position.y,
         this.mother.position.x,
-        this.mother.position.y
+        this.mother.position.y,
       );
     }
     sk.pop();

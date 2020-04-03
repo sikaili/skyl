@@ -1,5 +1,5 @@
-import Tone from "tone";
-import decomp from "poly-decomp";
+import Tone from 'tone';
+import decomp from 'poly-decomp';
 
 import {
   Engine,
@@ -9,29 +9,27 @@ import {
   MouseConstraint,
   Runner,
   Mouse,
-  Vertices
-} from "matter-js";
-import Particle from "./sub/particles";
-import E3 from "./sound/chasing.mp3";
-import D3 from "./sound/light.mp3";
+  Vertices,
+} from 'matter-js';
+import Particle from './sub/particles';
+import E3 from './sound/chasing.mp3';
+import D3 from './sound/light.mp3';
 
 window.decomp = decomp;
 
-console.log("import virus");
+console.log('import virus');
 
-const sketch = instance => {
+const sketch = (instance) => {
   const sk = instance;
-  const divNode = document.querySelector("#canvasContainer");
+  const divNode = document.querySelector('#canvasContainer');
 
   // save and get last
-  sk.lastKey = localStorage.getItem("last-key") || "notok";
+  sk.lastKey = localStorage.getItem('last-key') || 'notok';
   sk.thisKey = `OK${Date()}`;
-  sk.get = (key = sk.lastKey) => {
-    return JSON.parse(localStorage.getItem(key)) || [];
-  };
+  sk.get = (key = sk.lastKey) => JSON.parse(localStorage.getItem(key)) || [];
   sk.save = (item, key) => {
     localStorage.setItem(key, JSON.stringify(item));
-    localStorage.setItem("last-key", key);
+    localStorage.setItem('last-key', key);
   };
   const meter = new Tone.Meter();
   Particle.prototype.sampler2 = new Tone.Sampler(
@@ -39,8 +37,8 @@ const sketch = instance => {
     {
       onload: () => {
         sk.isLoaded = true;
-      }
-    }
+      },
+    },
   )
     .chain(new Tone.Volume(-12), Tone.Master)
     .connect(meter);
@@ -52,8 +50,8 @@ const sketch = instance => {
       {
         onload: () => {
           sk.isLoaded = true;
-        }
-      }
+        },
+      },
     ).chain(new Tone.Volume(-15), Tone.Master);
   }
 
@@ -61,29 +59,29 @@ const sketch = instance => {
     positionIterations: 6,
     velocityIterations: 4,
     constraintIterations: 2,
-    enableSleeping: true
+    enableSleeping: true,
   };
   let engine = Engine.create(options);
   const setBordersAndMouse = () => {
     sk.borders = Composite.create();
     const border1 = Bodies.rectangle(0, 0, 10, 4000, {
-      isStatic: true
+      isStatic: true,
     });
     const border2 = Bodies.rectangle(sk.width, 0, 10, 4000, {
-      isStatic: true
+      isStatic: true,
     });
     const border3 = Bodies.rectangle(0, 0, 4000, 10, {
-      isStatic: true
+      isStatic: true,
     });
     const border4 = Bodies.rectangle(0, sk.height, 4000, 10, {
-      isStatic: true
+      isStatic: true,
     });
     const divMouse = Mouse.create(divNode);
     const options = {
       mouse: divMouse,
       constraint: {
-        stiffness: 0.2
-      }
+        stiffness: 0.2,
+      },
     };
     const mouseConstraint = MouseConstraint.create(engine, options);
     Composite.add(sk.borders, [
@@ -91,7 +89,7 @@ const sketch = instance => {
       border2,
       border3,
       border4,
-      mouseConstraint
+      mouseConstraint,
     ]);
     World.add(engine.world, sk.borders);
   };
@@ -105,7 +103,7 @@ const sketch = instance => {
   let cursor = {
     color: [Math.random() * 120, Math.random() * 120, Math.random() * 120, 255],
     r: 80,
-    text: `virus ${virusNo}`
+    text: `virus ${virusNo}`,
   };
   let touched = false;
   const shapes = [];
@@ -123,19 +121,19 @@ const sketch = instance => {
     engine = null;
     Tone.context.suspend();
     Particle.prototype.sampler2.dispose();
-    Particle.prototype.samplers.map(a => a.dispose());
+    Particle.prototype.samplers.map((a) => a.dispose());
     sk.remove();
-    particles.map(a => {
+    particles.map((a) => {
       a = undefined;
     });
     particles = [];
     window.decomp = undefined;
-    console.log("virus killed");
+    console.log('virus killed');
   };
 
   sk.setup = () => {
     sk.createCanvas(sk.windowWidth, sk.windowHeight);
-    console.log("setup virus");
+    console.log('setup virus');
     setBordersAndMouse(sk);
     sk.scaleRef = (sk.width + sk.height) / 2;
     sk.background(0);
@@ -151,7 +149,7 @@ const sketch = instance => {
         sk.random(0, sk.width),
         sk.random(0, sk.height),
         false,
-        number * (1000 / (sk.width + sk.height))
+        number * (1000 / (sk.width + sk.height)),
       );
       World.add(engine.world, particles[i].body);
     }
@@ -161,7 +159,7 @@ const sketch = instance => {
     // console.log(meter.getLevel());
     sk.background(200, 200, 200);
     sk.noFill();
-    particles.forEach(particle => {
+    particles.forEach((particle) => {
       if (!particle.updating) {
         particle.contagion(particles);
       }
@@ -180,7 +178,7 @@ const sketch = instance => {
     // curso
     sk.push();
     sk.fill([...cursor.color.slice(0, 3), 100]);
-    shapes.forEach(shape => {
+    shapes.forEach((shape) => {
       shape.display();
     });
     sk.ellipse(sk.mouseX, sk.mouseY, cursor.r);
@@ -189,7 +187,7 @@ const sketch = instance => {
   sk.addVirus = () => {
     const virus = {
       color: cursor.color,
-      id: virusNo - 1
+      id: virusNo - 1,
     };
     const particle = new Particle(sk.mouseX, sk.mouseY, virus, number);
     particles.push(particle);
@@ -197,15 +195,14 @@ const sketch = instance => {
     setTimeout(() => {
       // random to 120 is good
       const scale = Math.random() * 255;
-      cursor.color =
-        virusNo > 0
-          ? [
-              Math.random() * scale,
-              Math.random() * scale,
-              Math.random() * scale,
-              255
-            ]
-          : [100, 100, 100, 100];
+      cursor.color = virusNo > 0
+        ? [
+          Math.random() * scale,
+          Math.random() * scale,
+          Math.random() * scale,
+          255,
+        ]
+        : [100, 100, 100, 100];
       cursor.text = `virus ${virusNo}`;
     }, 50);
   };
@@ -224,10 +221,10 @@ const sketch = instance => {
       sk.translate(this.body.position.x, this.body.position.y);
       sk.rotate(this.body.angle);
       sk.beginShape();
-      this.points.map(point => {
+      this.points.map((point) => {
         sk.vertex(
           point.x - this.center.x - sk.noise(point.x + sk.frameCount / 20) * 15,
-          point.y - this.center.y - sk.noise(point.y + sk.frameCount / 30) * 15
+          point.y - this.center.y - sk.noise(point.y + sk.frameCount / 30) * 15,
         );
       });
       sk.endShape();
@@ -235,17 +232,15 @@ const sketch = instance => {
     }
   }
 
-  sk.handleTouchEnd = ev => {
+  sk.handleTouchEnd = (ev) => {
     ev.preventDefault();
     // add shape
     const center = Vertices.centre(sk.staticBodyVertex);
-    const arr = sk.staticBodyVertex.map(point => {
-      return { x: point.x - center.x, y: point.y - center.y };
-    });
+    const arr = sk.staticBodyVertex.map((point) => ({ x: point.x - center.x, y: point.y - center.y }));
     if (sk.staticBodyVertex && sk.staticBodyVertex.length > 5) {
       const stop = Bodies.fromVertices(center.x, center.y, [arr], {
         isStatic: true,
-        density: 3
+        density: 3,
       });
       if (stop) {
         if (stop.parts.length > 1) {
@@ -270,10 +265,10 @@ const sketch = instance => {
       sk.addVirus();
       virusNo -= 1;
     } else {
-      cursor = { color: [100, 100, 100, 100], r: 40, text: "" };
+      cursor = { color: [100, 100, 100, 100], r: 40, text: '' };
 
       // dead by click
-      particles.forEach(particle => {
+      particles.forEach((particle) => {
         if (Math.random() > 0.95 && particle.virus && !particle.died) {
           particle.died = true;
           particle.triggerAttack();
@@ -304,7 +299,7 @@ const sketch = instance => {
 
   sk.saveCapture = () => {
     if (sk.pixelDensity() > 1) {
-      sk.saveCanvas(document.querySelector("canvas"), `ok${Date()}`, "png");
+      sk.saveCanvas(document.querySelector('canvas'), `ok${Date()}`, 'png');
     }
   };
 
@@ -316,23 +311,23 @@ const sketch = instance => {
 
   const setListeners = (divNode, sk) => { //eslint-disable-line
     divNode.addEventListener(
-      "click",
+      'click',
       async () => {
         await Tone.start();
         sk.start();
       },
-      { once: true, passive: false }
+      { once: true, passive: false },
     );
     divNode.addEventListener(
-      "touchstart",
+      'touchstart',
       async () => {
         await Tone.start();
         sk.start();
       },
-      { once: true, passive: false }
+      { once: true, passive: false },
     );
     divNode.addEventListener(
-      "touchstart",
+      'touchstart',
       () => {
         touched = true;
         sk.staticBodyVertex = [];
@@ -342,12 +337,12 @@ const sketch = instance => {
         }, 150);
       },
       {
-        passive: false
-      }
+        passive: false,
+      },
     );
 
     divNode.addEventListener(
-      "mousedown",
+      'mousedown',
       () => {
         touched = true;
         sk.staticBodyVertex = [];
@@ -357,42 +352,41 @@ const sketch = instance => {
         }, 100);
       },
       {
-        passive: false
-      }
+        passive: false,
+      },
     );
 
-    divNode.addEventListener("touchend", sk.handleTouchEnd, {
-      passive: false
+    divNode.addEventListener('touchend', sk.handleTouchEnd, {
+      passive: false,
     });
 
-    divNode.addEventListener("mouseup", sk.handleTouchEnd, {
-      passive: false
+    divNode.addEventListener('mouseup', sk.handleTouchEnd, {
+      passive: false,
     });
 
     divNode.addEventListener(
-      "ontouchmove",
-      m => {
+      'ontouchmove',
+      (m) => {
         m.preventDefault();
       },
-      { passive: false }
+      { passive: false },
     );
 
     divNode.addEventListener(
-      "touchmove",
-      ev => {
+      'touchmove',
+      (ev) => {
         sk.staticBodyVertex.push({ x: sk.mouseX, y: sk.mouseY });
         ev.preventDefault();
       },
-      { passive: false }
+      { passive: false },
     );
     divNode.addEventListener(
-      "mousemove",
-      ev => {
-        if (sk.staticBodyVertex)
-          sk.staticBodyVertex.push({ x: sk.mouseX, y: sk.mouseY });
+      'mousemove',
+      (ev) => {
+        if (sk.staticBodyVertex) { sk.staticBodyVertex.push({ x: sk.mouseX, y: sk.mouseY }); }
         ev.preventDefault();
       },
-      { passive: false }
+      { passive: false },
     );
   };
 

@@ -1,27 +1,24 @@
-import axios from "axios";
+import axios from 'axios';
 
-const is404 = res => {
-  return res.response && res.response.status === 404;
-};
+const is404 = (res) => res.response && res.response.status === 404;
 
 // dataMxn.getData("./data/work.json").then(data => {
 //   data = dataMxn.addMedia(data);
 //   this.$store.dispatch("updateProjectsFeed", data);
 // });
-const getData = (endpoint, options) => {
-  return axios
+const getData = (endpoint, options) => axios
     .get(endpoint, {
-      cancelToken: new axios.CancelToken(function executor(c) {
+      cancelToken: new axios.CancelToken(((c) => {
         window.cancelXHR = c;
-      })
+      })),
     })
-    .then(res => {
+    .then((res) => {
       if (options && options.required && is404(res, options)) {
         this.$router.replace({
-          name: "404"
+          name: '404',
         });
       } else if (res.status === 200) {
-        if (typeof res.data === "string") {
+        if (typeof res.data === 'string') {
           res.data = JSON.parse(res.data);
         }
         return res.data;
@@ -29,24 +26,23 @@ const getData = (endpoint, options) => {
         return options && options.status ? res : null;
       }
     })
-    .catch(error => {
+    .catch((error) => {
       console.error(error); //eslint-disable-line
       if (options && options.required && this.dataMxn.is404(error, options)) {
         this.$router.replace({
-          name: "404"
+          name: '404',
         });
       }
     });
-};
-const addMedia = data => {
+const addMedia = (data) => {
   const seedData = data;
   const arrayDump = Object.entries(seedData);
-  arrayDump.map(obj => {
-    seedData[obj[0]].map(a => {
-      !a.about ? (a.about = a.des) : ``;
+  arrayDump.map((obj) => {
+    seedData[obj[0]].map((a) => {
+      !a.about ? (a.about = a.des) : '';
       a.id = a.name
-        .split(` `)
-        .join(`-`)
+        .split(' ')
+        .join('-')
         .toLowerCase();
       const num = 15;
       const arr = [];

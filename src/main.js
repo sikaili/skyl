@@ -1,18 +1,18 @@
-import Vue from "vue";
-import VueMq from "vue-mq";
-import App from "./App.vue";
-import store from "./store";
-import router from "./router";
+import Vue from 'vue';
+import VueMq from 'vue-mq';
+import App from './App.vue';
+import store from './store';
+import router from './router';
 
-import "./registerServiceWorker";
+import './registerServiceWorker';
 
 Vue.use(VueMq, {
   breakpoints: {
     sm: 675,
     md: 1000,
-    lg: Infinity
+    lg: Infinity,
   },
-  defaultBreakpoint: "sm" // customize this for SSR
+  defaultBreakpoint: 'sm', // customize this for SSR
 });
 
 Vue.config.productionTip = false;
@@ -20,5 +20,5 @@ Vue.config.productionTip = false;
 window.vm = new Vue({
   router,
   store,
-  render: h => h(App)
-}).$mount("#app");
+  render: (h) => h(App),
+}).$mount('#app');

@@ -1,44 +1,44 @@
 // eslint-disable-next-line no-unused-vars
-import { mapGetters, mapActions } from "vuex";
-import intro from "@/components/Intro.vue";
+import { mapGetters, mapActions } from 'vuex';
+import intro from '@/components/Intro.vue';
 
 export default {
   watch: {
     loading(loading) {
-      if (loading === false && this.$mq !== "sm") {
+      if (loading === false && this.$mq !== 'sm') {
         this.toggleItem({
           name: this.name,
-          obj: this.menuItems[0]
+          obj: this.menuItems[0],
         });
       }
-    }
+    },
   },
   components: {
-    intro
+    intro,
   },
   computed: {
     ...mapGetters({
-      musicItems: "musicItems",
-      workItems: "workItems",
-      loading: "loading"
+      musicItems: 'musicItems',
+      workItems: 'workItems',
+      loading: 'loading',
     }),
     menuItems() {
       return this[`${this.name}Items`];
     },
     name() {
       return this.type.toLowerCase();
-    }
+    },
   },
   created() {
-    if (this.$mq !== "sm") {
+    if (this.$mq !== 'sm') {
       this.toggleItem({
         name: this.name,
-        obj: this.menuItems[0]
+        obj: this.menuItems[0],
       });
     }
   },
   methods: {
-    ...mapActions(["setActiveItem", "toggleItem", "changeLoadingState"]),
+    ...mapActions(['setActiveItem', 'toggleItem', 'changeLoadingState']),
     play(item) {
       this.setActiveItem(item);
       this.$router.push({ path: `/play/${item.id}` });
@@ -46,9 +46,9 @@ export default {
     setItemActive(item, options) {
       this.$router
         .push({ name: this.name, params: { id: item.id } })
-        .catch(err => {});
-      if (options === "touchScreen") {
-        this.menuItems.filter(a => a != item).map(a => (a.show = false));
+        .catch((err) => {});
+      if (options === 'touchScreen') {
+        this.menuItems.filter((a) => a != item).map((a) => (a.show = false));
         item.show = !item.show;
         this.setActiveItem(item);
       } else {
@@ -64,7 +64,7 @@ export default {
       this.abortLoad();
     },
     abortLoad() {
-      let id = window.setTimeout(function() {}, 0);
+      let id = window.setTimeout(() => {}, 0);
       while (id--) {
         window.clearTimeout(id);
       }
@@ -73,7 +73,7 @@ export default {
       }, 200);
     },
     load(item) {
-      if (item.link.split(":")[0] !== "https") return;
+      if (item.link.split(':')[0] !== 'https') return;
       this.loadingAnimation = true;
       setTimeout(() => {
         this.setActiveItem(item);
@@ -82,6 +82,6 @@ export default {
     },
     goToPage(item) {
       this.$router.push({ path: `/page/${this.name}/${item.id}` });
-    }
-  }
+    },
+  },
 };

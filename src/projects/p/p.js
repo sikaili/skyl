@@ -1,26 +1,26 @@
-import Tone from "tone";
-import F4 from "./sound/ling.mp3";
-import E3 from "./sound/bouton_reverb.mp3";
+import Tone from 'tone';
+import F4 from './sound/ling.mp3';
+import E3 from './sound/bouton_reverb.mp3';
 
-console.log("import p");
+console.log('import p');
 
-export default function(instance) {
-  const divNode = document.querySelector("#canvasContainer");
+export default function (instance) {
+  const divNode = document.querySelector('#canvasContainer');
   const sampler0 = new Tone.Sampler(
     { F4, E3 },
     {
       onload: () => {
         this.isLoaded = true;
-      }
-    }
+      },
+    },
   ).chain(new Tone.Volume(-12), Tone.Master);
   const sampler1 = new Tone.Sampler(
     { E3 },
     {
       onload: () => {
         this.isLoaded = true;
-      }
-    }
+      },
+    },
   ).chain(new Tone.Volume(-14), Tone.Master);
   const meter = new Tone.Meter();
   Tone.Master.connect(meter);
@@ -32,15 +32,15 @@ export default function(instance) {
   let loading = true;
   sk.stop = () => {
     sk.noLoop();
-    rotateObjects.map(a => {
+    rotateObjects.map((a) => {
       a = undefined;
     });
     sampler0.dispose();
     sampler1.dispose();
     Tone.context.suspend();
     sk.remove();
-    Object.entries(prop => delete sk[prop]);
-    console.log("p is killed");
+    Object.entries((prop) => delete sk[prop]);
+    console.log('p is killed');
   };
   class RotateObject {
     constructor(x, y, r) {
@@ -48,7 +48,7 @@ export default function(instance) {
       this.x = x;
       this.y = y;
       [this.r, this.rCircle, this.rOriginal] = [r, r, r];
-      this.mode = "normal";
+      this.mode = 'normal';
       this.playble = false;
       this.rot = false;
     }
@@ -61,45 +61,41 @@ export default function(instance) {
     update(x1, y1) {
       let distance = sk.calcDistance(x1, y1, this.x, this.y);
       if (distance < this.rOriginal * 4) {
-        this.mode = "inside";
+        this.mode = 'inside';
       } else {
-        this.mode = "outside";
+        this.mode = 'outside';
         distance *= 2.2;
       }
-      this.r =
-        ((sk.noise(sk.frameCount / 100, this.x / 100, this.y) *
-          this.rOriginal) /
-          2) *
-          2 +
-        30 -
-        (distance / this.rOriginal) * 2;
-      this.rCircle =
-        sk.noise(Math.sin(sk.frameCount / 60), this.x / 100) *
-          this.rOriginal *
-          1.5 +
-        10 -
-        distance / 400;
-      this.r =
-        ((sk.noise(
+      this.r = ((sk.noise(sk.frameCount / 100, this.x / 100, this.y)
+          * this.rOriginal)
+          / 2)
+          * 2
+        + 30
+        - (distance / this.rOriginal) * 2;
+      this.rCircle = sk.noise(Math.sin(sk.frameCount / 60), this.x / 100)
+          * this.rOriginal
+          * 1.5
+        + 10
+        - distance / 400;
+      this.r = ((sk.noise(
           sk.frameCount / 100,
-          sk.calcDistance(sk.mouseX, sk.mouseY, this.x, this.y) / 150 +
-            sk.frameCount / 40
-        ) *
-          this.rOriginal) /
-          2) *
-          2 +
-        30 -
-        distance / 20;
-      this.rCircle =
-        sk.noise(
+          sk.calcDistance(sk.mouseX, sk.mouseY, this.x, this.y) / 150
+            + sk.frameCount / 40,
+        )
+          * this.rOriginal)
+          / 2)
+          * 2
+        + 30
+        - distance / 20;
+      this.rCircle = sk.noise(
           Math.sin(sk.frameCount / 60),
-          sk.calcDistance(sk.mouseX, sk.mouseY, this.x, this.y) / 300 +
-            sk.frameCount / 100
-        ) *
-          this.rOriginal *
-          1.5 +
-        10 -
-        distance / 400;
+          sk.calcDistance(sk.mouseX, sk.mouseY, this.x, this.y) / 300
+            + sk.frameCount / 100,
+        )
+          * this.rOriginal
+          * 1.5
+        + 10
+        - distance / 400;
     }
 
     display(color) {
@@ -115,7 +111,7 @@ export default function(instance) {
       sk.fill(0, 0, 200, 80);
       sk.beginShape();
       switch (this.mode) {
-        case "inside": {
+        case 'inside': {
           sk.vertex(0, -this.r / 2);
           sk.vertex(this.r / 2, this.r / 2);
           sk.vertex(-this.r / 2, this.r / 2);
@@ -156,7 +152,7 @@ export default function(instance) {
     sk.noStroke();
     [intervalX, intervalY] = [
       (sk.width + sk.height) / 40,
-      (sk.width + sk.height) / 40
+      (sk.width + sk.height) / 40,
     ];
     sk.rectMode(sk.CENTER);
     let number = 0;
@@ -176,7 +172,7 @@ export default function(instance) {
     if (sk.keyIsPressed) {
       const min = rotateObjects
         .filter(
-          obj => sk.calcDistance(obj.x, obj.y, sk.mouseX, sk.mouseY) < intervalX
+          (obj) => sk.calcDistance(obj.x, obj.y, sk.mouseX, sk.mouseY) < intervalX,
         )
         .sort()[0];
       luckyNo = rotateObjects.indexOf(min);
@@ -187,13 +183,13 @@ export default function(instance) {
     for (let i = 0; i < rotateObjects.length; i += 1) {
       const obj = rotateObjects[i];
       obj.update(sk.mouseX, sk.mouseY);
-      if (obj.mode === "inside") {
+      if (obj.mode === 'inside') {
         sk.vertex(obj.x, obj.y);
       }
       if (!loading) {
         if (
-          sk.calcDistance(sk.mouseX, sk.mouseY, obj.x, obj.y) < 75 &&
-          obj.playble
+          sk.calcDistance(sk.mouseX, sk.mouseY, obj.x, obj.y) < 75
+          && obj.playble
         ) {
           obj.bigger();
           obj.rot = true;
@@ -220,7 +216,7 @@ export default function(instance) {
     if (Math.random() > 0.5) {
       const min = rotateObjects
         .filter(
-          obj => sk.calcDistance(obj.x, obj.y, sk.mouseX, sk.mouseY) < intervalX
+          (obj) => sk.calcDistance(obj.x, obj.y, sk.mouseX, sk.mouseY) < intervalX,
         )
         .sort()[0];
       luckyNo = rotateObjects.indexOf(min);
@@ -231,47 +227,45 @@ export default function(instance) {
     sk.resizeCanvas(sk.windowWidth, sk.windowHeight);
   };
 
-  sk.calcDistance = (x, y, x1, y1) => {
-    return Math.sqrt((x1 - x) * (x1 - x) + (y1 - y) * (y1 - y));
-  };
+  sk.calcDistance = (x, y, x1, y1) => Math.sqrt((x1 - x) * (x1 - x) + (y1 - y) * (y1 - y));
 
   divNode.addEventListener(
-    "click",
+    'click',
     async () => {
       await Tone.start();
     },
-    { once: true, passive: false }
+    { once: true, passive: false },
   );
 
   divNode.addEventListener(
-    "touchstart",
+    'touchstart',
     async () => {
       await Tone.start();
     },
-    { once: true, passive: false }
+    { once: true, passive: false },
   );
 
-  divNode.addEventListener("touchstart", sk.handleTouchStarted, {
-    passive: false
+  divNode.addEventListener('touchstart', sk.handleTouchStarted, {
+    passive: false,
   });
 
-  divNode.addEventListener("mousedown", sk.handleTouchStarted, {
-    passive: false
+  divNode.addEventListener('mousedown', sk.handleTouchStarted, {
+    passive: false,
   });
 
   divNode.addEventListener(
-    "ontouchmove",
-    m => {
+    'ontouchmove',
+    (m) => {
       m.preventDefault();
     },
-    { passive: false }
+    { passive: false },
   );
 
   divNode.addEventListener(
-    "touchmove",
-    ev => {
+    'touchmove',
+    (ev) => {
       ev.preventDefault();
     },
-    { passive: false }
+    { passive: false },
   );
 }

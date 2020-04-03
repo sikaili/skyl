@@ -1,27 +1,27 @@
-import Tone from "tone";
-import F3 from "./sound/light.mp3";
-import E3 from "./sound/bouton_reverb.mp3";
+import Tone from 'tone';
+import F3 from './sound/light.mp3';
+import E3 from './sound/bouton_reverb.mp3';
 
-console.log("import eyes");
-const eyes = dd => {
-  const divNode = document.querySelector("#canvasContainer");
+console.log('import eyes');
+const eyes = (dd) => {
+  const divNode = document.querySelector('#canvasContainer');
   const sampler0 = new Tone.Sampler(
     { F3 },
     {
       onload: () => {
         this.isLoaded = true;
-      }
-    }
+      },
+    },
   ).chain(new Tone.Volume(-12), Tone.Master);
   const sampler1 = new Tone.Sampler(
     { E3 },
     {
       onload: () => {
         this.isLoaded = true;
-      }
-    }
+      },
+    },
   ).chain(new Tone.Volume(-12), Tone.Master);
-  sampler0.add("A3", "/sound/chasing.mp3");
+  sampler0.add('A3', '/sound/chasing.mp3');
   // let textReceived = `击洋误钟亡鲜异室异急热助型推包商收王接声东建感像即争爱带光受反任门度报则清未支尽章密兰游沉托舰鱼均销笔亡钟亡肉嘴姆嘴圣择剧楚评皇室异急异皇买靠楚编赶词鲜诗湾误洋读阳若略范款减诗洲防研写供族研笑称列族流飞风兵列选飞风企称难东声做且难东声做权且飞风留施续红网继尼施留网送尼调改深吗响调深吗虽响红连步调功红八调红续武续微哪男效男哪射若值射超啊冲啊哥啊冲超索胡压竟银压竟免啊冷细巴细预止严考巴预脑诉严止冷层刘烈户层刘妈疑脑拿注器注较周消台单却界影器消叫听白今叫今叫白结却切白却院单却反界让院却反识须照罗增防族值千防青族值千防青防千愿落青例九字落愿例九例细严仅照具照仅容影语容语站友树坚善央善拿跟周消视远清听才结反界让识具须落九罗候识达带爱增随族供列写流运笑备飞权做务权企选族防千愿细谁益冲啊洋误洋烈杂误诗鲜词藏吉索供写选供仍男钱破继句竟略若益止诉底器越器照写称备兵飞且权`;
   // textReceived = textReceived.split("");
   const recentItemNo = 0;
@@ -45,7 +45,7 @@ const eyes = dd => {
   let scale2 = 1.2;
   let texts = [];
   const mp = [];
-  mp[-1] = { x: -1, y: -1, text: "我" };
+  mp[-1] = { x: -1, y: -1, text: '我' };
   let sx;
   let sy;
   let loading = false;
@@ -81,16 +81,15 @@ const eyes = dd => {
       // above line
       for (let theta1 = 0.05; theta1 < dd.PI - 0.05; theta1 += 0.1) {
         const n2 = dd.map(Math.sin(dd.frameCount / 40), -1, 1, -3, 3);
-        const yy2 =
-          ((-rr * 13) / 12) * Math.sin(theta1) +
-          dd.random(-5, 5) / scale1 -
-          Math.abs(dd.mouseY - dd.height / 2) / 60;
+        const yy2 = ((-rr * 13) / 12) * Math.sin(theta1)
+          + dd.random(-5, 5) / scale1
+          - Math.abs(dd.mouseY - dd.height / 2) / 60;
         const yy3 = rr * Math.sin(theta1);
         dd.vertex(theta1 * per - ((dd.PI - 0.1) * per) / 2 + n2, yy2 + n2);
         if (Math.random() > 0.999) {
           dd.vertex(
             theta1 * per - ((dd.PI - 0.1) * per) / 2 + n2,
-            yy2 - (Math.random() + 1) * 20
+            yy2 - (Math.random() + 1) * 20,
           );
         }
         if (Math.random() > 0.99) {
@@ -117,7 +116,7 @@ const eyes = dd => {
       dd.text(
         this.tx,
         -20 - (dd.mouseX - dd.width / 2) / 30,
-        -rr - (0.9 * rr) / dd.constrain(scale1, 1.3, 100)
+        -rr - (0.9 * rr) / dd.constrain(scale1, 1.3, 100),
       );
       dd.strokeWeight(1);
       dd.noFill();
@@ -127,14 +126,12 @@ const eyes = dd => {
         dd.stroke(eyeBS);
         // black OUT LINE
         const n1 = dd.noise(xoff, yoff);
-        const x1 =
-          r * Math.sin(i) +
-          dd.map(n1, 0, 1, -10, 10) / scale1 +
-          (dd.mouseX - dd.width / 2) / 13;
-        const y1 =
-          r * Math.cos(i) +
-          dd.map(n1, 0, 1, -20, 10) / scale1 +
-          (dd.mouseY - dd.height / 2) / 25;
+        const x1 = r * Math.sin(i)
+          + dd.map(n1, 0, 1, -10, 10) / scale1
+          + (dd.mouseX - dd.width / 2) / 13;
+        const y1 = r * Math.cos(i)
+          + dd.map(n1, 0, 1, -20, 10) / scale1
+          + (dd.mouseY - dd.height / 2) / 25;
         // y1 = 0;
         xoff += 0.008;
         dd.vertex(x1, y1);
@@ -142,7 +139,7 @@ const eyes = dd => {
         if (Math.random() > 0.4) {
           dd.vertex(
             (x1 / 2.5) * ii + (dd.mouseX - dd.width / 2) / 25,
-            y1 / 2 + (dd.mouseY - dd.height / 2) / 25
+            y1 / 2 + (dd.mouseY - dd.height / 2) / 25,
           );
         }
       }
@@ -152,7 +149,7 @@ const eyes = dd => {
   }
 
   dd.preload = () => {
-    table = dd.loadTable("/assets/hanziDB.csv", "csv", "header");
+    table = dd.loadTable('/assets/hanziDB.csv', 'csv', 'header');
   };
 
   dd.stop = () => {
@@ -166,8 +163,8 @@ const eyes = dd => {
     sampler1.dispose();
     Tone.context.suspend();
     dd.remove();
-    Object.entries(prop => delete dd[prop]);
-    console.log("eyes is killed");
+    Object.entries((prop) => delete dd[prop]);
+    console.log('eyes is killed');
   };
 
   dd.start = () => {
@@ -177,12 +174,12 @@ const eyes = dd => {
   dd.setup = () => {
     const canvas = dd.createCanvas(dd.windowWidth, dd.windowHeight);
     canvas.id = Math.random().toFixed(2);
-    console.log("setup eyes");
+    console.log('setup eyes');
     if (dd.width > 768) {
       dd.pixelDensity(1.0);
     }
     for (let e = 0; e < 5000; e++) {
-      const m = dd.split(table.getString(e, 0), ";");
+      const m = dd.split(table.getString(e, 0), ';');
       texts[e] = m[1];
     }
     if (dd.width < 1500) {
@@ -200,12 +197,12 @@ const eyes = dd => {
     dd.eyeLeft = new Eye(
       dd.width / 2 - 400 / scale1,
       dd.height / 2 - dd.height * 0.1,
-      "+"
+      '+',
     );
     dd.eyeRight = new Eye(
       dd.width / 2 + 400 / scale1,
       dd.height / 2 - dd.height * 0.1,
-      "-"
+      '-',
     );
   };
 
@@ -284,11 +281,11 @@ const eyes = dd => {
       let p;
       p = {
         x: Math.floor(Math.abs(dd.mouseX / sx)),
-        y: Math.floor(Math.abs(dd.mouseY / sy))
+        y: Math.floor(Math.abs(dd.mouseY / sy)),
       };
       const distance = Math.sqrt(
-        (p.x - mp[mp.length - 1].x) * (p.x - mp[mp.length - 1].x) +
-          (p.y - mp[mp.length - 1].y) * (p.y - mp[mp.length - 1].y)
+        (p.x - mp[mp.length - 1].x) * (p.x - mp[mp.length - 1].x)
+          + (p.y - mp[mp.length - 1].y) * (p.y - mp[mp.length - 1].y),
       );
       if (distance > 0) {
         p.text = texts[Math.floor((dd.width / scaleX) * p.y + p.x)];
@@ -302,7 +299,7 @@ const eyes = dd => {
     // Array Length Control
     const eee = ((dd.width * dd.height) / (sx * sy)) * 0.22;
     if (mp.length > Math.floor(eee)) {
-      setTimeout(function() {
+      setTimeout(() => {
         if (mp.length > 1) {
           mp.splice(0, 1);
         }
@@ -316,7 +313,7 @@ const eyes = dd => {
     }
   };
 
-  const calculatePosition = letter => {
+  const calculatePosition = (letter) => {
     const no = texts.indexOf(letter);
     const y = Math.floor(no / (dd.width / scaleX));
     const x = Math.ceil(no % (dd.width / scaleX));
@@ -335,7 +332,7 @@ const eyes = dd => {
               dd.text(
                 texts[Math.floor(Math.random() * 1000)],
                 x,
-                y + sy * 0.85
+                y + sy * 0.85,
               );
             } else {
               dd.fill(letterFSR);
@@ -349,7 +346,7 @@ const eyes = dd => {
               dd.rect(x, y + sy, sx, sy);
               dd.pop();
             }
-            dd.text("我", x, y + sy * 0.85);
+            dd.text('我', x, y + sy * 0.85);
           }
         }
       }
@@ -360,11 +357,10 @@ const eyes = dd => {
     if (loading == false) {
       // const num = Math.floor(Math.random() * 5);
       // const pan = dd.constrain(dd.map(x, 0, dd.width / sx, -1, 1), -1, 1);
-      const rate =
-        (Math.floor((dd.height / sy - y / 2) / 5) + Math.floor(x / 3)) *
-        0.618 *
-        0.618 *
-        0.618;
+      const rate = (Math.floor((dd.height / sy - y / 2) / 5) + Math.floor(x / 3))
+        * 0.618
+        * 0.618
+        * 0.618;
       if (reverse1 == 0) {
         sampler0.triggerAttack(rate * 440 + 10);
       } else if (reverse1 == 1) {
@@ -373,7 +369,7 @@ const eyes = dd => {
     }
   };
 
-  const Color = x => {
+  const Color = (x) => {
     if (x == 1) {
       back = dd.color(8, 61, 169);
       backR = dd.color(255, 255, 100);
@@ -418,20 +414,20 @@ const eyes = dd => {
 
   dd.handleTouchStarted = () => {
     if (
-      dd.mouseX < dd.width / 2 - 400 / scale1 + 60 &&
-      dd.mouseX > dd.width / 2 - 400 / scale1 - 60 &&
-      dd.mouseY < 0.4 * dd.height + 35 &&
-      dd.mouseY > 0.4 * dd.height - 300 / scale1
+      dd.mouseX < dd.width / 2 - 400 / scale1 + 60
+      && dd.mouseX > dd.width / 2 - 400 / scale1 - 60
+      && dd.mouseY < 0.4 * dd.height + 35
+      && dd.mouseY > 0.4 * dd.height - 300 / scale1
     ) {
       scale2 *= 1.2;
       sx /= 1.2;
       sy /= 1.2;
     }
     if (
-      dd.mouseX < dd.width / 2 + 400 / scale1 + 60 &&
-      dd.mouseX > dd.width / 2 + 400 / scale1 - 60 &&
-      dd.mouseY < 0.4 * dd.height + 35 &&
-      dd.mouseY > 0.4 * dd.height - 300 / scale1
+      dd.mouseX < dd.width / 2 + 400 / scale1 + 60
+      && dd.mouseX > dd.width / 2 + 400 / scale1 - 60
+      && dd.mouseY < 0.4 * dd.height + 35
+      && dd.mouseY > 0.4 * dd.height - 300 / scale1
     ) {
       scale2 /= 1.2;
       sx *= 1.2;
@@ -450,71 +446,71 @@ const eyes = dd => {
 
   const setListeners = (divNode, dd) => { //eslint-disable-line
     divNode.addEventListener(
-      "click",
+      'click',
       async () => {
         await Tone.start();
         dd.start();
       },
-      { once: true, passive: false }
+      { once: true, passive: false },
     );
     divNode.addEventListener(
-      "touchstart",
+      'touchstart',
       async () => {
         await Tone.start();
         dd.start();
       },
-      { once: true, passive: false }
+      { once: true, passive: false },
     );
     divNode.addEventListener(
-      "touchstart",
+      'touchstart',
       () => {
         dd.handleTouchStarted();
         touched = true;
       },
       {
-        passive: false
-      }
+        passive: false,
+      },
     );
 
     divNode.addEventListener(
-      "mousedown",
+      'mousedown',
       () => {
         dd.handleTouchStarted();
         touched = true;
       },
       {
-        passive: false
-      }
+        passive: false,
+      },
     );
 
-    divNode.addEventListener("touchend", dd.handleTouchEnded, {
-      passive: false
+    divNode.addEventListener('touchend', dd.handleTouchEnded, {
+      passive: false,
     });
 
-    divNode.addEventListener("mouseup", dd.handleTouchEnded, {
-      passive: false
+    divNode.addEventListener('mouseup', dd.handleTouchEnded, {
+      passive: false,
     });
 
     divNode.addEventListener(
-      "ontouchmove",
-      m => {
+      'ontouchmove',
+      (m) => {
         m.preventDefault();
       },
-      { passive: false }
+      { passive: false },
     );
 
     divNode.addEventListener(
-      "touchmove",
-      ev => {
+      'touchmove',
+      (ev) => {
         dd.mouseMove = true;
         ev.preventDefault();
       },
-      { passive: false }
+      { passive: false },
     );
 
     divNode.addEventListener(
-      "mousemove",
-      ev => {
+      'mousemove',
+      (ev) => {
         if (dd.timer) clearTimeout(dd.timer);
         dd.timer = setTimeout(() => {
           dd.mouseMove = false;
@@ -522,7 +518,7 @@ const eyes = dd => {
         dd.mouseMove = true;
         ev.preventDefault();
       },
-      { passive: false }
+      { passive: false },
     );
   };
   setListeners(divNode, dd);
