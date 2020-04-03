@@ -6,6 +6,7 @@ import {
   Engine,
   World,
   Bodies,
+  Composite,
   MouseConstraint,
   Runner,
   Mouse,
@@ -85,6 +86,7 @@ const sketch = sk => {
   };
   let engine = Engine.create(options);
   const setBordersAndMouse = () => {
+    sk.borders = Composite.create();
     const border1 = Bodies.rectangle(0, 0, 10, 4000, {
       isStatic: true
     });
@@ -105,13 +107,14 @@ const sketch = sk => {
       }
     };
     const mouseConstraint = MouseConstraint.create(engine, options);
-    World.add(engine.world, [
+    Composite.add(sk.borders, [
       border1,
       border2,
       border3,
       border4,
       mouseConstraint
     ]);
+    World.add(engine.world, sk.borders);
   };
   engine.world.gravity.y = 0;
   let runner = Engine.run(engine);
@@ -303,6 +306,8 @@ const sketch = sk => {
 
   sk.windowResized = () => {
     sk.resizeCanvas(sk.windowWidth, sk.windowHeight);
+    Composite.clear(sk.borders);
+    setBordersAndMouse();
   };
 
   const setListeners = (divNode, sk) => { //eslint-disable-line
