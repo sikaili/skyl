@@ -14,8 +14,8 @@ const state = {
 const mutations = {
   TOGGLE_ITEM(state, payload) {
     state[payload.name].map((item) => {
-      item == payload.obj && item.show ? (item.show = false) : '';
-      item == payload.obj ? (item.show = true) : (item.show = false);
+      item === payload.obj && item.show ? (item.show = false) : ''; //eslint-disable-line
+      item === payload.obj ? (item.show = true) : (item.show = false); //eslint-disable-line
     });
   },
   SET_ACTIVE_ITEM(state, item) {
@@ -23,7 +23,7 @@ const mutations = {
       item = state.iframeItems.find((obj) => obj.id === item);
     }
     if (item.link && !item.link.includes('https')) return;
-    item === state.activeItem ? '' : (state.activeItem = item);
+    item === state.activeItem ? '' : (state.activeItem = item); //eslint-disable-line
   },
   SET_IFRAME_ITEMS(state, payload) {
     state.iframeItems = payload;

@@ -123,9 +123,6 @@ const sketch = (instance) => {
     Particle.prototype.sampler2.dispose();
     Particle.prototype.samplers.map((a) => a.dispose());
     sk.remove();
-    particles.map((a) => {
-      a = undefined;
-    });
     particles = [];
     window.decomp = undefined;
     console.log('virus killed');
@@ -244,7 +241,7 @@ const sketch = (instance) => {
       });
       if (stop) {
         if (stop.parts.length > 1) {
-          for (let i = 1; i < stop.parts.length; i++) {
+          for (let i = 1; i < stop.parts.length; i += 1) {
             const body = stop.parts[i];
             const stopShape = new Shape(body);
             shapes.push(stopShape);
