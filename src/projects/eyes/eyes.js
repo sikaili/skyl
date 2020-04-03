@@ -1,12 +1,14 @@
 import Tone from 'tone';
 import F3 from './sound/light.mp3';
+import A3 from './sound/chasing.mp3';
 import E3 from './sound/bouton_reverb.mp3';
+import texts from './assets/hanzi.json';
 
 console.log('import eyes');
 const eyes = (dd) => {
   const divNode = document.querySelector('#canvasContainer');
   const sampler0 = new Tone.Sampler(
-    { F3 },
+    { F3, A3 },
     {
       onload: () => {
         this.isLoaded = true;
@@ -21,10 +23,10 @@ const eyes = (dd) => {
       },
     },
   ).chain(new Tone.Volume(-12), Tone.Master);
-  sampler0.add('A3', '/sound/chasing.mp3');
+  // sampler0.add('A3', '/sound/chasing.mp3');
   // let textReceived = `击洋误钟亡鲜异室异急热助型推包商收王接声东建感像即争爱带光受反任门度报则清未支尽章密兰游沉托舰鱼均销笔亡钟亡肉嘴姆嘴圣择剧楚评皇室异急异皇买靠楚编赶词鲜诗湾误洋读阳若略范款减诗洲防研写供族研笑称列族流飞风兵列选飞风企称难东声做且难东声做权且飞风留施续红网继尼施留网送尼调改深吗响调深吗虽响红连步调功红八调红续武续微哪男效男哪射若值射超啊冲啊哥啊冲超索胡压竟银压竟免啊冷细巴细预止严考巴预脑诉严止冷层刘烈户层刘妈疑脑拿注器注较周消台单却界影器消叫听白今叫今叫白结却切白却院单却反界让院却反识须照罗增防族值千防青族值千防青防千愿落青例九字落愿例九例细严仅照具照仅容影语容语站友树坚善央善拿跟周消视远清听才结反界让识具须落九罗候识达带爱增随族供列写流运笑备飞权做务权企选族防千愿细谁益冲啊洋误洋烈杂误诗鲜词藏吉索供写选供仍男钱破继句竟略若益止诉底器越器照写称备兵飞且权`;
   // textReceived = textReceived.split("");
-  const recentItemNo = 0;
+  // const recentItemNo = 0;
   let touched = false;
   const scaleX = 50;
   let back;
@@ -43,7 +45,6 @@ const eyes = (dd) => {
   let state = -1;
   let scale1 = 1;
   let scale2 = 1.2;
-  let texts = [];
   const mp = [];
   mp[-1] = { x: -1, y: -1, text: '我' };
   let sx;
@@ -52,7 +53,6 @@ const eyes = (dd) => {
   const loading1 = true;
   const loading2 = true;
   let reverse1 = 0;
-  let table;
 
   class Eye {
     constructor(x, y, tx) {
@@ -69,7 +69,7 @@ const eyes = (dd) => {
       const per = 200 / scale1;
       let ii = 1;
       // touched
-      if (state == 1) {
+      if (state === 1) {
         rr *= 1.2;
         r *= 1.15;
         ii *= 1.15;
@@ -147,18 +147,12 @@ const eyes = (dd) => {
       dd.pop();
     }
   }
-
-  dd.preload = () => {
-    table = dd.loadTable('/assets/hanziDB.csv', 'csv', 'header');
-  };
-
   dd.stop = () => {
     dd.stopped = true;
     dd.eyeRight = null;
     dd.noLoop();
     texts = [];
     dd.eyeLeft = null;
-    table = undefined;
     sampler0.dispose();
     sampler1.dispose();
     Tone.context.suspend();
@@ -177,10 +171,6 @@ const eyes = (dd) => {
     console.log('setup eyes');
     if (dd.width > 768) {
       dd.pixelDensity(1.0);
-    }
-    for (let e = 0; e < 5000; e++) {
-      const m = dd.split(table.getString(e, 0), ';');
-      texts[e] = m[1];
     }
     if (dd.width < 1500) {
       scale1 = 1500 / dd.width;
@@ -207,7 +197,7 @@ const eyes = (dd) => {
   };
 
   dd.draw = () => {
-    if (loading && loading1 == false && loading2 == false) {
+    if (loading && loading1 === false && loading2 === false) {
       loading = false;
     }
     if (scale2 > 12 || scale2 < 0.8) {
