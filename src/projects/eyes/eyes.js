@@ -148,6 +148,7 @@ const eyes = (dd) => {
     }
   }
   dd.stop = () => {
+    console.log('eyes is killed');
     dd.stopped = true;
     dd.eyeRight = null;
     dd.noLoop();
@@ -158,7 +159,6 @@ const eyes = (dd) => {
     Tone.context.suspend();
     dd.remove();
     Object.entries((prop) => delete dd[prop]);
-    console.log('eyes is killed');
   };
 
   dd.start = () => {

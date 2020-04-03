@@ -113,7 +113,7 @@ export default {
       this.key = Math.random().toFixed(2);
     },
   },
-  created() {
+  beforeCreate() {
     this.$root.$on('refreshCanvas', () => {
       this.key = Math.random().toFixed(2);
     });
@@ -124,6 +124,8 @@ export default {
       ) || { id: 'eyes', type: 'sketch' };
       this.$store.dispatch('setActiveItem', iframeItem);
     }
+  },
+  created() {
     window.addEventListener('resize', this.handleResize);
     window.addEventListener('scroll', this.handleScroll);
     window.addEventListener('orientationchange', this.handleResize);
