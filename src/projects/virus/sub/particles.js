@@ -4,7 +4,7 @@ import calDistance from '../utils/calDistance';
 export default class Particle {
   constructor(x, y, virus, number) {
     const scale = 200 / number;
-    this.r = (10 + Math.random() * 15) * (scale / 1.3);
+    this.r = (10 + Math.random() * 15) * (scale / 1.1);
     this.r = this.r < 5 ? 5 : this.r;
     this.pos = { x, y };
     this.updating = true;
