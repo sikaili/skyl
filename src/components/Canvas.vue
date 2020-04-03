@@ -1,24 +1,26 @@
+//eslint-disable-file
 <template>
-  <div id="canvasContainer"></div>
+  <div id="canvasContainer" />
 </template>
 
 <script>
-import p5 from "p5";
+import p5 from 'p5/lib/p5.min';
 
 let current;
-const changeSketch = name => {
+const changeSketch = (name) => {
   import(`./../projects/${name}/${name}.js`).then(module => { //eslint-disable-line
     current = new p5(module.default, 'canvasContainer'); //eslint-disable-line
   });
 };
+
 export default {
-  name: "Canvas",
+  name: 'Canvas',
   props: {
-    current: null
+    current: { type: String, default: '' },
   },
   data() {
     return {
-      loaded: null
+      loaded: null,
     };
   },
   created() {
@@ -38,7 +40,7 @@ export default {
   },
   destroyed() {
     current = null;
-  }
+  },
 };
 </script>
 

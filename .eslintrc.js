@@ -15,7 +15,7 @@ module.exports = {
     "template-curly-spacing" : "off",
     "no-shadow": "off",
     "no-param-reassign":"off",
-    indent : "off"
+    // indent : "off"
   },
   globals: {
     Atomics: 'readonly',
