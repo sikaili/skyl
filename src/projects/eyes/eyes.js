@@ -75,7 +75,7 @@ const eyes = dd => {
       dd.translate(this.x, this.y);
       dd.beginShape();
       dd.vertex((-(dd.PI - 0.1) * per) / 2, 0);
-      dd.strokeWeight(dd.width < 700 ? 3 : 5);
+      dd.strokeWeight(dd.width < 700 ? 3 : 8);
       // above line
       for (let theta1 = 0.05; theta1 < dd.PI - 0.05; theta1 += 0.1) {
         const n2 = dd.map(Math.sin(dd.frameCount / 40), -1, 1, -3, 3);
@@ -106,7 +106,7 @@ const eyes = dd => {
       dd.endShape();
       // TEXT +-
       dd.textSize(180 / scale1 + Math.random() * 10);
-      dd.strokeWeight(dd.width < 700 ? 10 : 20);
+      dd.strokeWeight(dd.width < 700 ? 10 : 25);
       if (Math.random() > 0.7) {
         dd.stroke(eyeS);
       } else {
@@ -176,7 +176,9 @@ const eyes = dd => {
     const canvas = dd.createCanvas(dd.windowWidth, dd.windowHeight);
     canvas.id = Math.random().toFixed(2);
     console.log("setup eyes");
-
+    if (dd.width > 768) {
+      dd.pixelDensity(1.0);
+    }
     for (let e = 0; e < 5000; e++) {
       const m = dd.split(table.getString(e, 0), ";");
       texts[e] = m[1];
