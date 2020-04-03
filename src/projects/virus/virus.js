@@ -64,16 +64,16 @@ const sketch = (instance) => {
   let engine = Engine.create(options);
   const setBordersAndMouse = () => {
     sk.borders = Composite.create();
-    const border1 = Bodies.rectangle(0, 0, 10, 4000, {
+    const border1 = Bodies.rectangle(0, 0, 30, 4000, {
       isStatic: true,
     });
-    const border2 = Bodies.rectangle(sk.width, 0, 10, 4000, {
+    const border2 = Bodies.rectangle(sk.width, 0, 30, 4000, {
       isStatic: true,
     });
-    const border3 = Bodies.rectangle(0, 0, 4000, 10, {
+    const border3 = Bodies.rectangle(0, 0, 4000, 30, {
       isStatic: true,
     });
-    const border4 = Bodies.rectangle(0, sk.height, 4000, 10, {
+    const border4 = Bodies.rectangle(0, sk.height, 4000, 30, {
       isStatic: true,
     });
     const divMouse = Mouse.create(divNode);
