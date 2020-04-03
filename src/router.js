@@ -48,6 +48,7 @@ const router = new Router({
       name: 'cv/',
       component: cv,
     },
+    { path: '*', redirect: '/play/random' },
   ],
 });
 export default router;

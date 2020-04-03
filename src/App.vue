@@ -118,10 +118,12 @@ export default {
       this.key = Math.random().toFixed(2);
     });
     const { id } = this.$route.params;
-    const iframeItem = this.$store.state.iframeItems.find(
-      (item) => item.id === id,
-    ) || { id: 'eyes', type: 'sketch' };
-    this.$store.dispatch('setActiveItem', iframeItem);
+    if (id !== 'random') {
+      const iframeItem = this.$store.state.iframeItems.find(
+        (item) => item.id === id,
+      ) || { id: 'eyes', type: 'sketch' };
+      this.$store.dispatch('setActiveItem', iframeItem);
+    }
     window.addEventListener('resize', this.handleResize);
     window.addEventListener('scroll', this.handleScroll);
     window.addEventListener('orientationchange', this.handleResize);
