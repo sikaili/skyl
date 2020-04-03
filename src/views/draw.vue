@@ -4,6 +4,7 @@
 
 <script>
 import Drawings from "@/components/Drawings.vue";
+
 export default {
   name: "draw",
   components: {

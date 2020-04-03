@@ -1,6 +1,7 @@
 import Tone from "tone";
 import F3 from "./sound/light.mp3";
 import E3 from "./sound/bouton_reverb.mp3";
+
 console.log("import eyes");
 const eyes = dd => {
   const divNode = document.querySelector("#canvasContainer");
@@ -59,6 +60,7 @@ const eyes = dd => {
       this.y = y;
       this.tx = tx;
     }
+
     display() {
       dd.push();
       dd.stroke(eyeS);

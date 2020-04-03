@@ -23,13 +23,14 @@
 </template>
 
 <script>
-document.ontouchmove = function(e) { //eslint-disable-line
-  return true;
-};
 import { mapGetters } from "vuex";
 import TheHead from "./components/TheHead.vue";
 import TheFooter from "./components/TheFooter.vue";
 import Canvas from "./components/Canvas.vue";
+
+document.ontouchmove = function(e) { //eslint-disable-line
+  return true;
+};
 export default {
   name: "app",
   components: {
@@ -124,7 +125,7 @@ export default {
     this.$root.$on("refreshCanvas", () => {
       this.key = Math.random().toFixed(2);
     });
-    const id = this.$route.params.id;
+    const { id } = this.$route.params;
     const iframeItem = this.$store.state.iframeItems.find(
       item => item.id === id
     ) || { id: "eyes", type: "sketch" };

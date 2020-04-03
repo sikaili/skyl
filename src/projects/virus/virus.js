@@ -1,6 +1,5 @@
 import Tone from "tone";
 import decomp from "poly-decomp";
-window.decomp = decomp;
 
 import {
   Engine,
@@ -16,33 +15,13 @@ import Particle from "./sub/particles";
 import E3 from "./sound/chasing.mp3";
 import D3 from "./sound/light.mp3";
 
+window.decomp = decomp;
+
 console.log("import virus");
 
-const sketch = sk => {
+const sketch = instance => {
+  const sk = instance;
   const divNode = document.querySelector("#canvasContainer");
-
-  sk.start = () => {
-    sk.loop();
-  };
-
-  sk.stop = () => {
-    sk.noLoop();
-    Runner.stop(runner);
-    World.clear(engine.world, false, true);
-    Engine.clear(engine);
-    runner = null;
-    engine = null;
-    Tone.context.suspend();
-    Particle.prototype.sampler2.dispose();
-    Particle.prototype.samplers.map(a => a.dispose());
-    sk.remove();
-    particles.map(a => {
-      a = undefined;
-    });
-    particles = [];
-    window.decomp = undefined;
-    console.log("virus killed");
-  };
 
   // save and get last
   sk.lastKey = localStorage.getItem("last-key") || "notok";
@@ -54,7 +33,7 @@ const sketch = sk => {
     localStorage.setItem(key, JSON.stringify(item));
     localStorage.setItem("last-key", key);
   };
-  let meter = new Tone.Meter();
+  const meter = new Tone.Meter();
   Particle.prototype.sampler2 = new Tone.Sampler(
     { D3 },
     {
@@ -78,7 +57,7 @@ const sketch = sk => {
     ).chain(new Tone.Volume(-15), Tone.Master);
   }
 
-  let options = {
+  const options = {
     positionIterations: 6,
     velocityIterations: 4,
     constraintIterations: 2,
@@ -129,7 +108,31 @@ const sketch = sk => {
     text: `virus ${virusNo}`
   };
   let touched = false;
-  let shapes = [];
+  const shapes = [];
+
+  sk.start = () => {
+    sk.loop();
+  };
+
+  sk.stop = () => {
+    sk.noLoop();
+    Runner.stop(runner);
+    World.clear(engine.world, false, true);
+    Engine.clear(engine);
+    runner = null;
+    engine = null;
+    Tone.context.suspend();
+    Particle.prototype.sampler2.dispose();
+    Particle.prototype.samplers.map(a => a.dispose());
+    sk.remove();
+    particles.map(a => {
+      a = undefined;
+    });
+    particles = [];
+    window.decomp = undefined;
+    console.log("virus killed");
+  };
+
   sk.setup = () => {
     sk.createCanvas(sk.windowWidth, sk.windowHeight);
     console.log("setup virus");
@@ -213,6 +216,7 @@ const sketch = sk => {
       this.center = body.position;
       this.body = body;
     }
+
     display() {
       sk.push();
       sk.fill(0);
@@ -234,26 +238,26 @@ const sketch = sk => {
   sk.handleTouchEnd = ev => {
     ev.preventDefault();
     // add shape
-    let center = Vertices.centre(sk.staticBodyVertex);
-    let arr = sk.staticBodyVertex.map(point => {
+    const center = Vertices.centre(sk.staticBodyVertex);
+    const arr = sk.staticBodyVertex.map(point => {
       return { x: point.x - center.x, y: point.y - center.y };
     });
     if (sk.staticBodyVertex && sk.staticBodyVertex.length > 5) {
-      let stop = Bodies.fromVertices(center.x, center.y, [arr], {
+      const stop = Bodies.fromVertices(center.x, center.y, [arr], {
         isStatic: true,
         density: 3
       });
       if (stop) {
         if (stop.parts.length > 1) {
           for (let i = 1; i < stop.parts.length; i++) {
-            let body = stop.parts[i];
-            let stopShape = new Shape(body);
+            const body = stop.parts[i];
+            const stopShape = new Shape(body);
             shapes.push(stopShape);
           }
           World.add(engine.world, stop);
         } else if (stop.parts.length === 1) {
-          let body = stop.parts[0];
-          let stopShape = new Shape(body);
+          const body = stop.parts[0];
+          const stopShape = new Shape(body);
           shapes.push(stopShape);
           World.add(engine.world, stop);
         }

@@ -92,6 +92,7 @@
 
 <script>
 import { mapActions } from "vuex";
+
 export default {
   name: "page",
   data() {
@@ -118,7 +119,7 @@ export default {
       if (this.id > itemsArray.length) {
         return "ERROR!";
       }
-      let dump = itemsArray.find(a => a.id == this.$route.params.id);
+      const dump = itemsArray.find(a => a.id == this.$route.params.id);
       return dump;
     }
   }

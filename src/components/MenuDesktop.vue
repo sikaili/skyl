@@ -103,6 +103,7 @@
 
 <script>
 import { menuMxn } from "@/js/mixins";
+
 export default {
   props: {
     type: {

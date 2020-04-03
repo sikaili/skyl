@@ -32,12 +32,11 @@ export default {
     };
   },
   computed: {
-    classBySize: function() {
+    classBySize() {
       if (this.$mq == "sm") {
         return this.class.sm;
-      } else {
-        return this.class.mdPlus;
       }
+      return this.class.mdPlus;
     }
   }
 };

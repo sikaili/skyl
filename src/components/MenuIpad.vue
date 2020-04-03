@@ -100,6 +100,7 @@
 
 <script>
 import { menuMxn } from "@/js/mixins";
+
 export default {
   name: "Menu",
   props: {

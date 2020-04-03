@@ -23,7 +23,7 @@ export default {
       loading: "loading"
     }),
     menuItems() {
-      return this[this.name + "Items"];
+      return this[`${this.name}Items`];
     },
     name() {
       return this.type.toLowerCase();

@@ -8,6 +8,7 @@
 import MenuSmall from "@/components/MenuSmall.vue";
 import MenuDesktop from "@/components/MenuDesktop.vue";
 import MenuIpad from "@/components/MenuIpad.vue";
+
 export default {
   name: "music",
   components: {

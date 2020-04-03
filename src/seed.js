@@ -219,7 +219,7 @@ const arrayDump = Object.entries(seedData);
 arrayDump.map(obj => {
   seedData[obj[0]].map(a => {
     !a.about ? (a.about = a.des) : ``;
-    a[`id`] = a.name
+    a.id = a.name
       .split(` `)
       .join(`-`)
       .toLowerCase();
@@ -227,12 +227,12 @@ arrayDump.map(obj => {
     const arr = [];
     for (let i = 0; i < num; i++) {
       try {
-        let m = require(`@/assets/${a.id}/${a.id}_${i}.jpg`);
+        const m = require(`@/assets/${a.id}/${a.id}_${i}.jpg`);
         arr.push(m);
       } catch (err) {
         continue;
       }
-      a[`imgs`] = arr;
+      a.imgs = arr;
     }
   });
 });
@@ -253,7 +253,7 @@ const getNameFromLink = link => {
   return nameStr;
 };
 
-let extraIframeLinks = links;
+const extraIframeLinks = links;
 // get all links
 const data = JSON.parse(JSON.stringify(seedData));
 const linksFromProjects = [...data.work].concat([...data.music]);

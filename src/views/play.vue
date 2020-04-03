@@ -4,6 +4,7 @@
 
 <script>
 import SideMenu from "@/components/SideMenu.vue";
+
 export default {
   name: "play",
   data() {

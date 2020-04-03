@@ -4,9 +4,10 @@
 
 <script>
 import p5 from "p5";
+
 let current;
 const changeSketch = name => {
-  import("./../projects/" + name + "/" + name + ".js").then(module => {
+  import(`./../projects/${name}/${name}.js`).then(module => {
     current = new p5(module.default, 'canvasContainer'); //eslint-disable-line
   });
 };

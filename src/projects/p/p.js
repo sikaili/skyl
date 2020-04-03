@@ -1,6 +1,7 @@
 import Tone from "tone";
 import F4 from "./sound/ling.mp3";
 import E3 from "./sound/bouton_reverb.mp3";
+
 console.log("import p");
 
 export default function(instance) {
@@ -171,7 +172,7 @@ export default function(instance) {
   };
 
   sk.draw = () => {
-    let fps = sk.frameRate();
+    const fps = sk.frameRate();
     if (sk.keyIsPressed) {
       const min = rotateObjects
         .filter(

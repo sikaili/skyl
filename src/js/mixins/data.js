@@ -1,4 +1,5 @@
 import axios from "axios";
+
 const is404 = res => {
   return res.response && res.response.status === 404;
 };
@@ -19,8 +20,6 @@ const getData = (endpoint, options) => {
         this.$router.replace({
           name: "404"
         });
-
-        return;
       } else if (res.status === 200) {
         if (typeof res.data === "string") {
           res.data = JSON.parse(res.data);
@@ -40,12 +39,12 @@ const getData = (endpoint, options) => {
     });
 };
 const addMedia = data => {
-  let seedData = data;
+  const seedData = data;
   const arrayDump = Object.entries(seedData);
   arrayDump.map(obj => {
     seedData[obj[0]].map(a => {
       !a.about ? (a.about = a.des) : ``;
-      a[`id`] = a.name
+      a.id = a.name
         .split(` `)
         .join(`-`)
         .toLowerCase();
@@ -53,12 +52,12 @@ const addMedia = data => {
       const arr = [];
       for (let i = 0; i < num; i++) {
         try {
-          let m = require(`@/assets/${a.id}/${a.id}_${i}.jpg`);
+          const m = require(`@/assets/${a.id}/${a.id}_${i}.jpg`);
           arr.push(m);
         } catch (err) {
           continue;
         }
-        a[`imgs`] = arr;
+        a.imgs = arr;
       }
     });
   });

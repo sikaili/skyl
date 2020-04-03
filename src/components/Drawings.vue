@@ -72,6 +72,7 @@
 
 <script>
 import VueGallery from "vue-gallery";
+
 export default {
   props: {
     drawings: {

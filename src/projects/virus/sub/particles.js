@@ -1,5 +1,6 @@
 import { Bodies, Body } from "matter-js";
 import calDistance from "../utils/calDistance";
+
 export default class Particle {
   constructor(x, y, virus, number) {
     const scale = 200 / number;
