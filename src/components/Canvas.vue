@@ -22,6 +22,36 @@
           @click="toggleSettings()"
         />
       </div>
+      <p
+        v-if="settings && settings.player"
+        class="pa2 bg-animate hover-bg-white hover-black mb0 pb2 white bg-black-60"
+        @click="toggle()"
+      >
+        {{ playing?playing :'Player' }}
+        <i
+          :class="
+            `hover-black fr ma0 icon ion-md-arrow-drop-down ${
+              showList ? ` ion-md-arrow-dropup` : ' ion-md-arrow-dropdown'
+            }`
+          "
+        />
+      </p>
+      <div
+        v-if="showList"
+        class="overflow-y-scroll f6 tl bg-white-30"
+      >
+        <span
+          v-for="(songId, index) in songs"
+          :key="index"
+        >
+          <p
+            class="listItem ph1 bg-animate hover-bg-white hover-black white bg-black-60"
+            @click="handleListItemClick(songId)"
+          >
+            {{ songId }}
+          </p>
+        </span>
+      </div>
 
       <div
         v-for="(value, name) in settings"
@@ -65,7 +95,6 @@ p5.disableFriendlyErrors = true;
 
 let current;
 let loaded = true;
-console.log('here');
 const changeSketch = (name) => {
   if (!loaded) {
     loaded = true;
@@ -81,8 +110,11 @@ export default {
   },
   data() {
     return {
+      showList: false,
       showSettings: false,
       settings: null,
+      songs: ['Rain-Addiction', 'Emb'],
+      playing: null,
     };
   },
   watch: {
@@ -97,6 +129,7 @@ export default {
     setTimeout(() => {
       if (current && current.settings && Object.keys(current.settings)) {
         this.settings = current.settings;
+        this.playing = current.songId ? current.songId : null;
       }
     }, 500);
   },
@@ -115,10 +148,28 @@ export default {
     current = undefined;
   },
   methods: {
+    handleListItemClick(songId) {
+      current.setSong(songId);
+      this.toggleSettings();
+      this.playing = songId;
+    },
     toggleSettings() {
       this.showSettings = !this.showSettings;
     },
-
+    toggle() {
+      if (this.showList) {
+        return this.hide();
+      }
+      return this.show();
+    },
+    show() {
+      this.showList = true;
+      setTimeout(() => document.addEventListener('click', this.hide), 0);
+    },
+    hide() {
+      this.showList = false;
+      document.removeEventListener('click', this.hide);
+    },
   },
 };
 </script>
@@ -132,7 +183,7 @@ export default {
 
   &__Icon {
     position: fixed;
-    right: 30px;
+    right: 28px;
     bottom: 30px;
   }
 
@@ -168,9 +219,9 @@ export default {
     }
 
     &--active {
-      top: 50%;
-      height: calc(50% - 30px);
-
+      top: unset;
+      bottom: 30px;
+      height: auto;
     }
   }
 }

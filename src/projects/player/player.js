@@ -1,11 +1,10 @@
 import p5 from 'p5/lib/p5.min';
 import Tone from 'tone';
-import rain from './sound/rain-addiction.m4a';
-
 
 export default function (sk) {
   console.log('player setup');
   sk.settings = {
+    player: true,
     red: {
       value: 255,
       type: 'range',
@@ -42,10 +41,23 @@ export default function (sk) {
   let xoff = 0;
   let particles = [];
   let forceDirection = -1;
-
-  const player = new Tone.Player().toMaster();
-  player.load(rain, () => { soundIsLoading = false; });
+  let url = '/assets/rain-addiction.m4a';
+  sk.songId = 'Rain Addiction';
+  if (vm.$route.query.id && typeof vm.$route.query.id === 'string') {
+    sk.songId = vm.$route.query.id;
+    url = `/assets/${ sk.songId }.m4a`;
+  }
+  let player = new Tone.Player(url, () => { soundIsLoading = false; }).toMaster();
   player.connect(fft);
+
+  sk.setSong = (songId) => {
+    state = -1;
+    sk.songId = songId;
+    soundIsLoading = true;
+    player.disconnect();
+    player.dispose();
+    player = new Tone.Player(`/assets/${ songId }.m4a`, () => { soundIsLoading = false; }).toMaster();
+  };
 
   sk.stop = () => {
     sk.stopped = true;
@@ -433,8 +445,8 @@ export default function (sk) {
         sk.fill(150);
         sk.strokeWeight(0);
         // sk.text('Li Sikai', 0.5 * sk.windowWidth, 0.3 * sk.windowHeight);
-        sk.text('2018', 0.5 * sk.windowWidth, 0.3 * sk.windowHeight + 60);
-        sk.text('Rain Addiction', 0.5 * sk.windowWidth, 0.3 * sk.windowHeight + 130);
+        // sk.text('2018', 0.5 * sk.windowWidth, 0.3 * sk.windowHeight + 60);
+        sk.text(sk.songId, 0.5 * sk.windowWidth, 0.3 * sk.windowHeight + 130);
         sk.pop();
       }
     }

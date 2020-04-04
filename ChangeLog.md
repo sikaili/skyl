@@ -1,6 +1,7 @@
-## [2.1.0] - 2019-04-03
+## [2.1.0] - 2019-04-04
 ### Added
 - Settings panel, colors for rain-addiction (1983097132206)
+- Select song in settings channel
 - virus quick settings
 - Rain-Addction instance mode (94c2c9305a924)
 - p-settings-color (24a65ed29f)
