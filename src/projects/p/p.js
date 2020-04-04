@@ -5,12 +5,17 @@ import E3 from './sound/bouton_reverb.mp3';
 console.log('import p');
 
 export default function (instance) {
+  const sk = instance;
+  sk.settings = {
+    background: [0, 0, 0, 0],
+    level: 0.1,
+  };
   const divNode = document.querySelector('#canvasContainer');
   const sampler0 = new Tone.Sampler(
     { F4, E3 },
     {
       onload: () => {
-        this.isLoaded = true;
+        sk.soundIsLoaded = true;
       },
     },
   ).chain(new Tone.Volume(-12), Tone.Master);
@@ -18,13 +23,12 @@ export default function (instance) {
     { E3 },
     {
       onload: () => {
-        this.isLoaded = true;
+        sk.soundIsLoaded = true;
       },
     },
   ).chain(new Tone.Volume(-14), Tone.Master);
   const meter = new Tone.Meter();
   Tone.Master.connect(meter);
-  const sk = instance;
   let intervalX;
   let intervalY;
   const rotateObjects = [];
@@ -78,20 +82,20 @@ export default function (instance) {
         + 10
         - distance / 400;
       this.r = ((sk.noise(
-          sk.frameCount / 100,
-          sk.calcDistance(sk.mouseX, sk.mouseY, this.x, this.y) / 150
+        sk.frameCount / 100,
+        sk.calcDistance(sk.mouseX, sk.mouseY, this.x, this.y) / 150
             + sk.frameCount / 40,
-        )
+      )
           * this.rOriginal)
           / 2)
           * 2
         + 30
         - distance / 20;
       this.rCircle = sk.noise(
-          Math.sin(sk.frameCount / 60),
-          sk.calcDistance(sk.mouseX, sk.mouseY, this.x, this.y) / 300
+        Math.sin(sk.frameCount / 60),
+        sk.calcDistance(sk.mouseX, sk.mouseY, this.x, this.y) / 300
             + sk.frameCount / 100,
-        )
+      )
           * this.rOriginal
           * 1.5
         + 10
@@ -145,7 +149,6 @@ export default function (instance) {
 
   sk.setup = () => {
     loading = false;
-    sk.scale(1.5);
     const canvas = sk.createCanvas(sk.windowWidth, sk.windowHeight);
     canvas.id = Math.random().toFixed(2);
     sk.noCursor();
@@ -168,7 +171,7 @@ export default function (instance) {
   };
 
   sk.draw = () => {
-    const fps = sk.frameRate();
+    // const fps = sk.frameRate();
     if (sk.keyIsPressed) {
       const min = rotateObjects
         .filter(
@@ -177,9 +180,8 @@ export default function (instance) {
         .sort()[0];
       luckyNo = rotateObjects.indexOf(min);
     }
-    const level = NaN;
     // console.log(level);
-    sk.background(150, 50 * (1 + level * 200), 200);
+    sk.background(150, sk.settings.level * 255, 200);
     for (let i = 0; i < rotateObjects.length; i += 1) {
       const obj = rotateObjects[i];
       obj.update(sk.mouseX, sk.mouseY);
@@ -193,8 +195,10 @@ export default function (instance) {
         ) {
           obj.bigger();
           obj.rot = true;
-          sampler0.triggerAttack(obj.id * 5);
-          sampler1.triggerAttack(obj.y);
+          if (sk.soundIsLoaded) {
+            sampler0.triggerAttack(obj.id * 5);
+            sampler1.triggerAttack(obj.y);
+          }
         } else {
           obj.rot = false;
         }

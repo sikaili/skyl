@@ -11,7 +11,7 @@ const eyes = (dd) => {
     { F3, A3 },
     {
       onload: () => {
-        this.isLoaded = true;
+        dd.soundIsLoaded = true;
       },
     },
   ).chain(new Tone.Volume(-12), Tone.Master);
@@ -19,7 +19,7 @@ const eyes = (dd) => {
     { E3 },
     {
       onload: () => {
-        this.isLoaded = true;
+        dd.soundIsLoaded = true;
       },
     },
   ).chain(new Tone.Volume(-12), Tone.Master);
@@ -150,8 +150,8 @@ const eyes = (dd) => {
   dd.stop = () => {
     console.log('eyes is killed');
     dd.stopped = true;
-    dd.eyeRight = null;
     dd.noLoop();
+    dd.eyeRight = null;
     texts = [];
     dd.eyeLeft = null;
     sampler0.dispose();
@@ -197,42 +197,44 @@ const eyes = (dd) => {
   };
 
   dd.draw = () => {
-    if (loading && loading1 === false && loading2 === false) {
-      loading = false;
-    }
-    if (scale2 > 12 || scale2 < 0.8) {
-      scale2 = dd.width > 700 ? 3 : 5;
-      sx = 150 / scale2;
-      sy = 150 / scale2;
-    }
-
-    Color(Math.floor((dd.frameCount / 150) % 3));
-    GeneArray();
-    if (dd.frameCount % 2 == 0) {
-      if (state == 1 && Math.random() > 0.95) {
-        dd.background(backR);
+    if (!dd.stopped) {
+      if (loading && loading1 === false && loading2 === false) {
+        loading = false;
       }
-      dd.background(back);
-      RandomBackground();
-    }
-    displayHighLightedText();
-    // "+""-"
-    if (dd.eyeRight) {
-      dd.eyeRight.display();
-      dd.eyeLeft.display();
+      if (scale2 > 12 || scale2 < 0.8) {
+        scale2 = dd.width > 700 ? 3 : 5;
+        sx = 150 / scale2;
+        sy = 150 / scale2;
+      }
+
+      Color(Math.floor((dd.frameCount / 150) % 3));
+      GeneArray();
+      if (dd.frameCount % 2 === 0) {
+        if (state === 1 && Math.random() > 0.95) {
+          dd.background(backR);
+        }
+        dd.background(back);
+        RandomBackground();
+      }
+      displayHighLightedText();
+      // "+""-"
+      if (dd.eyeRight) {
+        dd.eyeRight.display();
+        dd.eyeLeft.display();
+      }
     }
   };
 
   const displayHighLightedText = () => {
     // traite array, draw dd.rect and texts highlight;
-    for (let e = 0; e < mp.length; e++) {
+    for (let e = 0; e < mp.length; e += 1) {
       dd.push();
 
       const nx = mp[e].x;
       const ny = mp[e].y;
       dd.translate(nx * sx, ny * sy);
       // text random size +
-      if (e == mp.length - 1) {
+      if (e === mp.length - 1) {
         dd.scale(dd.random(2, 2.2));
       } else {
         dd.scale(dd.random(1, 1.0 + e / mp.length / 10));
@@ -344,23 +346,25 @@ const eyes = (dd) => {
   };
 
   const playSound = (x, y) => {
-    if (loading == false) {
+    if (loading === false) {
       // const num = Math.floor(Math.random() * 5);
       // const pan = dd.constrain(dd.map(x, 0, dd.width / sx, -1, 1), -1, 1);
       const rate = (Math.floor((dd.height / sy - y / 2) / 5) + Math.floor(x / 3))
         * 0.618
         * 0.618
         * 0.618;
-      if (reverse1 == 0) {
-        sampler0.triggerAttack(rate * 440 + 10);
-      } else if (reverse1 == 1) {
-        sampler1.triggerAttack(rate * 440 + 10);
+      if (dd.soundIsLoaded) {
+        if (reverse1 === 0) {
+          sampler0.triggerAttack(rate * 440 + 10);
+        } else if (reverse1 === 1) {
+          sampler1.triggerAttack(rate * 440 + 10);
+        }
       }
     }
   };
 
   const Color = (x) => {
-    if (x == 1) {
+    if (x === 1) {
       back = dd.color(8, 61, 169);
       backR = dd.color(255, 255, 100);
       letterF = dd.color(120, 80, 80);
@@ -373,7 +377,7 @@ const eyes = (dd) => {
       recS = dd.color(0, 0);
       recF = dd.color(218, 65, 103);
       reverse1 = 1;
-    } else if (x == 0) {
+    } else if (x === 0) {
       back = dd.color(255);
       backR = dd.color(0);
       letterF = dd.color(80, 120, 80);
@@ -386,7 +390,7 @@ const eyes = (dd) => {
       recS = dd.color(255);
       recF = dd.color(0);
       reverse1 = 0;
-    } else if (x == 2) {
+    } else if (x === 2) {
       back = dd.color(0);
       backR = dd.color(255);
       letterF = dd.color(80, 120, 80);
