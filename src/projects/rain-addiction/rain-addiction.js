@@ -5,6 +5,30 @@ import rain from './sound/rain-addiction.m4a';
 
 export default function (sk) {
   console.log('player setup');
+  sk.settings = {
+    r: {
+      value: 255,
+      type: 'range',
+      max: 255,
+      min: 0,
+      step: 1,
+    },
+    g: {
+      value: 50,
+      type: 'range',
+      max: 255,
+      min: 0,
+      step: 1,
+    },
+    b: {
+      value: 50,
+      type: 'range',
+      max: 255,
+      min: 0,
+      step: 1,
+    },
+    get color() { return [this.r.value, this.g.value, this.b.value] || [255, 50, 50]; },
+  };
   const divNode = document.querySelector('#canvasContainer');
   const fft = new Tone.FFT();
   const circleCenterR = sk.width > 768 ? 250 : 150;
@@ -108,27 +132,28 @@ export default function (sk) {
         if (state === 1) {
           angle = sk.atan2(sk.mouseY - sk.height / 2, sk.mouseX - sk.width / 2);
         }
-        if (((distance > 395 && distance < 200 * sk.constrain(this.mass, 0, 6)) || state === 1 || this.mass > 15) && ((heading < 0.03 * sk.PI + angle && heading > -0.03 * sk.PI + angle) || (this.mass > 16 && particles[j].mass > 10))) {
-          sum1 = sk.constrain(sum1, 50, 250);
-          sk.stroke(sk.random(400) - sum1, sum1);
-          if (Math.random() > 0.9) {
-            sk.stroke(0);
-          }
-          sk.strokeWeight(sk.constrain(this.mass * (sk.width > 768 ? 1 : 0.3), 1, 4));
-          if (state === 1) {
-            if (Math.random() > 0.2 && distance > 400) {
-              sk.line(particles[j].pos.x, particles[j].pos.y, this.pos.x, this.pos.y);
-            }
-          } else {
-            sk.line(particles[j].pos.x, particles[j].pos.y, this.pos.x, this.pos.y);
-          }
-          if (Math.random() > 0.94) {
-            sk.strokeWeight(0.5);
-            sk.stroke(50, sk.random(500), sk.random(500));
-            sk.fill(0, 0);
-            sk.bezier(this.pos.x, this.pos.y, sk.width / 2, sk.height / 2, sk.mouseX, sk.mouseY, particles[j].pos.x, particles[j].pos.y);
-          }
-        }
+        // letters
+        // if (((distance > 395 && distance < 200 * sk.constrain(this.mass, 0, 6)) || state === 1 || this.mass > 15) && ((heading < 0.03 * sk.PI + angle && heading > -0.03 * sk.PI + angle) || (this.mass > 16 && particles[j].mass > 10))) {
+        //   sum1 = sk.constrain(sum1, 50, 250);
+        //   sk.stroke(sk.random(400) - sum1, sum1);
+        //   if (Math.random() > 0.9) {
+        //     sk.stroke(0);
+        //   }
+        //   sk.strokeWeight(sk.constrain(this.mass * (sk.width > 768 ? 1 : 0.3), 1, 4));
+        //   if (state === 1) {
+        //     if (Math.random() > 0.2 && distance > 400) {
+        //       sk.line(particles[j].pos.x, particles[j].pos.y, this.pos.x, this.pos.y);
+        //     }
+        //   } else {
+        //     sk.line(particles[j].pos.x, particles[j].pos.y, this.pos.x, this.pos.y);
+        //   }
+        //   if (Math.random() > 0.94) {
+        //     sk.strokeWeight(0.5);
+        //     sk.stroke(50, sk.random(500), sk.random(500));
+        //     sk.fill(0, 0);
+        //     sk.bezier(this.pos.x, this.pos.y, sk.width / 2, sk.height / 2, sk.mouseX, sk.mouseY, particles[j].pos.x, particles[j].pos.y);
+        //   }
+        // }
         if (distance > 0 && distance < this.disRange) {
           const targetS = p5.Vector.sub(particles[j].pos, this.pos);
           targetS.div(distance * -1);
@@ -170,22 +195,25 @@ export default function (sk) {
       }
     }
 
-    display(m, sum, sum1) {
+    display(sum, sum1) {
       sk.push();
+      const m = sum / 3;
       sum1 = sk.constrain(sum1, 0, 100);
       const theta = this.vel.heading() + 0.5 * sk.PI;
       sk.strokeWeight(sk.width > 768 ? 1 + this.mass : 1);
-      sk.stroke(15 + this.mass * 3 + sk.noise(this.pos.y, this.pos.x) * 125 + sum1 / 2, sum1 / 10 + sk.noise(this.vel.mag()) * 220 - this.mass * 35 + sum / 1.2, sum / 1.2 - sum / 2.5 - sum1 / 1.2 + 250 / this.mass + 30);
+      sk.stroke((255 - sk.settings.color[0]) + 15 + this.mass * 3 + sk.noise(this.pos.y, this.pos.x) * 125 + sum1 / 2, (50 - sk.settings.color[1]) + sum1 / 10 + sk.noise(this.vel.mag()) * 220 - this.mass * 35 + sum / 1.2, sum / 1.2 - sum / 2.5 - sum1 / 1.2 + 250 / this.mass + sk.settings.color[2] - 20);
+      // small ones
       if (Math.random() * sum > 120) {
-        sk.fill(-sum1 / 2 + sum + sk.noise(this.pos.y, this.pos.y) * 150, sum1 + sk.noise(this.pos.x) * 150, sum1 / 3 + 150);
+        sk.fill(-sum1 / 2 + sum + sk.noise(this.pos.y, this.pos.y) * (sk.settings.color[0] - 100), sum1 + sk.noise(this.pos.x) * (sk.settings.color[1] + 100), sum1 / 3 + (sk.settings.color[2] + 100));
         if (Math.random() > 0.7) {
-          sk.fill(180, 50, 50);
+          sk.fill(sk.settings.color[0] - 75, sk.settings.color[1], sk.settings.color[2]);
         }
       } else {
-        sk.fill(100, sk.noise(this.pos.x) * 255, 255 - sk.noise(this.pos.x) * 255, 30);
+        sk.fill(sk.settings.color[0] - 155, sk.noise(this.pos.x) * 255, 255 - sk.noise(this.pos.x) * 255, 30);
       }
+      // big ones
       if (this.mass > 4) {
-        sk.fill(255, 50, 50, 180);
+        sk.fill(sk.settings.color[0], sk.settings.color[1], sk.settings.color[2], 180);
         sk.noStroke();
       }
       sk.ellipse(this.pos.x, this.pos.y, this.r + m, this.r + m);
@@ -315,9 +343,8 @@ export default function (sk) {
 
   sk.draw = () => {
     if (!sk.stopped) {
-      sk.push();
-      nos = sk.map(sk.noise(xoff), 0, 1, -2, 2);
       xoff += 0.05;
+      nos = sk.map(sk.noise(xoff), 0, 1, -2, 2);
       const spectrum = fft.getValue().map((value) => Math.abs((value + 100) * 3));
       let sum = 0;
       let sum1 = 0;
@@ -334,11 +361,7 @@ export default function (sk) {
       sum1 /= 200;
       sum1 = sum1 > 1000 ? 100 : sum1;
       sum = sum > 1000 ? 100 : sum;
-
-      // fft.analyze();
       peakDetect.update(spectrum);
-      const r = sk.constrain(sk.millis() / 8 ** 2, 0, 2000);
-      sk.stroke(sk.random(0, r), sk.random(0, r), sk.random(0, r));
       if (peakDetect.isDetected) {
         addParticles(1, sum1);
         forceDirection = 1;
@@ -351,12 +374,19 @@ export default function (sk) {
       } else {
         forceDirection = -1;
         if (state === 0 && state1 === 0) {
+          // main background
           const back = sk.constrain(sk.map(sum, 50, 160, 0, 255), 50, 255);
           sk.stroke(3 * back + 20 + sum + sum1 * sk.random(20), 3 * back + 20 - sum, 3 * back + 20 - sum, 50 + back * 3);
-          sk.background(255 - sk.constrain(sum1, 0, 50), 50, 50, back);
+          sk.background(sk.settings.color[0] - sk.constrain(sum1, 0, 50), sk.settings.color[1], sk.settings.color[2], back);
         } else {
-          sk.background(25, 50, 180, sum1);
-          sk.fill(0, sk.map(sum, 85, 110, 0, 255));
+          // touched background
+          const brightness = sk.settings.color.reduce((a, b) => +a + +b);
+          if (brightness < 150) {
+            sk.background(sk.noise(sk.frameCount / 100) * 500, 255 - sum1);
+          } else {
+            sk.background(280 - sk.settings.color[0], sk.settings.color[1], 235 - sk.settings.color[2], sum1);
+          }
+          // sk.fill(0, sk.map(sum, 85, 110, 0, 255));
           sk.stroke(sk.random(0, 1600), sk.random(-255, 255), sk.random(-255, 255), 180);
         }
       }
@@ -384,7 +414,7 @@ export default function (sk) {
         particles[i].bord();
         particles[i].fluide();
         particles[i].update();
-        particles[i].display(sum1 / 3, sum1, sum);
+        particles[i].display(sum1, sum);
       }
       sk.pop();
       sk.push();
@@ -407,7 +437,6 @@ export default function (sk) {
         sk.text('Rain Addiction', 0.5 * sk.windowWidth, 0.3 * sk.windowHeight + 130);
         sk.pop();
       }
-      sk.pop();
     }
   };
 
