@@ -225,12 +225,12 @@ arrayDump.map((obj) => {
       .toLowerCase();
     const num = 15;
     const arr = [];
-    for (let i = 0; i < num; i++) {
+    for (let i = 0; i < num; i += 1) {
       try {
         const m = require(`@/assets/${a.id}/${a.id}_${i}.jpg`);
         arr.push(m);
       } catch (err) {
-        continue;
+        //
       }
       a.imgs = arr;
     }
@@ -263,22 +263,29 @@ allIframeLinks.forEach((item) => {
 });
 allIframeLinks = allIframeLinks.map((iframeObject) => ({ id: iframeObject.id, link: iframeObject.link }));
 allIframeLinks.filter((iframeObject) => iframeObject.id);
-for (let i = 0; i < allIframeLinks.length; i++) {
+for (let i = 0; i < allIframeLinks.length; i += 1) {
   if (!allIframeLinks[i].link.includes('https')) {
     allIframeLinks.splice(i, 1);
   }
-  for (let t = 0; t < sketches.length; t++) {
+  for (let t = 0; t < sketches.length; t += 1) {
     if (sketches[t].id == allIframeLinks[i].id) {
       allIframeLinks[i].type = 'sketch';
       sketches.splice(t, 1);
     }
   }
 }
+
+// sort items by name using localeCompare
 if (sketches.length > 0) {
   allIframeLinks = allIframeLinks.concat(sketches);
 }
-// sort items by name using localeCompare
 allIframeLinks.sort((a, b) => a.id.localeCompare(b.id));
+allIframeLinks.sort((a, b) => {
+  if (a.type === 'sketch') {
+    return -1;
+  }
+  return 0;
+});
 
 if (!navigator.onLine) {
   console.log('OFFLINE');
