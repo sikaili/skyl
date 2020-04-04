@@ -152,7 +152,6 @@ const eyes = (dd) => {
     dd.stopped = true;
     dd.noLoop();
     dd.eyeRight = null;
-    texts = [];
     dd.eyeLeft = null;
     sampler0.dispose();
     sampler1.dispose();

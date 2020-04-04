@@ -219,8 +219,12 @@ export default function (instance) {
           obj.bigger();
           obj.rot = true;
           if (sk.soundIsLoaded) {
-            sampler0.triggerAttack(obj.id * 5);
-            sampler1.triggerAttack(obj.y);
+            try {
+              sampler0.triggerAttack(obj.id * 5);
+              sampler1.triggerAttack(obj.y);
+            } catch (err) {
+              //
+            }
           }
         } else {
           obj.rot = false;

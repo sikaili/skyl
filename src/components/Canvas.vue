@@ -16,10 +16,12 @@
       class="Settings Settings__Menu"
       :class="{ 'Settings__Menu--active' : showSettings }"
     >
-      <i
-        class="Settings__Close icon ion-md-close black c-animate"
-        @click="toggleSettings()"
-      />
+      <div class="Settings__Close black c-animate">
+        <i
+          class="tc icon ion-md-close f3"
+          @click="toggleSettings()"
+        />
+      </div>
 
       <div
         v-for="(value, name) in settings"
@@ -44,7 +46,7 @@
           >
         </template>
       </div>
-      <div class="Settings__MenuContainer pt4">
+      <div class="Settings__MenuContainer pv3">
         <i
           class="icon ion-md-aperture f3 white bg-black-80 bg-animate hover-bg-white hover-black pv2 ph3"
         />
@@ -102,7 +104,11 @@ export default {
   },
   beforeDestroy() {
     if (current) {
-      current.stop();
+      try {
+        current.stop();
+      } catch (err) {
+        console.log(err);
+      }
     }
   },
   destroyed() {
