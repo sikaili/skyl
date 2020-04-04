@@ -7,9 +7,30 @@ console.log('import p');
 export default function (instance) {
   const sk = instance;
   sk.settings = {
-    background: [0, 0, 0, 0],
-    level: 0.1,
+    r: {
+      value: 255,
+      type: 'range',
+      max: 255,
+      min: 0,
+      step: 1,
+    },
+    g: {
+      value: 255,
+      type: 'range',
+      max: 255,
+      min: 0,
+      step: 1,
+    },
+    b: {
+      value: 255,
+      type: 'range',
+      max: 255,
+      min: 0,
+      step: 1,
+    },
+    get color() { return [this.r.value, this.g.value, this.b.value] || [255, 255, 255]; },
   };
+
   const divNode = document.querySelector('#canvasContainer');
   const sampler0 = new Tone.Sampler(
     { F4, E3 },
@@ -109,10 +130,12 @@ export default function (instance) {
       if (!this.playble || this.rot) {
         sk.rotate(this.r);
       }
-      sk.fill(this.playble ? 0 : [255, 0, 0]);
+      // play
+      sk.fill(this.playble ? 0 : [sk.settings.color[0], 255 - sk.settings.color[1], 255 - sk.settings.color[2]]);
       const scal = 1;
       sk.rect(0, 0, this.r * scal, this.r);
-      sk.fill(0, 0, 200, 80);
+      sk.fill(255 - sk.settings.color[1], 255 - sk.settings.color[1], sk.settings.color[1] - 55, 80);
+      // triangle inside
       sk.beginShape();
       switch (this.mode) {
         case 'inside': {
@@ -128,7 +151,7 @@ export default function (instance) {
       sk.endShape(sk.CLOSE);
       sk.pop();
       sk.push();
-      sk.fill([0, 40, 49, 100]);
+      sk.fill([sk.settings.color[0] - 255, sk.settings.color[1] - 215, sk.settings.color[2] - 205, 100]);
       if (color) {
         sk.fill(color);
         sk.ellipse(0, 0, this.rCircle, this.rCircle);
@@ -138,7 +161,7 @@ export default function (instance) {
         }, 3000);
       }
       if (this.playble) {
-        sk.fill(0, this.id, this.id * 2);
+        sk.fill(255 - sk.settings.color[0], 255 - sk.settings.color[1] + this.id, 255 - sk.settings.color[2] + this.id * 2);
         this.rCircle /= 2;
       }
       sk.ellipse(0, 0, this.rCircle, this.rCircle);
@@ -181,7 +204,7 @@ export default function (instance) {
       luckyNo = rotateObjects.indexOf(min);
     }
     // console.log(level);
-    sk.background(150, sk.settings.level * 255, 200);
+    sk.background(sk.settings.color[0], sk.settings.color[1], sk.settings.color[2]);
     for (let i = 0; i < rotateObjects.length; i += 1) {
       const obj = rotateObjects[i];
       obj.update(sk.mouseX, sk.mouseY);
@@ -204,7 +227,7 @@ export default function (instance) {
         }
       }
       if (luckyNo === i) {
-        obj.display([255, 0, 0, 100]);
+        obj.display([sk.settings.color[0], 255 - sk.settings.color[1], 255 - sk.settings.color[2], 100]);
       } else {
         obj.display();
       }

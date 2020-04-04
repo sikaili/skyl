@@ -2,7 +2,7 @@
   <div>
     <div id="canvasContainer" />
     <div
-      v-if="!showSettings"
+      v-if="!showSettings && settings"
       class="Settings Settings__Icon white bg-black-80 bg-animate hover-bg-white hover-black pv2 ph3"
       @click="toggleSettings()"
     >
@@ -71,7 +71,7 @@ export default {
   data() {
     return {
       showSettings: false,
-      settings: {},
+      settings: null,
     };
   },
   watch: {
@@ -84,7 +84,9 @@ export default {
     changeSketch(this.current);
     loaded = true;
     setTimeout(() => {
-      this.settings = current.settings;
+      if (current && current.settings && Object.keys(current.settings)) {
+        this.settings = current.settings;
+      }
     }, 500);
   },
   mounted() {
