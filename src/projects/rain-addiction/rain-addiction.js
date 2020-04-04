@@ -6,28 +6,28 @@ import rain from './sound/rain-addiction.m4a';
 export default function (sk) {
   console.log('player setup');
   sk.settings = {
-    r: {
+    red: {
       value: 255,
       type: 'range',
       max: 255,
       min: 0,
       step: 1,
     },
-    g: {
+    green: {
       value: 50,
       type: 'range',
       max: 255,
       min: 0,
       step: 1,
     },
-    b: {
+    blue: {
       value: 50,
       type: 'range',
       max: 255,
       min: 0,
       step: 1,
     },
-    get color() { return [this.r.value, this.g.value, this.b.value] || [255, 50, 50]; },
+    get color() { return [this.red.value, this.green.value, this.blue.value] || [255, 50, 50]; },
   };
   const divNode = document.querySelector('#canvasContainer');
   const fft = new Tone.FFT();

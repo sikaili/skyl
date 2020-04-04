@@ -21,6 +21,22 @@ console.log('import virus');
 
 const sketch = (instance) => {
   const sk = instance;
+  sk.settings = {
+    gravity: {
+      value: 0,
+      type: 'range',
+      max: 1.0,
+      min: -1.0,
+      step: 0.1,
+    },
+    static: {
+      value: 0,
+      type: 'range',
+      max: 1,
+      min: 0,
+      step: 1,
+    },
+  };
   const divNode = document.querySelector('#canvasContainer');
 
   // save and get last
@@ -93,7 +109,6 @@ const sketch = (instance) => {
     ]);
     World.add(engine.world, sk.borders);
   };
-  engine.world.gravity.y = 0;
   let runner = Engine.run(engine);
 
   let looping = true;
@@ -153,6 +168,8 @@ const sketch = (instance) => {
   };
 
   sk.draw = () => {
+    engine.world.gravity.y = sk.settings.gravity.value;
+
     // console.log(meter.getLevel());
     sk.background(200, 200, 200);
     sk.noFill();
