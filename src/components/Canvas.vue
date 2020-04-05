@@ -5,7 +5,7 @@
       <div
         v-if="!showSettings && settings"
         class="Settings Settings__Icon white bg-black-80 bg-animate hover-bg-white hover-black pv2 ph3"
-        @click="toggleSettings()"
+        @click="toggle('showSettings')"
       >
         <i
           class="tc icon ion-md-settings f3"
@@ -20,13 +20,13 @@
         <div class="Settings__Close c-animate">
           <i
             class="tc icon ion-md-close f3"
-            @click="toggleSettings()"
+            @click="toggle('showSettings')"
           />
         </div>
         <p
           v-if="settings && settings.player"
           class="pa2 bg-animate hover-bg-white hover-black mb0 pb2 white bg-black-60"
-          @click="toggle()"
+          @click="toggle('showList')"
         >
           {{ songId?songId :'Player' }}
           <i
@@ -173,23 +173,21 @@ export default {
         this.$router.push({ query: { id: songId } });
       }
     },
-    toggleSettings() {
-      this.showSettings = !this.showSettings;
-      this.$root.$emit('emit-showSideMenu', !this.showSettings);
-    },
-    toggle() {
-      if (this.showList) {
-        return this.hide();
+    toggle(itemName) {
+      if (this[itemName]) {
+        this.hide(itemName);
+      } else {
+        this.show(itemName);
       }
-      return this.show();
+      if (itemName === 'showSettings') { this.$root.$emit('emit-showSideMenu', !this.showSettings); }
     },
-    show() {
-      this.showList = true;
-      setTimeout(() => document.addEventListener('click', this.hide), 0);
+    show(itemName) {
+      this[itemName] = true;
+      setTimeout(() => document.querySelector('#canvasContainer').addEventListener('click', () => { this.hide(itemName); }), 0);
     },
-    hide() {
-      this.showList = false;
-      document.removeEventListener('click', this.hide);
+    hide(itemName) {
+      this[itemName] = false;
+      document.querySelector('#canvasContainer').removeEventListener('click', () => { this.hide(itemName); });
     },
   },
 };
