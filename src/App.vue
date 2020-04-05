@@ -77,7 +77,7 @@ export default {
     iframeStyle() {
       let scale = 1;
       const inPlay = this.$route.path.includes('play');
-      inPlay && this.$mq == 'sm' ? (scale = 2) : (scale = 2);
+      inPlay && this.$mq == 'sm' ? (scale = 2) : (scale = 1);
       return `width:${
         this.$mq == 'sm' ? screen.width * scale : this.width * scale
       }px;

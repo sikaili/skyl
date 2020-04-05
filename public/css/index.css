@@ -45,7 +45,6 @@ p,a,span,h2,h3,dd{
     opacity: 0.5;
 }
 .back{
-  overflow: hidden;
   z-index:-100;
   position:fixed;
   left:0;
