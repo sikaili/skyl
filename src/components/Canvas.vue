@@ -168,7 +168,7 @@ export default {
       this.settings.blue.value = Math.random() * 200;
       if (songId) {
         current.setSong(songId);
-        this.toggleSettings();
+        this.toggle('showSettings');
         this.songId = songId;
         this.$router.push({ query: { id: songId } });
       }
@@ -179,14 +179,15 @@ export default {
       } else {
         this.show(itemName);
       }
-      if (itemName === 'showSettings') { this.$root.$emit('emit-showSideMenu', !this.showSettings); }
     },
     show(itemName) {
       this[itemName] = true;
+      if (itemName === 'showSettings') { this.$root.$emit('emit-showSideMenu', !this.showSettings); }
       setTimeout(() => document.querySelector('#canvasContainer').addEventListener('click', () => { this.hide(itemName); }), 0);
     },
     hide(itemName) {
       this[itemName] = false;
+      if (itemName === 'showSettings') { this.$root.$emit('emit-showSideMenu', !this.showSettings); }
       document.querySelector('#canvasContainer').removeEventListener('click', () => { this.hide(itemName); });
     },
   },

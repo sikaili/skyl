@@ -41,25 +41,34 @@ export default function (sk) {
   let xoff = 0;
   let particles = [];
   let forceDirection = -1;
-  let url = '/assets/rain-addiction.m4a';
-  sk.songId = 'Rain Addiction';
+  sk.songId = 'Rain-Addiction';
+
   if (vm.$route.query.id && typeof vm.$route.query.id === 'string') {
     sk.songId = vm.$route.query.id;
-    url = `/assets/${ sk.songId }.m4a`;
   }
-  let player = new Tone.Player(url, () => { soundIsLoading = false; }).toMaster();
-  player.connect(fft);
+
+  let player;
 
   sk.setSong = (songId) => {
-    state = -1;
-    songPlayed = -1;
-    sk.songId = songId;
-    soundIsLoading = true;
-    player.disconnect();
-    player.dispose();
-    player = new Tone.Player(`/assets/${ songId }.m4a`, () => { soundIsLoading = false; }).toMaster();
-    player.connect(fft);
+    const sound = () => import('./sound/' + songId + '.m4a');
+    sound().then((module) => {
+      const soundFile = module.default;
+      state = -1;
+      songPlayed = -1;
+      sk.songId = songId;
+      soundIsLoading = true;
+      if (player) {
+        player.disconnect(fft);
+        player.disconnect();
+        player.dispose();
+      }
+      player = new Tone.Player(soundFile, () => { soundIsLoading = false; }).toMaster();
+      player.connect(fft);
+    });
   };
+
+  sk.setSong(sk.songId);
+
 
   sk.stop = () => {
     sk.stopped = true;
