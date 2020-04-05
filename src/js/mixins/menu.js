@@ -40,7 +40,7 @@ export default {
   methods: {
     ...mapActions(['setActiveItem', 'toggleItem', 'changeLoadingState']),
     play(item) {
-      this.setActiveItem(item);
+      this.setActiveItem(item.id);
       this.$router.push({ path: `/play/${item.id}` });
     },
     setItemActive(item, options) {
@@ -50,7 +50,6 @@ export default {
       if (options === 'touchScreen') {
         this.menuItems.filter((a) => a != item).map((a) => (a.show = false));
         item.show = !item.show;
-        this.setActiveItem(item);
       } else {
         this.toggleItem({ name: this.name, obj: item });
       }
@@ -76,7 +75,7 @@ export default {
       if (item.link.split(':')[0] !== 'https') return;
       this.loadingAnimation = true;
       setTimeout(() => {
-        this.setActiveItem(item);
+        this.setActiveItem(item.id);
         this.loadingAnimation = false;
       }, 1500);
     },

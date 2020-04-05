@@ -261,7 +261,7 @@ let allIframeLinks = linksFromProjects.concat(extraIframeLinks);
 allIframeLinks.forEach((item) => {
   item.id ? '' : (item.id = getNameFromLink(item.link));
 });
-allIframeLinks = allIframeLinks.map((iframeObject) => ({ id: iframeObject.id, link: iframeObject.link }));
+allIframeLinks = allIframeLinks.map((iframeObject) => ({ id: iframeObject.id, link: iframeObject.link, type: iframeObject.type }));
 allIframeLinks.filter((iframeObject) => iframeObject.id);
 for (let i = 0; i < allIframeLinks.length; i += 1) {
   if (!allIframeLinks[i].link.includes('https')) {

@@ -7,28 +7,28 @@ console.log('import p');
 export default function (instance) {
   const sk = instance;
   sk.settings = {
-    r: {
+    red: {
       value: 255,
       type: 'range',
       max: 255,
       min: 0,
       step: 1,
     },
-    g: {
+    green: {
       value: 255,
       type: 'range',
       max: 255,
       min: 0,
       step: 1,
     },
-    b: {
+    blue: {
       value: 255,
       type: 'range',
       max: 255,
       min: 0,
       step: 1,
     },
-    get color() { return [this.r.value, this.g.value, this.b.value] || [255, 255, 255]; },
+    get color() { return [this.red.value, this.green.value, this.blue.value] || [255, 255, 255]; },
   };
 
   const divNode = document.querySelector('#canvasContainer');

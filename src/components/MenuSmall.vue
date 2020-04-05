@@ -1,20 +1,23 @@
 <template>
   <div class="Menu cl">
     <intro />
-    <div class="Menu__menuItems w-100 bg-white-80" v-if="menuShow">
+    <div
+      v-if="menuShow"
+      class="Menu__menuItems w-100 bg-white-80"
+    >
       <div
         v-for="item in menuItems"
         :key="item.id"
         class="flex flex-column justify-center"
       >
         <a
-          @click="setItemActive(item, 'touchScreen')"
           class="pa1 tc link"
           :class="item.show ? 'router-link-active' : ''"
+          @click="setItemActive(item, 'touchScreen')"
         >
           <div class="link ma0 pa0 bw0">
             <dl class="mt2 f6 lh-copy">
-              <dt class="clip"></dt>
+              <dt class="clip" />
               <dd class="f5 ml0 black truncate w-100">
                 {{ item.name }}
                 <i
@@ -25,34 +28,36 @@
                         : 'black ion-md-arrow-dropdown'
                     }`
                   "
-                ></i>
-                <b v-show="item.show" class="dib bg-blue">{{ item.year }}</b>
+                />
+                <b
+                  v-show="item.show"
+                  class="dib bg-blue"
+                >{{ item.year }}</b>
               </dd>
             </dl>
           </div>
         </a>
         <transition name="slide-fade">
           <div
-            class="Menu__details bg-black-10 w-100 tl ma0"
             v-show="item.show"
+            class="Menu__details bg-black-10 w-100 tl ma0"
           >
             <div class="ph4 pv3">
               <!-- <span class="f4 f1-ns b dib pr3">{{ item.name }}</span> -->
               <blockquote class="ph0 pb2 mb0 bb mh0 mt0">
                 <p class="lh-copy f6 ma0 black">
                   {{ item.des }}
-                  <br />
+                  <br>
                   <span
-                    @click="goToPage(item)"
                     class="tc w4 f6 dim link ba bw2 ph2 pv1 mt3 dib black"
-                    >Read more..</span
-                  >
+                    @click="goToPage(item)"
+                  >Read more..</span>
                   <span
                     v-if="item.link.split(':')[0] == `https`"
-                    @click="play(item)"
                     class="fr tc w4 ml3 f6 link ba bw2 ph3 pv1 mt3 dib black dim"
+                    @click="play(item)"
                   >
-                    <i class="icon ion-md-return-right"></i>
+                    <i class="icon ion-md-return-right" />
 
                     <span class="pr1">Play!</span>
                   </span>
@@ -63,10 +68,13 @@
                   :href="item.link"
                   target="_blank"
                   class="f7 truncate black lh-copy nowrap"
-                  >{{ item.link }}</a
-                >
+                >{{ item.link }}</a>
               </div>
-              <img :src="item.img" :alt="item.name" class="w-100 dim" />
+              <img
+                :src="item.img"
+                :alt="item.name"
+                class="w-100 dim"
+              >
               <h4>Credits</h4>
               <div
                 v-for="(person, n) in item.credits"
@@ -74,13 +82,19 @@
                 class="f7 flex"
                 style="line-height:1"
               >
-                <p class="truncate w-60">{{ person.role }}:</p>
+                <p class="truncate w-60">
+                  {{ person.role }}:
+                </p>
                 <p class="truncate">
-                  <a target="_blank" class="ml3 black" :href="person.link">
+                  <a
+                    target="_blank"
+                    class="ml3 black"
+                    :href="person.link"
+                  >
                     {{ person.name }}
                   </a>
                 </p>
-                <br />
+                <br>
               </div>
             </div>
           </div>
@@ -102,39 +116,46 @@
           d="M16 0 A16 16 0 0 1 16 32 A16 16 0 0 1 16 0 M19 15 L13 15 L13 26 L19 26 z M16 6 A3 3 0 0 0 16 12 A3 3 0 0 0 16 6"
         />
       </svg>
-      <span class="MenuSmall__Notification lh-title ml3"
-        >Please come back on a desktop for better expereince
+      <span
+        class="MenuSmall__Notification lh-title ml3"
+      >Please come back on a desktop for better expereince
       </span>
-      <p class="pl3" @click="disableNotification()">X</p>
+      <p
+        class="pl3"
+        @click="disableNotification()"
+      >
+        X
+      </p>
     </div>
   </div>
 </template>
 
 <script>
-import { menuMxn } from "@/js/mixins";
+import { menuMxn } from '@/js/mixins';
 
 export default {
-  name: "Menu",
+  name: 'Menu',
+  mixins: [menuMxn],
   props: {
     type: {
-      type: String
-    }
+      default: '',
+      type: String,
+    },
   },
-  mixins: [menuMxn],
   data() {
     return {
-      alert: !localStorage.getItem("propose-desktop"),
+      alert: !localStorage.getItem('propose-desktop'),
       menuShow: true,
       loadingAnimation: false,
-      bwhite: "bg-white"
+      bwhite: 'bg-white',
     };
   },
   methods: {
     disableNotification() {
-      localStorage.setItem("propose-desktop", true);
+      localStorage.setItem('propose-desktop', true);
       this.alert = false;
-    }
-  }
+    },
+  },
 };
 </script>
 <style>

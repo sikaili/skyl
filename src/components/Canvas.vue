@@ -79,8 +79,13 @@
         </div>
         <div class="Settings__MenuContainer pv3">
           <i
+            v-if="settings && settings.red"
             class="icon ion-md-shuffle f3 white bg-black-80 bg-animate hover-bg-white hover-black pv2 ph3"
-            @click="setSketchSong()"
+            @click="randomRGB()"
+          />
+          <i
+            class="icon ion-md-refresh f3 white bg-black-80 bg-animate hover-bg-white hover-black pv2 ph3"
+            @click="forceUpdate()"
           />
         </div>
       </div>
@@ -163,15 +168,18 @@ export default {
   },
   methods: {
     setSketchSong(songId) {
-      this.settings.red.value = Math.random() * 255;
-      this.settings.green.value = Math.random() * 200;
-      this.settings.blue.value = Math.random() * 200;
+      this.randomRGB();
       if (songId) {
         current.setSong(songId);
         this.toggle('showSettings');
         this.songId = songId;
         this.$router.push({ query: { id: songId } });
       }
+    },
+    randomRGB() {
+      this.settings.red.value = Math.random() * 255;
+      this.settings.green.value = Math.random() * 200;
+      this.settings.blue.value = Math.random() * 200;
     },
     toggle(itemName) {
       if (this[itemName]) {
@@ -189,6 +197,11 @@ export default {
       this[itemName] = false;
       if (itemName === 'showSettings') { this.$root.$emit('emit-showSideMenu', !this.showSettings); }
       document.querySelector('#canvasContainer').removeEventListener('click', () => { this.hide(itemName); });
+    },
+    forceUpdate() {
+      if (window.confirm('Update to the newest version?')) {
+        window.location.reload(true);
+      }
     },
   },
 };
