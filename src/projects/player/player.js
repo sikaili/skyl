@@ -36,7 +36,7 @@ export default function (sk) {
   let touched = false;
   let state = -1;
   let noParticles = 0;
-  let state1 = -1;
+  let songPlayed = -1;
   let nos = 0;
   let xoff = 0;
   let particles = [];
@@ -52,11 +52,13 @@ export default function (sk) {
 
   sk.setSong = (songId) => {
     state = -1;
+    songPlayed = -1;
     sk.songId = songId;
     soundIsLoading = true;
     player.disconnect();
     player.dispose();
     player = new Tone.Player(`/assets/${ songId }.m4a`, () => { soundIsLoading = false; }).toMaster();
+    player.connect(fft);
   };
 
   sk.stop = () => {
@@ -385,7 +387,7 @@ export default function (sk) {
         }
       } else {
         forceDirection = -1;
-        if (state === 0 && state1 === 0) {
+        if (state === 0 && songPlayed === 0) {
           // main background
           const back = sk.constrain(sk.map(sum, 50, 160, 0, 255), 50, 255);
           sk.stroke(3 * back + 20 + sum + sum1 * sk.random(20), 3 * back + 20 - sum, 3 * back + 20 - sum, 50 + back * 3);
@@ -430,7 +432,7 @@ export default function (sk) {
       }
       sk.pop();
       sk.push();
-      if (state === -1 || state1 === -1) {
+      if (state === -1 || songPlayed === -1) {
         sk.background(0, 180);
         sk.stroke(0, 0);
         sk.fill(200, 100, 100, (Math.sin(sk.frameCount / 100 * 2 * sk.PI) + 1) * 180);
@@ -470,7 +472,7 @@ export default function (sk) {
     if (soundIsLoading === false) {
       if (player.state === 'stopped') {
         player.start();
-        state1 = 0;
+        songPlayed = 0;
         sk.mouseX = 0.5 * sk.width;
         sk.mouseY = 0.4 * sk.height;
       } else {

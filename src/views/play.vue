@@ -1,5 +1,5 @@
 <template>
-  <SideMenu />
+  <SideMenu v-if="showSideMenu" />
 </template>
 
 <script>
@@ -11,7 +11,17 @@ export default {
     SideMenu,
   },
   data() {
-    return {};
+    return {
+      showSideMenu: true,
+    };
+  },
+  mounted() {
+    this.$root.$on('emit-showSideMenu', (show) => {
+      this.showSideMenu = show;
+    });
+  },
+  beforeDestroy() {
+    this.$root.$off('emit-showSideMenu');
   },
 };
 </script>

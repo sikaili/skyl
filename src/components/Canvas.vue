@@ -1,88 +1,88 @@
 <template>
   <div>
     <div id="canvasContainer" />
-    <div
-      v-if="!showSettings && settings"
-      class="Settings Settings__Icon white bg-black-80 bg-animate hover-bg-white hover-black pv2 ph3"
-      @click="toggleSettings()"
-    >
-      <i
-        class="tc icon ion-md-settings f3"
-      />
-    </div>
-
-    <div
-      v-else
-      class="Settings Settings__Menu"
-      :class="{ 'Settings__Menu--active' : showSettings }"
-    >
-      <div class="Settings__Close black c-animate">
+    <div v-if="$route.name==='play'">
+      <div
+        v-if="!showSettings && settings"
+        class="Settings Settings__Icon white bg-black-80 bg-animate hover-bg-white hover-black pv2 ph3"
+        @click="toggleSettings()"
+      >
         <i
-          class="tc icon ion-md-close f3"
-          @click="toggleSettings()"
+          class="tc icon ion-md-settings f3"
         />
       </div>
-      <p
-        v-if="settings && settings.player"
-        class="pa2 bg-animate hover-bg-white hover-black mb0 pb2 white bg-black-60"
-        @click="toggle()"
-      >
-        {{ playing?playing :'Player' }}
-        <i
-          :class="
-            `hover-black fr ma0 icon ion-md-arrow-drop-down ${
-              showList ? ` ion-md-arrow-dropup` : ' ion-md-arrow-dropdown'
-            }`
-          "
-        />
-      </p>
+
       <div
-        v-if="showList"
-        class="overflow-y-scroll f6 tl bg-white-30"
+        v-else
+        class="Settings Settings__Menu"
+        :class="{ 'Settings__Menu--active' : showSettings }"
       >
-        <span
-          v-for="(songId, index) in songs"
-          :key="index"
+        <div class="Settings__Close c-animate">
+          <i
+            class="tc icon ion-md-close f3"
+            @click="toggleSettings()"
+          />
+        </div>
+        <p
+          v-if="settings && settings.player"
+          class="pa2 bg-animate hover-bg-white hover-black mb0 pb2 white bg-black-60"
+          @click="toggle()"
         >
-          <p
-            class="listItem ph1 bg-animate hover-bg-white hover-black white bg-black-60"
-            @click="handleListItemClick(songId)"
+          {{ songId?songId :'Player' }}
+          <i
+            :class="
+              `hover-black fr ma0 icon ion-md-arrow-drop-down ${
+                showList ? ` ion-md-arrow-dropup` : ' ion-md-arrow-dropdown'
+              }`
+            "
+          />
+        </p>
+        <div
+          v-if="showList"
+          class="overflow-y-scroll f6 tl bg-white-30"
+        >
+          <span
+            v-for="(songId, index) in songs"
+            :key="index"
           >
-            {{ songId }}
-          </p>
-        </span>
-      </div>
+            <p
+              class="listItem ph1 bg-animate hover-bg-white hover-black white bg-black-60"
+              @click="setSketchSong(songId)"
+            >
+              {{ songId }}
+            </p>
+          </span>
+        </div>
 
-      <div
-        v-for="(value, name) in settings"
-        :key="name"
-        class="Settings__MenuContainer"
-      >
-        <template v-if="value.type">
-          <label
-            class="Settings__MenuContainerInputLabel"
-            :for="name"
-          >{{ name }}</label>
-          <input
-            v-if="value.type==='range'"
-            :id="name"
-            v-model="settings[name]['value']"
-            :name="name"
-            class="Settings__MenuContainerInput"
-            :type="settings[name].type"
-            :min="settings[name].min"
-            :max="settings[name].max"
-            :step="settings[name].step"
-          >
-        </template>
-      </div>
-      <div class="Settings__MenuContainer pv3">
-        <i
-          class="icon ion-md-aperture f3 white bg-black-80 bg-animate hover-bg-white hover-black pv2 ph3"
-        />
-        <i
-          class="ma1 icon ion-md-save f3 white bg-black-80 bg-animate hover-bg-white hover-black pv2 ph3"
-        />
+        <div
+          v-for="(value, name) in settings"
+          :key="name"
+          class="Settings__MenuContainer"
+        >
+          <template v-if="value.type">
+            <label
+              class="Settings__MenuContainerInputLabel"
+              :for="name"
+            >{{ name }}</label>
+            <input
+              v-if="value.type==='range'"
+              :id="name"
+              v-model="settings[name]['value']"
+              :name="name"
+              class="Settings__MenuContainerInput"
+              :type="settings[name].type"
+              :min="settings[name].min"
+              :max="settings[name].max"
+              :step="settings[name].step"
+            >
+          </template>
+        </div>
+        <div class="Settings__MenuContainer pv3">
+          <i
+            class="icon ion-md-shuffle f3 white bg-black-80 bg-animate hover-bg-white hover-black pv2 ph3"
+            @click="setSketchSong()"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -113,27 +113,41 @@ export default {
       showList: false,
       showSettings: false,
       settings: null,
-      songs: ['Rain-Addiction', 'Emb'],
-      playing: null,
+      songs: ['La-Danse', 'Hua', '2019-12-YeChe', 'Rain-Addiction', 'Emb'],
+      songId: null,
     };
   },
   watch: {
     settings() {
       current.settings = this.settings;
     },
+    songId(val) {
+      switch (val) {
+        case 'La-Danse':
+          this.settings.red.value = 159;
+          this.settings.green.value = 45;
+          this.settings.blue.value = 58;
+          break;
+        default:
+          break;
+      }
+    },
   },
   beforeMount() {
     loaded = false;
     changeSketch(this.current);
     loaded = true;
-    setTimeout(() => {
-      if (current && current.settings && Object.keys(current.settings)) {
-        this.settings = current.settings;
-        this.playing = current.songId ? current.songId : null;
-      }
-    }, 500);
-  },
-  mounted() {
+    const getSettings = (retry) => {
+      setTimeout(() => {
+        if (current && current.settings && Object.keys(current.settings)) {
+          this.settings = current.settings;
+          this.songId = current.songId ? current.songId : null;
+        } else if (!retry) {
+          getSettings(true);
+        }
+      }, 500);
+    };
+    getSettings();
   },
   beforeDestroy() {
     if (current) {
@@ -148,13 +162,20 @@ export default {
     current = undefined;
   },
   methods: {
-    handleListItemClick(songId) {
-      current.setSong(songId);
-      this.toggleSettings();
-      this.playing = songId;
+    setSketchSong(songId) {
+      this.settings.red.value = Math.random() * 255;
+      this.settings.green.value = Math.random() * 200;
+      this.settings.blue.value = Math.random() * 200;
+      if (songId) {
+        current.setSong(songId);
+        this.toggleSettings();
+        this.songId = songId;
+        this.$router.push({ query: { id: songId } });
+      }
     },
     toggleSettings() {
       this.showSettings = !this.showSettings;
+      this.$root.$emit('emit-showSideMenu', !this.showSettings);
     },
     toggle() {
       if (this.showList) {
@@ -188,6 +209,7 @@ export default {
   }
 
   &__Close {
+    color:black;
     font-size: 30px;
     position:absolute;
     padding: 0 8px 12px 12px;
