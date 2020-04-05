@@ -158,6 +158,7 @@ const seedData = {
     },
     {
       name: 'Saturation Chinoise',
+      type: 'music',
       year: '2018',
       link: 'https://apps.skyl.fr/saturation-chinoise/',
       des:
@@ -195,6 +196,7 @@ const seedData = {
     {
       name: 'Flower',
       des: 'A song.',
+      type: 'music',
       year: 2016,
       link: 'https://apps.skyl.fr/hua/',
       img: '/img/covers/hua.jpg',

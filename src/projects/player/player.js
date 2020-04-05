@@ -15,7 +15,7 @@ export default function (sk) {
     green: {
       value: 50,
       type: 'range',
-      max: 255,
+      max: 155,
       min: 0,
       step: 1,
     },
