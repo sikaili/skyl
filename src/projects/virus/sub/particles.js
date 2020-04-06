@@ -4,7 +4,7 @@ import calDistance from '../utils/calDistance';
 export default class Particle {
   constructor(x, y, virus, number) {
     const scale = 200 / number;
-    this.r = (10 + Math.random() * 15) * (scale / 1.2);
+    this.r = (10 + Math.random() * 15) * (scale / 1.3);
     this.r = this.r < 5 ? 5 : this.r;
     this.pos = { x, y };
     this.updating = true;
@@ -14,7 +14,7 @@ export default class Particle {
       this.r *= 2;
       this.id = virus.id;
     }
-    this.body = Bodies.circle(x, y, this.r / 1.3);
+    this.body = Bodies.circle(x, y, this.r / 1.4);
     Body.setMass(this.body, 3 / scale);
     if (virus) {
       Body.applyForce(this.body, this.body.position, {
@@ -53,13 +53,11 @@ export default class Particle {
               if (Math.random() > 0.6 && particle.fill[3] < 150) {
                 particle.immu = true;
               }
-              if (Math.random() > 0.6) {
-                setTimeout(() => {
-                  particle.immu = false;
-                }, timeToBeInfected * 2);
-              }
+              setTimeout(() => {
+                particle.immu = false;
+              }, timeToBeInfected * 2);
             }
-            if (Math.random() > 0.97 && particle.fill[3] > 100) {
+            if (Math.random() > 0.95 && particle.fill[3] > 100) {
               particle.died = true;
               this.sampler2.triggerAttack(130 + (particle.r - 20) * 2);
             }

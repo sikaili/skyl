@@ -75,9 +75,8 @@ export default {
       return `opacity:${this.$route.path.includes('play') ? 1 : ''}`;
     },
     iframeStyle() {
-      let scale = 1;
-      const inPlay = this.$route.path.includes('play');
-      inPlay && this.$mq == 'sm' ? (scale = 2) : (scale = 1);
+      const inPlay = this.$route.name === 'play';
+      const scale = this.$mq === 'sm' ? 2 : 1;
       return `width:${
         this.$mq == 'sm' ? screen.width * scale : this.width * scale
       }px;

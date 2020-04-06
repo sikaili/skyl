@@ -3,9 +3,9 @@
     <div id="canvasContainer" />
     <div v-if="$route.name==='play'">
       <div
-        v-if="!showSettings && (settings || type === 'music')"
+        v-if="!showCanvasSettings && (settings || type === 'music')"
         class="Settings Settings__Icon white bg-black-80 bg-animate hover-bg-white hover-black pv2 ph3"
-        @click="toggle('showSettings')"
+        @click="toggle('showCanvasSettings')"
       >
         <i
           class="tc icon ion-md-settings f3"
@@ -15,12 +15,12 @@
       <div
         v-else
         class="Settings Settings__Menu"
-        :class="{ 'Settings__Menu--active' : showSettings }"
+        :class="{ 'Settings__Menu--active' : showCanvasSettings }"
       >
         <div
-          v-if="showSettings"
+          v-if="showCanvasSettings"
           class="Settings__Close c-animate"
-          @click="toggle('showSettings')"
+          @click="toggle('showCanvasSettings')"
         >
           <i
             class="tc icon ion-md-close f3"
@@ -29,19 +29,19 @@
         <p
           v-if="(settings && settings.player) || type === 'music'"
           class="Settings__Player pa2 bg-animate hover-bg-white hover-black mb0 pb2 white bg-black-60"
-          @click="toggle('showList')"
+          @click="toggle('showPlayerList')"
         >
           {{ songId?songId :'Player' }}
           <i
             :class="
               `hover-black fr ma0 icon ion-md-arrow-drop-down ${
-                showList ? ` ion-md-arrow-dropup` : ' ion-md-arrow-dropdown'
+                showPlayerList ? ` ion-md-arrow-dropup` : ' ion-md-arrow-dropdown'
               }`
             "
           />
         </p>
         <div
-          v-if="showList"
+          v-if="showPlayerList"
           class="Settings__PlayerList overflow-y-scroll f6 tl bg-white-30"
           :class="{ 'Settings__PlayerList--full': type === 'music' }"
         >
@@ -120,8 +120,8 @@ export default {
   },
   data() {
     return {
-      showList: this.type === 'music',
-      showSettings: false,
+      showPlayerList: this.type === 'music',
+      showCanvasSettings: false,
       settings: null,
       songs: ['La-Danse', 'flower', 'saturation-chinoise', '2019-12-YeChe', 'Rain-Addiction', 'Emb', 'c-syn', 'e-minor'],
       iframes: ['c-syn', 'e-minor', 'flower', 'saturation-chinoise'],
@@ -200,7 +200,7 @@ export default {
       }
       if (!this.iframes.includes(songId)) {
         current.setSong(songId);
-        this.toggle('showSettings');
+        this.toggle('showCanvasSettings');
         this.songId = songId;
         this.$router.push({ query: { id: songId } });
       } else {
@@ -229,12 +229,12 @@ export default {
     },
     show(itemName) {
       this[itemName] = true;
-      if (itemName === 'showSettings') { this.$root.$emit('emit-showSideMenu', !this.showSettings); }
+      if (itemName === 'showCanvasSettings') { this.$root.$emit('emit-showSideMenu', !this.showCanvasSettings); }
       setTimeout(() => document.querySelector('#canvasContainer').addEventListener('click', () => { this.hide(itemName); }), 0);
     },
     hide(itemName) {
       this[itemName] = false;
-      if (itemName === 'showSettings') { this.$root.$emit('emit-showSideMenu', !this.showSettings); }
+      if (itemName === 'showCanvasSettings') { this.$root.$emit('emit-showSideMenu', !this.showCanvasSettings); }
       document.querySelector('#canvasContainer').removeEventListener('click', () => { this.hide(itemName); });
     },
     forceUpdate() {
@@ -272,7 +272,7 @@ export default {
     top:0;
   }
   &__Menu {
-    background-color: rgba(255,255,255,0.6);
+    background-color: rgba(220,220,220,0.7);
     width: auto;
     position: fixed;
     right: 30px;
@@ -306,7 +306,7 @@ export default {
     min-width: 208px;
 
     &List {
-      max-height: 256px;
+      max-height: 184px;
       background-color:rgba(0, 0, 0, 0.3);
 
       &--full {

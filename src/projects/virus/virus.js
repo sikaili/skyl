@@ -1,6 +1,5 @@
 import Tone from 'tone';
 import decomp from 'poly-decomp';
-
 import {
   Engine,
   World,
@@ -11,6 +10,7 @@ import {
   Mouse,
   Vertices,
 } from 'matter-js';
+import calDistance from './utils/calDistance';
 import Particle from './sub/particles';
 import E3 from './sound/chasing.mp3';
 import D3 from './sound/light.mp3';
@@ -257,8 +257,11 @@ const sketch = (instance) => {
     ev.preventDefault();
     // add shape
     const center = Vertices.centre(sk.staticBodyVertex);
-    const arr = sk.staticBodyVertex.map((point) => ({ x: point.x - center.x, y: point.y - center.y }));
-    if (sk.staticBodyVertex && sk.staticBodyVertex.length > 5) {
+    let arr = sk.staticBodyVertex.map((point) => ({ x: point.x - center.x, y: point.y - center.y }));
+    if (Math.abs(arr[0].x / arr[0].y - arr[arr.length - 1].x / arr[arr.length - 1].y) < 0.2 || arr.length < 10) {
+      arr = [arr[0], { x: arr[0].x, y: arr[0].y + 20 }, { x: arr[arr.length - 1].x, y: arr[arr.length - 1].y + 20 }, arr[arr.length - 1]];
+    }
+    if (sk.staticBodyVertex && sk.staticBodyVertex.length > 2) {
       const stop = Bodies.fromVertices(center.x, center.y, [arr], {
         isStatic: true,
         density: 3,
@@ -396,16 +399,34 @@ const sketch = (instance) => {
     divNode.addEventListener(
       'touchmove',
       (ev) => {
-        sk.staticBodyVertex.push({ x: sk.mouseX, y: sk.mouseY });
         ev.preventDefault();
+        if (sk.staticBodyVertex) {
+          if (sk.staticBodyVertex.length > 0) {
+            const lastPoint = sk.staticBodyVertex[sk.staticBodyVertex.length - 1];
+            if (calDistance(lastPoint.x, lastPoint.y, sk.mouseX, sk.mouseY) > 2) {
+              sk.staticBodyVertex.push({ x: sk.mouseX, y: sk.mouseY });
+            }
+          } else {
+            sk.staticBodyVertex.push({ x: sk.mouseX, y: sk.mouseY });
+          }
+        }
       },
       { passive: false },
     );
     divNode.addEventListener(
       'mousemove',
       (ev) => {
-        if (sk.staticBodyVertex) { sk.staticBodyVertex.push({ x: sk.mouseX, y: sk.mouseY }); }
         ev.preventDefault();
+        if (sk.staticBodyVertex) {
+          if (sk.staticBodyVertex.length > 0) {
+            const lastPoint = sk.staticBodyVertex[sk.staticBodyVertex.length - 1];
+            if (calDistance(lastPoint.x, lastPoint.y, sk.mouseX, sk.mouseY) > 2) {
+              sk.staticBodyVertex.push({ x: sk.mouseX, y: sk.mouseY });
+            }
+          } else {
+            sk.staticBodyVertex.push({ x: sk.mouseX, y: sk.mouseY });
+          }
+        }
       },
       { passive: false },
     );
