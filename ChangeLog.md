@@ -1,3 +1,10 @@
+## [2.2.1] - 2019-04-06
+### Changed
+- player menu apearence (4ea30e4288c29e8)
+### Fixed
+- iframe grey bug on safari, caused by overflow:hidden
+
+
 ## [2.2.0] - 2019-04-05
 ### Added
 - enable player settings for iframe music (00596a102d556459e5)
