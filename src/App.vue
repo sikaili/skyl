@@ -16,9 +16,10 @@
         :style="iframeStyle"
       />
       <Canvas
-        v-else
+        v-if="activeItem.type === 'sketch' || activeItem.type === 'music'"
         :key="key + 2"
         :current="activeItem.id"
+        :type="activeItem.type"
       />
     </div>
     <transition name="slide-fade-main">

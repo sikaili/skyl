@@ -3,7 +3,7 @@
     <div id="canvasContainer" />
     <div v-if="$route.name==='play'">
       <div
-        v-if="!showSettings && settings"
+        v-if="!showSettings && (settings || type === 'music')"
         class="Settings Settings__Icon white bg-black-80 bg-animate hover-bg-white hover-black pv2 ph3"
         @click="toggle('showSettings')"
       >
@@ -17,15 +17,18 @@
         class="Settings Settings__Menu"
         :class="{ 'Settings__Menu--active' : showSettings }"
       >
-        <div class="Settings__Close c-animate">
+        <div
+          v-if="showSettings"
+          class="Settings__Close c-animate"
+          @click="toggle('showSettings')"
+        >
           <i
             class="tc icon ion-md-close f3"
-            @click="toggle('showSettings')"
           />
         </div>
         <p
-          v-if="settings && settings.player"
-          class="pa2 bg-animate hover-bg-white hover-black mb0 pb2 white bg-black-60"
+          v-if="(settings && settings.player) || type === 'music'"
+          class="Settings__Player pa2 bg-animate hover-bg-white hover-black mb0 pb2 white bg-black-60"
           @click="toggle('showList')"
         >
           {{ songId?songId :'Player' }}
@@ -39,14 +42,15 @@
         </p>
         <div
           v-if="showList"
-          class="overflow-y-scroll f6 tl bg-white-30"
+          class="Settings__PlayerList overflow-y-scroll f6 tl bg-white-30"
+          :class="{ 'Settings__PlayerList--full': type === 'music' }"
         >
           <span
             v-for="(songId, index) in songs"
             :key="index"
           >
             <p
-              class="listItem ph1 bg-animate hover-bg-white hover-black white bg-black-60"
+              class="Settings__PlayerListItem ph3 bg-animate hover-bg-white hover-black white bg-black-60"
               @click="setSketchSong(songId)"
             >
               {{ songId }}
@@ -77,11 +81,11 @@
             >
           </template>
         </div>
-        <div class="Settings__MenuContainer pv3">
+        <div class="Settings__MenuContainer pt3 pb2">
           <i
             v-if="settings && settings.red"
             class="icon ion-md-shuffle f3 white bg-black-80 bg-animate hover-bg-white hover-black pv2 ph3"
-            @click="randomRGB()"
+            @click="setRGB()"
           />
           <i
             class="icon ion-md-refresh f3 white bg-black-80 bg-animate hover-bg-white hover-black pv2 ph3"
@@ -112,13 +116,15 @@ export default {
   name: 'Canvas',
   props: {
     current: { type: String, default: '' },
+    type: { type: String, default: '' },
   },
   data() {
     return {
-      showList: false,
+      showList: this.type === 'music',
       showSettings: false,
       settings: null,
-      songs: ['La-Danse', 'Hua', '2019-12-YeChe', 'Rain-Addiction', 'Emb'],
+      songs: ['La-Danse', 'flower', 'saturation-chinoise', '2019-12-YeChe', 'Rain-Addiction', 'Emb', 'c-syn', 'e-minor'],
+      iframes: ['c-syn', 'e-minor', 'flower', 'saturation-chinoise'],
       songId: null,
     };
   },
@@ -127,11 +133,18 @@ export default {
       current.settings = this.settings;
     },
     songId(val) {
+      if (this.iframes.includes(val)) {
+        return;
+      }
       switch (val) {
         case 'La-Danse':
-          this.settings.red.value = 159;
-          this.settings.green.value = 45;
-          this.settings.blue.value = 58;
+          this.setRGB([159, 45, 58]);
+          break;
+        case 'Hua':
+          this.setRGB([0, 0, 36]);
+          break;
+        case 'Rain-Addiction':
+          this.setRGB([255, 50, 50]);
           break;
         default:
           break;
@@ -140,9 +153,15 @@ export default {
   },
   beforeMount() {
     loaded = false;
-    changeSketch(this.current);
+    if (this.type !== 'music') {
+      changeSketch(this.current);
+    }
     loaded = true;
     const getSettings = (retry) => {
+      if (this.type === 'music') {
+        this.songId = this.current;
+        return;
+      }
       setTimeout(() => {
         if (current && current.settings && Object.keys(current.settings)) {
           this.settings = current.settings;
@@ -162,24 +181,44 @@ export default {
         console.log(err);
       }
     }
+    this.$root.$emit('emit-showSideMenu', true);
   },
   destroyed() {
     current = undefined;
   },
   methods: {
     setSketchSong(songId) {
-      this.randomRGB();
-      if (songId) {
+      if (this.type === 'music') {
+        if (this.iframes.includes(songId)) {
+          this.$store.dispatch('setActiveItem', songId);
+          this.$router.push({ params: { id: songId } });
+        } else {
+          this.$store.dispatch('setActiveItem', 'player');
+          this.$router.push({ params: { id: 'player' }, query: { id: songId } });
+        }
+        return;
+      }
+      if (!this.iframes.includes(songId)) {
         current.setSong(songId);
         this.toggle('showSettings');
         this.songId = songId;
         this.$router.push({ query: { id: songId } });
+      } else {
+        this.$store.dispatch('setActiveItem', songId);
+        this.$router.push({ params: { id: songId } });
       }
     },
-    randomRGB() {
-      this.settings.red.value = Math.random() * 255;
-      this.settings.green.value = Math.random() * 200;
-      this.settings.blue.value = Math.random() * 200;
+    setRGB(colorArray) {
+      ['red', 'green', 'blue'].forEach((color, index) => {
+        this.setRangeInput(color, colorArray && typeof colorArray[index] === 'number' ? colorArray[index] : null);
+      });
+    },
+    setRangeInput(name, value) {
+      if (typeof value === 'number') {
+        this.settings[name].value = value;
+      } else {
+        this.settings[name].value = current.random(this.settings[name].min, this.settings[name].max);
+      }
     },
     toggle(itemName) {
       if (this[itemName]) {
@@ -209,9 +248,13 @@ export default {
 
 <style lang="scss" scoped>
 #canvasContainer {
+  position: absolute;
   z-index: -999;
+  width: 100vw;
+  height: 100vh;
 }
 .Settings {
+  position: absolute;;
   transition: all 0.5s;
 
   &__Icon {
@@ -223,22 +266,22 @@ export default {
   &__Close {
     color:black;
     font-size: 30px;
-    position:absolute;
-    padding: 0 8px 12px 12px;
+    position: absolute;
+    padding: 0 8px 12px 16px;
     right:0;
     top:0;
   }
   &__Menu {
     background-color: rgba(255,255,255,0.6);
     width: auto;
-    position: absolute;
+    position: fixed;
     right: 30px;
     height: 0%;
     top: 100%;
     padding-top: 24px;
 
     &Container {
-      margin: 24px;
+      margin: 16px;
 
       &Input {
         float:right;
@@ -246,8 +289,8 @@ export default {
         margin-left: 8px !important;
         width: 120px !important;
 
-        &Label{
-          // margin-bottom: 8px;
+        &Label {
+          font-size: 14px;
         }
       }
     }
@@ -258,7 +301,21 @@ export default {
       height: auto;
     }
   }
+
+  &__Player {
+    min-width: 208px;
+
+    &List {
+      max-height: 256px;
+      background-color:rgba(0, 0, 0, 0.3);
+
+      &--full {
+        max-height: 352px;
+      }
+    }
+  }
 }
+
 input[type=range].Settings__MenuContainerInput {
   -webkit-appearance: none;
   width: 100%;

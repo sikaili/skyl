@@ -29,6 +29,13 @@ const sketch = (instance) => {
       min: -1.0,
       step: 0.1,
     },
+    timeTobeInfected: {
+      value: 1500,
+      type: 'range',
+      max: 5000,
+      min: 500,
+      step: 100,
+    },
     static: {
       value: 0,
       type: 'range',
@@ -175,7 +182,7 @@ const sketch = (instance) => {
     sk.noFill();
     particles.forEach((particle) => {
       if (!particle.updating) {
-        particle.contagion(particles);
+        particle.contagion(particles, sk.settings.timeTobeInfected.value);
       }
       if (touched && sk.trigger) {
         particle.mouseForceTrigger({ x: sk.mouseX, y: sk.mouseY });

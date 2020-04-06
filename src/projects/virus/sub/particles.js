@@ -4,7 +4,7 @@ import calDistance from '../utils/calDistance';
 export default class Particle {
   constructor(x, y, virus, number) {
     const scale = 200 / number;
-    this.r = (10 + Math.random() * 15) * (scale / 1.1);
+    this.r = (10 + Math.random() * 15) * (scale / 1.2);
     this.r = this.r < 5 ? 5 : this.r;
     this.pos = { x, y };
     this.updating = true;
@@ -24,7 +24,7 @@ export default class Particle {
     }
   }
 
-  contagion(particles) {
+  contagion(particles, timeToBeInfected = 1500) {
     particles.forEach((particle) => {
       const distance = calDistance(
         particle.body.position.x,
@@ -53,16 +53,18 @@ export default class Particle {
               if (Math.random() > 0.6 && particle.fill[3] < 150) {
                 particle.immu = true;
               }
-              setTimeout(() => {
-                particle.immu = false;
-              }, 3000);
+              if (Math.random() > 0.6) {
+                setTimeout(() => {
+                  particle.immu = false;
+                }, timeToBeInfected * 2);
+              }
             }
             if (Math.random() > 0.97 && particle.fill[3] > 100) {
               particle.died = true;
               this.sampler2.triggerAttack(130 + (particle.r - 20) * 2);
             }
-          }, 3000);
-        }, (1500 / this.fill[3]) ** 2);
+          }, timeToBeInfected * 2);
+        }, (timeToBeInfected / this.fill[3]) ** 2);
         // virus vs virus
       } else if (
         distance < (this.r + particle.r) / 1.2

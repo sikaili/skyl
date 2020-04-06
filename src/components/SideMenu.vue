@@ -76,7 +76,7 @@
         class="overflow-y-scroll vh-50 f6 tl bg-white-30"
       >
         <span
-          v-for="(item, index) in iframeItems"
+          v-for="(item, index) in filteredIframeItems"
           :key="index"
         >
           <p
@@ -107,6 +107,9 @@ export default {
       activeItem: 'activeItem',
       iframeItems: 'iframeItems',
     }),
+    filteredIframeItems() {
+      return this.iframeItems.filter((item) => item.type !== 'music');
+    },
   },
   created() {
     const { id } = this.$route.params;
