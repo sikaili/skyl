@@ -1,5 +1,5 @@
 <template>
-  <SideMenu v-if="showSideMenu" />
+  <SideMenu v-show="showSideMenu" />
 </template>
 
 <script>

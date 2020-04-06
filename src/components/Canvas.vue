@@ -1,9 +1,6 @@
 <template>
   <div>
-    <div
-      v-if="type!=='music'"
-      id="canvasContainer"
-    />
+    <div id="canvasContainer" />
     <div v-if="$route.name==='play'">
       <div
         v-if="!showSettings && (settings || type === 'music')"
@@ -20,10 +17,13 @@
         class="Settings Settings__Menu"
         :class="{ 'Settings__Menu--active' : showSettings }"
       >
-        <div class="Settings__Close c-animate">
+        <div
+          v-if="showSettings"
+          class="Settings__Close c-animate"
+          @click="toggle('showSettings')"
+        >
           <i
             class="tc icon ion-md-close f3"
-            @click="toggle('showSettings')"
           />
         </div>
         <p
@@ -42,14 +42,15 @@
         </p>
         <div
           v-if="showList"
-          class="overflow-y-scroll f6 tl bg-white-30"
+          class="Settings__PlayerList overflow-y-scroll f6 tl bg-white-30"
+          :class="{ 'Settings__PlayerList--full': type === 'music' }"
         >
           <span
             v-for="(songId, index) in songs"
             :key="index"
           >
             <p
-              class="listItem ph1 bg-animate hover-bg-white hover-black white bg-black-60"
+              class="Settings__PlayerListItem ph3 bg-animate hover-bg-white hover-black white bg-black-60"
               @click="setSketchSong(songId)"
             >
               {{ songId }}
@@ -80,7 +81,7 @@
             >
           </template>
         </div>
-        <div class="Settings__MenuContainer pv3">
+        <div class="Settings__MenuContainer pt3 pb2">
           <i
             v-if="settings && settings.red"
             class="icon ion-md-shuffle f3 white bg-black-80 bg-animate hover-bg-white hover-black pv2 ph3"
@@ -228,12 +229,12 @@ export default {
     },
     show(itemName) {
       this[itemName] = true;
-      if (itemName === 'showSettings' && this.type !== 'music') { this.$root.$emit('emit-showSideMenu', !this.showSettings); }
+      if (itemName === 'showSettings') { this.$root.$emit('emit-showSideMenu', !this.showSettings); }
       setTimeout(() => document.querySelector('#canvasContainer').addEventListener('click', () => { this.hide(itemName); }), 0);
     },
     hide(itemName) {
       this[itemName] = false;
-      if (itemName === 'showSettings' && this.type !== 'music') { this.$root.$emit('emit-showSideMenu', !this.showSettings); }
+      if (itemName === 'showSettings') { this.$root.$emit('emit-showSideMenu', !this.showSettings); }
       document.querySelector('#canvasContainer').removeEventListener('click', () => { this.hide(itemName); });
     },
     forceUpdate() {
@@ -247,7 +248,10 @@ export default {
 
 <style lang="scss" scoped>
 #canvasContainer {
+  position: absolute;
   z-index: -999;
+  width: 100vw;
+  height: 100vh;
 }
 .Settings {
   position: absolute;;
@@ -263,7 +267,7 @@ export default {
     color:black;
     font-size: 30px;
     position: absolute;
-    padding: 0 8px 12px 12px;
+    padding: 0 8px 12px 16px;
     right:0;
     top:0;
   }
@@ -277,7 +281,7 @@ export default {
     padding-top: 24px;
 
     &Container {
-      margin: 24px;
+      margin: 16px;
 
       &Input {
         float:right;
@@ -285,8 +289,8 @@ export default {
         margin-left: 8px !important;
         width: 120px !important;
 
-        &Label{
-          // margin-bottom: 8px;
+        &Label {
+          font-size: 14px;
         }
       }
     }
@@ -299,9 +303,19 @@ export default {
   }
 
   &__Player {
-    min-width: 120px;
+    min-width: 208px;
+
+    &List {
+      max-height: 256px;
+      background-color:rgba(0, 0, 0, 0.3);
+
+      &--full {
+        max-height: 352px;
+      }
+    }
   }
 }
+
 input[type=range].Settings__MenuContainerInput {
   -webkit-appearance: none;
   width: 100%;
@@ -389,4 +403,3 @@ input[type=range].Settings__MenuContainerInput:focus::-ms-fill-upper {
 
 
 </style>
-x
