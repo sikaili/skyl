@@ -43,6 +43,10 @@ const sketch = (instance) => {
       min: 0,
       step: 1,
     },
+    actions: [{
+      name: 'addParticles',
+      icon: 'add',
+    }],
   };
   const divNode = document.querySelector('#canvasContainer');
 
@@ -150,6 +154,19 @@ const sketch = (instance) => {
     console.log('virus killed');
   };
 
+  sk.addParticles = (number = 20) => {
+    for (let i = 0; i < number; i += 1) {
+      const particle = new Particle(
+        sk.random(0, sk.width),
+        sk.random(0, sk.height),
+        false,
+        200 * (1000 / (sk.width + sk.height)),
+      );
+      particles.push(particle);
+      World.add(engine.world, particle.body);
+    }
+  };
+
   sk.setup = () => {
     sk.createCanvas(sk.windowWidth, sk.windowHeight);
     console.log('setup virus');
@@ -163,29 +180,24 @@ const sketch = (instance) => {
     sk.textSize(40);
     sk.mouseX = sk.width / 2;
     sk.mouseY = sk.height / 2;
-    for (let i = 0; i < number; i += 1) {
-      particles[i] = new Particle(
-        sk.random(0, sk.width),
-        sk.random(0, sk.height),
-        false,
-        number * (1000 / (sk.width + sk.height)),
-      );
-      World.add(engine.world, particles[i].body);
-    }
+    sk.addParticles(200);
   };
 
   sk.draw = () => {
     engine.world.gravity.y = sk.settings.gravity.value;
 
     // console.log(meter.getLevel());
-    sk.background(200, 200, 200);
     sk.noFill();
+    sk.background([200, 200, 200, touched ? 150 : 255]);
     particles.forEach((particle) => {
       if (!particle.updating) {
         particle.contagion(particles, sk.settings.timeTobeInfected.value);
       }
       if (touched && sk.trigger) {
         particle.mouseForceTrigger({ x: sk.mouseX, y: sk.mouseY });
+      }
+      if (particle.body.position.x > sk.width || particle.body.position.x < 0 || particle.body.position.y > sk.height || particle.body.position.y < 0) {
+        Composite.remove(engine.world, particle.body);
       }
       particle.display(sk);
     });
@@ -237,12 +249,12 @@ const sketch = (instance) => {
 
     display() {
       sk.push();
-      sk.fill(0);
-      sk.stroke(0);
+      sk.fill(this.body.isStatic ? 0 : [0, sk.noise(sk.frameCount / 20) * 255]);
+      sk.fill(this.body.isStatic ? 0 : [0, sk.noise(sk.frameCount / 20) * 255]);
       sk.translate(this.body.position.x, this.body.position.y);
       sk.rotate(this.body.angle);
       sk.beginShape();
-      this.points.map((point) => {
+      this.points.forEach((point) => {
         sk.vertex(
           point.x - this.center.x - sk.noise(point.x + sk.frameCount / 20) * 15,
           point.y - this.center.y - sk.noise(point.y + sk.frameCount / 30) * 15,
@@ -258,12 +270,14 @@ const sketch = (instance) => {
     // add shape
     const center = Vertices.centre(sk.staticBodyVertex);
     let arr = sk.staticBodyVertex.map((point) => ({ x: point.x - center.x, y: point.y - center.y }));
-    if (Math.abs(arr[0].x / arr[0].y - arr[arr.length - 1].x / arr[arr.length - 1].y) < 0.2 || arr.length < 10) {
-      arr = [arr[0], { x: arr[0].x, y: arr[0].y + 20 }, { x: arr[arr.length - 1].x, y: arr[arr.length - 1].y + 20 }, arr[arr.length - 1]];
+    if (arr && arr.length > 2) {
+      if (Math.abs(arr[0].x / arr[0].y - arr[arr.length - 1].x / arr[arr.length - 1].y) < 0.2 || arr.length < 10) {
+        arr = [arr[0], { x: arr[0].x, y: arr[0].y + 20 }, { x: arr[arr.length - 1].x, y: arr[arr.length - 1].y + 20 }, arr[arr.length - 1]];
+      }
     }
-    if (sk.staticBodyVertex && sk.staticBodyVertex.length > 2) {
+    if (sk.staticBodyVertex && sk.staticBodyVertex.length > 1) {
       const stop = Bodies.fromVertices(center.x, center.y, [arr], {
-        isStatic: true,
+        isStatic: !!sk.settings.static.value,
         density: 3,
       });
       if (stop) {
@@ -293,7 +307,7 @@ const sketch = (instance) => {
 
       // dead by click
       particles.forEach((particle) => {
-        if (Math.random() > 0.95 && particle.virus && !particle.died) {
+        if (Math.random() > 0.95 && particle.virus && !particle.died && !particle.immu) {
           particle.died = true;
           particle.triggerAttack();
         }

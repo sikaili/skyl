@@ -14,7 +14,7 @@ export default class Particle {
       this.r *= 2;
       this.id = virus.id;
     }
-    this.body = Bodies.circle(x, y, this.r / 1.4);
+    this.body = Bodies.circle(x, y, this.r);
     Body.setMass(this.body, 3 / scale);
     if (virus) {
       Body.applyForce(this.body, this.body.position, {
@@ -34,7 +34,7 @@ export default class Particle {
       );
       // contagion
       if (
-        distance < (this.r + particle.r) / 1.2
+        distance < (this.r + particle.r) * 1.1
         && this.virus
         && !particle.virus
         && Math.random() > 0.8
