@@ -87,6 +87,15 @@
             class="icon ion-md-shuffle f3 white bg-black-80 bg-animate hover-bg-white hover-black pv2 ph3"
             @click="setRGB()"
           />
+          <template v-if="settings && settings.actions">
+            <i
+              v-for="action in settings.actions"
+              :key="action.name"
+              class="icon f3 white bg-black-80 bg-animate hover-bg-white hover-black pv2 ph3"
+              :class="`ion-md-${action.icon}`"
+              @click="actionButton(action.name)"
+            />
+          </template>
           <i
             class="icon ion-md-refresh f3 white bg-black-80 bg-animate hover-bg-white hover-black pv2 ph3"
             @click="forceUpdate()"
@@ -129,8 +138,11 @@ export default {
     };
   },
   watch: {
-    settings() {
-      current.settings = this.settings;
+    settings: {
+      deep: true,
+      handler(val) {
+        localStorage.setItem(this.current, JSON.stringify(val));
+      },
     },
     songId(val) {
       if (this.iframes.includes(val)) {
@@ -164,12 +176,18 @@ export default {
       }
       setTimeout(() => {
         if (current && current.settings && Object.keys(current.settings)) {
-          this.settings = current.settings;
           this.songId = current.songId ? current.songId : null;
+          const savedSettings = JSON.parse(localStorage.getItem(this.current));
+          // set only static values, get() begins with _
+          const keys = Object.keys(savedSettings).filter((name) => name.split('')[0] !== '_');
+          keys.forEach((key) => {
+            current.settings[key] = savedSettings[key];
+          });
+          this.settings = current.settings;
         } else if (!retry) {
           getSettings(true);
         }
-      }, 500);
+      }, retry ? 1500 : 500);
     };
     getSettings();
   },
@@ -212,6 +230,9 @@ export default {
       ['red', 'green', 'blue'].forEach((color, index) => {
         this.setRangeInput(color, colorArray && typeof colorArray[index] === 'number' ? colorArray[index] : null);
       });
+    },
+    actionButton(actionName) {
+      current[actionName]();
     },
     setRangeInput(name, value) {
       if (typeof value === 'number') {

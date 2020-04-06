@@ -28,7 +28,7 @@ export default function (instance) {
       min: 0,
       step: 1,
     },
-    get color() { return [this.red.value, this.green.value, this.blue.value] || [255, 255, 255]; },
+    get _color() { return [this.red.value, this.green.value, this.blue.value] || [255, 255, 255]; },
   };
 
   const divNode = document.querySelector('#canvasContainer');
@@ -131,10 +131,10 @@ export default function (instance) {
         sk.rotate(this.r);
       }
       // play
-      sk.fill(this.playble ? 0 : [sk.settings.color[0], 255 - sk.settings.color[1], 255 - sk.settings.color[2]]);
+      sk.fill(this.playble ? 0 : [sk.settings._color[0], 255 - sk.settings._color[1], 255 - sk.settings._color[2]]);
       const scal = 1;
       sk.rect(0, 0, this.r * scal, this.r);
-      sk.fill(255 - sk.settings.color[1], 255 - sk.settings.color[1], sk.settings.color[1] - 55, 80);
+      sk.fill(255 - sk.settings._color[1], 255 - sk.settings._color[1], sk.settings._color[1] - 55, 80);
       // triangle inside
       sk.beginShape();
       switch (this.mode) {
@@ -151,7 +151,7 @@ export default function (instance) {
       sk.endShape(sk.CLOSE);
       sk.pop();
       sk.push();
-      sk.fill([sk.settings.color[0] - 255, sk.settings.color[1] - 215, sk.settings.color[2] - 205, 100]);
+      sk.fill([sk.settings._color[0] - 255, sk.settings._color[1] - 215, sk.settings._color[2] - 205, 100]);
       if (color) {
         sk.fill(color);
         sk.ellipse(0, 0, this.rCircle, this.rCircle);
@@ -161,7 +161,7 @@ export default function (instance) {
         }, 3000);
       }
       if (this.playble) {
-        sk.fill(255 - sk.settings.color[0], 255 - sk.settings.color[1] + this.id, 255 - sk.settings.color[2] + this.id * 2);
+        sk.fill(255 - sk.settings._color[0], 255 - sk.settings._color[1] + this.id, 255 - sk.settings._color[2] + this.id * 2);
         this.rCircle /= 2;
       }
       sk.ellipse(0, 0, this.rCircle, this.rCircle);
@@ -204,7 +204,7 @@ export default function (instance) {
       luckyNo = rotateObjects.indexOf(min);
     }
     // console.log(level);
-    sk.background(sk.settings.color[0], sk.settings.color[1], sk.settings.color[2]);
+    sk.background(sk.settings._color[0], sk.settings._color[1], sk.settings._color[2]);
     for (let i = 0; i < rotateObjects.length; i += 1) {
       const obj = rotateObjects[i];
       obj.update(sk.mouseX, sk.mouseY);
@@ -231,7 +231,7 @@ export default function (instance) {
         }
       }
       if (luckyNo === i) {
-        obj.display([sk.settings.color[0], 255 - sk.settings.color[1], 255 - sk.settings.color[2], 100]);
+        obj.display([sk.settings._color[0], 255 - sk.settings._color[1], 255 - sk.settings._color[2], 100]);
       } else {
         obj.display();
       }
