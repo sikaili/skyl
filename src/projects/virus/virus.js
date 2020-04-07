@@ -23,7 +23,7 @@ const sketch = (instance) => {
   const sk = instance;
   sk.settings = {
     gravity: {
-      value: 0,
+      value: -0.1,
       type: 'range',
       max: 1.0,
       min: -1.0,
@@ -185,8 +185,6 @@ const sketch = (instance) => {
 
   sk.draw = () => {
     engine.world.gravity.y = sk.settings.gravity.value;
-
-    // console.log(meter.getLevel());
     sk.noFill();
     sk.background([200, 200, 200, touched ? 150 : 255]);
     particles.forEach((particle) => {
@@ -203,9 +201,15 @@ const sketch = (instance) => {
     });
     if (touched) {
       sk.push();
-      sk.stroke(0, 200);
+      sk.stroke(0, 150);
       sk.strokeWeight(10);
-      sk.line(sk.pmouseX, sk.pmouseY, sk.mouseX, sk.mouseY);
+      if (sk.staticBodyVertex) {
+        sk.beginShape();
+        sk.staticBodyVertex.forEach((point) => {
+          sk.vertex(point.x + Math.random() * 3, point.y);
+        });
+        sk.endShape();
+      }
       sk.pop();
     }
     // curso
@@ -314,6 +318,28 @@ const sketch = (instance) => {
       });
     }
   };
+  sk.handleTouchMove = (ev) => {
+    ev.preventDefault();
+    if (sk.staticBodyVertex) {
+      if (sk.staticBodyVertex.length > 0) {
+        const lastPoint = sk.staticBodyVertex[sk.staticBodyVertex.length - 1];
+        if (calDistance(lastPoint.x, lastPoint.y, sk.mouseX, sk.mouseY) > 2) {
+          sk.staticBodyVertex.push({ x: sk.mouseX, y: sk.mouseY });
+        }
+      } else {
+        sk.staticBodyVertex.push({ x: sk.mouseX, y: sk.mouseY });
+      }
+    }
+  };
+  sk.handleTouchStart = (ev) => {
+    ev.preventDefault();
+    touched = true;
+    sk.staticBodyVertex = [];
+    sk.trigger = true;
+    setTimeout(() => {
+      sk.trigger = false;
+    }, 150);
+  };
 
   sk.keyPressed = () => {
     switch (sk.keyCode) {
@@ -347,7 +373,7 @@ const sketch = (instance) => {
     setBordersAndMouse();
   };
 
-  const setListeners = (divNode, sk) => { //eslint-disable-line
+  const setListeners = (divNode) => { //eslint-disable-line
     divNode.addEventListener(
       'click',
       async () => {
@@ -366,14 +392,7 @@ const sketch = (instance) => {
     );
     divNode.addEventListener(
       'touchstart',
-      () => {
-        touched = true;
-        sk.staticBodyVertex = [];
-        sk.trigger = true;
-        setTimeout(() => {
-          sk.trigger = false;
-        }, 150);
-      },
+      sk.handleTouchStart,
       {
         passive: false,
       },
@@ -381,14 +400,7 @@ const sketch = (instance) => {
 
     divNode.addEventListener(
       'mousedown',
-      () => {
-        touched = true;
-        sk.staticBodyVertex = [];
-        sk.trigger = true;
-        setTimeout(() => {
-          sk.trigger = false;
-        }, 100);
-      },
+      sk.handleTouchStart,
       {
         passive: false,
       },
@@ -412,41 +424,17 @@ const sketch = (instance) => {
 
     divNode.addEventListener(
       'touchmove',
-      (ev) => {
-        ev.preventDefault();
-        if (sk.staticBodyVertex) {
-          if (sk.staticBodyVertex.length > 0) {
-            const lastPoint = sk.staticBodyVertex[sk.staticBodyVertex.length - 1];
-            if (calDistance(lastPoint.x, lastPoint.y, sk.mouseX, sk.mouseY) > 2) {
-              sk.staticBodyVertex.push({ x: sk.mouseX, y: sk.mouseY });
-            }
-          } else {
-            sk.staticBodyVertex.push({ x: sk.mouseX, y: sk.mouseY });
-          }
-        }
-      },
+      sk.handleTouchMove,
       { passive: false },
     );
     divNode.addEventListener(
       'mousemove',
-      (ev) => {
-        ev.preventDefault();
-        if (sk.staticBodyVertex) {
-          if (sk.staticBodyVertex.length > 0) {
-            const lastPoint = sk.staticBodyVertex[sk.staticBodyVertex.length - 1];
-            if (calDistance(lastPoint.x, lastPoint.y, sk.mouseX, sk.mouseY) > 2) {
-              sk.staticBodyVertex.push({ x: sk.mouseX, y: sk.mouseY });
-            }
-          } else {
-            sk.staticBodyVertex.push({ x: sk.mouseX, y: sk.mouseY });
-          }
-        }
-      },
+      sk.handleTouchMove,
       { passive: false },
     );
   };
 
-  setListeners(divNode, sk);
+  setListeners(divNode);
 };
 
 export default sketch;

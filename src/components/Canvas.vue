@@ -74,6 +74,7 @@
               v-model="settings[name]['value']"
               :name="name"
               class="Settings__MenuContainerInput"
+              :class="{ 'Settings__MenuContainerInput--checkbox' : settings[name].max === 1 && settings[name].step === 1 }"
               :type="settings[name].type"
               :min="settings[name].min"
               :max="settings[name].max"
@@ -245,6 +246,11 @@ export default {
         this.settings[name].value = current.random(this.settings[name].min, this.settings[name].max);
       }
     },
+    forceUpdate() {
+      if (window.confirm('Update to the newest version?')) { //eslint-disable-line
+        window.location.reload(true);
+      }
+    },
     toggle(itemName) {
       if (this[itemName]) {
         this.hide(itemName);
@@ -256,16 +262,13 @@ export default {
       this[itemName] = true;
       if (itemName === 'showCanvasSettings') { this.$root.$emit('emit-showSideMenu', !this.showCanvasSettings); }
       setTimeout(() => document.querySelector('#canvasContainer').addEventListener('click', () => { this.hide(itemName); }), 0);
+      setTimeout(() => document.querySelector('#canvasContainer').addEventListener('touchstart', () => { this.hide(itemName); }), 0);
     },
     hide(itemName) {
       this[itemName] = false;
       if (itemName === 'showCanvasSettings') { this.$root.$emit('emit-showSideMenu', !this.showCanvasSettings); }
       document.querySelector('#canvasContainer').removeEventListener('click', () => { this.hide(itemName); });
-    },
-    forceUpdate() {
-      if (window.confirm('Update to the newest version?')) {
-        window.location.reload(true);
-      }
+      document.querySelector('#canvasContainer').removeEventListener('touchstart', () => { this.hide(itemName); });
     },
   },
 };
@@ -313,6 +316,10 @@ export default {
         background: transparent;
         margin-left: 8px !important;
         width: 120px !important;
+
+        &--checkbox {
+          width: 50px !important;
+        }
 
         &Label {
           font-size: 14px;
