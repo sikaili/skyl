@@ -1,3 +1,12 @@
+
+## [2.2.2] - 2019-04-07
+### Changed
+- virus mouse trace, canvas style boolean input (285b8ab725c)
+### Added
+- action button & save settings in localstorage (a8c19fd99685)
+- set this.r, add actions, set static draw or not (17e8712b72eab29b2)
+- virus : detect draw-line(40f2346bf88695b8c8a70a27)
+
 ## [2.2.1] - 2019-04-06
 ### Changed
 - player menu apearence (4ea30e4288c29e8)
