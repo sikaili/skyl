@@ -49,23 +49,23 @@ export default function (sk) {
 
   let player;
 
-  // sk.setSong = (songId) => {
-  //   const sound = () => import('./sound/' + songId + '.m4a');
-  //   sound().then((module) => {
-  //     const soundFile = module.default;
-  //     state = -1;
-  //     songPlayed = -1;
-  //     sk.songId = songId;
-  //     soundIsLoading = true;
-  //     if (player) {
-  //       player.disconnect(fft);
-  //       player.disconnect();
-  //       player.dispose();
-  //     }
-  //     player = new Tone.Player(soundFile, () => { soundIsLoading = false; }).toMaster();
-  //     player.connect(fft);
-  //   });
-  // };
+  sk.setSong = (songId) => {
+    const sound = () => import('./sound/' + songId + '.m4a');
+    sound().then((module) => {
+      const soundFile = module.default;
+      state = -1;
+      songPlayed = -1;
+      sk.songId = songId;
+      soundIsLoading = true;
+      if (player) {
+        player.disconnect(fft);
+        player.disconnect();
+        player.dispose();
+      }
+      player = new Tone.Player(soundFile, () => { soundIsLoading = false; }).toMaster();
+      player.connect(fft);
+    });
+  };
 
   sk.setSong(sk.songId);
 
