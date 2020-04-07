@@ -1,9 +1,25 @@
 <template>
   <div class="cl">
     <div class="flex justify-center bg-white-50">
-      <router-link :class="classBySize" to="/work" exact>Work</router-link>
-      <router-link :class="classBySize" to="/music">Music</router-link>
-      <router-link :class="classBySize" to="/drawings">Drawings</router-link>
+      <router-link
+        :class="classBySize"
+        to="/work"
+        exact
+      >
+        Work
+      </router-link>
+      <router-link
+        :class="classBySize"
+        to="/music"
+      >
+        Music
+      </router-link>
+      <router-link
+        :class="classBySize"
+        to="/drawings"
+      >
+        Drawings
+      </router-link>
       <router-link
         :class="classBySize"
         :to="{ name: 'play', params: { id: $route.params.id } }"
@@ -16,29 +32,29 @@
 
 <script>
 export default {
-  name: "Head",
+  name: 'Head',
   props: {
     link: {
       type: String,
-      default: "https://eyes.skyl.fr"
-    }
+      default: 'https://eyes.skyl.fr',
+    },
   },
   data() {
     return {
       class: {
-        mdPlus: "tc min pa3 w-20 f4 black link",
-        sm: "tc min pv4 ph1 w-20 f6 black link"
-      }
+        mdPlus: 'tc min pa3 w-20 f4 black link',
+        sm: 'tc min pv4 ph1 w-20 f6 black link',
+      },
     };
   },
   computed: {
     classBySize() {
-      if (this.$mq == "sm") {
+      if (this.$mq == 'sm') {
         return this.class.sm;
       }
       return this.class.mdPlus;
-    }
-  }
+    },
+  },
 };
 </script>
 

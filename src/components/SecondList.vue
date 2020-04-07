@@ -4,7 +4,12 @@
       {{ item }}
     </li>
     <ul v-if="children && show">
-      <li v-for="child in children" :key="child">{{ child }}</li>
+      <li
+        v-for="child in children"
+        :key="child"
+      >
+        {{ child }}
+      </li>
     </ul>
   </div>
 </template>
@@ -13,15 +18,15 @@
 export default {
   props: {
     item: {
-      type: String
+      type: String,
     },
-    children: { type: Array }
+    children: { type: Array },
   },
   data() {
     return {
-      show: true
+      show: true,
     };
-  }
+  },
 };
 </script>
 

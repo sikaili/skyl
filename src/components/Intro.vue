@@ -11,22 +11,22 @@
 </template>
 
 <script>
-import { shellMxn } from "@/js/mixins";
+import { shellMxn } from '@/js/mixins';
 
 export default {
-  name: "intro",
+  name: 'Intro',
+  mixins: [shellMxn],
   data() {
     return {
       style: {
         mobile: {
-          h1: "tc autoM f4 b white",
-          p: "bg-black-10 tl white autoM f6 ph3"
+          h1: 'tc autoM f4 b white',
+          p: 'bg-black-10 tl white autoM f6 ph3',
         },
-        desktop: { h1: "tc autoM f2 b white", p: "bg-black-10 tl white autoM" }
-      }
+        desktop: { h1: 'tc autoM f2 b white', p: 'bg-black-10 tl white autoM' },
+      },
     };
   },
-  mixins: [shellMxn]
 };
 </script>
 

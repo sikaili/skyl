@@ -12,9 +12,9 @@
     min-height: 1em;
     width: 100%;"
   >
-    <small class="f7 db helvetica"
-      >© 2019 <b class="dib ph2 link dim helvetica">Sikai Li</b> All Rights
-      Reserved</small
-    >
+    <small
+      class="f7 db helvetica"
+    >© 2019 <b class="dib ph2 link dim helvetica">Sikai Li</b> All Rights
+      Reserved</small>
   </footer>
 </template>

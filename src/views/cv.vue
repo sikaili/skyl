@@ -1,15 +1,20 @@
 <template>
-  <div class="bg-white-70 fr" :class="$mq !== `lg` ? 'ma0' : 'ma6 mt4 mw8'">
+  <div
+    class="bg-white-70 fr"
+    :class="$mq !== `lg` ? 'ma0' : 'ma6 mt4 mw8'"
+  >
     <i
-      @click="$router.go(-1)"
       class="fr right-0 pr2 f2 icon ion-md-close gray c-animate hover-black"
-    ></i>
+      @click="$router.go(-1)"
+    />
     <div
       :class="
         $mq !== `lg` ? 'pv4 mb5 ph1' : 'pa5 flex justify-center flex-column'
       "
     >
-      <h1 class="fw3">Expérience Professionnelle</h1>
+      <h1 class="fw3">
+        Expérience Professionnelle
+      </h1>
       <section class="pv2">
         <h1>
           Orange
@@ -20,7 +25,9 @@
           réalisation de sites/Single-page Applications à la demande des clients
           internes.
         </h3>
-        <h4 class="mt4 mb3">Responsabilités occupées :</h4>
+        <h4 class="mt4 mb3">
+          Responsabilités occupées :
+        </h4>
         <ul class="lh-copy bt mt0">
           <SecondList
             v-for="(mission, i) in splitText(orange.firstMissons)"
@@ -33,7 +40,9 @@
             "
           />
         </ul>
-        <h4 class="mt4 mb3">Environnement Technique :</h4>
+        <h4 class="mt4 mb3">
+          Environnement Technique :
+        </h4>
         <Table
           :categories="['Langages', 'Librairies', 'Outils & Plug-ins']"
           :content="[
@@ -66,7 +75,9 @@
             :img="require(`@/assets/img/plastic-arcade-24.png`)"
           />
         </div>
-        <h4 class="mt4 mb3">Responsabilités occupées :</h4>
+        <h4 class="mt4 mb3">
+          Responsabilités occupées :
+        </h4>
 
         <ul class="lh-copy bt mt0">
           <SecondList
@@ -80,7 +91,9 @@
             "
           />
         </ul>
-        <h4 class="mt4 mb3">Environnement Technique :</h4>
+        <h4 class="mt4 mb3">
+          Environnement Technique :
+        </h4>
         <Table
           :categories="['Langages', 'Librairies', 'Outils & Plug-ins']"
           :content="[
@@ -90,7 +103,9 @@
           ]"
         />
       </section>
-      <h1 class="fw3 mv4">Expositions & Concerts</h1>
+      <h1 class="fw3 mv4">
+        Expositions & Concerts
+      </h1>
       <TextContent
         v-for="expo in expos"
         :key="expo.title"
@@ -98,7 +113,9 @@
         :caption="expo.place"
         :content="expo.content"
       />
-      <h1 class="fw3 mt5 mb4">Formations</h1>
+      <h1 class="fw3 mt5 mb4">
+        Formations
+      </h1>
       <TextContent
         v-for="formation in formations"
         :key="formation.title"
@@ -110,7 +127,7 @@
         class="f5 no-underline white bg-black-40 bg-animate hover-bg-black hover-white inline-flex items-center pa3 border-box mr1"
         @click="$router.go(-1)"
       >
-        <i class="icon ion-md-return-left"></i>
+        <i class="icon ion-md-return-left" />
 
         <span class="pl1">Return</span>
       </span>
@@ -119,17 +136,17 @@
 </template>
 
 <script>
-import Card from "@/components/Card.vue";
-import Table from "@/components/Table.vue";
-import SecondList from "@/components/SecondList.vue";
-import TextContent from "@/components/TextContent.vue";
+import Card from '@/components/Card.vue';
+import Table from '@/components/Table.vue';
+import SecondList from '@/components/SecondList.vue';
+import TextContent from '@/components/TextContent.vue';
 
 export default {
   components: {
     Card,
     Table,
     SecondList,
-    TextContent
+    TextContent,
   },
   data() {
     return {
@@ -143,8 +160,8 @@ Modifications et Maintenance des sites existants (jQuery ou autres technologies)
 Responsive Design & Adaptive Design, avec Vue MQ;
 State management centralisé avec Vuex;
 Utilisation de Vue Analytics pour faciliter la connection entre Vue Router et Google Analytics`,
-          number: 2
-        }
+          number: 2,
+        },
       },
       thecamp: {
         firstMissons: `Prototypage des idées d'interactions en Javascript (p5.js et Canvas API);
@@ -152,19 +169,19 @@ Création d’installations art numérique, réalisation des animations en Javas
 Séances de 'Proof of Concept' avec des experts du domaine;
 Participation aux workshops avec les clients, SNCF, Airbus, LVMH, etc…`,
         secondMissons: {
-          text: ``,
-          number: null
-        }
+          text: '',
+          number: null,
+        },
       },
       expos: traiteText(expos),
-      formations: traiteText(formations)
+      formations: traiteText(formations),
     };
   },
   methods: {
     splitText(str) {
-      return str.split(";");
-    }
-  }
+      return str.split(';');
+    },
+  },
 };
 
 const expos = `SIANA, 2019@
@@ -206,15 +223,15 @@ Université de Poitiers, 2015@
 Poitiers, France@
 Apprentissage de la langue française, littérature, histoire, culture
 `;
-const traiteText = str => {
-  const arr = str.split(".");
+const traiteText = (str) => {
+  const arr = str.split('.');
   const dump = [];
-  arr.map(a => {
-    const arr1 = a.split("@");
+  arr.map((a) => {
+    const arr1 = a.split('@');
     const e = {
       title: arr1[0],
       place: arr1[1],
-      content: arr1[2]
+      content: arr1[2],
     };
     dump.push(e);
   });

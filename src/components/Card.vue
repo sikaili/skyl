@@ -1,11 +1,15 @@
 <template functional>
-  <a :href="props.link" target="_blank" class="mh3">
+  <a
+    :href="props.link"
+    target="_blank"
+    class="mh3"
+  >
     <div class="relative card pa3 bg-white-30 border-box">
-      <img :src="props.img" />
+      <img :src="props.img">
       <p class="pb4">{{ props.caption }}</p>
-      <span class="tc w4 f6 dim link ba bw2 ph2 pv1 mt3 dib black"
-        >Read more..</span
-      >
+      <span
+        class="tc w4 f6 dim link ba bw2 ph2 pv1 mt3 dib black"
+      >Read more..</span>
     </div>
   </a>
 </template>

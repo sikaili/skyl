@@ -6,23 +6,23 @@ module.exports = {
     es6: true,
   },
   extends: [
-    "airbnb-base",
-    "plugin:vue/recommended"
+    'airbnb-base',
+    'plugin:vue/recommended',
   ],
   rules: {
-    "no-console": process.env.NODE_ENV === "production" ? "error" : "off",
-    "no-debugger": process.env.NODE_ENV === "production" ? "error" : "off",
-    "template-curly-spacing" : "off",
-    "no-shadow": "off",
-    "no-param-reassign":"off",
+    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'template-curly-spacing': 'off',
+    'no-shadow': 'off',
+    'no-param-reassign': 'off',
   },
   globals: {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
   },
   parserOptions: {
-    parser: "babel-eslint",
+    parser: 'babel-eslint',
     ecmaVersion: 2018,
-    sourceType: 'module'
-  }
+    sourceType: 'module',
+  },
 };
