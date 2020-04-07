@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="canvasContainer" />
-    <div v-if="$route.name==='play'">
+    <div v-if="$route.name ==='play'">
       <div
         v-if="!showCanvasSettings && (settings || type === 'music')"
         class="Settings Settings__Icon white bg-black-80 bg-animate hover-bg-white hover-black pv2 ph3"
@@ -69,7 +69,7 @@
               :for="name"
             >{{ name }}</label>
             <input
-              v-if="value.type==='range'"
+              v-if="value.type ==='range'"
               :id="name"
               v-model="settings[name]['value']"
               :name="name"

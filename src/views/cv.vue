@@ -34,7 +34,7 @@
             :key="i"
             :item="mission"
             :children="
-              i=== orange.secondMissons.number
+              i === orange.secondMissons.number
                 ? splitText(orange.secondMissons.text)
                 : []
             "
@@ -85,7 +85,7 @@
             :key="i"
             :item="mission"
             :children="
-              i=== thecamp.secondMissons.number
+              i === thecamp.secondMissons.number
                 ? splitText(thecamp.secondMissons.text)
                 : []
             "

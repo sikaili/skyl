@@ -1,9 +1,9 @@
 <template>
   <div>
-    <h1 :class="$mq=== `sm` ? style.mobile.h1 : style.desktop.h1">
+    <h1 :class="$mq === `sm` ? style.mobile.h1 : style.desktop.h1">
       LI Sikai
     </h1>
-    <p :class="$mq=== `sm` ? style.mobile.p : style.desktop.p">
+    <p :class="$mq === `sm` ? style.mobile.p : style.desktop.p">
       Technologist, interaction designer based in Paris, I make music & new
       media art.
     </p>

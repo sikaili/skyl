@@ -1,10 +1,10 @@
 <template>
   <MenuSmall
-    v-if="$mq=== `sm`"
+    v-if="$mq === `sm`"
     type="Work"
   />
   <MenuIpad
-    v-else-if="$mq=== `md` || ipad"
+    v-else-if="$mq === `md` || ipad"
     type="Work"
   />
   <MenuDesktop

@@ -26,7 +26,7 @@
       <router-view />
     </transition>
     <transition name="slide-fade-main">
-      <TheFooter v-if="footer && $mq=== `lg`" />
+      <TheFooter v-if="footer && $mq === `lg`" />
     </transition>
   </div>
 </template>
