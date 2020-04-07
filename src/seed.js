@@ -220,7 +220,7 @@ const seedData = {
 const arrayDump = Object.entries(seedData);
 arrayDump.map((obj) => {
   seedData[obj[0]].map((a) => {
-    !a.about ? (a.about = a.des) : '';
+    if (!a.about) a.about = a.des;
     a.id = a.name
       .split(' ')
       .join('-')
@@ -261,7 +261,7 @@ const data = JSON.parse(JSON.stringify(seedData));
 const linksFromProjects = [...data.work].concat([...data.music]);
 let allIframeLinks = linksFromProjects.concat(extraIframeLinks);
 allIframeLinks.forEach((item) => {
-  item.id ? '' : (item.id = getNameFromLink(item.link));
+  if (!item.id) item.id = getNameFromLink(item.link);
 });
 allIframeLinks = allIframeLinks.map((iframeObject) => ({ id: iframeObject.id, link: iframeObject.link, type: iframeObject.type }));
 allIframeLinks.filter((iframeObject) => iframeObject.id);
@@ -270,7 +270,7 @@ for (let i = 0; i < allIframeLinks.length; i += 1) {
     allIframeLinks.splice(i, 1);
   }
   for (let t = 0; t < sketches.length; t += 1) {
-    if (sketches[t].id == allIframeLinks[i].id) {
+    if (sketches[t].id === allIframeLinks[i].id) {
       allIframeLinks[i].type = 'sketch';
       sketches.splice(t, 1);
     }

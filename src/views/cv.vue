@@ -34,7 +34,7 @@
             :key="i"
             :item="mission"
             :children="
-              i == orange.secondMissons.number
+              i=== orange.secondMissons.number
                 ? splitText(orange.secondMissons.text)
                 : []
             "
@@ -85,7 +85,7 @@
             :key="i"
             :item="mission"
             :children="
-              i == thecamp.secondMissons.number
+              i=== thecamp.secondMissons.number
                 ? splitText(thecamp.secondMissons.text)
                 : []
             "
@@ -184,6 +184,21 @@ Participation aux workshops avec les clients, SNCF, Airbus, LVMH, etc…`,
   },
 };
 
+const traiteText = (str) => {
+  const arr = str.split('.');
+  const dump = [];
+  arr.forEach((a) => {
+    const arr1 = a.split('@');
+    const e = {
+      title: arr1[0],
+      place: arr1[1],
+      content: arr1[2],
+    };
+    dump.push(e);
+  });
+  return dump;
+};
+
 const expos = `SIANA, 2019@
 Évry, France@
 En relation avec la RGPD et dans un souci de transparence et de clarté, Datalaxy présente un programme de datavisualisation des données Facebook de l’utilisateur.
@@ -223,20 +238,6 @@ Université de Poitiers, 2015@
 Poitiers, France@
 Apprentissage de la langue française, littérature, histoire, culture
 `;
-const traiteText = (str) => {
-  const arr = str.split('.');
-  const dump = [];
-  arr.map((a) => {
-    const arr1 = a.split('@');
-    const e = {
-      title: arr1[0],
-      place: arr1[1],
-      content: arr1[2],
-    };
-    dump.push(e);
-  });
-  return dump;
-};
 </script>
 
 <style scoped>

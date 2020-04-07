@@ -26,7 +26,7 @@ export default function (sk) {
       min: 0,
       step: 1,
     },
-    get _color() { return [this.red.value, this.green.value, this.blue.value] || [255, 50, 50]; },
+    get getColor() { return [this.red.value, this.green.value, this.blue.value] || [255, 50, 50]; },
   };
   const divNode = document.querySelector('#canvasContainer');
   const fft = new Tone.FFT();
@@ -42,30 +42,30 @@ export default function (sk) {
   let particles = [];
   let forceDirection = -1;
   sk.songList = ['Rain-Addiction', 'Emb', '2019-12-YeChe', 'La-Danse'];
-  sk.songId = sk.songList[Math.floor(Math.random()*sk.songList.length)];
+  sk.songId = sk.songList[Math.floor(Math.random() * sk.songList.length)];
   if (vm.$route.query.id && typeof vm.$route.query.id === 'string') {
     sk.songId = vm.$route.query.id;
   }
 
   let player;
 
-  sk.setSong = (songId) => {
-    const sound = () => import('./sound/' + songId + '.m4a');
-    sound().then((module) => {
-      const soundFile = module.default;
-      state = -1;
-      songPlayed = -1;
-      sk.songId = songId;
-      soundIsLoading = true;
-      if (player) {
-        player.disconnect(fft);
-        player.disconnect();
-        player.dispose();
-      }
-      player = new Tone.Player(soundFile, () => { soundIsLoading = false; }).toMaster();
-      player.connect(fft);
-    });
-  };
+  // sk.setSong = (songId) => {
+  //   const sound = () => import('./sound/' + songId + '.m4a');
+  //   sound().then((module) => {
+  //     const soundFile = module.default;
+  //     state = -1;
+  //     songPlayed = -1;
+  //     sk.songId = songId;
+  //     soundIsLoading = true;
+  //     if (player) {
+  //       player.disconnect(fft);
+  //       player.disconnect();
+  //       player.dispose();
+  //     }
+  //     player = new Tone.Player(soundFile, () => { soundIsLoading = false; }).toMaster();
+  //     player.connect(fft);
+  //   });
+  // };
 
   sk.setSong(sk.songId);
 
@@ -224,19 +224,19 @@ export default function (sk) {
       sum1 = sk.constrain(sum1, 0, 100);
       const theta = this.vel.heading() + 0.5 * sk.PI;
       sk.strokeWeight(sk.width > 768 ? 1 + this.mass : 1);
-      sk.stroke((255 - sk.settings._color[0]) + 15 + this.mass * 3 + sk.noise(this.pos.y, this.pos.x) * 125 + sum1 / 2, (50 - sk.settings._color[1]) + sum1 / 10 + sk.noise(this.vel.mag()) * 220 - this.mass * 35 + sum / 1.2, sum / 1.2 - sum / 2.5 - sum1 / 1.2 + 250 / this.mass + sk.settings._color[2] - 20);
+      sk.stroke((255 - sk.settings.getColor[0]) + 15 + this.mass * 3 + sk.noise(this.pos.y, this.pos.x) * 125 + sum1 / 2, (50 - sk.settings.getColor[1]) + sum1 / 10 + sk.noise(this.vel.mag()) * 220 - this.mass * 35 + sum / 1.2, sum / 1.2 - sum / 2.5 - sum1 / 1.2 + 250 / this.mass + sk.settings.getColor[2] - 20);
       // small ones
       if (Math.random() * sum > 120) {
-        sk.fill(-sum1 / 2 + sum + sk.noise(this.pos.y, this.pos.y) * (sk.settings._color[0] - 100), sum1 + sk.noise(this.pos.x) * (sk.settings._color[1] + 100), sum1 / 3 + (sk.settings._color[2] + 100));
+        sk.fill(-sum1 / 2 + sum + sk.noise(this.pos.y, this.pos.y) * (sk.settings.getColor[0] - 100), sum1 + sk.noise(this.pos.x) * (sk.settings.getColor[1] + 100), sum1 / 3 + (sk.settings.getColor[2] + 100));
         if (Math.random() > 0.7) {
-          sk.fill(sk.settings._color[0] - 75, sk.settings._color[1], sk.settings._color[2]);
+          sk.fill(sk.settings.getColor[0] - 75, sk.settings.getColor[1], sk.settings.getColor[2]);
         }
       } else {
-        sk.fill(sk.settings._color[0] - 155, sk.noise(this.pos.x) * 255, 255 - sk.noise(this.pos.x) * 255, 30);
+        sk.fill(sk.settings.getColor[0] - 155, sk.noise(this.pos.x) * 255, 255 - sk.noise(this.pos.x) * 255, 30);
       }
       // big ones
       if (this.mass > 4) {
-        sk.fill(sk.settings._color[0], sk.settings._color[1], sk.settings._color[2], 180);
+        sk.fill(sk.settings.getColor[0], sk.settings.getColor[1], sk.settings.getColor[2], 180);
         sk.noStroke();
       }
       sk.ellipse(this.pos.x, this.pos.y, this.r + m, this.r + m);
@@ -400,14 +400,14 @@ export default function (sk) {
           // main background
           const back = sk.constrain(sk.map(sum, 50, 160, 0, 255), 50, 255);
           sk.stroke(3 * back + 20 + sum + sum1 * sk.random(20), 3 * back + 20 - sum, 3 * back + 20 - sum, 50 + back * 3);
-          sk.background(sk.settings._color[0] - sk.constrain(sum1, 0, 50), sk.settings._color[1], sk.settings._color[2], back);
+          sk.background(sk.settings.getColor[0] - sk.constrain(sum1, 0, 50), sk.settings.getColor[1], sk.settings.getColor[2], back);
         } else {
           // touched background
-          const brightness = sk.settings._color.reduce((a, b) => +a + +b);
+          const brightness = sk.settings.getColor.reduce((a, b) => +a + +b);
           if (brightness < 150) {
             sk.background(sk.noise(sk.frameCount / 100) * 500, 255 - sum1);
           } else {
-            sk.background(280 - sk.settings._color[0], sk.settings._color[1], 235 - sk.settings._color[2], sum1);
+            sk.background(280 - sk.settings.getColor[0], sk.settings.getColor[1], 235 - sk.settings.getColor[2], sum1);
           }
           // sk.fill(0, sk.map(sum, 85, 110, 0, 255));
           sk.stroke(sk.random(0, 1600), sk.random(-255, 255), sk.random(-255, 255), 180);

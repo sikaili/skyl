@@ -49,7 +49,7 @@ export default {
   },
   computed: {
     classBySize() {
-      if (this.$mq == 'sm') {
+      if (this.$mq === 'sm') {
         return this.class.sm;
       }
       return this.class.mdPlus;

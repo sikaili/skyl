@@ -13,7 +13,7 @@ const state = {
 };
 const mutations = {
   TOGGLE_ITEM(state, payload) {
-    state[payload.name].map((item) => {
+    state[payload.name].forEach((item) => {
       item === payload.obj && item.show ? (item.show = false) : ''; //eslint-disable-line
       item === payload.obj ? (item.show = true) : (item.show = false); //eslint-disable-line
     });

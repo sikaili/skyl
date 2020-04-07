@@ -5,7 +5,7 @@
     </h1>
     <div
       class="ml-auto mr-auto w-80 mw7 bg-white-90"
-      :class="$mq == `sm` ? `w-100` : ''"
+      :class="$mq=== `sm` ? `w-100` : ''"
     >
       <i
         class="fr right-0 pr2 f2 icon ion-md-close gray c-animate hover-black"
@@ -13,7 +13,7 @@
       />
       <div
         class="flex-row justify-center items-start tl"
-        :class="$mq == `sm` ? `ma2 pa3 mb5 pb5` : `pa5`"
+        :class="$mq=== `sm` ? `ma2 pa3 mb5 pb5` : `pa5`"
       >
         <h3>{{ item.name }}</h3>
         <p
@@ -26,7 +26,7 @@
           v-for="picLink in item.imgs"
           :key="picLink"
           class="w-100 pv3"
-          :class="$mq == `sm` ? `ph3` : 'ph5'"
+          :class="$mq=== `sm` ? `ph3` : 'ph5'"
           :src="picLink"
         >
         <br>
@@ -101,7 +101,7 @@
           <span class="pl1">Return</span>
         </span>
         <span
-          v-if="item.link.split(':')[0] == `https`"
+          v-if="item.link.split(':')[0]=== `https`"
           class="f5 no-underline white bg-light-red bg-animate hover-bg-black hover-white inline-flex items-center pa3 border-box mr1"
           @click="play"
         >
@@ -129,7 +129,7 @@ export default {
       if (this.id > itemsArray.length) {
         return 'ERROR!';
       }
-      const dump = itemsArray.find((a) => a.id == this.$route.params.id);
+      const dump = itemsArray.find((a) => a.id === this.$route.params.id);
       return dump;
     },
   },

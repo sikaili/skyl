@@ -26,7 +26,7 @@
       <router-view />
     </transition>
     <transition name="slide-fade-main">
-      <TheFooter v-if="footer && $mq == `lg`" />
+      <TheFooter v-if="footer && $mq=== `lg`" />
     </transition>
   </div>
 </template>
@@ -61,7 +61,7 @@ export default {
     ...mapGetters(['activeItem']),
     iframeContainer() {
       if (!this.activeItem.type) {
-        return `width:${this.$mq == 'sm' ? screen.width : this.width}px;
+        return `width:${this.$mq === 'sm' ? window.screen.width : this.width}px;
       height:${this.height}px;
       opacity:${this.$route.path.includes('play') ? 1 : ''};
       -moz-transform: scale(1);
@@ -78,24 +78,7 @@ export default {
       const inPlay = this.$route.name === 'play';
       const scale = this.$mq === 'sm' ? 2 : 1;
       return `width:${
-        this.$mq == 'sm' ? screen.width * scale : this.width * scale
-      }px;
-      height:${this.height * scale}px;
-      opacity:${inPlay ? 1 : 0.4};
-      -moz-transform: scale(${1 / scale});
-      -moz-transform-origin: 0 0;
-      -o-transform: scale(${1 / scale});
-      -o-transform-origin: 0 0;
-      -webkit-transform: scale(${1 / scale});
-      -webkit-transform-origin: 0 0;
-      `;
-    },
-    canvas() {
-      let scale = 1;
-      const inPlay = this.$route.path.includes('play');
-      inPlay && this.$mq == 'sm' ? (scale = 1) : (scale = 1);
-      return `width:${
-        this.$mq == 'sm' ? screen.width * scale : this.width * scale
+        this.$mq === 'sm' ? window.screen.width * scale : this.width * scale
       }px;
       height:${this.height * scale}px;
       opacity:${inPlay ? 1 : 0.4};
@@ -142,12 +125,9 @@ export default {
       this.height = window.innerHeight;
     },
     handleScroll() {
-      let id = window.setTimeout(() => {}, 0);
-      while (id--) {
-        window.clearTimeout(id);
-      }
+      clearTimeout(this.timeOut);
       this.footer = false;
-      setTimeout(() => {
+      this.timeOut = setTimeout(() => {
         this.footer = true;
       }, 2000);
     },

@@ -1,7 +1,6 @@
 module.exports = {
   root: true,
   env: {
-    node: true,
     browser: true,
     es6: true,
   },
@@ -15,6 +14,8 @@ module.exports = {
     'template-curly-spacing': 'off',
     'no-shadow': 'off',
     'no-param-reassign': 'off',
+    'import/no-unresolved': 'off',
+    'max-len': 'off',
   },
   globals: {
     Atomics: 'readonly',

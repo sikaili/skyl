@@ -53,7 +53,7 @@
                     @click="goToPage(item)"
                   >Read more..</span>
                   <span
-                    v-if="item.link.split(':')[0] == `https`"
+                    v-if="item.link.split(':')[0]=== `https`"
                     class="fr tc w4 ml3 f6 link ba bw2 ph3 pv1 mt3 dib black dim"
                     @click="play(item)"
                   >

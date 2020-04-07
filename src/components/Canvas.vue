@@ -182,7 +182,7 @@ export default {
           const savedSettings = JSON.parse(localStorage.getItem(this.current));
           // set only static values, get() begins with _
           if (savedSettings) {
-            const keys = Object.keys(savedSettings).filter((name) => name.split('')[0] !== '_');
+            const keys = Object.keys(savedSettings).filter((name) => !name.includes('get'));
             keys.forEach((key) => {
               current.settings[key] = savedSettings[key];
             });
