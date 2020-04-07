@@ -277,7 +277,7 @@ const sketch = (instance) => {
     }
     if (sk.staticBodyVertex && sk.staticBodyVertex.length > 1) {
       const stop = Bodies.fromVertices(center.x, center.y, [arr], {
-        isStatic: !!sk.settings.static.value,
+        isStatic: !!+sk.settings.static.value,
         density: 3,
       });
       if (stop) {

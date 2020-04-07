@@ -97,7 +97,7 @@
             />
           </template>
           <i
-            class="icon ion-md-refresh f3 white bg-black-80 bg-animate hover-bg-white hover-black pv2 ph3"
+            class="icon ion-md-sync f3 white bg-white-50 bg-animate hover-bg-white hover-black pv2 ph3"
             @click="forceUpdate()"
           />
         </div>
@@ -177,12 +177,16 @@ export default {
       setTimeout(() => {
         if (current && current.settings && Object.keys(current.settings)) {
           this.songId = current.songId ? current.songId : null;
+
           const savedSettings = JSON.parse(localStorage.getItem(this.current));
           // set only static values, get() begins with _
-          const keys = Object.keys(savedSettings).filter((name) => name.split('')[0] !== '_');
-          keys.forEach((key) => {
-            current.settings[key] = savedSettings[key];
-          });
+          if (savedSettings) {
+            const keys = Object.keys(savedSettings).filter((name) => name.split('')[0] !== '_');
+            keys.forEach((key) => {
+              current.settings[key] = savedSettings[key];
+            });
+          }
+
           this.settings = current.settings;
         } else if (!retry) {
           getSettings(true);

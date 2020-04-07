@@ -41,8 +41,8 @@ export default function (sk) {
   let xoff = 0;
   let particles = [];
   let forceDirection = -1;
-  sk.songId = 'Rain-Addiction';
-
+  sk.songList = ['Rain-Addiction', 'Emb', '2019-12-YeChe', 'La-Danse'];
+  sk.songId = sk.songList[Math.floor(Math.random()*sk.songList.length)];
   if (vm.$route.query.id && typeof vm.$route.query.id === 'string') {
     sk.songId = vm.$route.query.id;
   }
