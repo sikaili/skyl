@@ -80,6 +80,11 @@
               :max="settings[name].max"
               :step="settings[name].step"
             >
+            <input
+              v-if="value.type==='text'"
+              v-model="settings[name]['value']"
+              class="Settings__MenuContainerInput--text"
+            >
           </template>
         </div>
         <div class="Settings__MenuContainer pt3 pb2">
@@ -94,7 +99,7 @@
               :key="action.name"
               class="icon f3 white bg-black-80 bg-animate hover-bg-white hover-black pv2 ph3"
               :class="`ion-md-${action.icon}`"
-              @click="actionButton(action.name)"
+              @click="actionButton(action.name, action)"
             />
           </template>
           <i
@@ -182,7 +187,7 @@ export default {
           const savedSettings = JSON.parse(localStorage.getItem(this.current));
           // set only static values, get() begins with _
           if (savedSettings) {
-            const keys = Object.keys(savedSettings).filter((name) => !name.includes('get') || !name === 'actions');
+            const keys = Object.keys(savedSettings).filter((name) => !name.includes('get') && name !== 'actions');
             keys.forEach((key) => {
               current.settings[key] = savedSettings[key];
             });
@@ -236,7 +241,8 @@ export default {
         this.setRangeInput(color, colorArray && typeof colorArray[index] === 'number' ? colorArray[index] : null);
       });
     },
-    actionButton(actionName) {
+    actionButton(actionName, action) {
+      action.on = !action.on;
       current[actionName]();
     },
     setRangeInput(name, value) {
