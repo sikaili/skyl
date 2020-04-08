@@ -463,7 +463,7 @@ export default function (sk) {
     }
   };
 
-  sk.handleTouchStarted = () => {
+  sk.handleTouchStart = () => {
     addParticles();
     sk.background(0);
     state = 1;
@@ -512,7 +512,7 @@ export default function (sk) {
   divNode.addEventListener(
     'touchstart',
     () => {
-      sk.handleTouchStarted();
+      sk.handleTouchStart();
       touched = true;
     },
     {
@@ -523,7 +523,7 @@ export default function (sk) {
   divNode.addEventListener(
     'mousedown',
     () => {
-      sk.handleTouchStarted();
+      sk.handleTouchStart();
       touched = true;
     },
     {
@@ -531,11 +531,11 @@ export default function (sk) {
     },
   );
 
-  divNode.addEventListener('touchend', sk.handleTouchEnded, {
+  divNode.addEventListener('touchend', sk.handleTouchEnd, {
     passive: false,
   });
 
-  divNode.addEventListener('mouseup', sk.handleTouchEnded, {
+  divNode.addEventListener('mouseup', sk.handleTouchEnd, {
     passive: false,
   });
 }

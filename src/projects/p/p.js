@@ -243,7 +243,7 @@ export default function (instance) {
     // sk.pop();
   };
 
-  sk.handleTouchStarted = () => {
+  sk.handleTouchStart = () => {
     if (Math.random() > 0.5) {
       const min = rotateObjects
         .filter(
@@ -276,11 +276,11 @@ export default function (instance) {
     { once: true, passive: false },
   );
 
-  divNode.addEventListener('touchstart', sk.handleTouchStarted, {
+  divNode.addEventListener('touchstart', sk.handleTouchStart, {
     passive: false,
   });
 
-  divNode.addEventListener('mousedown', sk.handleTouchStarted, {
+  divNode.addEventListener('mousedown', sk.handleTouchStart, {
     passive: false,
   });
 

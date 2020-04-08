@@ -5,13 +5,14 @@ import E3 from './sound/bouton_reverb.mp3';
 import texts from './assets/hanzi.json';
 
 console.log('import eyes');
-const eyes = (dd) => {
+const eyes = (instance) => {
+  const sk = instance;
   const divNode = document.querySelector('#canvasContainer');
   const sampler0 = new Tone.Sampler(
     { F3, A3 },
     {
       onload: () => {
-        dd.soundIsLoaded = true;
+        sk.soundIsLoaded = true;
       },
     },
   ).chain(new Tone.Volume(-12), Tone.Master);
@@ -19,7 +20,7 @@ const eyes = (dd) => {
     { E3 },
     {
       onload: () => {
-        dd.soundIsLoaded = true;
+        sk.soundIsLoaded = true;
       },
     },
   ).chain(new Tone.Volume(-12), Tone.Master);
@@ -62,8 +63,8 @@ const eyes = (dd) => {
     }
 
     display() {
-      dd.push();
-      dd.stroke(eyeS);
+      sk.push();
+      sk.stroke(eyeS);
       let rr = 120 / scale1;
       let r = 100 / scale1;
       const per = 200 / scale1;
@@ -74,181 +75,181 @@ const eyes = (dd) => {
         r *= 1.15;
         ii *= 1.15;
       }
-      dd.translate(this.x, this.y);
-      dd.beginShape();
-      dd.vertex((-(dd.PI - 0.1) * per) / 2, 0);
-      dd.strokeWeight(dd.width < 700 ? 3 : 8);
+      sk.translate(this.x, this.y);
+      sk.beginShape();
+      sk.vertex((-(sk.PI - 0.1) * per) / 2, 0);
+      sk.strokeWeight(sk.width < 700 ? 3 : 8);
       // above line
-      for (let theta1 = 0.05; theta1 < dd.PI - 0.05; theta1 += 0.1) {
-        const n2 = dd.map(Math.sin(dd.frameCount / 40), -1, 1, -3, 3);
+      for (let theta1 = 0.05; theta1 < sk.PI - 0.05; theta1 += 0.1) {
+        const n2 = sk.map(Math.sin(sk.frameCount / 40), -1, 1, -3, 3);
         const yy2 = ((-rr * 13) / 12) * Math.sin(theta1)
-          + dd.random(-5, 5) / scale1
-          - Math.abs(dd.mouseY - dd.height / 2) / 60;
+          + sk.random(-5, 5) / scale1
+          - Math.abs(sk.mouseY - sk.height / 2) / 60;
         const yy3 = rr * Math.sin(theta1);
-        dd.vertex(theta1 * per - ((dd.PI - 0.1) * per) / 2 + n2, yy2 + n2);
+        sk.vertex(theta1 * per - ((sk.PI - 0.1) * per) / 2 + n2, yy2 + n2);
         if (Math.random() > 0.999) {
-          dd.vertex(
-            theta1 * per - ((dd.PI - 0.1) * per) / 2 + n2,
+          sk.vertex(
+            theta1 * per - ((sk.PI - 0.1) * per) / 2 + n2,
             yy2 - (Math.random() + 1) * 20,
           );
         }
         if (Math.random() > 0.99) {
-          dd.vertex(theta1 * per - ((dd.PI - 0.1) * per) / 2 + n2, yy3);
+          sk.vertex(theta1 * per - ((sk.PI - 0.1) * per) / 2 + n2, yy3);
         }
       }
-      dd.fill(eyeF);
+      sk.fill(eyeF);
       // below line
-      for (let theta11 = dd.PI - 0.05; theta11 > 0.05; theta11 -= 0.1) {
-        const n21 = dd.map(Math.sin(dd.frameCount / 30), -1, 1, -5, 5);
-        const yy21 = ((-rr * 13) / 12) * Math.sin(theta11) + dd.random(-3, 3);
-        dd.vertex(theta11 * per - ((dd.PI - 0.1) * per) / 2 + n21, -yy21);
+      for (let theta11 = sk.PI - 0.05; theta11 > 0.05; theta11 -= 0.1) {
+        const n21 = sk.map(Math.sin(sk.frameCount / 30), -1, 1, -5, 5);
+        const yy21 = ((-rr * 13) / 12) * Math.sin(theta11) + sk.random(-3, 3);
+        sk.vertex(theta11 * per - ((sk.PI - 0.1) * per) / 2 + n21, -yy21);
       }
-      dd.vertex((-(dd.PI - 0.1) * per) / 2, 0);
-      dd.endShape();
+      sk.vertex((-(sk.PI - 0.1) * per) / 2, 0);
+      sk.endShape();
       // TEXT +-
-      dd.textSize(180 / scale1 + Math.random() * 10);
-      dd.strokeWeight(dd.width < 700 ? 10 : 25);
+      sk.textSize(180 / scale1 + Math.random() * 10);
+      sk.strokeWeight(sk.width < 700 ? 10 : 25);
       if (Math.random() > 0.7) {
-        dd.stroke(eyeS);
+        sk.stroke(eyeS);
       } else {
-        dd.stroke(eyeBS);
+        sk.stroke(eyeBS);
       }
-      dd.text(
+      sk.text(
         this.tx,
-        -20 - (dd.mouseX - dd.width / 2) / 30,
-        -rr - (0.9 * rr) / dd.constrain(scale1, 1.3, 100),
+        -20 - (sk.mouseX - sk.width / 2) / 30,
+        -rr - (0.9 * rr) / sk.constrain(scale1, 1.3, 100),
       );
-      dd.strokeWeight(1);
-      dd.noFill();
-      dd.beginShape();
+      sk.strokeWeight(1);
+      sk.noFill();
+      sk.beginShape();
       yoff += 0.1;
-      for (let i = 0; i < 2 * dd.PI + 0.01; i += 0.005) {
-        dd.stroke(eyeBS);
+      for (let i = 0; i < 2 * sk.PI + 0.01; i += 0.005) {
+        sk.stroke(eyeBS);
         // black OUT LINE
-        const n1 = dd.noise(xoff, yoff);
+        const n1 = sk.noise(xoff, yoff);
         const x1 = r * Math.sin(i)
-          + dd.map(n1, 0, 1, -10, 10) / scale1
-          + (dd.mouseX - dd.width / 2) / 13;
+          + sk.map(n1, 0, 1, -10, 10) / scale1
+          + (sk.mouseX - sk.width / 2) / 13;
         const y1 = r * Math.cos(i)
-          + dd.map(n1, 0, 1, -20, 10) / scale1
-          + (dd.mouseY - dd.height / 2) / 25;
+          + sk.map(n1, 0, 1, -20, 10) / scale1
+          + (sk.mouseY - sk.height / 2) / 25;
         // y1 = 0;
         xoff += 0.008;
-        dd.vertex(x1, y1);
+        sk.vertex(x1, y1);
         // EYE LINES, WHITE SPOT MOVING
         if (Math.random() > 0.4) {
-          dd.vertex(
-            (x1 / 2.5) * ii + (dd.mouseX - dd.width / 2) / 25,
-            y1 / 2 + (dd.mouseY - dd.height / 2) / 25,
+          sk.vertex(
+            (x1 / 2.5) * ii + (sk.mouseX - sk.width / 2) / 25,
+            y1 / 2 + (sk.mouseY - sk.height / 2) / 25,
           );
         }
       }
-      dd.endShape();
-      dd.pop();
+      sk.endShape();
+      sk.pop();
     }
   }
-  dd.stop = () => {
+  sk.stop = () => {
     console.log('eyes is killed');
-    dd.stopped = true;
-    dd.noLoop();
-    dd.eyeRight = null;
-    dd.eyeLeft = null;
+    sk.stopped = true;
+    sk.noLoop();
+    sk.eyeRight = null;
+    sk.eyeLeft = null;
     sampler0.dispose();
     sampler1.dispose();
     Tone.context.suspend();
-    dd.remove();
-    Object.entries((prop) => delete dd[prop]);
+    sk.remove();
+    Object.entries((prop) => delete sk[prop]);
   };
 
-  dd.start = () => {
-    dd.loop();
+  sk.start = () => {
+    sk.loop();
   };
 
-  dd.setup = () => {
-    const canvas = dd.createCanvas(dd.windowWidth, dd.windowHeight);
+  sk.setup = () => {
+    const canvas = sk.createCanvas(sk.windowWidth, sk.windowHeight);
     canvas.id = Math.random().toFixed(2);
     console.log('setup eyes');
-    if (dd.width > 768) {
-      dd.pixelDensity(1.0);
+    if (sk.width > 768) {
+      sk.pixelDensity(1.0);
     }
-    if (dd.width < 1500) {
-      scale1 = 1500 / dd.width;
+    if (sk.width < 1500) {
+      scale1 = 1500 / sk.width;
     }
-    scale2 = ((1334 * 750) / (dd.width * dd.height)) * 1.8;
-    if (dd.width > 1600) {
+    scale2 = ((1334 * 750) / (sk.width * sk.height)) * 1.8;
+    if (sk.width > 1600) {
       scale2 = 4;
     }
     sx = 150 / scale2;
     sy = 150 / scale2;
-    dd.mouseX = dd.width / 2;
-    dd.mouseY = dd.height * 0.3;
+    sk.mouseX = sk.width / 2;
+    sk.mouseY = sk.height * 0.3;
 
-    dd.eyeLeft = new Eye(
-      dd.width / 2 - 400 / scale1,
-      dd.height / 2 - dd.height * 0.1,
+    sk.eyeLeft = new Eye(
+      sk.width / 2 - 400 / scale1,
+      sk.height / 2 - sk.height * 0.1,
       '+',
     );
-    dd.eyeRight = new Eye(
-      dd.width / 2 + 400 / scale1,
-      dd.height / 2 - dd.height * 0.1,
+    sk.eyeRight = new Eye(
+      sk.width / 2 + 400 / scale1,
+      sk.height / 2 - sk.height * 0.1,
       '-',
     );
   };
 
-  dd.draw = () => {
-    if (!dd.stopped) {
+  sk.draw = () => {
+    if (!sk.stopped) {
       if (loading && loading1 === false && loading2 === false) {
         loading = false;
       }
       if (scale2 > 12 || scale2 < 0.8) {
-        scale2 = dd.width > 700 ? 3 : 5;
+        scale2 = sk.width > 700 ? 3 : 5;
         sx = 150 / scale2;
         sy = 150 / scale2;
       }
 
-      Color(Math.floor((dd.frameCount / 150) % 3));
+      Color(Math.floor((sk.frameCount / 150) % 3));
       GeneArray();
-      if (dd.frameCount % 2 === 0) {
+      if (sk.frameCount % 2 === 0) {
         if (state === 1 && Math.random() > 0.95) {
-          dd.background(backR);
+          sk.background(backR);
         }
-        dd.background(back);
+        sk.background(back);
         RandomBackground();
       }
       displayHighLightedText();
       // "+""-"
-      if (dd.eyeRight) {
-        dd.eyeRight.display();
-        dd.eyeLeft.display();
+      if (sk.eyeRight) {
+        sk.eyeRight.display();
+        sk.eyeLeft.display();
       }
     }
   };
 
   const displayHighLightedText = () => {
-    // traite array, draw dd.rect and texts highlight;
+    // traite array, draw sk.rect and texts highlight;
     for (let e = 0; e < mp.length; e += 1) {
-      dd.push();
+      sk.push();
 
       const nx = mp[e].x;
       const ny = mp[e].y;
-      dd.translate(nx * sx, ny * sy);
+      sk.translate(nx * sx, ny * sy);
       // text random size +
       if (e === mp.length - 1) {
-        dd.scale(dd.random(2, 2.2));
+        sk.scale(sk.random(2, 2.2));
       } else {
-        dd.scale(dd.random(1, 1.0 + e / mp.length / 10));
+        sk.scale(sk.random(1, 1.0 + e / mp.length / 10));
       }
       // rect background
-      dd.stroke(recS);
-      dd.strokeWeight(2);
-      dd.fill(recF);
-      dd.rect(0, 0, sx, sy);
+      sk.stroke(recS);
+      sk.strokeWeight(2);
+      sk.fill(recF);
+      sk.rect(0, 0, sx, sy);
       // text high lighted
-      dd.fill(letterFR);
-      dd.noStroke();
-      dd.textSize(140 / scale2);
-      dd.text(mp[e].text, 0, sy * 0.85);
-      dd.pop();
+      sk.fill(letterFR);
+      sk.noStroke();
+      sk.textSize(140 / scale2);
+      sk.text(mp[e].text, 0, sy * 0.85);
+      sk.pop();
     }
   };
 
@@ -268,18 +269,18 @@ const eyes = (dd) => {
     // if (mp1) {
     //   mp = mp1;
     // }
-    if (!dd.keyIsPressed && dd.mouseMove) {
+    if (!sk.keyIsPressed && sk.mouseMove) {
       let p;
       p = {
-        x: Math.floor(Math.abs(dd.mouseX / sx)),
-        y: Math.floor(Math.abs(dd.mouseY / sy)),
+        x: Math.floor(Math.abs(sk.mouseX / sx)),
+        y: Math.floor(Math.abs(sk.mouseY / sy)),
       };
       const distance = Math.sqrt(
         (p.x - mp[mp.length - 1].x) * (p.x - mp[mp.length - 1].x)
           + (p.y - mp[mp.length - 1].y) * (p.y - mp[mp.length - 1].y),
       );
       if (distance > 0) {
-        p.text = texts[Math.floor((dd.width / scaleX) * p.y + p.x)];
+        p.text = texts[Math.floor((sk.width / scaleX) * p.y + p.x)];
         mp.push(p);
         playSound(p.x, p.y);
       } else {
@@ -288,7 +289,7 @@ const eyes = (dd) => {
     }
 
     // Array Length Control
-    const eee = ((dd.width * dd.height) / (sx * sy)) * 0.22;
+    const eee = ((sk.width * sk.height) / (sx * sy)) * 0.22;
     if (mp.length > Math.floor(eee)) {
       setTimeout(() => {
         if (mp.length > 1) {
@@ -296,48 +297,48 @@ const eyes = (dd) => {
         }
       }, 1500);
     }
-    if (mp.length > (dd.width * dd.height) / (sx * sy)) {
-      mp.splice((dd.width * dd.height) / (sx * sy) - 5, 5);
+    if (mp.length > (sk.width * sk.height) / (sx * sy)) {
+      mp.splice((sk.width * sk.height) / (sx * sy) - 5, 5);
     }
-    if (dd.touches.length > 1) {
+    if (sk.touches.length > 1) {
       mp.splice(0, 1 + scale2 * scale2);
     }
   };
 
   const calculatePosition = (letter) => {
     const no = texts.indexOf(letter);
-    const y = Math.floor(no / (dd.width / scaleX));
-    const x = Math.ceil(no % (dd.width / scaleX));
+    const y = Math.floor(no / (sk.width / scaleX));
+    const x = Math.ceil(no % (sk.width / scaleX));
     return { x, y };
   };
 
   const RandomBackground = () => {
-    if (!dd.stopped) {
-      dd.textSize(140 / scale2);
-      dd.fill(letterF);
-      for (let x = 0; x < dd.width; x += sx) {
-        for (let y = 0; y < dd.height; y += sy) {
+    if (!sk.stopped) {
+      sk.textSize(140 / scale2);
+      sk.fill(letterF);
+      for (let x = 0; x < sk.width; x += sx) {
+        for (let y = 0; y < sk.height; y += sy) {
           if (Math.random() > 0.6) {
             if (Math.random() > 0.8) {
-              dd.fill(letterFS);
-              dd.text(
+              sk.fill(letterFS);
+              sk.text(
                 texts[Math.floor(Math.random() * 1000)],
                 x,
                 y + sy * 0.85,
               );
             } else {
-              dd.fill(letterFSR);
-              dd.text(texts[Math.floor(Math.random() * 200)], x, y + sy * 0.85);
+              sk.fill(letterFSR);
+              sk.text(texts[Math.floor(Math.random() * 200)], x, y + sy * 0.85);
             }
           } else {
-            if (Math.random() > 0.99 && dd.frameCount % 2 === 0) {
-              dd.push();
-              dd.noStroke();
-              dd.fill(120, 70, 120);
-              dd.rect(x, y + sy, sx, sy);
-              dd.pop();
+            if (Math.random() > 0.99 && sk.frameCount % 2 === 0) {
+              sk.push();
+              sk.noStroke();
+              sk.fill(120, 70, 120);
+              sk.rect(x, y + sy, sx, sy);
+              sk.pop();
             }
-            dd.text('我', x, y + sy * 0.85);
+            sk.text('我', x, y + sy * 0.85);
           }
         }
       }
@@ -347,12 +348,12 @@ const eyes = (dd) => {
   const playSound = (x, y) => {
     if (loading === false) {
       // const num = Math.floor(Math.random() * 5);
-      // const pan = dd.constrain(dd.map(x, 0, dd.width / sx, -1, 1), -1, 1);
-      const rate = (Math.floor((dd.height / sy - y / 2) / 5) + Math.floor(x / 3))
+      // const pan = sk.constrain(sk.map(x, 0, sk.width / sx, -1, 1), -1, 1);
+      const rate = (Math.floor((sk.height / sy - y / 2) / 5) + Math.floor(x / 3))
         * 0.618
         * 0.618
         * 0.618;
-      if (dd.soundIsLoaded) {
+      if (sk.soundIsLoaded) {
         if (reverse1 === 0) {
           sampler0.triggerAttack(rate * 440 + 10);
         } else if (reverse1 === 1) {
@@ -364,63 +365,63 @@ const eyes = (dd) => {
 
   const Color = (x) => {
     if (x === 1) {
-      back = dd.color(8, 61, 169);
-      backR = dd.color(255, 255, 100);
-      letterF = dd.color(120, 80, 80);
-      letterFS = dd.color(120, 80, 80);
-      letterFSR = dd.color(40, 50, 30);
-      letterFR = dd.color(0);
-      eyeF = dd.color(75, 0, 0);
-      eyeS = dd.color(215, 120, 30);
-      eyeBS = dd.color(200, 200, 250);
-      recS = dd.color(0, 0);
-      recF = dd.color(218, 65, 103);
+      back = sk.color(8, 61, 169);
+      backR = sk.color(255, 255, 100);
+      letterF = sk.color(120, 80, 80);
+      letterFS = sk.color(120, 80, 80);
+      letterFSR = sk.color(40, 50, 30);
+      letterFR = sk.color(0);
+      eyeF = sk.color(75, 0, 0);
+      eyeS = sk.color(215, 120, 30);
+      eyeBS = sk.color(200, 200, 250);
+      recS = sk.color(0, 0);
+      recF = sk.color(218, 65, 103);
       reverse1 = 1;
     } else if (x === 0) {
-      back = dd.color(255);
-      backR = dd.color(0);
-      letterF = dd.color(80, 120, 80);
-      letterFS = dd.color(40, 50, 40);
-      letterFSR = dd.color(180, 175, 180);
-      eyeF = dd.color(255);
-      eyeS = dd.color(40, 50, 40);
-      eyeBS = dd.color(0);
-      letterFR = dd.color(255);
-      recS = dd.color(255);
-      recF = dd.color(0);
+      back = sk.color(255);
+      backR = sk.color(0);
+      letterF = sk.color(80, 120, 80);
+      letterFS = sk.color(40, 50, 40);
+      letterFSR = sk.color(180, 175, 180);
+      eyeF = sk.color(255);
+      eyeS = sk.color(40, 50, 40);
+      eyeBS = sk.color(0);
+      letterFR = sk.color(255);
+      recS = sk.color(255);
+      recF = sk.color(0);
       reverse1 = 0;
     } else if (x === 2) {
-      back = dd.color(0);
-      backR = dd.color(255);
-      letterF = dd.color(80, 120, 80);
-      letterFS = dd.color(120, 80, 120);
-      letterFSR = dd.color(40, 50, 40);
-      letterFR = dd.color(0);
-      eyeF = dd.color(0);
-      eyeS = dd.color(250, 200, 250);
-      eyeBS = dd.color(200, 250, 200);
-      recS = dd.color(0, 0);
-      recF = dd.color(250, 200, 250);
+      back = sk.color(0);
+      backR = sk.color(255);
+      letterF = sk.color(80, 120, 80);
+      letterFS = sk.color(120, 80, 120);
+      letterFSR = sk.color(40, 50, 40);
+      letterFR = sk.color(0);
+      eyeF = sk.color(0);
+      eyeS = sk.color(250, 200, 250);
+      eyeBS = sk.color(200, 250, 200);
+      recS = sk.color(0, 0);
+      recF = sk.color(250, 200, 250);
       reverse1 = 1;
     }
   };
 
-  dd.handleTouchStarted = () => {
+  sk.handleTouchStart = () => {
     if (
-      dd.mouseX < dd.width / 2 - 400 / scale1 + 60
-      && dd.mouseX > dd.width / 2 - 400 / scale1 - 60
-      && dd.mouseY < 0.4 * dd.height + 35
-      && dd.mouseY > 0.4 * dd.height - 300 / scale1
+      sk.mouseX < sk.width / 2 - 400 / scale1 + 60
+      && sk.mouseX > sk.width / 2 - 400 / scale1 - 60
+      && sk.mouseY < 0.4 * sk.height + 35
+      && sk.mouseY > 0.4 * sk.height - 300 / scale1
     ) {
       scale2 *= 1.2;
       sx /= 1.2;
       sy /= 1.2;
     }
     if (
-      dd.mouseX < dd.width / 2 + 400 / scale1 + 60
-      && dd.mouseX > dd.width / 2 + 400 / scale1 - 60
-      && dd.mouseY < 0.4 * dd.height + 35
-      && dd.mouseY > 0.4 * dd.height - 300 / scale1
+      sk.mouseX < sk.width / 2 + 400 / scale1 + 60
+      && sk.mouseX > sk.width / 2 + 400 / scale1 - 60
+      && sk.mouseY < 0.4 * sk.height + 35
+      && sk.mouseY > 0.4 * sk.height - 300 / scale1
     ) {
       scale2 /= 1.2;
       sx *= 1.2;
@@ -429,20 +430,20 @@ const eyes = (dd) => {
     state = 1;
   };
 
-  dd.handleTouchEnded = () => {
+  sk.handleTouchEnd = () => {
     state = 0;
   };
 
-  dd.windowResized = () => {
-    dd.resizeCanvas(dd.windowWidth, dd.windowHeight);
+  sk.windowResized = () => {
+    sk.resizeCanvas(sk.windowWidth, sk.windowHeight);
   };
 
-  const setListeners = (divNode, dd) => { //eslint-disable-line
+  const setListeners = (divNode, sk) => { //eslint-disable-line
     divNode.addEventListener(
       'click',
       async () => {
         await Tone.start();
-        dd.start();
+        sk.start();
       },
       { once: true, passive: false },
     );
@@ -450,14 +451,14 @@ const eyes = (dd) => {
       'touchstart',
       async () => {
         await Tone.start();
-        dd.start();
+        sk.start();
       },
       { once: true, passive: false },
     );
     divNode.addEventListener(
       'touchstart',
       () => {
-        dd.handleTouchStarted();
+        sk.handleTouchStart();
         touched = true;
       },
       {
@@ -468,7 +469,7 @@ const eyes = (dd) => {
     divNode.addEventListener(
       'mousedown',
       () => {
-        dd.handleTouchStarted();
+        sk.handleTouchStart();
         touched = true;
       },
       {
@@ -476,11 +477,11 @@ const eyes = (dd) => {
       },
     );
 
-    divNode.addEventListener('touchend', dd.handleTouchEnded, {
+    divNode.addEventListener('touchend', sk.handleTouchEnd, {
       passive: false,
     });
 
-    divNode.addEventListener('mouseup', dd.handleTouchEnded, {
+    divNode.addEventListener('mouseup', sk.handleTouchEnd, {
       passive: false,
     });
 
@@ -495,7 +496,7 @@ const eyes = (dd) => {
     divNode.addEventListener(
       'touchmove',
       (ev) => {
-        dd.mouseMove = true;
+        sk.mouseMove = true;
         ev.preventDefault();
       },
       { passive: false },
@@ -504,17 +505,17 @@ const eyes = (dd) => {
     divNode.addEventListener(
       'mousemove',
       (ev) => {
-        if (dd.timer) clearTimeout(dd.timer);
-        dd.timer = setTimeout(() => {
-          dd.mouseMove = false;
+        if (sk.timer) clearTimeout(sk.timer);
+        sk.timer = setTimeout(() => {
+          sk.mouseMove = false;
         }, 100);
-        dd.mouseMove = true;
+        sk.mouseMove = true;
         ev.preventDefault();
       },
       { passive: false },
     );
   };
-  setListeners(divNode, dd);
+  setListeners(divNode, sk);
 };
 
 export default eyes;
