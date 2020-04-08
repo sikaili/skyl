@@ -13,5 +13,9 @@
   {
     "id": "player",
     "type": "sketch"
+  },
+  {
+    "id": "traffic",
+    "type": "sketch"
   }
 ]

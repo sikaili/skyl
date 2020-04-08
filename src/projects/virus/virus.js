@@ -46,6 +46,8 @@ const sketch = (instance) => {
     actions: [{
       name: 'addParticles',
       icon: 'add',
+    }, {
+      name: 'clearParticles', icon: 'trash',
     }],
   };
   const divNode = document.querySelector('#canvasContainer');
@@ -124,7 +126,7 @@ const sketch = (instance) => {
 
   let looping = true;
   let particles = [];
-  let virusNo = 3 + Math.floor(Math.random() * 3);
+  let virusNo = 5 + Math.floor(Math.random() * 5);
   const number = 211 + Math.floor(Math.random() * 50);
   let cursor = {
     color: [Math.random() * 120, Math.random() * 120, Math.random() * 120, 255],
@@ -165,6 +167,13 @@ const sketch = (instance) => {
       particles.push(particle);
       World.add(engine.world, particle.body);
     }
+  };
+  sk.clearParticles = () => {
+    virusNo = 3;
+    particles.forEach((particle) => {
+      Composite.remove(engine.world, particle.body);
+    });
+    particles = [];
   };
 
   sk.setup = () => {
@@ -253,8 +262,8 @@ const sketch = (instance) => {
 
     display() {
       sk.push();
-      sk.fill(this.body.isStatic ? 0 : [0, sk.noise(sk.frameCount / 20) * 255]);
-      sk.fill(this.body.isStatic ? 0 : [0, sk.noise(sk.frameCount / 20) * 255]);
+      sk.fill(this.body.isStatic ? 0 : [0, 50 + sk.noise(sk.frameCount / 20) * 255]);
+      sk.fill(this.body.isStatic ? 0 : [0, 50 + sk.noise(sk.frameCount / 20) * 255]);
       sk.translate(this.body.position.x, this.body.position.y);
       sk.rotate(this.body.angle);
       sk.beginShape();

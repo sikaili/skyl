@@ -50,14 +50,16 @@ export default class Particle {
           setTimeout(() => {
             if (Math.random() > 0.7) {
               particle.virus = false;
-              if (Math.random() > 0.6 && particle.fill[3] < 150) {
+              if (Math.random() > 0.5 && particle.fill[3] < 150) {
                 particle.immu = true;
               }
-              setTimeout(() => {
-                particle.immu = false;
-              }, timeToBeInfected * 2);
+              if (Math.random() > 0.3) {
+                setTimeout(() => {
+                  particle.immu = false;
+                }, timeToBeInfected * 2);
+              }
             }
-            if (Math.random() > 0.95 && particle.fill[3] > 100) {
+            if (Math.random() > 0.97 && particle.fill[3] > 100) {
               particle.died = true;
               this.sampler2.triggerAttack(130 + (particle.r - 20) * 2);
             }
@@ -65,14 +67,28 @@ export default class Particle {
         }, (timeToBeInfected / this.fill[3]) ** 2);
         // virus vs virus
       } else if (
-        distance < (this.r + particle.r) / 1.2
+        distance < (this.r + particle.r) * 1.05
         && this.virus
         && particle.virus
-        && particle.id !== this.id
+        // && particle.id !== this.id
+        // && this.fill[3] > 150
       ) {
-        particle.fill = particle.fill.map(
-          (color, index) => (color + this.fill[index]) / 2,
-        );
+        // 不同色传染
+        if (particle.fill[3] < this.fill[3] - 100 && this.id !== particle.id) {
+          particle = this.infection(particle);
+        }
+        // 同色染色不染透明度
+        if (particle.id === this.id) {
+          const colors = particle.fill.map(
+            (color, index) => (color + this.fill[index]) / 2,
+          );
+          particle.fill = [...colors.slice(0, 3), particle.fill[3]];
+        // 不同色传染全部
+        } else if (Math.abs(particle.fill[3] - this.fill[3]) < 100) {
+          particle.fill = particle.fill.map(
+            (color, index) => (color + this.fill[index]) / 2,
+          );
+        }
       }
     });
   }
