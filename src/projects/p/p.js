@@ -29,6 +29,25 @@ export default function (instance) {
       step: 1,
     },
     get getColor() { return [this.red.value, this.green.value, this.blue.value] || [255, 255, 255]; },
+    actions: [
+      {
+        name: 'saveCapture',
+        icon: 'image',
+      }, {
+        on: true,
+        get name() {
+          if (this.on) {
+            return 'noLoop';
+          }
+          return 'loop';
+        },
+        get icon() {
+          if (this.on) {
+            return 'pause';
+          }
+          return 'play';
+        },
+      }],
   };
 
   const divNode = document.querySelector('#canvasContainer');
@@ -170,11 +189,17 @@ export default function (instance) {
     }
   }
 
+  sk.saveCapture = () => {
+    if (sk.pixelDensity() > 1) {
+      sk.saveCanvas(document.querySelector('canvas'), `p-${Math.random().toFixed(1)}`, 'png');
+    }
+  };
+
   sk.setup = () => {
     loading = false;
     const canvas = sk.createCanvas(sk.windowWidth, sk.windowHeight);
     canvas.id = Math.random().toFixed(2);
-    sk.noCursor();
+    // sk.noCursor();
     sk.noStroke();
     [intervalX, intervalY] = [
       (sk.width + sk.height) / 40,
