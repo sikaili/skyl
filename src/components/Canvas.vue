@@ -20,7 +20,7 @@
         <div
           v-if="showCanvasSettings"
           class="Settings__Close c-animate"
-          @click="toggle('showCanvasSettings')"
+          @click.once="toggle('showCanvasSettings')"
         >
           <i
             class="tc icon ion-md-close f3"
@@ -71,7 +71,7 @@
             <input
               v-if="value.type ==='range'"
               :id="name"
-              v-model="settings[name]['value']"
+              v-model="settings[name].value"
               :name="name"
               class="Settings__MenuContainerInput"
               :class="{ 'Settings__MenuContainerInput--checkbox' : settings[name].max === 1 && settings[name].step === 1 }"
@@ -82,7 +82,7 @@
             >
             <input
               v-if="value.type==='text'"
-              v-model="settings[name]['value']"
+              v-model="settings[name].value"
               class="Settings__MenuContainerInput--text"
             >
           </template>
@@ -323,11 +323,23 @@ export default {
         margin-left: 8px !important;
         width: 120px !important;
 
+        &--text {
+          margin-left: 8px;
+          padding:0 4px;
+          border: none;
+          border-radius: 0;
+          margin: 0;
+          height: 24px;
+          float:right;
+          width: 96px;
+        }
+
         &--checkbox {
           width: 50px !important;
         }
 
         &Label {
+          line-height: 24px;
           font-size: 14px;
         }
       }

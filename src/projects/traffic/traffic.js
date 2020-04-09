@@ -2,87 +2,23 @@ import Tone from 'tone';
 
 
 const s = (instance) => {
-  const distortion = new Tone.Distortion(0.1);
-  const tremolo = new Tone.Tremolo(5, 0.6).start();
-  const synth = new Tone.Synth({
-    oscillator: {
-      type: 'sine',
-      modulationType: 'sawtooth',
-      modulationIndex: 6,
-      harmonicity: 1,
-    },
-    envelope: {
-      attack: 0.4,
-      decay: 0.1,
-      sustain: 0.8,
-      release: 1,
-    },
-  }).chain(distortion, tremolo, Tone.Master);
-  const divNode = document.querySelector('#canvasContainer');
-
   const sk = instance;
-  // save and get last
-  sk.lastKey = localStorage.getItem('last-key') || 'notok';
-  sk.thisKey = `OK${Date()}`;
-  sk.get = (key = sk.lastKey) => JSON.parse(localStorage.getItem(key)) || [];
-  sk.save = (item, key) => {
-    localStorage.setItem(key, JSON.stringify(item));
-    localStorage.setItem('last-key', key);
-  };
-  let looping = true;
-  const rect = {
-    x: 30, y: 30, r: 10, fill: [0, 0, 0, 0],
-  };
-
-
-  const triggerSynth = (time) => {
-    const notes = ['C2', 'A4', 'D3', 'A2', 'E4', 'Eb3', 'A2', 'D4'];
-    if (synth) {
-      synth.triggerAttackRelease(
-        notes[Math.floor(Math.random() * notes.length)],
-        '16N',
-        time,
-      );
-    }
-  };
-
-  const seq = new Tone.Sequence(
-    (time, note) => {
-      rect.text = null;
-      rect.fill = [
-        Math.floor(sk.random(-200, 600)),
-        Math.floor(sk.random(-255, 100)),
-        Math.floor(sk.random(-500, 500)),
-      ];
-      rect.r = (Math.floor(Math.random() * 5) * sk.height) / 15;
-      rect.x = sk.width / 2;
-      rect.y = sk.height / 2 + (330 - note) * 0.8;
-      if (synth) {
-        synth.triggerAttackRelease(note, '16n');
-      }
-    },
-    [440, 220, [440, 220, [440, 220, 440]]],
-  );
-
-  sk.stop = () => {
-    sk.noLoop();
-    synth.dispose();
-    Tone.context.suspend();
-    sk.remove();
-    console.log('traffic is killed');
-  };
 
   sk.settings = {
-    // distance: {
-    //   value: 0.8,
-    //   type: 'range',
-    //   max: 2.5,
-    //   min: 0,
-    //   step: 0.1,
-    // },
     text: {
       value: '不停止',
       type: 'text',
+    },
+    notes: {
+      value: 'A3,B2,D3,F5,G2',
+      // type: 'text',
+    },
+    bpm: {
+      value: 70,
+      // type: 'range',
+      max: 100,
+      min: 30,
+      step: 1,
     },
     actions: [{
       name: 'saveCapture',
@@ -103,6 +39,106 @@ const s = (instance) => {
       },
     }],
   };
+  const distortion = new Tone.Distortion(0.1);
+  const tremolo = new Tone.Tremolo(5, 0.6).start();
+  const synth = new Tone.Synth({
+    oscillator: {
+      type: 'sine',
+      modulationType: 'sawtooth',
+      modulationIndex: 6,
+      harmonicity: 1,
+    },
+    envelope: {
+      attack: 0.4,
+      decay: 0.1,
+      sustain: 0.8,
+      release: 1,
+    },
+  }).chain(distortion, tremolo, Tone.Master);
+
+  const divNode = document.querySelector('#canvasContainer');
+
+  // save and get last
+  sk.lastKey = localStorage.getItem('last-key') || 'notok';
+  sk.thisKey = `OK${Date()}`;
+  sk.get = (key = sk.lastKey) => JSON.parse(localStorage.getItem(key)) || [];
+  sk.save = (item, key) => {
+    localStorage.setItem(key, JSON.stringify(item));
+    localStorage.setItem('last-key', key);
+  };
+  let looping = true;
+  const rect = {
+    x: 30,
+    y: 30,
+    r: 10,
+    fill: [0, 0, 0, 0],
+    get mode() {
+      if (Math.floor((this.y / sk.height) * 4) % 2 === 0) {
+        return 'rect';
+      }
+      return 'circle';
+    },
+  };
+
+  const createRect = (note) => {
+    if (Math.random() > 0.3) rect.text = null;
+    rect.fill = [
+      Math.floor(sk.random(-200, 600)),
+      Math.floor(sk.random(-255, 100)),
+      Math.floor(sk.random(-500, 500)),
+    ];
+    rect.r = (Math.floor(Math.random() * 5) * sk.height) / 15;
+    rect.x = sk.width / 2;
+    rect.y = sk.height / 2 + (330 - note) * 0.6;
+  };
+
+  const seq = new Tone.Sequence(
+    (time, note) => {
+      createRect(note);
+      try {
+        synth.triggerAttackRelease(note, '16n');
+      } catch (err) {
+        //
+      }
+    },
+    [440, 220, [440, 220, [440, 220, 440]]],
+  );
+
+  const setSeqNotes = () => {
+    if (sk.notes !== sk.settings.notes.value) {
+      const arr = sk.settings.notes.value.split(',');
+      const notes = [arr[0], arr[1], [arr[2], arr[3], [arr[4], arr[5], arr[6]]]];
+      notes.map((a, index) => {
+        seq.at(index, a);
+      });
+      sk.notes = sk.settings.notes.value;
+    }
+  };
+
+  const triggerSynth = (time) => {
+    const notes = ['C2', 'A4', 'D3', 'A2', 'E4', 'Eb3', 'A2', 'D4'];
+    try {
+      synth.triggerAttackRelease(
+        notes[Math.floor(Math.random() * notes.length)],
+        '16N',
+        time,
+      );
+    } catch (err) {
+      //
+    }
+  };
+
+  sk.stop = () => {
+    sk.noLoop();
+    seq.stop();
+    seq.dispose();
+    synth.dispose();
+    Tone.Transport.stop();
+    Tone.context.suspend();
+    sk.remove();
+    console.log('traffic is killed');
+  };
+
   sk.pause = () => {
     Tone.Transport.toggle();
     sk.noLoop();
@@ -113,26 +149,54 @@ const s = (instance) => {
   };
 
   sk.setup = () => {
-    // sk.pixelDensity(6);
     sk.createCanvas(sk.windowWidth, sk.windowHeight);
     sk.scaleRef = (sk.width + sk.height) / 2;
     sk.background(0);
+    createRect(110);
     sk.noStroke();
     sk.rectMode(sk.CENTER);
     sk.textAlign(sk.CENTER, sk.CENTER);
+    (async () => {
+      await sk.soundReady;
+      sk.setupTone();
+    })();
+  };
+
+  sk.setupTone = () => {
     seq.humanize = true;
     seq.probability = 1;
+    seq.start();
+    Tone.Transport.schedule(triggerSynth, 0);
+    Tone.Transport.schedule(triggerSynth, '16n');
+    Tone.Transport.schedule(triggerSynth, '8n');
+    Tone.Transport.schedule(triggerSynth, '4n');
+    Tone.Transport.loopEnd = '1:0:0';
+    Tone.Transport.loop = true;
+    Tone.Transport.bpm.value = 70;
+    Tone.Transport.start();
+  };
+
+  sk.tri = (x, y, r) => {
+    sk.beginShape();
+    sk.vertex(x, y - r / 1.33);
+    sk.vertex(x + r / 2, y + r / 1.66);
+    sk.vertex(x - r / 2, y + r / 1.66);
+    sk.endShape();
   };
 
   sk.draw = () => {
+    // setSeqNotes();
+    Tone.Transport.bpm.value = sk.settings.bpm.value;
     rect.r
       += ((sk.noise(rect.fill[0], rect.fill[3], rect.fill[1]) * sk.scaleRef) / 2
         - rect.r)
       * 0.5;
     sk.fill(rect.fill);
-    if (rect.y < sk.height / 2) {
+    if (rect.mode === 'rect') {
+      sk.smooth();
       sk.rect(rect.x, rect.y, rect.r);
     } else {
+      sk.smooth();
       sk.ellipse(rect.x, rect.y, rect.r);
     }
     if (rect.text) {
@@ -142,14 +206,9 @@ const s = (instance) => {
     }
   };
   sk.handleTouchStart = () => {
-    rect.y *= Math.floor(Math.random() * 3 - 1) * 1.2;
-    if (Math.random() > 0.6) rect.y = sk.mouseY;
-
-    rect.r /= 5;
+    rect.y = Math.random() > 0.5 ? 0 : sk.height * 0.9;
+    rect.r /= 0.5 + Math.random();
     rect.text = sk.settings.text.value[Math.floor(Math.random() * sk.settings.text.value.length)];
-    if (Math.random() > 0.95) {
-      sk.background(0);
-    }
   };
 
   sk.keyPressed = () => {
@@ -185,15 +244,9 @@ const s = (instance) => {
     'click',
     async () => {
       await Tone.start();
-      seq.start();
-      Tone.Transport.schedule(triggerSynth, 0);
-      Tone.Transport.schedule(triggerSynth, '16n');
-      Tone.Transport.schedule(triggerSynth, '8n');
-      Tone.Transport.schedule(triggerSynth, '4n');
-      Tone.Transport.loopEnd = '1:0:0';
-      Tone.Transport.loop = true;
-      Tone.Transport.bpm.value = 70;
-      Tone.Transport.start();
+      sk.soundReady = new Promise((resolve) => {
+        resolve(true);
+      });
     },
     { once: true, passive: false },
   );
@@ -202,15 +255,9 @@ const s = (instance) => {
     'touchstart',
     async () => {
       await Tone.start();
-      seq.start();
-      Tone.Transport.schedule(triggerSynth, 0);
-      Tone.Transport.schedule(triggerSynth, '16n');
-      Tone.Transport.schedule(triggerSynth, '8n');
-      Tone.Transport.schedule(triggerSynth, '4n');
-      Tone.Transport.loopEnd = '1:0:0';
-      Tone.Transport.loop = true;
-      Tone.Transport.bpm.value = 70;
-      Tone.Transport.start();
+      sk.soundReady = new Promise((resolve) => {
+        resolve(true);
+      });
     },
     { once: true, passive: false },
   );
