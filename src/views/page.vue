@@ -53,7 +53,7 @@
             v-for="person in item.credits"
             :key="person.link + person.role"
             class="flex f7"
-            style="line-height:0"
+            style="line-height: 0;"
           >
             <p class="w-40">
               {{ person.role }}:
@@ -74,7 +74,7 @@
             v-for="(person, n) in item.credits"
             :key="person.link + n"
             class="f7 flex"
-            style="line-height:1"
+            style="line-height: 1;"
           >
             <p class="truncate w-60 ma1">
               {{ person.role }}:
@@ -143,26 +143,26 @@ export default {
     },
     play() {
       this.setActiveItem(this.item.id);
-      this.$router.push({ path: `/play/${this.item.id}` });
+      this.$router.push({ path: `/play/${this.$store.getters.activeItem.app || this.item.id}` });
     },
   },
 };
 </script>
 
 <style scoped>
-.black {
-  color: black;
-}
-.iframe {
-  height: 100%;
-  width: 100%;
-}
+    .black {
+        color: black;
+    }
+    .iframe {
+        height: 100%;
+        width: 100%;
+    }
 
-.idiv {
-  position: absolute;
-  top: 5rem;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
-}
+    .idiv {
+        position: absolute;
+        top: 5rem;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+    }
 </style>

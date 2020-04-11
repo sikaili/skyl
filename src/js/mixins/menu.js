@@ -41,7 +41,7 @@ export default {
     ...mapActions(['setActiveItem', 'toggleItem', 'changeLoadingState']),
     play(item) {
       this.setActiveItem(item.id);
-      this.$router.push({ path: `/play/${item.id}` });
+      this.$router.push({ path: `/play/${item.app || item.id}` });
     },
     setItemActive(item, options) {
       this.$router

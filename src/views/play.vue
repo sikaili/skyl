@@ -27,7 +27,7 @@ export default {
 </script>
 
 <style scoped>
-a:hover {
-  background-color: black;
-}
+    a:hover {
+        background-color: black;
+    }
 </style>

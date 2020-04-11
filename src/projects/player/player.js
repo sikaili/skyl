@@ -28,14 +28,14 @@ export default function (sk) {
     },
     freq1: {
       value: 500,
-      type: 'range',
+      // type: 'range',
       max: 950,
       min: 50,
       step: 50,
     },
     freq2: {
       value: 200,
-      type: 'range',
+      // type: 'range',
       max: 950,
       min: 50,
       step: 50,
@@ -56,32 +56,25 @@ export default function (sk) {
   let xoff = 0;
   let particles = [];
   let forceDirection = -1;
-  // sk.songList = ['Rain-Addiction', 'Emb', '2019-12-YeChe', 'La-Danse'];
-  // sk.songId = sk.songList[Math.floor(Math.random() * sk.songList.length)];
-  sk.songId = 'Rotation';
+  sk.songList = ['Rain-Addiction', 'Emb', '2019-12-YeChe', 'La-Danse'];
+  sk.songId = sk.songList[Math.floor(Math.random() * sk.songList.length)];
+  // sk.songId = 'Rotation';
   if (vm.$route.query.id && typeof vm.$route.query.id === 'string') {
     sk.songId = vm.$route.query.id;
-  }
-
-  switch (sk.songId) {
-    case 'Rotation':
-      sk.settings.grey = true;
-      sk.settings.freq1.vale = 300;
-      sk.settings.freq2.vale = 650;
-      break;
-    default:
-      break;
+  } else {
+    vm.$router.push({ query: { id: sk.songId } });
   }
 
   let player;
 
   sk.setSong = (songId) => {
+    sk.songId = songId;
+    songId = songId.toLowerCase();
     const sound = () => import('./sound/' + songId + '.m4a'); //eslint-disable-line
     sound().then((module) => {
       const soundFile = module.default;
       state = -1;
       songPlayed = -1;
-      sk.songId = songId;
       soundIsLoading = true;
       if (player) {
         player.disconnect(fft);
@@ -91,6 +84,16 @@ export default function (sk) {
       player = new Tone.Player(soundFile, () => { soundIsLoading = false; }).toMaster();
       player.connect(fft);
     });
+    switch (sk.songId) {
+      case 'Rotation':
+      case 'rotation':
+        sk.settings.grey = true;
+        sk.settings.freq1.vale = 300;
+        sk.settings.freq2.vale = 650;
+        break;
+      default:
+        break;
+    }
   };
 
   sk.setSong(sk.songId);
@@ -470,7 +473,7 @@ export default function (sk) {
       sk.push();
       if (state === -1 || songPlayed === -1) {
         sk.background(0, 180);
-        sk.stroke(0, 0);
+        sk.noStroke(0);
         sk.fill(200, 100, 100, (Math.sin(sk.frameCount / 100 * 2 * sk.PI) + 1) * 180);
         sk.textSize(sk.width > 768 ? 36 : 24);
         if (soundIsLoading === false) {

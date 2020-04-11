@@ -16,9 +16,9 @@
         :style="iframeStyle"
       />
       <Canvas
-        v-if="activeItem.type === 'sketch' || activeItem.type === 'music'"
+        v-if="activeItem.type === 'sketch' || activeItem.type === 'musicIframe'"
         :key="key + 2"
-        :current="activeItem.id"
+        :current="activeItem.app ? activeItem.app : activeItem.id"
         :type="activeItem.type"
       />
     </div>
@@ -136,26 +136,26 @@ export default {
 </script>
 
 <style>
-.slide-fade-main-enter-active {
-  transition: all 0.2s ease;
-}
-.slide-fade-main-leave-active {
-  transition: all 0s;
-}
-.slide-fade-main-enter,
-.slide-fade-main-leave-to {
-  transform: translateY(-30px);
-  opacity: 0;
-}
-canvas.p5Canvas {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 0 0 0 0;
-}
+    .slide-fade-main-enter-active {
+        transition: all 0.2s ease;
+    }
+    .slide-fade-main-leave-active {
+        transition: all 0s;
+    }
+    .slide-fade-main-enter,
+    .slide-fade-main-leave-to {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+    canvas.p5Canvas {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0 0 0 0;
+    }
 
-body {
-  padding: 0 0 0 0;
-  margin: 0 0 0 0;
-}
+    body {
+        padding: 0 0 0 0;
+        margin: 0 0 0 0;
+    }
 </style>

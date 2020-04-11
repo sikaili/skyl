@@ -3,7 +3,7 @@
     <div id="canvasContainer" />
     <div v-if="$route.name ==='play'">
       <div
-        v-if="!showCanvasSettings && (settings || type === 'music')"
+        v-if="!showCanvasSettings && (settings || type === 'musicIframe')"
         class="Settings Settings__Icon white bg-black-80 bg-animate hover-bg-white hover-black pv2 ph3"
         @click="toggle('showCanvasSettings')"
       >
@@ -27,7 +27,7 @@
           />
         </div>
         <p
-          v-if="(settings && settings.player) || type === 'music'"
+          v-if="(settings && settings.player) || type === 'musicIframe'"
           class="Settings__Player pa2 bg-animate hover-bg-white hover-black mb0 pb2 white bg-black-60"
           @click="toggle('showPlayerList')"
         >
@@ -43,7 +43,7 @@
         <div
           v-if="showPlayerList"
           class="Settings__PlayerList overflow-y-scroll f6 tl bg-white-30"
-          :class="{ 'Settings__PlayerList--full': type === 'music' }"
+          :class="{ 'Settings__PlayerList--full': type === 'musicIframe' }"
         >
           <span
             v-for="(songId, index) in songs"
@@ -135,7 +135,7 @@ export default {
   },
   data() {
     return {
-      showPlayerList: this.type === 'music',
+      showPlayerList: this.type === 'musicIframe',
       showCanvasSettings: false,
       settings: null,
       songs: ['Rotation', 'La-Danse', 'flower', 'saturation-chinoise', '2019-12-YeChe', 'Rain-Addiction', 'Emb', 'c-syn', 'e-minor'],
@@ -155,6 +155,7 @@ export default {
         return;
       }
       switch (val) {
+        case 'rotation':
         case 'Rotation':
           this.setRGB([0, 50, 0]);
           break;
@@ -174,12 +175,12 @@ export default {
   },
   beforeMount() {
     loaded = false;
-    if (this.type !== 'music') {
+    if (this.type !== 'musicIframe') {
       changeSketch(this.current);
     }
     loaded = true;
     const getSettings = (retry) => {
-      if (this.type === 'music') {
+      if (this.type === 'musicIframe') {
         this.songId = this.current;
         return;
       }
@@ -188,11 +189,13 @@ export default {
           this.songId = current.songId ? current.songId : null;
 
           const savedSettings = JSON.parse(localStorage.getItem(this.current));
-          // set only static values, get() begins with _
+          // set only static values, get() begins with get
           if (savedSettings) {
             const keys = Object.keys(savedSettings).filter((name) => !name.includes('get') && name !== 'actions');
             keys.forEach((key) => {
-              current.settings[key] = savedSettings[key];
+              if (current.settings[key]) {
+                current.settings[key] = savedSettings[key];
+              }
             });
           }
 
@@ -203,6 +206,11 @@ export default {
       }, retry ? 1500 : 500);
     };
     getSettings();
+  },
+  mounted() {
+    if (this.current === 'player' && this.$store.getters.activeItem.id !== 'player') {
+      this.$router.push({ params: { id: 'player' }, query: { id: this.$store.getters.activeItem.id } });
+    }
   },
   beforeDestroy() {
     if (current) {
@@ -219,7 +227,7 @@ export default {
   },
   methods: {
     setSketchSong(songId) {
-      if (this.type === 'music') {
+      if (this.type === 'musicIframe') {
         if (this.iframes.includes(songId)) {
           this.$store.dispatch('setActiveItem', songId);
           this.$router.push({ params: { id: songId } });
@@ -231,12 +239,12 @@ export default {
       }
       if (!this.iframes.includes(songId)) {
         current.setSong(songId);
-        this.toggle('showCanvasSettings');
+        this.hide('showCanvasSettings');
         this.songId = songId;
         this.$router.push({ query: { id: songId } });
       } else {
         this.$store.dispatch('setActiveItem', songId);
-        this.$router.push({ params: { id: songId } });
+        this.$router.push({ params: { id: 'player' }, query: { id: songId } });
       }
     },
     setRGB(colorArray) {
@@ -256,7 +264,7 @@ export default {
       }
     },
     forceUpdate() {
-      if (window.confirm('Update to the newest version?')) { //eslint-disable-line
+      if (window.confirm('Empty cache and update to the newest version?')) { //eslint-disable-line
         window.location.reload(true);
       }
     },

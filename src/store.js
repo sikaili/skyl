@@ -48,11 +48,7 @@ const actions = {
     context.commit('TOGGLE_ITEM', payload);
   },
   setActiveItem(context, payload) {
-    // if (payload.type === "sketch") {
-    //   context.commit("SET_ACTIVE_ITEM", payload);
-    // } else if (payload && payload.link.includes("https://")) {
     context.commit('SET_ACTIVE_ITEM', payload);
-    // }
   },
   setIframeItems(context, payload) {
     context.commit('SET_IFRAME_ITEMS', payload);

@@ -14,7 +14,7 @@
     </span>
     <div
       class="f6 tl"
-      style="min-height:5rem;"
+      style="min-height: 5rem;"
     >
       <p
         class="pa2 bg-animate hover-bg-white hover-black mb0 pb2 white bg-black-60"
@@ -108,7 +108,7 @@ export default {
       iframeItems: 'iframeItems',
     }),
     filteredIframeItems() {
-      return this.iframeItems.filter((item) => item.type !== 'music');
+      return this.iframeItems.filter((item) => item.type !== 'musicIframe' && !item.app);
     },
   },
   created() {
@@ -153,7 +153,7 @@ export default {
       if (item !== this.activeItem) {
         this.displayList = false;
         this.$store.dispatch('setActiveItem', item);
-        this.$router.replace({ params: { id: this.activeItem.id } });
+        this.$router.replace({ params: { id: this.activeItem.app || this.activeItem.id } });
         this.setActionButton();
       }
     },
@@ -176,11 +176,11 @@ export default {
 </script>
 
 <style scoped>
-a:hover {
-  background-color: black;
-}
-.listItem {
-  line-height: 30px;
-  margin: 4px 0;
-}
+    a:hover {
+        background-color: black;
+    }
+    .listItem {
+        line-height: 30px;
+        margin: 4px 0;
+    }
 </style>

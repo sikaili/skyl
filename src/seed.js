@@ -12,7 +12,7 @@ const seedData = {
       year: 2019,
       credits: [
         {
-          role: 'Concept, Sound, Code',
+          role: 'Sound, code ',
           name: 'Sikai Li',
           link: 'https://skyl.fr',
         },
@@ -30,17 +30,17 @@ const seedData = {
       img: '/img/covers/where-is-joe.jpg',
       credits: [
         {
-          role: 'Concept, Development',
+          role: 'Design, code ',
           name: 'Sikai Li',
           link: 'https://skyl.fr',
         },
         {
-          role: 'Ideas, Support',
+          role: 'Ideas, support ',
           name: 'Olaf Avenati',
           link: 'https://olaf.avenati.net',
         },
         {
-          role: 'Communication',
+          role: 'Communication ',
           name: 'Yasmine Ben Khaled, Solène Pyrizok, Mathilde Zajac',
         },
       ],
@@ -59,17 +59,17 @@ const seedData = {
       show: false,
       credits: [
         {
-          role: 'Code, Electronics, Sound',
+          role: 'Code, electronics, sound ',
           name: 'Sikai Li',
           link: 'https://skyl.fr',
         },
         {
-          role: 'Product, Game Design',
+          role: 'Product, game design ',
           name: 'Theo Le Du',
           link: 'https://cosmografik.fr/',
         },
         {
-          role: '3D Graphics, Effects',
+          role: '3D graphics, effects ',
           name: 'Nicolas Grossman',
           link: 'https://epoqevisual.com/',
         },
@@ -84,13 +84,13 @@ const seedData = {
       name: 'Eyes',
       year: 2018,
       des:
-        'The 5000 most common Chinese characters sorted by frequency, displayed or hidden on the same page. Cute brother is watching you.',
+        'The 5000 most common hanzi sorted by frequency. Cute brother is watching you.',
       link: 'https://eyes.skyl.fr',
       img: '/img/covers/eyes.png',
       show: false,
       credits: [
         {
-          role: 'Concept, Sound, Code',
+          role: 'Concept, sound, code ',
           name: 'Sikai Li',
           link: 'https://skyl.fr',
         },
@@ -111,12 +111,12 @@ const seedData = {
       show: false,
       credits: [
         {
-          role: 'Concept, Sound, Code',
+          role: 'Concept, sound, code ',
           name: 'Sikai Li',
           link: 'https://skyl.fr',
         },
         {
-          role: 'Poem',
+          role: 'Poem ',
           name: 'Ryan Dzelzkalns',
           link: 'https://www.ryandz.com',
         },
@@ -126,11 +126,11 @@ const seedData = {
       name: 'Noise Draw',
       year: 2017,
       des:
-        'A tool I made, to draw perlin noise lines and make glichy sound at the same time.',
+        'Draw perlin noise lines and make glichy sound at the same time.',
       link: 'https://noise-draw.skyl.fr',
       credits: [
         {
-          role: 'Concept, Code',
+          role: 'Concept, code ',
           name: 'Sikai Li',
           link: 'https://skyl.fr',
         },
@@ -141,15 +141,33 @@ const seedData = {
   ],
   music: [
     {
+      name: 'Rotation',
+      app: 'player',
+      type: 'sketch',
+      year: '2020',
+      des:
+        '锋利的碎片在旋转',
+      link: 'https://skyl.fr/play/player?id=Rotation',
+      img: '/img/covers/Rotation.jpg',
+      credits: [
+        {
+          role: 'Music, code ',
+          name: 'Sikai Li',
+          link: 'https://skyl.fr',
+        },
+      ],
+      show: false,
+    },
+    {
       name: 'P',
       year: '2019',
       des:
-        'Speed up a single sound object, move and compose your own combination',
+        'Speed up a single sound object, move and compose your own',
       link: 'https://skyl.fr/play/p/',
       img: '/img/covers/p.png',
       credits: [
         {
-          role: 'Code',
+          role: 'Code, recording ',
           name: 'Sikai Li',
           link: 'https://skyl.fr',
         },
@@ -158,36 +176,21 @@ const seedData = {
     },
     {
       name: 'Saturation Chinoise',
-      type: 'music',
+      type: 'musicIframe',
       year: '2018',
       link: 'https://apps.skyl.fr/saturation-chinoise/',
       des:
-        "Music for the video game 'Plastic Arcade' I've been working on during my residency at thecamp, 80's style guitar riff & retro synth sound. There's a also chiptone remake done by 2080.",
+        "Music for the video game 'Plastic Arcade' I've been working on during my residency at thecamp, 80's style guitar riff & retro synth sound.",
       img: '/img/covers/saturation-chinoise.jpg',
       show: false,
       credits: [
         {
-          role: 'Composition & Production',
+          role: 'Music ',
           name: 'Sikai Li',
           link: 'https://skyl.fr',
         },
         {
-          role: 'Game Designer',
-          name: 'Theo Le Du',
-          link: 'https://cosmografik.fr/',
-        },
-        {
-          role: '3D Artist',
-          name: 'Nicolas Grossman',
-          link: 'https://epoqevisual.com/',
-        },
-        {
-          role: 'Host',
-          name: 'thecamp',
-          link: 'https://www.thecamp.fr',
-        },
-        {
-          role: 'Music for Game',
+          role: 'For game ',
           name: 'Plastic Arcade',
           link: 'https://www.hivers.fr/hive-2/projects/plastic-arcade/',
         },
@@ -195,20 +198,20 @@ const seedData = {
     },
     {
       name: 'Flower',
-      des: 'A song.',
-      type: 'music',
+      des: '花',
+      type: 'musicIframe',
       year: 2016,
       link: 'https://apps.skyl.fr/hua/',
       img: '/img/covers/hua.jpg',
       show: false,
       credits: [
         {
-          role: 'Composition & Production',
+          role: 'Music ',
           name: 'Sikai Li',
           link: 'https://skyl.fr',
         },
         {
-          role: 'Post-Production',
+          role: 'Post-Production ',
           name: 'AB Studio',
           link: '',
         },
@@ -263,8 +266,11 @@ let allIframeLinks = linksFromProjects.concat(extraIframeLinks);
 allIframeLinks.forEach((item) => {
   if (!item.id) item.id = getNameFromLink(item.link);
 });
-allIframeLinks = allIframeLinks.map((iframeObject) => ({ id: iframeObject.id, link: iframeObject.link, type: iframeObject.type }));
+allIframeLinks = allIframeLinks.map((iframeObject) => ({
+  id: iframeObject.id, link: iframeObject.link, type: iframeObject.type, app: iframeObject.app,
+}));
 allIframeLinks.filter((iframeObject) => iframeObject.id);
+
 for (let i = 0; i < allIframeLinks.length; i += 1) {
   if (!allIframeLinks[i].link.includes('https')) {
     allIframeLinks.splice(i, 1);
@@ -293,5 +299,8 @@ if (!navigator.onLine) {
   console.log('OFFLINE');
   allIframeLinks = allIframeLinks.filter((a) => a.type === 'sketch');
 }
+
+console.log(JSON.stringify(allIframeLinks));
+
 
 export { seedData, allIframeLinks };
