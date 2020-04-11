@@ -1,0 +1,40 @@
+{
+  "extends": "stylelint-config-recommended-scss",
+  "rules": {
+      "no-descending-specificity": null,
+      "no-empty-source": null,
+      "declaration-block-no-shorthand-property-overrides": null,
+      "selector-pseudo-class-no-unknown": null,
+      "selector-pseudo-element-no-unknown": null,
+      "media-feature-name-no-unknown": null,
+      "property-no-unknown": [ true, {
+          "ignoreProperties": [
+              "/^bp-.+/",
+              "/^span-.+/",
+              "/^width-.+/",
+              "/^height-.+/",
+              "scrollbar-width"
+          ]
+      }],
+      "indentation": [4, {
+          "baseIndentLevel": 1
+      }],
+      "at-rule-empty-line-before": ["always", {
+          ignoreAtRules: [
+              "include",
+              "import",
+              "font-face",
+              "if",
+              "else",
+              "each"
+          ]
+      }],
+      "declaration-block-trailing-semicolon": "always",
+      "selector-list-comma-newline-after": "always",
+      "selector-combinator-space-after": "always",
+      "selector-combinator-space-before": "always",
+      "declaration-colon-space-after": "always",
+      "declaration-colon-space-before": "never",
+      "block-opening-brace-space-before": "always"
+  }
+}

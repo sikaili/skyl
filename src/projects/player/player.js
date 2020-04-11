@@ -26,6 +26,21 @@ export default function (sk) {
       min: 0,
       step: 1,
     },
+    freq1: {
+      value: 500,
+      type: 'range',
+      max: 950,
+      min: 50,
+      step: 50,
+    },
+    freq2: {
+      value: 200,
+      type: 'range',
+      max: 950,
+      min: 50,
+      step: 50,
+    },
+    grey: false,
     get getColor() { return [this.red.value, this.green.value, this.blue.value] || [255, 50, 50]; },
   };
   const divNode = document.querySelector('#canvasContainer');
@@ -41,16 +56,27 @@ export default function (sk) {
   let xoff = 0;
   let particles = [];
   let forceDirection = -1;
-  sk.songList = ['Rain-Addiction', 'Emb', '2019-12-YeChe', 'La-Danse'];
-  sk.songId = sk.songList[Math.floor(Math.random() * sk.songList.length)];
+  // sk.songList = ['Rain-Addiction', 'Emb', '2019-12-YeChe', 'La-Danse'];
+  // sk.songId = sk.songList[Math.floor(Math.random() * sk.songList.length)];
+  sk.songId = 'Rotation';
   if (vm.$route.query.id && typeof vm.$route.query.id === 'string') {
     sk.songId = vm.$route.query.id;
+  }
+
+  switch (sk.songId) {
+    case 'Rotation':
+      sk.settings.grey = true;
+      sk.settings.freq1.vale = 300;
+      sk.settings.freq2.vale = 650;
+      break;
+    default:
+      break;
   }
 
   let player;
 
   sk.setSong = (songId) => {
-    const sound = () => import('./sound/' + songId + '.m4a');
+    const sound = () => import('./sound/' + songId + '.m4a'); //eslint-disable-line
     sound().then((module) => {
       const soundFile = module.default;
       state = -1;
@@ -300,7 +326,7 @@ export default function (sk) {
     this.framesSinceLastPeak = 0;
     this.decayRate = 0.95;
 
-    this.threshold = threshold || 0.35;
+    this.threshold = threshold || 0.1;
     this.cutoff = 0;
     this.cutoffMult = 1.5;
 
@@ -349,6 +375,7 @@ export default function (sk) {
   sk.setup = () => {
     sk.randomSeed(2200);
     peakDetect = new PeakDetect();
+
     sk.createCanvas(sk.windowWidth, sk.windowHeight);
     sk.stroke(255, 255, 255);
     sk.strokeWeight(10);
@@ -371,21 +398,19 @@ export default function (sk) {
       const spectrum = fft.getValue().map((value) => Math.abs((value + 100) * 3));
       let sum = 0;
       let sum1 = 0;
-      for (let i = 500; i < 700; i += 1) {
-        sum += spectrum[i];
-      }
+      sum = spectrum.filter((freq, i) => (i > sk.settings.freq1.value) && (i < sk.settings.freq1.value + 200));
+      sum = sum.reduce((a, b) => a + b);
       sum = sum / 200 * 1.1;
       if (state === 1 || state === 2) {
         sum = 0;
       }
-      for (let i = 200; i < 400; i += 1) {
-        sum1 += spectrum[i];
-      }
-      sum1 /= 200;
+      sum1 = spectrum.filter((freq, i) => (i > sk.settings.freq2.value) && (i < sk.settings.freq2.value + 200));
+      sum1 = sum1.reduce((a, b) => a + b) / 200;
       sum1 = sum1 > 1000 ? 100 : sum1;
       sum = sum > 1000 ? 100 : sum;
       peakDetect.update(spectrum);
       if (peakDetect.isDetected) {
+        sk.background(255);
         addParticles(1, sum1);
         forceDirection = 1;
         sk.stroke(sk.random(800), 50, 50);
@@ -440,6 +465,8 @@ export default function (sk) {
         particles[i].display(sum1, sum);
       }
       sk.pop();
+      if (sk.settings.grey) { sk.filter(sk.GRAY); }
+
       sk.push();
       if (state === -1 || songPlayed === -1) {
         sk.background(0, 180);

@@ -39,9 +39,9 @@ const s = (instance) => {
       },
     }],
   };
-  const distortion = new Tone.Distortion(0.1);
-  const tremolo = new Tone.Tremolo(5, 0.6).start();
-  const synth = new Tone.Synth({
+  let distortion = new Tone.Distortion(0.1);
+  let tremolo = new Tone.Tremolo(5, 0.6).start();
+  let synth = new Tone.Synth({
     oscillator: {
       type: 'sine',
       modulationType: 'sawtooth',
@@ -92,7 +92,7 @@ const s = (instance) => {
     rect.y = sk.height / 2 + (330 - note) * 0.6;
   };
 
-  const seq = new Tone.Sequence(
+  let seq = new Tone.Sequence(
     (time, note) => {
       createRect(note);
       try {
@@ -131,8 +131,10 @@ const s = (instance) => {
   sk.stop = () => {
     sk.noLoop();
     seq.stop();
-    seq.dispose();
-    synth.dispose();
+    seq = null;
+    synth = null;
+    distortion = null;
+    tremolo = null;
     Tone.Transport.stop();
     Tone.context.suspend();
     sk.remove();

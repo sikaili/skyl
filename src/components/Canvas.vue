@@ -138,7 +138,7 @@ export default {
       showPlayerList: this.type === 'music',
       showCanvasSettings: false,
       settings: null,
-      songs: ['La-Danse', 'flower', 'saturation-chinoise', '2019-12-YeChe', 'Rain-Addiction', 'Emb', 'c-syn', 'e-minor'],
+      songs: ['Rotation', 'La-Danse', 'flower', 'saturation-chinoise', '2019-12-YeChe', 'Rain-Addiction', 'Emb', 'c-syn', 'e-minor'],
       iframes: ['c-syn', 'e-minor', 'flower', 'saturation-chinoise'],
       songId: null,
     };
@@ -155,6 +155,9 @@ export default {
         return;
       }
       switch (val) {
+        case 'Rotation':
+          this.setRGB([0, 50, 0]);
+          break;
         case 'La-Danse':
           this.setRGB([159, 45, 58]);
           break;
@@ -281,175 +284,177 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#canvasContainer {
-  position: absolute;
-  z-index: -999;
-  width: 100vw;
-  height: 100vh;
-}
-.Settings {
-  position: absolute;;
-  transition: all 0.5s;
+    #canvasContainer {
+        position: absolute;
+        z-index: -999;
+        width: 100vw;
+        height: 100vh;
+    }
 
-  &__Icon {
-    position: fixed;
-    right: 28px;
-    bottom: 30px;
-  }
+    .Settings {
+        position: absolute;
+        transition: all 0.5s;
 
-  &__Close {
-    color:black;
-    font-size: 30px;
-    position: absolute;
-    padding: 0 8px 12px 16px;
-    right:0;
-    top:0;
-  }
-  &__Menu {
-    background-color: rgba(220,220,220,0.7);
-    width: auto;
-    position: fixed;
-    right: 30px;
-    height: 0%;
-    top: 100%;
-    padding-top: 24px;
+        &__Icon {
+            position: fixed;
+            right: 28px;
+            bottom: 30px;
+        }
 
-    &Container {
-      margin: 16px;
+        &__Close {
+            color: black;
+            font-size: 30px;
+            position: absolute;
+            padding: 0 8px 12px 16px;
+            right: 0;
+            top: 0;
+        }
 
-      &Input {
-        float:right;
+        &__Menu {
+            background-color: rgba(220,220,220,0.7);
+            width: auto;
+            position: fixed;
+            right: 30px;
+            height: 0%;
+            top: 100%;
+            padding-top: 24px;
+
+            &Container {
+                margin: 16px;
+
+                &Input {
+                    float: right;
+                    background: transparent;
+                    margin-left: 8px !important;
+                    width: 120px !important;
+
+                    &--text {
+                        margin-left: 8px;
+                        padding: 0 4px;
+                        border: none;
+                        border-radius: 0;
+                        margin: 0;
+                        height: 24px;
+                        float: right;
+                        width: 96px;
+                    }
+
+                    &--checkbox {
+                        width: 50px !important;
+                    }
+
+                    &Label {
+                        line-height: 24px;
+                        font-size: 14px;
+                    }
+                }
+            }
+
+            &--active {
+                top: unset;
+                bottom: 30px;
+                height: auto;
+            }
+        }
+
+        &__Player {
+            min-width: 208px;
+
+            &List {
+                max-height: 184px;
+                background-color: rgba(0, 0, 0, 0.3);
+
+                &--full {
+                    max-height: 352px;
+                }
+            }
+        }
+    }
+
+    input[type=range].Settings__MenuContainerInput {
+        -webkit-appearance: none;
+        width: 100%;
+        margin: -1.45px 0;
+    }
+    input[type=range].Settings__MenuContainerInput:focus {
+        outline: none;
+    }
+    input[type=range].Settings__MenuContainerInput::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 26.9px;
+        cursor: pointer;
+        box-shadow: 0.2px 0.2px 0px rgba(100, 100, 100, 0.1), 0px 0px 0.2px rgba(113, 113, 113, 0.1);
+        background: #dadce1;
+        border-radius: 25px;
+        border: 1.6px solid rgba(180, 180, 100, 0);
+    }
+    input[type=range].Settings__MenuContainerInput::-webkit-slider-thumb {
+        box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);
+        border: 1px solid rgba(100, 100, 100, 0.1);
+        height: 24px;
+        width: 24px;
+        border-radius: 13px;
+        background: rgba(0, 0, 0, 0.8);
+        cursor: pointer;
+        -webkit-appearance: none;
+        margin-top: -0.15px;
+    }
+    input[type=range].Settings__MenuContainerInput:focus::-webkit-slider-runnable-track {
+        background: #ffffff;
+    }
+    input[type=range].Settings__MenuContainerInput::-moz-range-track {
+        width: 100%;
+        height: 26.9px;
+        cursor: pointer;
+        box-shadow: 0.2px 0.2px 0px rgba(100, 100, 100, 0.1), 0px 0px 0.2px rgba(113, 113, 113, 0.1);
+        background: #dadce1;
+        border-radius: 25px;
+        border: 1.6px solid rgba(180, 180, 100, 0);
+    }
+    input[type=range].Settings__MenuContainerInput::-moz-range-thumb {
+        box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);
+        border: 1px solid rgba(100, 100, 100, 0.1);
+        height: 24px;
+        width: 24px;
+        border-radius: 13px;
+        background: rgba(0, 0, 0, 0.8);
+        cursor: pointer;
+    }
+    input[type=range].Settings__MenuContainerInput::-ms-track {
+        width: 100%;
+        height: 26.9px;
+        cursor: pointer;
         background: transparent;
-        margin-left: 8px !important;
-        width: 120px !important;
-
-        &--text {
-          margin-left: 8px;
-          padding:0 4px;
-          border: none;
-          border-radius: 0;
-          margin: 0;
-          height: 24px;
-          float:right;
-          width: 96px;
-        }
-
-        &--checkbox {
-          width: 50px !important;
-        }
-
-        &Label {
-          line-height: 24px;
-          font-size: 14px;
-        }
-      }
+        border-color: transparent;
+        color: transparent;
     }
-
-    &--active {
-      top: unset;
-      bottom: 30px;
-      height: auto;
+    input[type=range].Settings__MenuContainerInput::-ms-fill-lower {
+        background: #b0b4bf;
+        border: 1.6px solid rgba(180, 180, 100, 0);
+        border-radius: 50px;
+        box-shadow: 0.2px 0.2px 0px rgba(100, 100, 100, 0.1), 0px 0px 0.2px rgba(113, 113, 113, 0.1);
     }
-  }
-
-  &__Player {
-    min-width: 208px;
-
-    &List {
-      max-height: 184px;
-      background-color:rgba(0, 0, 0, 0.3);
-
-      &--full {
-        max-height: 352px;
-      }
+    input[type=range].Settings__MenuContainerInput::-ms-fill-upper {
+        background: #dadce1;
+        border: 1.6px solid rgba(180, 180, 100, 0);
+        border-radius: 50px;
+        box-shadow: 0.2px 0.2px 0px rgba(100, 100, 100, 0.1), 0px 0px 0.2px rgba(113, 113, 113, 0.1);
     }
-  }
-}
-
-input[type=range].Settings__MenuContainerInput {
-  -webkit-appearance: none;
-  width: 100%;
-  margin: -1.45px 0;
-}
-input[type=range].Settings__MenuContainerInput:focus {
-  outline: none;
-}
-input[type=range].Settings__MenuContainerInput::-webkit-slider-runnable-track {
-  width: 100%;
-  height: 26.9px;
-  cursor: pointer;
-  box-shadow: 0.2px 0.2px 0px rgba(100, 100, 100, 0.1), 0px 0px 0.2px rgba(113, 113, 113, 0.1);
-  background: #dadce1;
-  border-radius: 25px;
-  border: 1.6px solid rgba(180, 180, 100, 0);
-}
-input[type=range].Settings__MenuContainerInput::-webkit-slider-thumb {
-  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);
-  border: 1px solid rgba(100, 100, 100, 0.1);
-  height: 24px;
-  width: 24px;
-  border-radius: 13px;
-  background: rgba(0, 0, 0, 0.8);
-  cursor: pointer;
-  -webkit-appearance: none;
-  margin-top: -0.15px;
-}
-input[type=range].Settings__MenuContainerInput:focus::-webkit-slider-runnable-track {
-  background: #ffffff;
-}
-input[type=range].Settings__MenuContainerInput::-moz-range-track {
-  width: 100%;
-  height: 26.9px;
-  cursor: pointer;
-  box-shadow: 0.2px 0.2px 0px rgba(100, 100, 100, 0.1), 0px 0px 0.2px rgba(113, 113, 113, 0.1);
-  background: #dadce1;
-  border-radius: 25px;
-  border: 1.6px solid rgba(180, 180, 100, 0);
-}
-input[type=range].Settings__MenuContainerInput::-moz-range-thumb {
-  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);
-  border: 1px solid rgba(100, 100, 100, 0.1);
-  height: 24px;
-  width: 24px;
-  border-radius: 13px;
-  background: rgba(0, 0, 0, 0.8);
-  cursor: pointer;
-}
-input[type=range].Settings__MenuContainerInput::-ms-track {
-  width: 100%;
-  height: 26.9px;
-  cursor: pointer;
-  background: transparent;
-  border-color: transparent;
-  color: transparent;
-}
-input[type=range].Settings__MenuContainerInput::-ms-fill-lower {
-  background: #b0b4bf;
-  border: 1.6px solid rgba(180, 180, 100, 0);
-  border-radius: 50px;
-  box-shadow: 0.2px 0.2px 0px rgba(100, 100, 100, 0.1), 0px 0px 0.2px rgba(113, 113, 113, 0.1);
-}
-input[type=range].Settings__MenuContainerInput::-ms-fill-upper {
-  background: #dadce1;
-  border: 1.6px solid rgba(180, 180, 100, 0);
-  border-radius: 50px;
-  box-shadow: 0.2px 0.2px 0px rgba(100, 100, 100, 0.1), 0px 0px 0.2px rgba(113, 113, 113, 0.1);
-}
-input[type=range].Settings__MenuContainerInput::-ms-thumb {
-  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);
-  border: 1px solid rgba(100, 100, 100, 0.1);
-  width: 24px;
-  border-radius: 13px;
-  background: rgba(0, 0, 0, 0.8);
-  cursor: pointer;
-  height: 24px;
-}
-input[type=range].Settings__MenuContainerInput:focus::-ms-fill-lower {
-  background: #dadce1;
-}
-input[type=range].Settings__MenuContainerInput:focus::-ms-fill-upper {
-  background: #ffffff;
-}
+    input[type=range].Settings__MenuContainerInput::-ms-thumb {
+        box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);
+        border: 1px solid rgba(100, 100, 100, 0.1);
+        width: 24px;
+        border-radius: 13px;
+        background: rgba(0, 0, 0, 0.8);
+        cursor: pointer;
+        height: 24px;
+    }
+    input[type=range].Settings__MenuContainerInput:focus::-ms-fill-lower {
+        background: #dadce1;
+    }
+    input[type=range].Settings__MenuContainerInput:focus::-ms-fill-upper {
+        background: #ffffff;
+    }
 
 
 </style>
