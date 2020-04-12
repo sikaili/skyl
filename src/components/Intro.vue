@@ -31,12 +31,12 @@ export default {
 </script>
 
 <style scoped>
-h1,
-p {
-  cursor: pointer;
-}
-h1:hover {
-  background-color: rgba(0, 0, 0, 0.2);
-  transition: background-color 0.2s ease-in;
-}
+    h1,
+    p {
+        cursor: pointer;
+    }
+    h1:hover {
+        background-color: rgba(0, 0, 0, 0.2);
+        transition: background-color 0.2s ease-in;
+    }
 </style>

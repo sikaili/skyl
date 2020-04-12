@@ -6,6 +6,12 @@
       class="back bw0"
       :style="iframeContainer"
     >
+      <Canvas
+        v-if="activeItem.type === 'sketch' || activeItem.type === 'musicIframe'"
+        :key="key + 2"
+        :current="activeItem.app ? activeItem.app : activeItem.id"
+        :type="activeItem.type"
+      />
       <iframe
         v-if="activeItem.type !== 'sketch'"
         :key="key + 1"
@@ -14,12 +20,6 @@
         scroll="no"
         :src="activeItem.link"
         :style="iframeStyle"
-      />
-      <Canvas
-        v-if="activeItem.type === 'sketch' || activeItem.type === 'musicIframe'"
-        :key="key + 2"
-        :current="activeItem.app ? activeItem.app : activeItem.id"
-        :type="activeItem.type"
       />
     </div>
     <transition name="slide-fade-main">

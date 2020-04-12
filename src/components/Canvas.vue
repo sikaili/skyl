@@ -138,7 +138,7 @@ export default {
       showPlayerList: this.type === 'musicIframe',
       showCanvasSettings: false,
       settings: null,
-      songs: ['Rotation', 'La-Danse', 'flower', 'saturation-chinoise', '2019-12-YeChe', 'Rain-Addiction', 'Emb', 'c-syn', 'e-minor'],
+      songs: ['Amarrage', 'Rotation', 'La-Danse', 'flower', 'saturation-chinoise', '2019-12-YeChe', 'Rain-Addiction', 'Emb', 'c-syn', 'e-minor'],
       iframes: ['c-syn', 'e-minor', 'flower', 'saturation-chinoise'],
       songId: null,
     };
@@ -155,9 +155,11 @@ export default {
         return;
       }
       switch (val) {
+        case 'amarrage':
+        case 'Amarrage':
         case 'rotation':
         case 'Rotation':
-          this.setRGB([0, 50, 0]);
+          this.setRGB([113, 10, 10]);
           break;
         case 'La-Danse':
           this.setRGB([159, 45, 58]);
@@ -193,7 +195,7 @@ export default {
           if (savedSettings) {
             const keys = Object.keys(savedSettings).filter((name) => !name.includes('get') && name !== 'actions');
             keys.forEach((key) => {
-              if (current.settings[key]) {
+              if (current.settings[key] && current.settings[key].type) {
                 current.settings[key] = savedSettings[key];
               }
             });

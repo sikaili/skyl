@@ -4,6 +4,22 @@ import sketches from '@/assets/JSON/sketches.json';
 const seedData = {
   work: [
     {
+      name: 'P',
+      year: '2020',
+      des:
+        'Speed up a single sound object, move and compose your own',
+      link: 'https://skyl.fr/play/p/',
+      img: '/img/covers/p.png',
+      credits: [
+        {
+          role: 'Code, recording ',
+          name: 'Sikai Li',
+          link: 'https://skyl.fr',
+        },
+      ],
+      show: false,
+    },
+    {
       name: 'Ocean Loop',
       des:
         'An audio-visual experiment about ocean plastic pollution, randomly generated graphics, sound of plastic particles.',
@@ -141,6 +157,24 @@ const seedData = {
   ],
   music: [
     {
+      name: 'Amarrage',
+      app: 'player',
+      type: 'sketch',
+      year: '2020',
+      des:
+        '慢慢移动到岸边',
+      link: 'https://skyl.fr/play/player?id=Amarrage',
+      img: '/img/covers/Amarrage.jpg',
+      credits: [
+        {
+          role: 'Music ',
+          name: 'Sikai Li',
+          link: 'https://skyl.fr',
+        },
+      ],
+      show: false,
+    },
+    {
       name: 'Rotation',
       app: 'player',
       type: 'sketch',
@@ -151,7 +185,7 @@ const seedData = {
       img: '/img/covers/Rotation.jpg',
       credits: [
         {
-          role: 'Music, code ',
+          role: 'Music ',
           name: 'Sikai Li',
           link: 'https://skyl.fr',
         },
@@ -300,7 +334,7 @@ if (!navigator.onLine) {
   allIframeLinks = allIframeLinks.filter((a) => a.type === 'sketch');
 }
 
-console.log(JSON.stringify(allIframeLinks));
+// console.log(JSON.stringify(allIframeLinks));
 
 
 export { seedData, allIframeLinks };

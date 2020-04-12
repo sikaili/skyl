@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed mw4 f3 tc left-1">
+  <div class="Sidemenu fixed mw4 f3 tc left-1">
     <br>
     <span
       class="w-100 f5 no-underline white bg-black-80 bg-animate hover-bg-white hover-black inline-flex items-center pa3 border-box"
@@ -14,13 +14,13 @@
     </span>
     <div
       class="f6 tl"
-      style="min-height: 5rem;"
+      style="min-height: 2.5rem;"
     >
       <p
         class="pa2 bg-animate hover-bg-white hover-black mb0 pb2 white bg-black-60"
         @click="toggle()"
       >
-        {{ activeItem.id ? activeItem.id : "list" }}
+        {{ $route.query.id || activeItem.id || "list" }}
         <i
           :class="
             `hover-black fr ma0 icon ion-md-arrow-drop-down ${
@@ -29,51 +29,51 @@
           "
         />
       </p>
-      <p class="mb0 pb2 white bg-black-60">
-        links:
-        <a
-          :href="activeItem.link"
-          target="_blank"
-          title="open in a new page"
-          class="link white"
-        >skyl.fr</a>
-      </p>
+      <div v-if="displayList">
+        <p class="mv0 pv1 ph1 white bg-black-80">
+          <a
+            target="_blank"
+            title="open in a new page"
+            class="link white"
+          >skyl.fr</a>
+        </p>
 
-      <p class="ma0 pa0 f3 white bg-black-60">
-        <a
-          target="_blank"
-          href="https://github.com/sikaili"
-        >
-          <i class="white mh1 icon ion-logo-github" />
-        </a>
-        <a
-          target="_blank"
-          title="instagram"
-          href="https://www.instagram.com/skylfr/"
-        >
-          <i class="white mh1 icon ion-logo-instagram" />
-        </a>
-        <a
-          target="_blank"
-          rel="canonical"
-          :href="
-            'https://twitter.com/intent/tweet?url=https://skyl.fr' + $route.path
-          "
-        >
-          <i class="white mh1 icon ion-logo-twitter" />
-        </a>
-        <a
-          href="mailto:contact@sikai.li"
-          title="mail"
-        >
-          <i class="white icon ion-ios-send" />
-        </a>
-      </p>
+        <p class="ma0 pa0 f3 white bg-black-80">
+          <a
+            target="_blank"
+            href="https://github.com/sikaili"
+          >
+            <i class="white mh1 icon ion-logo-github" />
+          </a>
+          <a
+            target="_blank"
+            title="instagram"
+            href="https://www.instagram.com/skylfr/"
+          >
+            <i class="white mh1 icon ion-logo-instagram" />
+          </a>
+          <a
+            target="_blank"
+            rel="canonical"
+            :href="
+              'https://twitter.com/intent/tweet?url=https://skyl.fr' + $route.path
+            "
+          >
+            <i class="white mh1 icon ion-logo-twitter" />
+          </a>
+          <a
+            href="mailto:contact@sikai.li"
+            title="mail"
+          >
+            <i class="white icon ion-ios-send" />
+          </a>
+        </p>
+      </div>
     </div>
     <transition name="slide-fade1">
       <div
         v-if="displayList"
-        class="overflow-y-scroll vh-50 f6 tl bg-white-30"
+        class="Sidemenu__List overflow-y-scroll vh-50 f6 tl bg-white-30"
       >
         <span
           v-for="(item, index) in filteredIframeItems"
@@ -176,9 +176,14 @@ export default {
 </script>
 
 <style scoped>
+    .Sidemenu {
+        min-width: 128px;
+    }
+
     a:hover {
         background-color: black;
     }
+
     .listItem {
         line-height: 30px;
         margin: 4px 0;

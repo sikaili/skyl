@@ -56,9 +56,7 @@ export default function (sk) {
   let xoff = 0;
   let particles = [];
   let forceDirection = -1;
-  sk.songList = ['Rain-Addiction', 'Emb', '2019-12-YeChe', 'La-Danse'];
-  sk.songId = sk.songList[Math.floor(Math.random() * sk.songList.length)];
-  // sk.songId = 'Rotation';
+  sk.songId = 'Amarrage';
   if (vm.$route.query.id && typeof vm.$route.query.id === 'string') {
     sk.songId = vm.$route.query.id;
   } else {
@@ -84,14 +82,15 @@ export default function (sk) {
       player = new Tone.Player(soundFile, () => { soundIsLoading = false; }).toMaster();
       player.connect(fft);
     });
-    switch (sk.songId) {
-      case 'Rotation':
+    switch (songId) {
       case 'rotation':
+      case 'amarrage':
         sk.settings.grey = true;
         sk.settings.freq1.vale = 300;
         sk.settings.freq2.vale = 650;
         break;
       default:
+        sk.settings.grey = false;
         break;
     }
   };
@@ -380,6 +379,7 @@ export default function (sk) {
     peakDetect = new PeakDetect();
 
     sk.createCanvas(sk.windowWidth, sk.windowHeight);
+    if (sk.width > 640)sk.pixelDensity(1.0);
     sk.stroke(255, 255, 255);
     sk.strokeWeight(10);
     sk.textFont('Helvetica');
@@ -468,7 +468,9 @@ export default function (sk) {
         particles[i].display(sum1, sum);
       }
       sk.pop();
-      if (sk.settings.grey) { sk.filter(sk.GRAY); }
+      if (sk.settings.grey) {
+        sk.filter(sk.GRAY);
+      }
 
       sk.push();
       if (state === -1 || songPlayed === -1) {
