@@ -39,6 +39,9 @@ export default {
   },
   methods: {
     ...mapActions(['setActiveItem', 'toggleItem', 'changeLoadingState']),
+    showReadMoreButton(item) {
+      return item.imgs.length > 1;
+    },
     play(item) {
       this.setActiveItem(item.id);
       this.$router.push({ path: `/play/${item.app || item.id}` });

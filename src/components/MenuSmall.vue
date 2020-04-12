@@ -49,12 +49,13 @@
                   {{ item.des }}
                   <br>
                   <span
-                    class="tc w4 f6 dim link ba bw2 ph2 pv1 mt3 dib black"
+                    v-if="showReadMoreButton(item)"
+                    class="tc w4 f6 dim link ba bw2 ph2 pv1 mt3 mr3 dib black"
                     @click="goToPage(item)"
                   >Read more..</span>
                   <span
                     v-if="item.link.split(':')[0] === `https`"
-                    class="fr tc w4 ml3 f6 link ba bw2 ph3 pv1 mt3 dib black dim"
+                    class="fr tc w4 f6 link ba bw2 ph3 pv1 mt3 dib black dim"
                     @click="play(item)"
                   >
                     <i class="icon ion-md-return-right" />
@@ -80,7 +81,7 @@
                 v-for="(person, n) in item.credits"
                 :key="person.link + n"
                 class="f7 flex"
-                style="line-height:1"
+                style="line-height: 1;"
               >
                 <p class="truncate w-60">
                   {{ person.role }}:
@@ -109,7 +110,7 @@
         class="w1"
         data-icon="info"
         viewBox="0 0 32 32"
-        style="fill:currentcolor"
+        style="fill: currentcolor;"
       >
         <title>info icon</title>
         <path
@@ -159,36 +160,36 @@ export default {
 };
 </script>
 <style>
-svg.w1 {
-  max-height: 44px;
-}
-.loading {
-  width: 100%;
-  height: 30px;
-}
-.slide-fade-enter-active {
-  transition: all 0.15s ease;
-}
-.slide-fade-leave-active {
-  transition: all 0.15s ease;
-}
-.slide-fade-enter {
-  transform: translateY(50px);
-  opacity: 0 0.15s;
-}
-.slide-fade-leave-to {
-  /* max-height: 0px 0.5s; */
-  opacity: 0 0.2s;
-}
-.loading-enter-active {
-  transition: all 1s;
-}
-.loading-leave-active {
-  transition: all 0s;
-  opacity: 0;
-}
-.loading-enter {
-  width: 0;
-  opacity: 0;
-}
+    svg.w1 {
+        max-height: 44px;
+    }
+    .loading {
+        width: 100%;
+        height: 30px;
+    }
+    .slide-fade-enter-active {
+        transition: all 0.15s ease;
+    }
+    .slide-fade-leave-active {
+        transition: all 0.15s ease;
+    }
+    .slide-fade-enter {
+        transform: translateY(50px);
+        opacity: 0 0.15s;
+    }
+    .slide-fade-leave-to {
+        /* max-height: 0px 0.5s; */
+        opacity: 0 0.2s;
+    }
+    .loading-enter-active {
+        transition: all 1s;
+    }
+    .loading-leave-active {
+        transition: all 0s;
+        opacity: 0;
+    }
+    .loading-enter {
+        width: 0;
+        opacity: 0;
+    }
 </style>

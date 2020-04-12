@@ -44,14 +44,6 @@
     </div>
     <div class="fl w-50 bg-white">
       <div>
-        <transition name="loading">
-          <div
-            v-show="loadingAnimation"
-            class="loading bg-blue f3"
-          >
-            Loading...
-          </div>
-        </transition>
         <div
           v-for="(w, index) in menuItems"
           :key="type + index"
@@ -69,12 +61,13 @@
                     {{ w.des }}
                     <br>
                     <span
-                      class="tc w4 f6 dim link ba bw2 ph2 pv1 mt3 dib black"
+                      v-if="showReadMoreButton(w)"
+                      class="tc w4 f6 dim link ba bw2 ph2 pv1 mt3 mr3 dib black"
                       @click="goToPage(w)"
                     >Read more..</span>
                     <span
                       v-if="w.link.split(':')[0] === `https`"
-                      class="tc w4 ml3 f6 link ba bw2 ph3 pv1 mt3 dib black dim"
+                      class="tc w4 f6 link ba bw2 ph3 pv1 mt3 dib black dim"
                       @click="play(w)"
                     >
                       <span class="pr1">Play!</span>
@@ -95,7 +88,7 @@
                   v-for="person in w.credits"
                   :key="person.link + person.role"
                   class="f7 flex"
-                  style="line-height:1"
+                  style="line-height: 1;"
                 >
                   <p class="truncate w-60">
                     {{ person.role }}:
@@ -144,29 +137,29 @@ export default {
 };
 </script>
 <style>
-.loading {
-  width: 100%;
-  height: 30px;
-}
-.slide-fade-enter-active {
-  transition: all 0.15s ease;
-}
-.slide-fade-leave-active {
-  display: none;
-}
-.slide-fade-enter {
-  transform: translateX(30px);
-  opacity: 0 0.15s;
-}
-.loading-enter-active {
-  transition: all 1s;
-}
-.loading-leave-active {
-  transition: all 0s;
-  opacity: 0;
-}
-.loading-enter {
-  width: 0;
-  opacity: 0;
-}
+    .loading {
+        width: 100%;
+        height: 30px;
+    }
+    .slide-fade-enter-active {
+        transition: all 0.15s ease;
+    }
+    .slide-fade-leave-active {
+        display: none;
+    }
+    .slide-fade-enter {
+        transform: translateX(30px);
+        opacity: 0 0.15s;
+    }
+    .loading-enter-active {
+        transition: all 1s;
+    }
+    .loading-leave-active {
+        transition: all 0s;
+        opacity: 0;
+    }
+    .loading-enter {
+        width: 0;
+        opacity: 0;
+    }
 </style>
