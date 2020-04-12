@@ -158,7 +158,7 @@ const seedData = {
   music: [
     {
       name: 'Amarrage',
-      app: 'player',
+      app: 'cave',
       type: 'sketch',
       year: '2020',
       des:
@@ -176,7 +176,7 @@ const seedData = {
     },
     {
       name: 'Rotation',
-      app: 'player',
+      app: 'cave',
       type: 'sketch',
       year: '2020',
       des:

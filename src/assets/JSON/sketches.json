@@ -17,5 +17,9 @@
   {
     "id": "traffic",
     "type": "sketch"
+  },
+  {
+    "id": "cave",
+    "type": "sketch"
   }
 ]

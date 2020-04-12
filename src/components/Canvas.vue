@@ -210,7 +210,7 @@ export default {
     getSettings();
   },
   mounted() {
-    if (this.current === 'player' && this.$store.getters.activeItem.id !== 'player') {
+    if (this.current === 'player' || this.current === 'vis') {
       this.$router.push({ params: { id: 'player' }, query: { id: this.$store.getters.activeItem.id } });
     }
   },
