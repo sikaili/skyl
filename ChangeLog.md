@@ -1,3 +1,12 @@
+## [2.3.2] - 2019-04-12
+### Changed
+- do not show read more when no imgs inside
+- add text action to traffic, debug canvas 
+
+### Added
+- Traffic (d3a1b7ae4c93b51fa1db2d532e)
+- add text action to traffic, debug canvas (19811c2ed75760b22acc314)
+- add amarrage, player pixel density when width> 640 (18cf0893f29fe87)
 
 ## [2.2.2] - 2019-04-07
 ### Changed
