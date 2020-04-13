@@ -94,16 +94,6 @@ export default (instance) => {
   };
   sk.setSong(sk.songId);
 
-  sk.setup = () => {
-    sk.points = generatePoints(5, [{ x: -50, y: 50 }, { x: 50, y: 50 }, { x: 50, y: -50 }, { x: -50, y: -50 }]);
-    sk.randomSeed(2200);
-    sk.rectMode(sk.CENTER);
-    sk.createCanvas(sk.windowWidth, sk.windowHeight);
-    sk.peakDetect = new PeakDetect();
-    sk.stroke(255, 255, 255);
-    sk.textFont('Helvetica');
-    sk.textAlign(sk.CENTER);
-  };
   const generatePoints = (number, givenPoints, big = null) => {
     if (sk.keepPoints) {
       return sk.points;
@@ -115,10 +105,11 @@ export default (instance) => {
     if (!givenPoints) {
       givenPoints = [];
     }
-    if (Math.random() > 0.7 && givenPoints.length === 0) {
+    if (Math.random() > 0.79 && givenPoints.length === 0) {
       number = Math.random() * 500 + 300;
       const arr = [];
       if (Math.random() > 0.5) {
+        // circle
         for (let i = 0; i < 2 * 3.14; i += 0.1) {
           const r = 150;
           const x = r * Math.sin(i) + sk.noise(i / 100) * 10;
@@ -126,6 +117,7 @@ export default (instance) => {
           arr.push({ x, y });
         }
       } else {
+        // rect
         for (let x = -150; x <= 150; x += 10) {
           arr.push({ x, y: 150 });
         }
@@ -139,9 +131,7 @@ export default (instance) => {
           arr.push({ x: -150, y });
         }
       }
-      if (Math.random() > 0.3 && givenPoints.length === 0) {
-        givenPoints = arr;
-      }
+      givenPoints = arr;
     }
     // given points
     if (givenPoints.length > 0) {
@@ -162,17 +152,28 @@ export default (instance) => {
     // normal
     for (let i = 0; i < number; i += 1) {
       points[i] = {
-        get speed() { return Math.random() > 0 ? (sk.noise(this.x / 100, this.y / 100) - 0.1) / 25 : Math.random() / 15; },
+        get speed() { return (sk.noise(this.x / 100, this.y / 100) - 0.1) / 25; },
         direction: 1,
         x: (sk.noise(i / 100, Math.sin(sk.frameCount / 200) * sum) - 0.5) * (sk.width + sk.height) / scale,
         y: (sk.noise(i / 100, sk.frameCount / 200 * sum1) - 0.5) * (sk.width + sk.height) / scale,
         update() {
-          this.x += (this.speed * 60 * this.x) * this.speed * this.direction;
-          this.y += (this.speed * 60 * this.y) * this.speed * this.direction;
+          this.x += (this.speed * 60 * this.x) * this.speed * this.direction * (sk.windowWidth > 640 ? 1 : 0.75);
+          this.y += (this.speed * 60 * this.y) * this.speed * this.direction * (sk.windowWidth > 640 ? 1 : 0.75);
         },
       };
     }
     return points;
+  };
+
+  sk.setup = () => {
+    sk.points = generatePoints(5, [{ x: -50, y: 50 }, { x: 50, y: 50 }, { x: 50, y: -50 }, { x: -50, y: -50 }]);
+    sk.randomSeed(2200);
+    sk.rectMode(sk.CENTER);
+    sk.createCanvas(sk.windowWidth, sk.windowHeight);
+    sk.peakDetect = new PeakDetect();
+    sk.stroke(255, 255, 255);
+    sk.textFont('Helvetica');
+    sk.textAlign(sk.CENTER);
   };
   let xoff = 0;
   sk.draw = () => {
@@ -239,9 +240,7 @@ export default (instance) => {
     sk.strokeWeight(1);
     sk.translate(sk.width / 2, sk.height / 2);
     // default view
-    // sk.fill(sum1 / 1.5, 200 - sum);
-    // sk.stroke(255, sum1 / 2 + 70);
-    sk.fill(255 - sum1, (sk.noise(sum / 300 + sk.frameCount / 400) - 0.4) * 255);
+    sk.fill(328 - sum1, (sk.noise(sum1 / 300 + xoff) - 0.33) * 255);
     sk.stroke(sum1 * 2, 125 + sum1 / 1.5);
     // high gain view
     if (sum1 > 280 && Math.random() > 0.7) {
@@ -257,14 +256,17 @@ export default (instance) => {
         }, 600);
       } else {
         clearTimeout(sk.timeOut);
-        sk.points = generatePoints(sum * 6, null, 1);
+        sk.points = generatePoints(sum * 6, [], 1);
       }
     }
     sk.beginShape();
     sk.points.forEach((point, index) => {
       const theta = index / 400;
       point.update();
-      sk.vertex(point.x + (sk.noise(theta * xoff * sum1 / 200) - 0.5) * 20, point.y + (sk.noise(theta + xoff * sum1 / 200) - 0.5) * 20);
+      const offsetAmplitude = sk.width > 640 ? 20 : 10;
+      const offset = (sk.noise(theta * xoff * sum1 / 200, theta * sum / 100 * point.speed) - 0.5) * offsetAmplitude;
+      const offsetB = (sk.noise(theta + xoff * sum1 / 200) - 0.5) * offsetAmplitude;
+      sk.vertex(point.x + offset, point.y + offset);
     });
     sk.endShape();
     sk.pop();
