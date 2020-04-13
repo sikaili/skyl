@@ -143,11 +143,22 @@ export default {
       songId: null,
     };
   },
+  computed: {
+    isPlayer() {
+      return ['player', 'cave'].includes(this.current);
+    },
+  },
   watch: {
     settings: {
       deep: true,
       handler(val) {
-        localStorage.setItem(this.current, JSON.stringify(val));
+        const toStore = JSON.parse(JSON.stringify(val));
+        Object.keys(toStore).map((name) => {
+          if (name.includes('get') || name === 'actions' || !toStore[name].type) {
+            delete toStore[name];
+          }
+        });
+        localStorage.setItem(this.current, JSON.stringify(toStore));
       },
     },
     songId(val) {
@@ -210,8 +221,8 @@ export default {
     getSettings();
   },
   mounted() {
-    if (this.current === 'player' || this.current === 'vis') {
-      this.$router.push({ params: { id: 'player' }, query: { id: this.$store.getters.activeItem.id } });
+    if (this.isPlayer && (this.$store.getters.activeItem.id !== this.current)) {
+      this.$router.push({ params: { id: this.current }, query: { id: this.$store.getters.activeItem.id } });
     }
   },
   beforeDestroy() {
@@ -234,8 +245,9 @@ export default {
           this.$store.dispatch('setActiveItem', songId);
           this.$router.push({ params: { id: songId } });
         } else {
-          this.$store.dispatch('setActiveItem', 'player');
-          this.$router.push({ params: { id: 'player' }, query: { id: songId } });
+          const playerId = Math.random() > 0.5 ? 'cave' : 'player';
+          this.$store.dispatch('setActiveItem', playerId);
+          this.$router.push({ params: { id: 'playerId' }, query: { id: songId } });
         }
         return;
       }

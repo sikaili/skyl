@@ -14,10 +14,11 @@ export default (instance) => {
     Tone.context.suspend();
     sk.remove();
     Object.entries((prop) => delete sk[prop]);
-    console.log('vis is killed');
+    console.log('cave is killed');
   };
 
   sk.settings = {
+    player: true,
     red: {
       value: 255,
       type: 'range',
@@ -40,37 +41,24 @@ export default (instance) => {
       step: 1,
     },
     freq1: {
-      value: 500,
-      type: 'range',
+      value: 700,
+      // type: 'range',
       max: 950,
       min: 50,
       step: 50,
     },
     freq2: {
-      value: 200,
-      type: 'range',
+      value: 250,
+      // type: 'range',
       max: 950,
       min: 50,
       step: 50,
     },
-    sum: {
-      value: 200,
-      type: 'range',
-      max: 500,
-      min: 0,
-      step: 1,
-    },
-    sum1: {
-      value: 200,
-      type: 'range',
-      max: 500,
-      min: 0,
-      step: 1,
-    },
     get getColor() { return [this.red.value, this.green.value, this.blue.value] || [255, 50, 50]; },
   };
 
-  sk.songId = 'rotation';
+  sk.songId = 'amarrage';
+
   if (vm.$route.query.id && typeof vm.$route.query.id === 'string') {
     sk.songId = vm.$route.query.id;
   } else {
@@ -99,11 +87,6 @@ export default (instance) => {
     });
     switch (songId) {
       case 'rotation':
-      case 'amarrage':
-        sk.settings.grey = true;
-        sk.settings.freq1.vale = 300;
-        sk.settings.freq2.vale = 650;
-        break;
       default:
         sk.settings.grey = false;
         break;
@@ -112,36 +95,77 @@ export default (instance) => {
   sk.setSong(sk.songId);
 
   sk.setup = () => {
-    sk.points = generatePoints(4, [{ x: -50, y: 50 }, { x: 50, y: 50 }, { x: 50, y: -50 }, { x: -50, y: -50 }]);
+    sk.points = generatePoints(5, [{ x: -50, y: 50 }, { x: 50, y: 50 }, { x: 50, y: -50 }, { x: -50, y: -50 }]);
     sk.randomSeed(2200);
+    sk.rectMode(sk.CENTER);
     sk.createCanvas(sk.windowWidth, sk.windowHeight);
     sk.peakDetect = new PeakDetect();
     sk.stroke(255, 255, 255);
-    sk.strokeWeight(10);
     sk.textFont('Helvetica');
     sk.textAlign(sk.CENTER);
   };
-  const generatePoints = (number, givenPoints) => {
-    if (Math.random() > 0.8) number *= 5;
-    const scale = (Math.random() > 0.3) ? 2 : 1;
-    const points = [];
-    if (givenPoints) {
-      return givenPoints.map((point) => ({
-        ...point,
-        direction: 1,
-        get speed() { return Math.random() > 0 ? (sk.noise(this.x / 100, this.y / 100) - 0.1) / 25 : Math.random() / 15; },
-        update() {
-          this.x += (this.speed * 60 * this.x) * this.speed;
-          this.y += (this.speed * 60 * this.y) * this.speed;
-        },
-      }));
+  const generatePoints = (number, givenPoints, big = null) => {
+    if (sk.keepPoints) {
+      return sk.points;
     }
+    if (Math.random() > 0.8) number *= 5;
+    // number = number > 1000 ? 1000 : number;
+    const scale = (Math.random() > 0.3 && !big) ? 2 : 1;
+    const points = [];
+    if (!givenPoints) {
+      givenPoints = [];
+    }
+    if (Math.random() > 0.7 && givenPoints.length === 0) {
+      number = Math.random() * 500 + 300;
+      const arr = [];
+      if (Math.random() > 0.5) {
+        for (let i = 0; i < 2 * 3.14; i += 0.1) {
+          const r = 150;
+          const x = r * Math.sin(i) + sk.noise(i / 100) * 10;
+          const y = r * Math.cos(i) + sk.noise(i / 100) * 10;
+          arr.push({ x, y });
+        }
+      } else {
+        for (let x = -150; x <= 150; x += 10) {
+          arr.push({ x, y: 150 });
+        }
+        for (let y = 150; y >= -150; y -= 10) {
+          arr.push({ x: 150, y });
+        }
+        for (let x = 150; x >= -150; x -= 10) {
+          arr.push({ x, y: -150 });
+        }
+        for (let y = -150; y <= 150; y += 10) {
+          arr.push({ x: -150, y });
+        }
+      }
+      if (Math.random() > 0.3 && givenPoints.length === 0) {
+        givenPoints = arr;
+      }
+    }
+    // given points
+    if (givenPoints.length > 0) {
+      for (let i = 0; i < number; i += 1) {
+        points[i] = {
+          get speed() { return (sk.noise(this.x / 100 + i / 100, this.y / 100 + i / 100) - 0.4) / 25; },
+          direction: 1,
+          x: givenPoints[i % givenPoints.length].x,
+          y: givenPoints[i % givenPoints.length].y,
+          update() {
+            this.x += (this.speed * 60 * this.x) * this.speed * this.direction;
+            this.y += (this.speed * 60 * this.y) * this.speed * this.direction;
+          },
+        };
+      }
+      return points;
+    }
+    // normal
     for (let i = 0; i < number; i += 1) {
       points[i] = {
         get speed() { return Math.random() > 0 ? (sk.noise(this.x / 100, this.y / 100) - 0.1) / 25 : Math.random() / 15; },
         direction: 1,
-        x: (sk.noise(i / 100, sum) - 0.5) * (sk.width + sk.height) / scale,
-        y: (sk.noise(i / 100, sk.frameCount / 200 + sum1) - 0.5) * (sk.width + sk.height) / scale,
+        x: (sk.noise(i / 100, Math.sin(sk.frameCount / 200) * sum) - 0.5) * (sk.width + sk.height) / scale,
+        y: (sk.noise(i / 100, sk.frameCount / 200 * sum1) - 0.5) * (sk.width + sk.height) / scale,
         update() {
           this.x += (this.speed * 60 * this.x) * this.speed * this.direction;
           this.y += (this.speed * 60 * this.y) * this.speed * this.direction;
@@ -152,78 +176,103 @@ export default (instance) => {
   };
   let xoff = 0;
   sk.draw = () => {
-    xoff += 0.03;
+    xoff += 0.05;
+    // const spectrum = fft.getValue().map((value) => { if (value) console.log(value); });
     const spectrum = fft.getValue().map((value) => Math.abs((value + 100) * 2.55));
+
     peakDetect.update(spectrum);
     const selectedFreq = spectrum.filter((freq, i) => (i > sk.settings.freq1.value) && (i < sk.settings.freq1.value + 200));
-    sum = 400 - selectedFreq.reduce((a, b) => a + b) / 200;
+    sum = 255 - selectedFreq.reduce((a, b) => a + b) / 200;
     const selectedFreq1 = spectrum.filter((freq, i) => (i > sk.settings.freq2.value) && (i < sk.settings.freq2.value + 200));
-    sum1 = 500 - selectedFreq1.reduce((a, b) => a + b) / 200;
+    sum1 = 300 - selectedFreq1.reduce((a, b) => a + b) / 200 * 2;
     sum = sk.constrain(sum, 0, 500);
     sum1 = sk.constrain(sum1, 0, 500);
-    sk.background([0, 0, 0, sum1]);
+    sk.background([0, 0, 0, sum / 2]);
     // peak detection
     if (peakDetect.isDetected && !sk.staticBodyVertex) {
-      if (sk.points && (Math.random > 0.4 || (sum < 180 && sum1 < 150))) {
+      if (sk.points && (Math.random > 0.5 || (sum < 210 && sum1 < 210))) {
         clearInterval(sk.interval);
+        sk.interval = null;
         return;
       }
-      sk.background([255, 255, 255, 255]);
-      if (sk.points[0].direction === 1 && Math.random() > 0.5) {
-        sk.points.map((point) => { point.direction = -3; });
+      if (sk.points[0].direction === 1 && Math.random() > 0.7) {
+        // console.log('detect');
+        sk.points.forEach((point) => { point.direction = -3; });
         setTimeout(() => {
-          sk.points = generatePoints(sum1 * 6);
+          sk.points.forEach((point) => { point.direction = 0.3; });
         }, 600);
-      } else {
-        sk.points = generatePoints(sum1 * 5);
+      } else if (Math.random() > 0.5) {
+        // console.log('detect =>');
+        sk.points = generatePoints(sum * 6, 1);
       }
-      if (Math.random() > 0.5) {
+      if (Math.random() > 0.5 && sk.interval) {
         clearInterval(sk.interval);
+        sk.interval = null;
       }
-      if (Math.random() > 0.8 && sum > 250 && sum1 > 200) {
+      // glitching interval
+      if (Math.random() > 0.8 && sum > 200 && sum1 > 230 && !sk.interval) {
         sk.interval = setInterval(() => {
-          sk.background(255);
-          sk.points = generatePoints((500 - sum1) * 5);
-        }, 20);
+          if (sk.points[0].direction === 1) {
+            sk.points.forEach((point) => { point.direction = -20; });
+          } else {
+            sk.points = generatePoints(sum1 * 5, 1);
+          }
+        }, 60);
         setTimeout(() => {
           clearInterval(sk.interval);
-        }, 600);
+          sk.interval = null;
+        }, 400);
       }
-      sk.stroke(255);
       sk.push();
+      sk.background([255, 255, 255, 255]);
+      sk.stroke(0);
+      sk.fill(0);
       sk.translate(sk.width / 2, sk.height / 2);
-      sk.beginShape();
-      sk.points.forEach((point, index) => {
-        const theta = index / 100;
-        sk.vertex(-point.x + sk.noise(theta) * 5, -point.y + sk.noise(theta) * 5);
-      });
-      sk.endShape(sk.CLOSE);
+      if (Math.random() > 0.5) {
+        sk.ellipse(0, 0, 300);
+      } else {
+        sk.rect(0, 0, 300);
+      }
       sk.pop();
     }
     sk.push();
     sk.strokeWeight(1);
     sk.translate(sk.width / 2, sk.height / 2);
-    sk.fill(sum1 / 2, 400 - sum);
-    sk.stroke(255, sum1 / 2 + 125);
-    if (sum1 > 395) {
-      const brightness = (Math.random() - 0.5) * 400;
+    // default view
+    // sk.fill(sum1 / 1.5, 200 - sum);
+    // sk.stroke(255, sum1 / 2 + 70);
+    sk.fill(255 - sum1, (sk.noise(sum / 300 + sk.frameCount / 400) - 0.4) * 255);
+    sk.stroke(sum1 * 2, 125 + sum1 / 1.5);
+    // high gain view
+    if (sum1 > 280 && Math.random() > 0.7) {
+      const brightness = (Math.random() - 0.3) * 510;
       sk.background(brightness);
       sk.stroke(255 - brightness);
       sk.fill(brightness, 255);
+      if (sk.points[0].direction === 1 && Math.random() > 0.5) {
+        // console.log('here');
+        sk.points.forEach((point) => { point.direction = -5; });
+        sk.timeOut = setTimeout(() => {
+          sk.points = generatePoints(sum * 6);
+        }, 600);
+      } else {
+        clearTimeout(sk.timeOut);
+        sk.points = generatePoints(sum * 6, null, 1);
+      }
     }
     sk.beginShape();
     sk.points.forEach((point, index) => {
-      const theta = index / 200;
+      const theta = index / 400;
       point.update();
-      sk.vertex(point.x + (sk.noise(theta * xoff * sum1 / 200) - 0.5) * 20, point.y + (sk.noise(theta + xoff * sum / 200) - 0.5) * 20);
+      sk.vertex(point.x + (sk.noise(theta * xoff * sum1 / 200) - 0.5) * 20, point.y + (sk.noise(theta + xoff * sum1 / 200) - 0.5) * 20);
     });
-    sk.endShape(sk.CLOSE);
+    sk.endShape();
     sk.pop();
     sk.fill(0);
     // sk.text(`${sum}\n${sum1}`, 0.5 * sk.width, 0.8 * sk.height);
     // showing mouse path
     if (sk.staticBodyVertex) {
-      sk.strokeWeight(10);
+      sk.strokeWeight(3);
       sk.stroke(255, 150);
       sk.beginShape();
       sk.staticBodyVertex.forEach((point) => {
@@ -251,9 +300,12 @@ export default (instance) => {
   sk.handleTouchEnd = () => {
     const center = { x: sk.width / 2, y: sk.height / 2 };
     const arr = sk.staticBodyVertex.map((point) => ({ x: point.x - center.x, y: point.y - center.y }));
-    console.log(arr);
     if (arr.length > 10) {
-      sk.points = generatePoints(300, arr);
+      sk.points = generatePoints(400, arr);
+      sk.keepPoints = true;
+      setTimeout(() => {
+        sk.keepPoints = false;
+      }, 1000);
     }
     sk.staticBodyVertex = null;
 
@@ -274,10 +326,7 @@ export default (instance) => {
     ev.preventDefault();
     if (sk.staticBodyVertex) {
       if (sk.staticBodyVertex.length > 0) {
-        // const lastPoint = sk.staticBodyVertex[sk.staticBodyVertex.length - 1];
-        // if (calDistance(lastPoint.x, lastPoint.y, sk.mouseX, sk.mouseY) > 2) {
         sk.staticBodyVertex.push({ x: sk.mouseX, y: sk.mouseY });
-        // }
       } else {
         sk.staticBodyVertex.push({ x: sk.mouseX, y: sk.mouseY });
       }
