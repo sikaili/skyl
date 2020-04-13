@@ -94,17 +94,32 @@ export default (instance) => {
   };
   sk.setSong(sk.songId);
 
-  const generatePoints = (number, givenPoints, big = null) => {
+  class Point {
+    constructor(i, scale = 2, toInner = -0.1, x, y) {
+      this.x = x || (sk.noise(i / 100, Math.sin(sk.frameCount / 200) * sum) - 0.5) * (sk.width + sk.height) / scale;
+      this.y = y || (sk.noise(i / 100, sk.frameCount / 200 * sum1) - 0.5) * (sk.width + sk.height) / scale;
+      this.direction = 1;
+      this.toInner = toInner;
+    }
+
+    get speed() {
+      return (sk.noise(this.x / 100, this.y / 100) + this.toInner) / 25;
+    }
+
+    update(x = 0, y = 0) {
+      this.x += (this.speed * 60 * this.x - x) * this.speed * this.direction * (sk.windowWidth > 640 ? 1 : 0.75);
+      this.y += (this.speed * 60 * this.y - y) * this.speed * this.direction * (sk.windowWidth > 640 ? 1 : 0.75);
+    }
+  }
+
+  const generatePoints = (number, givenPoints = [], big = null) => {
     if (sk.keepPoints) {
       return sk.points;
     }
     if (Math.random() > 0.8) number *= 5;
-    // number = number > 1000 ? 1000 : number;
     const scale = (Math.random() > 0.3 && !big) ? 2 : 1;
     const points = [];
-    if (!givenPoints) {
-      givenPoints = [];
-    }
+
     if (Math.random() > 0.79 && givenPoints.length === 0) {
       number = Math.random() * 500 + 300;
       const arr = [];
@@ -133,34 +148,15 @@ export default (instance) => {
       }
       givenPoints = arr;
     }
-    // given points
-    if (givenPoints.length > 0) {
-      for (let i = 0; i < number; i += 1) {
-        points[i] = {
-          get speed() { return (sk.noise(this.x / 100 + i / 100, this.y / 100 + i / 100) - 0.4) / 25; },
-          direction: 1,
-          x: givenPoints[i % givenPoints.length].x + sk.noise(i / 30, sk.frameCount / 300) * 25,
-          y: givenPoints[i % givenPoints.length].y + sk.noise(i / 30, sk.frameCount / 300) * 25,
-          update(x = 0, y = 0) {
-            this.x += (this.speed * 60 * this.x - x) * this.speed * this.direction;
-            this.y += (this.speed * 60 * this.y - y) * this.speed * this.direction;
-          },
-        };
-      }
-      return points;
-    }
-    // normal
+
     for (let i = 0; i < number; i += 1) {
-      points[i] = {
-        get speed() { return (sk.noise(this.x / 100, this.y / 100) - 0.1) / 25; },
-        direction: 1,
-        x: (sk.noise(i / 100, Math.sin(sk.frameCount / 200) * sum) - 0.5) * (sk.width + sk.height) / scale,
-        y: (sk.noise(i / 100, sk.frameCount / 200 * sum1) - 0.5) * (sk.width + sk.height) / scale,
-        update(x = 0, y = 0) {
-          this.x += (this.speed * 60 * this.x - x) * this.speed * this.direction * (sk.windowWidth > 640 ? 1 : 0.75);
-          this.y += (this.speed * 60 * this.y - y) * this.speed * this.direction * (sk.windowWidth > 640 ? 1 : 0.75);
-        },
-      };
+      if (givenPoints.length > 0) {
+        const x = givenPoints[i % givenPoints.length].x + sk.noise(i / 30, sk.frameCount / 300) * 25;
+        const y = givenPoints[i % givenPoints.length].y + sk.noise(i / 30, sk.frameCount / 300) * 25;
+        points[i] = new Point(i, scale, -0.4, x, y);
+      } else {
+        points[i] = new Point(i, scale);
+      }
     }
     return points;
   };
@@ -174,6 +170,8 @@ export default (instance) => {
     sk.stroke(255, 255, 255);
     sk.textFont('Helvetica');
     sk.textAlign(sk.CENTER);
+    sk.mouseX = sk.width / 2;
+    sk.mouseY = sk.height / 2;
   };
   let xoff = 0;
   sk.draw = () => {
@@ -190,7 +188,7 @@ export default (instance) => {
     sum1 = sk.constrain(sum1, 0, 500);
     sk.background([0, 0, 0, sum / 2]);
     // peak detection
-    if (peakDetect.isDetected && !sk.staticBodyVertex) {
+    if (peakDetect.isDetected) {
       if (sk.points && (Math.random > 0.5 || (sum < 210 && sum1 < 210))) {
         clearInterval(sk.interval);
         sk.interval = null;
@@ -259,6 +257,7 @@ export default (instance) => {
         sk.points = generatePoints(sum * 6, [], 1);
       }
     }
+    // display points
     sk.beginShape();
     sk.points.forEach((point, index) => {
       const theta = index / 400;
@@ -266,17 +265,35 @@ export default (instance) => {
       const offsetAmplitude = sk.width > 640 ? 20 : 10;
       const offsetA = (sk.noise(theta * xoff * sum1 / 200, theta * sum / 100 * point.speed) - 0.5) * offsetAmplitude;
       const offsetB = (sk.noise(theta * xoff * sum / 200, theta * sum1 / 100 + xoff) - 0.5) * offsetAmplitude;
-
       sk.vertex(point.x + offsetA, point.y + offsetB);
+      // to mouse center line
+      if (index % 150 === 0 && (sk.touched || point.direction < 0)) {
+        sk.push();
+        sk.stroke(Math.random() * 255, 100);
+        sk.line(sk.mouseX - sk.width / 2, sk.mouseY - sk.height / 2, point.x + offsetA, point.y + offsetB);
+        sk.pop();
+      }
     });
     sk.endShape();
+    sk.beginShape();
+    if (sk.mousePoints) {
+      sk.mousePoints.forEach((point, index) => {
+        const theta = index / 400;
+        point.update(sk.mouseX - sk.width / 2, sk.mouseY - sk.height / 2);
+        const offsetAmplitude = sk.width > 640 ? 20 : 10;
+        const offsetA = (sk.noise(theta * xoff * sum1 / 200, theta * sum / 100 * point.speed) - 0.5) * offsetAmplitude;
+        const offsetB = (sk.noise(theta * xoff * sum / 200, theta * sum1 / 100 + xoff) - 0.5) * offsetAmplitude;
+        sk.vertex(point.x + offsetA, point.y + offsetB);
+      });
+    }
+    sk.endShape();
     sk.pop();
-    sk.fill(0);
     // sk.text(`${sum}\n${sum1}`, 0.5 * sk.width, 0.8 * sk.height);
     // showing mouse path
     if (sk.staticBodyVertex) {
-      sk.strokeWeight(3);
-      sk.stroke(255, 150);
+      sk.strokeWeight(1);
+      sk.stroke(Math.random() * 255, 255);
+      sk.fill(0, 100);
       sk.beginShape();
       sk.staticBodyVertex.forEach((point, index) => {
         const offset = (sk.noise(index / 200 + xoff * sum1 / 200, sum / 100) - 0.5) * 20;
@@ -302,16 +319,18 @@ export default (instance) => {
   };
 
   sk.handleTouchEnd = () => {
+    sk.touched = false;
     const center = { x: sk.width / 2, y: sk.height / 2 };
-    const arr = sk.staticBodyVertex.map((point) => ({ x: point.x - center.x, y: point.y - center.y }));
-    if (arr.length > 10) {
-      sk.points = generatePoints(160, arr);
-      sk.keepPoints = true;
-      setTimeout(() => {
-        sk.keepPoints = false;
-      }, 1000);
+    if (sk.staticBodyVertex) {
+      const arr = sk.staticBodyVertex.map((point) => ({ x: point.x - center.x, y: point.y - center.y }));
+      if (arr.length > 10) {
+        sk.mousePoints = generatePoints(127, arr);
+        setTimeout(() => {
+          sk.mousePoints = null;
+        }, 1000);
+      }
+      sk.staticBodyVertex = null;
     }
-    sk.staticBodyVertex = null;
 
     sk.background(0);
     if (!sk.soundIsLoading) {
@@ -324,7 +343,14 @@ export default (instance) => {
     }
   };
   sk.handleTouchStart = () => {
-    sk.staticBodyVertex = [];
+    sk.touched = true;
+    if (Math.random() > 0.7) {
+      sk.points.forEach((point) => {
+        point.direction = -1;
+      });
+    } else {
+      sk.staticBodyVertex = [];
+    }
   };
   sk.handleTouchMove = (ev) => {
     ev.preventDefault();
