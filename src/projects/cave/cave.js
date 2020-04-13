@@ -139,11 +139,11 @@ export default (instance) => {
         points[i] = {
           get speed() { return (sk.noise(this.x / 100 + i / 100, this.y / 100 + i / 100) - 0.4) / 25; },
           direction: 1,
-          x: givenPoints[i % givenPoints.length].x,
-          y: givenPoints[i % givenPoints.length].y,
-          update() {
-            this.x += (this.speed * 60 * this.x) * this.speed * this.direction;
-            this.y += (this.speed * 60 * this.y) * this.speed * this.direction;
+          x: givenPoints[i % givenPoints.length].x + sk.noise(i / 30, sk.frameCount / 300) * 25,
+          y: givenPoints[i % givenPoints.length].y + sk.noise(i / 30, sk.frameCount / 300) * 25,
+          update(x = 0, y = 0) {
+            this.x += (this.speed * 60 * this.x - x) * this.speed * this.direction;
+            this.y += (this.speed * 60 * this.y - y) * this.speed * this.direction;
           },
         };
       }
@@ -156,9 +156,9 @@ export default (instance) => {
         direction: 1,
         x: (sk.noise(i / 100, Math.sin(sk.frameCount / 200) * sum) - 0.5) * (sk.width + sk.height) / scale,
         y: (sk.noise(i / 100, sk.frameCount / 200 * sum1) - 0.5) * (sk.width + sk.height) / scale,
-        update() {
-          this.x += (this.speed * 60 * this.x) * this.speed * this.direction * (sk.windowWidth > 640 ? 1 : 0.75);
-          this.y += (this.speed * 60 * this.y) * this.speed * this.direction * (sk.windowWidth > 640 ? 1 : 0.75);
+        update(x = 0, y = 0) {
+          this.x += (this.speed * 60 * this.x - x) * this.speed * this.direction * (sk.windowWidth > 640 ? 1 : 0.75);
+          this.y += (this.speed * 60 * this.y - y) * this.speed * this.direction * (sk.windowWidth > 640 ? 1 : 0.75);
         },
       };
     }
@@ -262,11 +262,12 @@ export default (instance) => {
     sk.beginShape();
     sk.points.forEach((point, index) => {
       const theta = index / 400;
-      point.update();
+      point.update(sk.mouseX - sk.width / 2, sk.mouseY - sk.height / 2);
       const offsetAmplitude = sk.width > 640 ? 20 : 10;
-      const offset = (sk.noise(theta * xoff * sum1 / 200, theta * sum / 100 * point.speed) - 0.5) * offsetAmplitude;
-      const offsetB = (sk.noise(theta + xoff * sum1 / 200) - 0.5) * offsetAmplitude;
-      sk.vertex(point.x + offset, point.y + offset);
+      const offsetA = (sk.noise(theta * xoff * sum1 / 200, theta * sum / 100 * point.speed) - 0.5) * offsetAmplitude;
+      const offsetB = (sk.noise(theta * xoff * sum / 200, theta * sum1 / 100 + xoff) - 0.5) * offsetAmplitude;
+
+      sk.vertex(point.x + offsetA, point.y + offsetB);
     });
     sk.endShape();
     sk.pop();
@@ -277,8 +278,9 @@ export default (instance) => {
       sk.strokeWeight(3);
       sk.stroke(255, 150);
       sk.beginShape();
-      sk.staticBodyVertex.forEach((point) => {
-        sk.vertex(point.x + Math.random() * 3, point.y);
+      sk.staticBodyVertex.forEach((point, index) => {
+        const offset = (sk.noise(index / 200 + xoff * sum1 / 200, sum / 100) - 0.5) * 20;
+        sk.vertex(point.x + offset, point.y + offset);
       });
       sk.endShape();
     }
@@ -303,7 +305,7 @@ export default (instance) => {
     const center = { x: sk.width / 2, y: sk.height / 2 };
     const arr = sk.staticBodyVertex.map((point) => ({ x: point.x - center.x, y: point.y - center.y }));
     if (arr.length > 10) {
-      sk.points = generatePoints(400, arr);
+      sk.points = generatePoints(160, arr);
       sk.keepPoints = true;
       setTimeout(() => {
         sk.keepPoints = false;
