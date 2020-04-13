@@ -1,6 +1,11 @@
 <template>
   <div id="app">
-    <TheHead />
+    <div
+      class="ToggleFullScreen"
+      @mouseenter="handleFullScreenMouseIn()"
+      @mouseleave="handleFullScreenMouseLeave()"
+    />
+    <TheHead v-if="!canvasFullScreen" />
     <div
       :key="key"
       class="back bw0"
@@ -26,7 +31,7 @@
       <router-view />
     </transition>
     <transition name="slide-fade-main">
-      <TheFooter v-if="footer && $mq === `lg`" />
+      <TheFooter v-if="footer && $mq === 'lg' && !canvasFullScreen" />
     </transition>
   </div>
 </template>
@@ -58,7 +63,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['activeItem']),
+    ...mapGetters(['activeItem', 'canvasFullScreen']),
     iframeContainer() {
       if (!this.activeItem.type) {
         return `width:${this.$mq === 'sm' ? window.screen.width : this.width}px;
@@ -131,11 +136,26 @@ export default {
         this.footer = true;
       }, 2000);
     },
+    handleFullScreenMouseIn() {
+      this.activeFullScreen = setTimeout(() => {
+        this.$store.dispatch('setCanvasFullScreen', !this.canvasFullScreen);
+      }, 1500);
+    },
+    handleFullScreenMouseLeave() {
+      clearTimeout(this.activeFullScreen);
+    },
   },
 };
 </script>
 
 <style>
+    .ToggleFullScreen {
+        position: fixed;
+        right: 0;
+        top: 0;
+        width: 30px;
+        height: 40px;
+    }
     .slide-fade-main-enter-active {
         transition: all 0.2s ease;
     }

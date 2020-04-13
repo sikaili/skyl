@@ -3,7 +3,7 @@
     <div id="canvasContainer" />
     <div v-if="$route.name ==='play'">
       <div
-        v-if="!showCanvasSettings && (settings || type === 'musicIframe')"
+        v-if="showSettingsIcon"
         class="Settings Settings__Icon white bg-black-80 bg-animate hover-bg-white hover-black pv2 ph3"
         @click="toggle('showCanvasSettings')"
       >
@@ -114,6 +114,7 @@
 
 <script>
 import p5 from 'p5/lib/p5.min';
+import { mapGetters } from 'vuex';
 
 p5.disableFriendlyErrors = true;
 
@@ -144,8 +145,12 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(['activeItem', 'canvasFullScreen']),
     isPlayer() {
       return ['player', 'cave'].includes(this.current);
+    },
+    showSettingsIcon() {
+      return !this.showCanvasSettings && (this.settings || this.type === 'musicIframe') && !this.canvasFullScreen;
     },
   },
   watch: {
@@ -221,8 +226,8 @@ export default {
     getSettings();
   },
   mounted() {
-    if (this.isPlayer && (this.$store.getters.activeItem.id !== this.current)) {
-      this.$router.push({ params: { id: this.current }, query: { id: this.$store.getters.activeItem.id } });
+    if (this.isPlayer && (this.activeItem.id !== this.current)) {
+      this.$router.push({ params: { id: this.current }, query: { id: this.activeItem.id } });
     }
   },
   beforeDestroy() {
@@ -309,8 +314,6 @@ export default {
     #canvasContainer {
         position: absolute;
         z-index: -999;
-        width: 100vw;
-        height: 100vh;
     }
 
     .Settings {

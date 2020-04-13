@@ -1,5 +1,8 @@
 <template>
-  <div class="Sidemenu fixed mw4 f3 tc left-1">
+  <div
+    v-if="!canvasFullScreen"
+    class="Sidemenu fixed mw4 f3 tc left-1"
+  >
     <br>
     <span
       class="w-100 f5 no-underline white bg-black-80 bg-animate hover-bg-white hover-black inline-flex items-center pa3 border-box"
@@ -106,6 +109,7 @@ export default {
     ...mapGetters({
       activeItem: 'activeItem',
       iframeItems: 'iframeItems',
+      canvasFullScreen: 'canvasFullScreen',
     }),
     filteredIframeItems() {
       return this.iframeItems.filter((item) => item.type !== 'musicIframe' && !item.app);

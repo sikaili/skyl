@@ -10,6 +10,7 @@ const state = {
   activeItem: {},
   loading: true,
   iframeItems: allIframeLinks,
+  canvasFullScreen: false,
 };
 const mutations = {
   TOGGLE_ITEM(state, payload) {
@@ -37,6 +38,9 @@ const mutations = {
   UPDATE_WORK(state, work) {
     state.work = work;
   },
+  SET_CANVAS_FULLSCREEN(state, payload) {
+    state.canvasFullScreen = payload;
+  },
 };
 const actions = {
   updateProjectsFeed(context, payload) {
@@ -56,6 +60,9 @@ const actions = {
   changeLoadingState(context, payload) {
     context.commit('CHANG_LOADING_STATE', payload);
   },
+  setCanvasFullScreen(context, payload) {
+    context.commit('SET_CANVAS_FULLSCREEN', payload);
+  },
 };
 const getters = {
   activeItem(state) {
@@ -72,6 +79,9 @@ const getters = {
   },
   loading(state) {
     return state.loading;
+  },
+  canvasFullScreen(state) {
+    return state.canvasFullScreen;
   },
 };
 

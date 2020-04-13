@@ -5,7 +5,7 @@
     /* center the element */
     right: 0;
     left: 0;
-    bottom:0;
+    bottom: 0;
     margin-right: auto;
     margin-left: auto;
     /* give it dimensions */
@@ -14,7 +14,7 @@
   >
     <small
       class="f7 db helvetica"
-    >© 2019 <b class="dib ph2 link dim helvetica">Sikai Li</b> All Rights
+    >© 2020 <b class="dib ph2 link dim helvetica">Sikai Li</b> All Rights
       Reserved</small>
   </footer>
 </template>

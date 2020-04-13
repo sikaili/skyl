@@ -162,6 +162,7 @@ export default (instance) => {
   };
 
   sk.setup = () => {
+    sk.noCursor();
     sk.points = generatePoints(5, [{ x: -50, y: 50 }, { x: 50, y: 50 }, { x: 50, y: -50 }, { x: -50, y: -50 }]);
     sk.randomSeed(2200);
     sk.rectMode(sk.CENTER);
