@@ -1,4 +1,6 @@
 import Tone from 'tone';
+import setListeners from '@/js/utlis/addEventListeners';
+
 
 const inB = false;
 let globleDrawArray = [];
@@ -9,10 +11,31 @@ let canvasNumber;
 let amplitude;
 let drawCount = 0;
 let No = 0;
-let drawsN = 1;
+const drawsN = 1;
 
 
 export default function (sk) {
+  const tremolo = new Tone.JCReverb(0.3);
+  tremolo.set({
+    wet: 0.1,
+  });
+  const pan = new Tone.Panner();
+  const filt = new Tone.Filter(50, 'bandpass');
+  const osc = new Tone.OmniOscillator('C#4', 'pwm').chain(new Tone.Volume(-4), filt, pan, tremolo, Tone.Master);
+  osc.start();
+
+
+  sk.stop = () => {
+    sk.noLoop();
+    osc.dispose();
+    filt.dispose();
+    pan.dispose();
+    tremolo.dispose();
+    Tone.context.suspend();
+    sk.remove();
+  };
+
+
   sk.settings = {
     name: 'noise-draw',
     list: {
@@ -33,6 +56,7 @@ export default function (sk) {
         name: 'removeSnapshot', icon: 'trash',
       }],
   };
+
 
   function Draw(d, _m) {
     this.d = d;
@@ -77,20 +101,11 @@ export default function (sk) {
       sk.pop();
     };
   }
-  let osc;
-  let filt;
-  let pan;
-  let tremolo;
 
   sk.setup = () => {
     sk.newCanvas();
     sk.createCanvas(sk.windowWidth, sk.windowHeight);
     sk.noCursor();
-    tremolo = new Tone.JCReverb(0.3);
-    pan = new Tone.Panner();
-    filt = new Tone.Filter(50, 'bandpass');
-    osc = new Tone.OmniOscillator('C#4', 'pwm').chain(new Tone.Volume(-4), filt, pan, tremolo, Tone.Master);
-    osc.start();
   };
 
   sk.updateList = () => {
@@ -177,10 +192,6 @@ export default function (sk) {
       sk.text('double-click to draw/pause', 0.5 * sk.windowWidth + sk.map(sk.noise(xoff), 0, 1, -5, 10), sk.map(sk.noise(30 + xoff * 2), 0, 1, -10, 10) + 0.5 * sk.height);
       sk.pop();
     }
-    tremolo.set({
-      // roomSize: 0.5 + Math.abs((sk.mouseX - sk.width / 2) / sk.width),
-      wet: 0.1,
-    });
     pan.set({ pan: sk.mouseX / sk.width - 0.5 });
     filt.set({
       frequency: sk.map(Math.abs(sk.mouseX - sk.width / 2), 0, sk.width / 2, 50, 300),
@@ -206,43 +217,96 @@ export default function (sk) {
     }
   };
 
-  sk.touchStarted = function () {
+
+  const scaleDrawing = (_array, _i) => {
+    for (let ii = 0; ii < _array.length; ii++) {
+      if (_array[ii].mp) {
+        for (let e = 0; e < _array[ii].mp.length; e++) {
+          const smallbig = 1 + _i / 10;
+          _array[ii].mp[e].x *= smallbig;
+          _array[ii].mp[e].y *= smallbig;
+        }
+      } else {
+        for (let e = 0; e < _array[ii].length; e++) {
+          const smallbig = 1 + _i / 10;
+          _array[ii][e].x *= smallbig;
+          _array[ii][e].y *= smallbig;
+        }
+      }
+    }
   };
 
-  sk.touchEnded = function () {
+  const moveDrawing = (_array, x = 0, y = 0) => {
+    for (let ii = 0; ii < _array.length; ii++) {
+      if (_array[ii].mp) {
+        for (let e = 0; e < _array[ii].mp.length; e++) {
+          _array[ii].mp[e].x += x;
+          _array[ii].mp[e].y += y;
+        }
+      } else {
+        for (let e = 0; e < _array[ii].length; e++) {
+          _array[ii][e].x += x;
+          _array[ii][e].y += y;
+        }
+      }
+    }
+  };
+
+  sk.handleTouchStart = () => {
+  };
+
+  sk.handleTouchEnd = () => {
     if (canvasNumber !== -100) {
       sk.addSnapshot(canvasNumber);
     }
   };
+
   sk.keyPressed = () => {
     const { keyCode } = sk;
-    if (keyCode == 189 || keyCode == 187) {
-      Scale(globleDrawArray, 188 - keyCode);
-    // Scale(mm[drawsN],188-keyCode);
+    switch (keyCode) {
+      case 32:
+        sk.saveCapture();
+        break;
+      case 187:
+      case 189:
+        scaleDrawing(globleDrawArray, 188 - keyCode);
+        break;
+      case 78:
+        sk.newPartDrawing();
+        break;
+      case 37:
+      case 39:
+        moveDrawing(globleDrawArray, ((keyCode - 38) * 50));
+        break;
+      case 38:
+      case 40:
+        moveDrawing(globleDrawArray, 0, ((keyCode - 39) * 50));
+        break;
+      default:
+        break;
     }
-    if (keyCode == 32) {
-      const w = window.open('about:blank', 'image from canvas');
-      w.document.write(`<img src='${canvas.toDataURL('image/png')}' alt='from canvas'/>`);
+    // if (keyCode >= 49 && keyCode < 54) {
+    //   canvasNumber = -100;
+    //   drawsN = keyCode - 49;
+    //   globleDrawArray = [];
+    //   for (let e = 0; e < mm[drawsN].length; e++) {
+    //     const dra = new Draw(e, mm[drawsN][e]);
+    //     globleDrawArray[e] = dra;
+    //   }
+    // }
+  };
 
-      saveCanvas(`draw_${canvasNumber}`, 'tif');
-    }
-    if (keyCode == 78) {
-      sk.newPartDrawing();
-    }
-    if (keyCode >= 49 && keyCode < 54) {
-      canvasNumber = -100;
-      drawsN = keyCode - 49;
-      globleDrawArray = [];
-      for (let e = 0; e < mm[drawsN].length; e++) {
-        const dra = new Draw(e, mm[drawsN][e]);
-        globleDrawArray[e] = dra;
-      }
+  sk.saveCapture = () => {
+    if (sk.pixelDensity() > 0.5) {
+      sk.saveCanvas(document.querySelector('canvas'), `ok${Date()}`, 'png');
     }
   };
+
   sk.windowResized = () => {
     sk.resizeCanvas(sk.windowWidth, sk.windowHeight);
     sk.background(50, 50, 200);
   };
+  setListeners(sk, Tone);
 
   document.addEventListener('touchmove', (n) => {
     n.preventDefault();
@@ -268,31 +332,9 @@ export default function (sk) {
 }
 
 
-function Scale(_array, _i) {
-  for (let ii = 0; ii < _array.length; ii++) {
-    if (_array[ii].mp) {
-      for (let e = 0; e < _array[ii].mp.length; e++) {
-        const smallbig = 1 + _i / 10;
-        _array[ii].mp[e].x *= smallbig;
-        _array[ii].mp[e].y *= smallbig;
-      }
-    } else {
-      for (let e = 0; e < _array[ii].length; e++) {
-        const smallbig = 1 + _i / 10;
-        _array[ii][e].x *= smallbig;
-        _array[ii][e].y *= smallbig;
-      }
-    }
-  }
-}
-
 function resetAllSnapshots() {
   if (confirm('You are about to delete all your drawings')) {
     localStorage.clear();
     canvasNumber = 0;
   }
 }
-
-document.touchmove = function (n) {
-  n.preventDefault();
-};
