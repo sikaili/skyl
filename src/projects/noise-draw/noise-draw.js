@@ -46,15 +46,28 @@ export default function (sk) {
     actions: [
       {
         name: 'newCanvas',
+        icon: 'refresh',
+      },
+      {
+        name: 'newPartDrawing',
         icon: 'add',
       },
-      // {
-      //   name: 'newPartDrawing',
-      //   icon: 'add',
-      // },
+      {
+        name: 'fitDrawingToWindow', icon: 'qr-scanner',
+      },
+      {
+        name: 'fitDrawingToWindow', icon: 'contract', value: [undefined, true],
+      },
+      {
+        name: 'scaleDrawing', icon: 'add-circle', value: [undefined, 1.1],
+      },
+      {
+        name: 'scaleDrawing', icon: 'remove-circle', value: [undefined, 0.9],
+      },
       {
         name: 'removeSnapshot', icon: 'trash',
-      }],
+      },
+    ],
   };
 
 
@@ -218,38 +231,53 @@ export default function (sk) {
   };
 
 
-  const scaleDrawing = (_array, _i) => {
-    for (let ii = 0; ii < _array.length; ii++) {
-      if (_array[ii].mp) {
-        for (let e = 0; e < _array[ii].mp.length; e++) {
-          const smallbig = 1 + _i / 10;
-          _array[ii].mp[e].x *= smallbig;
-          _array[ii].mp[e].y *= smallbig;
-        }
-      } else {
-        for (let e = 0; e < _array[ii].length; e++) {
-          const smallbig = 1 + _i / 10;
-          _array[ii][e].x *= smallbig;
-          _array[ii][e].y *= smallbig;
-        }
-      }
+  sk.scaleDrawing = (parts = globleDrawArray, scale) => {
+    parts.forEach((part) => {
+      const partPoints = part.mp ? part.mp : part;
+      partPoints.forEach((point) => {
+        point.x *= scale;
+        point.y *= scale;
+      });
+    });
+  };
+
+  sk.fitDrawingToWindow = (parts = globleDrawArray, center = false) => {
+    const allPoints = [];
+    parts.forEach((part) => {
+      const partPoints = part.mp ? part.mp : part;
+      partPoints.forEach((point) => {
+        allPoints.push(point);
+      });
+    });
+    const xArray = allPoints.map((point) => point.x);
+    const yArray = allPoints.map((point) => point.y);
+    const minX = Math.min(...xArray);
+    const maxX = Math.max(...xArray);
+    const minY = Math.min(...yArray);
+    const maxY = Math.max(...yArray);
+    let moveX = 50 - minX;
+    let moveY = 50 - minY;
+    const scaleX = (sk.width - 50) / (maxX + moveX);
+    const scaleY = (sk.height - 50) / (maxY + moveY);
+    const scale = scaleY > scaleX ? scaleX : scaleY;
+    if (center) {
+      moveX = sk.width / 2 - (minX + maxX) / 2;
+      moveY = sk.height / 2 - (minY + maxY) / 2;
+      sk.moveDrawing(undefined, moveX, moveY);
+    } else {
+      sk.moveDrawing(undefined, moveX, moveY);
+      sk.scaleDrawing(undefined, scale);
     }
   };
 
-  const moveDrawing = (_array, x = 0, y = 0) => {
-    for (let ii = 0; ii < _array.length; ii++) {
-      if (_array[ii].mp) {
-        for (let e = 0; e < _array[ii].mp.length; e++) {
-          _array[ii].mp[e].x += x;
-          _array[ii].mp[e].y += y;
-        }
-      } else {
-        for (let e = 0; e < _array[ii].length; e++) {
-          _array[ii][e].x += x;
-          _array[ii][e].y += y;
-        }
-      }
-    }
+  sk.moveDrawing = (parts = globleDrawArray, x = 0, y = 0) => {
+    parts.forEach((part) => {
+      const partPoints = part.mp ? part.mp : part;
+      partPoints.forEach((point) => {
+        point.x += x;
+        point.y += y;
+      });
+    });
   };
 
   sk.handleTouchStart = () => {
@@ -269,18 +297,18 @@ export default function (sk) {
         break;
       case 187:
       case 189:
-        scaleDrawing(globleDrawArray, 188 - keyCode);
+        sk.scaleDrawing(globleDrawArray, 1 + (188 - keyCode) / 10);
         break;
       case 78:
         sk.newPartDrawing();
         break;
       case 37:
       case 39:
-        moveDrawing(globleDrawArray, ((keyCode - 38) * 50));
+        sk.moveDrawing(globleDrawArray, ((keyCode - 38) * 50));
         break;
       case 38:
       case 40:
-        moveDrawing(globleDrawArray, 0, ((keyCode - 39) * 50));
+        sk.moveDrawing(globleDrawArray, 0, ((keyCode - 39) * 50));
         break;
       default:
         break;

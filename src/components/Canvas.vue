@@ -95,9 +95,9 @@
           />
           <template v-if="settings && settings.actions">
             <i
-              v-for="action in settings.actions"
-              :key="action.name"
-              class="icon f3 white bg-black-80 bg-animate hover-bg-white hover-black pv2 ph3"
+              v-for="(action, index) in settings.actions"
+              :key="index"
+              class="Settings__MenuActions icon f3 white bg-black-80 bg-animate hover-bg-white hover-black pv2 ph3"
               :class="`ion-md-${action.icon}`"
               @click="actionButton(action.name, action)"
             />
@@ -287,7 +287,11 @@ export default {
     },
     actionButton(actionName, action) {
       action.on = !action.on;
-      current[actionName]();
+      if (action.value) {
+        current[actionName](...action.value);
+      } else {
+        current[actionName]();
+      }
     },
     setRangeInput(name, value) {
       if (typeof value === 'number') {
@@ -352,8 +356,9 @@ export default {
         &__Menu {
             background-color: rgba(220,220,220,0.7);
             width: auto;
+            max-width: calc(100% - 28px);
             position: fixed;
-            right: 30px;
+            right: 28px;
             height: 0%;
             top: 100%;
             padding-top: 24px;
@@ -387,6 +392,11 @@ export default {
                         font-size: 14px;
                     }
                 }
+            }
+
+
+            &Actions {
+                line-height: 72px;
             }
 
             &--active {
