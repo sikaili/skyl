@@ -1,5 +1,6 @@
 import p5 from 'p5/lib/p5.min';
 import Tone from 'tone';
+import setListeners from '@/js/utlis/addEventListeners';
 import PeakDetect from '@/js/utlis/PeakDetect';
 
 export default function (sk) {
@@ -47,7 +48,6 @@ export default function (sk) {
     grey: false,
     get getColor() { return [this.red.value, this.green.value, this.blue.value] || [255, 50, 50]; },
   };
-  const divNode = document.querySelector('#canvasContainer');
   const fft = new Tone.FFT();
   const circleCenterR = sk.width > 768 ? 250 : 150;
   let peakDetect;
@@ -458,7 +458,7 @@ export default function (sk) {
     sk.mouseY = 0.35 * sk.windowHeight;
   };
 
-  sk.touchEnded = () => {
+  sk.handleTouchEnd = () => {
     sk.background(0);
     state = 0;
     if (soundIsLoading === false) {
@@ -476,47 +476,5 @@ export default function (sk) {
   sk.touchMoved = () => {
     state = 1;
   };
-  divNode.addEventListener(
-    'click',
-    async () => {
-      await Tone.start();
-      sk.soundIsReady = true;
-    },
-    { once: true, passive: false },
-  );
-  divNode.addEventListener(
-    'touchstart',
-    async () => {
-      await Tone.start();
-      sk.soundIsReady = true;
-    },
-    { once: true, passive: false },
-  );
-  divNode.addEventListener(
-    'touchstart',
-    () => {
-      sk.handleTouchStart();
-    },
-    {
-      passive: false,
-    },
-  );
-
-  divNode.addEventListener(
-    'mousedown',
-    () => {
-      sk.handleTouchStart();
-    },
-    {
-      passive: false,
-    },
-  );
-
-  divNode.addEventListener('touchend', sk.handleTouchEnd, {
-    passive: false,
-  });
-
-  divNode.addEventListener('mouseup', sk.handleTouchEnd, {
-    passive: false,
-  });
+  setListeners(sk, Tone);
 }

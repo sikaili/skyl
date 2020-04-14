@@ -1,10 +1,10 @@
 import Tone from 'tone';
 import PeakDetect from '@/js/utlis/PeakDetect';
+import setListeners from '@/js/utlis/addEventListeners';
+
 
 export default (instance) => {
   const sk = instance;
-  const divNode = document.querySelector('#canvasContainer');
-
   sk.stop = () => {
     sk.stopped = true;
     sk.noLoop();
@@ -370,58 +370,5 @@ export default (instance) => {
     sk.resizeCanvas(sk.windowWidth, sk.windowHeight);
     sk.background(0);
   };
-
-  divNode.addEventListener(
-    'click',
-    async () => {
-      await Tone.start();
-      sk.soundIsReady = true;
-    },
-    { once: true, passive: false },
-  );
-  divNode.addEventListener(
-    'touchstart',
-    async () => {
-      await Tone.start();
-      sk.soundIsReady = true;
-    },
-    { once: true, passive: false },
-  );
-  divNode.addEventListener(
-    'touchstart',
-    () => {
-      sk.handleTouchStart();
-    },
-    {
-      passive: false,
-    },
-  );
-
-  divNode.addEventListener(
-    'mousedown',
-    () => {
-      sk.handleTouchStart();
-    },
-    {
-      passive: false,
-    },
-  );
-
-  divNode.addEventListener('touchend', sk.handleTouchEnd, {
-    passive: false,
-  });
-
-  divNode.addEventListener('mouseup', sk.handleTouchEnd, {
-    passive: false,
-  });
-  divNode.addEventListener(
-    'touchmove',
-    sk.handleTouchMove,
-    { passive: false },
-  );
-  divNode.addEventListener(
-    'mousemove',
-    sk.handleTouchMove,
-    { passive: false },
-  );
+  setListeners(sk, Tone);
 };

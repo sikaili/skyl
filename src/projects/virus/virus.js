@@ -1,4 +1,5 @@
 import Tone from 'tone';
+import setListeners from '@/js/utlis/addEventListeners';
 import decomp from 'poly-decomp';
 import {
   Engine,
@@ -381,69 +382,7 @@ const sketch = (instance) => {
     Composite.clear(sk.borders);
     setBordersAndMouse();
   };
-
-  const setListeners = (divNode) => { //eslint-disable-line
-    divNode.addEventListener(
-      'click',
-      async () => {
-        await Tone.start();
-        sk.start();
-      },
-      { once: true, passive: false },
-    );
-    divNode.addEventListener(
-      'touchstart',
-      async () => {
-        await Tone.start();
-        sk.start();
-      },
-      { once: true, passive: false },
-    );
-    divNode.addEventListener(
-      'touchstart',
-      sk.handleTouchStart,
-      {
-        passive: false,
-      },
-    );
-
-    divNode.addEventListener(
-      'mousedown',
-      sk.handleTouchStart,
-      {
-        passive: false,
-      },
-    );
-
-    divNode.addEventListener('touchend', sk.handleTouchEnd, {
-      passive: false,
-    });
-
-    divNode.addEventListener('mouseup', sk.handleTouchEnd, {
-      passive: false,
-    });
-
-    divNode.addEventListener(
-      'ontouchmove',
-      (m) => {
-        m.preventDefault();
-      },
-      { passive: false },
-    );
-
-    divNode.addEventListener(
-      'touchmove',
-      sk.handleTouchMove,
-      { passive: false },
-    );
-    divNode.addEventListener(
-      'mousemove',
-      sk.handleTouchMove,
-      { passive: false },
-    );
-  };
-
-  setListeners(divNode);
+  setListeners(sk, Tone);
 };
 
 export default sketch;
