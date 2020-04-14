@@ -18,24 +18,27 @@ export default (instance) => {
   };
 
   sk.settings = {
-    player: true,
+    list: {
+      current: '',
+      items: ['Amarrage', 'Rotation', 'La-Danse', 'flower', 'saturation-chinoise', '2019-12-YeChe', 'Rain-Addiction', 'Emb', 'c-syn', 'e-minor'],
+    },
     red: {
       value: 255,
-      type: 'range',
+      // type: 'range',
       max: 255,
       min: 0,
       step: 1,
     },
     green: {
       value: 50,
-      type: 'range',
+      // type: 'range',
       max: 155,
       min: 0,
       step: 1,
     },
     blue: {
       value: 50,
-      type: 'range',
+      // type: 'range',
       max: 255,
       min: 0,
       step: 1,
@@ -57,12 +60,12 @@ export default (instance) => {
     get getColor() { return [this.red.value, this.green.value, this.blue.value] || [255, 50, 50]; },
   };
 
-  sk.songId = 'amarrage';
+  sk.settings.list.current = 'Amarrage';
 
   if (vm.$route.query.id && typeof vm.$route.query.id === 'string') {
-    sk.songId = vm.$route.query.id;
+    sk.settings.list.current = vm.$route.query.id;
   } else {
-    vm.$router.push({ query: { id: sk.songId } });
+    vm.$router.push({ query: { id: sk.settings.list.current } });
   }
   const fft = new Tone.FFT();
   const peakDetect = new PeakDetect(40, 20000, 0.2);
@@ -70,7 +73,7 @@ export default (instance) => {
   let sum1;
 
   sk.setSong = (songId) => {
-    sk.songId = songId;
+    sk.settings.list.current = songId;
     songId = songId.toLowerCase();
     const sound = () => import('../player/sound/' + songId + '.m4a'); //eslint-disable-line
     sound().then((module) => {
@@ -92,7 +95,7 @@ export default (instance) => {
         break;
     }
   };
-  sk.setSong(sk.songId);
+  sk.setSong(sk.settings.list.current);
 
   class Point {
     constructor(i, scale = 2, toInner = -0.1, x, y) {
@@ -315,7 +318,7 @@ export default (instance) => {
       }
       sk.textSize(18);
       sk.fill(150);
-      sk.text(sk.songId, 0.5 * sk.windowWidth, 0.3 * sk.windowHeight + 130);
+      sk.text(sk.settings.list.current, 0.5 * sk.windowWidth, 0.3 * sk.windowHeight + 130);
     }
   };
 
@@ -362,6 +365,10 @@ export default (instance) => {
         sk.staticBodyVertex.push({ x: sk.mouseX, y: sk.mouseY });
       }
     }
+  };
+  sk.windowResized = () => {
+    sk.resizeCanvas(sk.windowWidth, sk.windowHeight);
+    sk.background(0);
   };
 
   divNode.addEventListener(

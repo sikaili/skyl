@@ -21,5 +21,9 @@
   {
     "id": "cave",
     "type": "sketch"
+  },
+  {
+    "id": "noise-draw",
+    "type": "sketch"
   }
 ]

@@ -5,7 +5,10 @@ import PeakDetect from '@/js/utlis/PeakDetect';
 export default function (sk) {
   console.log('player setup');
   sk.settings = {
-    player: true,
+    list: {
+      current: '',
+      items: ['Amarrage', 'Rotation', 'La-Danse', 'flower', 'saturation-chinoise', '2019-12-YeChe', 'Rain-Addiction', 'Emb', 'c-syn', 'e-minor'],
+    },
     red: {
       value: 255,
       type: 'range',
@@ -56,17 +59,17 @@ export default function (sk) {
   let xoff = 0;
   let particles = [];
   let forceDirection = -1;
-  sk.songId = 'Amarrage';
+  sk.settings.list.current = 'Amarrage';
   if (vm.$route.query.id && typeof vm.$route.query.id === 'string') {
-    sk.songId = vm.$route.query.id;
+    sk.settings.list.current = vm.$route.query.id;
   } else {
-    vm.$router.push({ query: { id: sk.songId } });
+    vm.$router.push({ query: { id: sk.settings.list.current } });
   }
 
   let player;
 
   sk.setSong = (songId) => {
-    sk.songId = songId;
+    sk.settings.list.current = songId;
     songId = songId.toLowerCase();
     const sound = () => import('./sound/' + songId + '.m4a'); //eslint-disable-line
     sound().then((module) => {
@@ -95,7 +98,7 @@ export default function (sk) {
     }
   };
 
-  sk.setSong(sk.songId);
+  sk.setSong(sk.settings.list.current);
 
 
   sk.stop = () => {
@@ -437,7 +440,7 @@ export default function (sk) {
         sk.strokeWeight(0);
         // sk.text('Li Sikai', 0.5 * sk.windowWidth, 0.3 * sk.windowHeight);
         // sk.text('2018', 0.5 * sk.windowWidth, 0.3 * sk.windowHeight + 60);
-        sk.text(sk.songId, 0.5 * sk.windowWidth, 0.3 * sk.windowHeight + 130);
+        sk.text(sk.settings.list.current, 0.5 * sk.windowWidth, 0.3 * sk.windowHeight + 130);
         sk.pop();
       }
     }

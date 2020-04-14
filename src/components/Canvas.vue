@@ -5,7 +5,7 @@
       <div
         v-if="showSettingsIcon"
         class="Settings Settings__Icon white bg-black-80 bg-animate hover-bg-white hover-black pv2 ph3"
-        @click="toggle('showCanvasSettings')"
+        @click.stop="toggle('showCanvasSettings')"
       >
         <i
           class="tc icon ion-md-settings f3"
@@ -27,33 +27,33 @@
           />
         </div>
         <p
-          v-if="(settings && settings.player) || type === 'musicIframe'"
+          v-if="list"
           class="Settings__Player pa2 bg-animate hover-bg-white hover-black mb0 pb2 white bg-black-60"
-          @click="toggle('showPlayerList')"
+          @click="toggle('showList')"
         >
-          {{ songId?songId :'Player' }}
+          {{ list.current || songId|| 'Player' }}
           <i
             :class="
               `hover-black fr ma0 icon ion-md-arrow-drop-down ${
-                showPlayerList ? ` ion-md-arrow-dropup` : ' ion-md-arrow-dropdown'
+                showList ? ` ion-md-arrow-dropup` : ' ion-md-arrow-dropdown'
               }`
             "
           />
         </p>
         <div
-          v-if="showPlayerList"
+          v-if="showList"
           class="Settings__PlayerList overflow-y-scroll f6 tl bg-white-30"
           :class="{ 'Settings__PlayerList--full': type === 'musicIframe' }"
         >
           <span
-            v-for="(songId, index) in songs"
+            v-for="(item, index) in list.items"
             :key="index"
           >
             <p
               class="Settings__PlayerListItem ph3 bg-animate hover-bg-white hover-black white bg-black-60"
-              @click="setSketchSong(songId)"
+              @click="setCurrentItem(item)"
             >
-              {{ songId }}
+              {{ item }}
             </p>
           </span>
         </div>
@@ -136,10 +136,10 @@ export default {
   },
   data() {
     return {
-      showPlayerList: this.type === 'musicIframe',
+      showList: this.type === 'musicIframe',
       showCanvasSettings: false,
       settings: null,
-      songs: ['Amarrage', 'Rotation', 'La-Danse', 'flower', 'saturation-chinoise', '2019-12-YeChe', 'Rain-Addiction', 'Emb', 'c-syn', 'e-minor'],
+      songs: { items: ['Amarrage', 'Rotation', 'La-Danse', 'flower', 'saturation-chinoise', '2019-12-YeChe', 'Rain-Addiction', 'Emb', 'c-syn', 'e-minor'] },
       iframes: ['c-syn', 'e-minor', 'flower', 'saturation-chinoise'],
       songId: null,
     };
@@ -152,13 +152,22 @@ export default {
     showSettingsIcon() {
       return !this.showCanvasSettings && (this.settings || this.type === 'musicIframe') && !this.canvasFullScreen;
     },
+    list() {
+      if (this.settings && this.settings.list && this.settings.list.items) {
+        return this.settings.list;
+      }
+      if (this.type === 'musicIframe') {
+        return this.songs;
+      }
+      return null;
+    },
   },
   watch: {
     settings: {
       deep: true,
       handler(val) {
         const toStore = JSON.parse(JSON.stringify(val));
-        Object.keys(toStore).map((name) => {
+        Object.keys(toStore).forEach((name) => {
           if (name.includes('get') || name === 'actions' || !toStore[name].type) {
             delete toStore[name];
           }
@@ -244,7 +253,12 @@ export default {
     current = undefined;
   },
   methods: {
-    setSketchSong(songId) {
+    setCurrentItem(item) {
+      if (this.list.action) {
+        current[this.list.action](item);
+        return;
+      }
+      const songId = item;
       if (this.type === 'musicIframe') {
         if (this.iframes.includes(songId)) {
           this.$store.dispatch('setActiveItem', songId);
