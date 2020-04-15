@@ -5,13 +5,12 @@ import setListeners from '@/js/utlis/addEventListeners';
 const inB = false;
 let globleDrawArray = [];
 let givenCanvas = null;
-let state = 0;
 let xoff = 0;
+const yoff = 0;
 let canvasNumber;
-let amplitude;
+const amplitude = 0.01;
 let drawCount = 0;
 let No = 0;
-const drawsN = 1;
 
 
 export default function (sk) {
@@ -42,6 +41,13 @@ export default function (sk) {
       current: 'OK',
       items: [],
       action: 'getSnapshot',
+    },
+    speed: {
+      value: 100,
+      // type: 'range',
+      max: 1000,
+      min: 1,
+      step: 10,
     },
     actions: [
       {
@@ -75,8 +81,6 @@ export default function (sk) {
     this.d = d;
     this.mp = [];
     this.rec = false;
-    this.yoff = 0;
-    this.theta = 0;
     this.mouseI = 0;
     this.m = _m;
     this.count = 0;
@@ -98,17 +102,16 @@ export default function (sk) {
         }
       }
     };
-    this.display = (_xoff) => {
+    this.display = (xoff, yoff) => {
       sk.push();
-      sk.fill(0, 50 + sk.constrain(sk.mouseX - sk.pmouseX, -20, 100) + amplitude * 10);
-      sk.strokeWeight(0.8 * (sk.width + sk.height) / 1500 + Math.random() / 3);
+      sk.fill(0, 50 + sk.constrain(sk.mouseX - sk.pmouseX, -20, 100));
       sk.beginShape();
       for (let ee = 0; ee < this.mp.length; ee += 1) {
-        this.mouseI = sk.constrain(sk.map(Math.abs(sk.mouseX - sk.width / 2), 0, sk.width / 2, 1, 2), 1.2, 2);
-        this.offsett = sk.map(sk.noise(this.yoff * _xoff), 0, 1, -20 * this.mouseI, 20 * this.mouseI) / 3 / 2000 * (sk.width + sk.height);
-        sk.vertex(this.mp[ee].x + this.offsett * Math.sin(this.theta), this.mp[ee].y + this.offsett * Math.cos(this.theta) * sk.constrain((sk.mouseY - sk.pmouseY) / 2, 0.5, 800));
-        this.yoff += 0.5 * sk.map(sk.mouseY, 0, sk.height, -0.1, 0.1);
-        this.theta += 0.01;
+        this.mouseI = sk.map(Math.abs(sk.mouseX - sk.width / 2), 0, sk.width / 2 - 200, 1, 2);
+        this.offset = sk.map(sk.noise(yoff * xoff, ee / 100), 0, 1, -20 * this.mouseI, 20 * this.mouseI) / 3 / 2000 * (sk.width + sk.height);
+        // this.offset = (sk.noise(yoff * xoff, sk.frameCount / 400) - 0.5) * 20;
+        sk.vertex(this.mp[ee].x + this.offset * Math.sin(xoff), this.mp[ee].y + this.offset * sk.noise(xoff) * sk.constrain((sk.mouseY - sk.pmouseY) / 2, 0.5, 800));
+        yoff += 0.5 * sk.map(sk.mouseY, 0, sk.height, -0.1, 0.1);
       }
       sk.endShape();
       sk.pop();
@@ -116,8 +119,9 @@ export default function (sk) {
   }
 
   sk.setup = () => {
-    sk.newCanvas();
     sk.createCanvas(sk.windowWidth, sk.windowHeight);
+    sk.strokeWeight(1);
+    sk.newCanvas();
     sk.noCursor();
   };
 
@@ -128,13 +132,13 @@ export default function (sk) {
   sk.newCanvas = () => {
     sk.updateList();
     canvasNumber = sk.settings.list.items.length;
-    sk.settings.list.current = canvasNumber;
+    sk.settings.list.current = `noise-draw-${ canvasNumber}`;
     givenCanvas = null;
     No = 0;
     globleDrawArray = null;
     globleDrawArray = [];
     globleDrawArray[0] = new Draw(0);
-    state = 0;
+    sk.isPaused = true;
   };
 
   sk.removeSnapshot = () => {
@@ -188,14 +192,13 @@ export default function (sk) {
 
   sk.draw = () => {
     sk.background(255 - sk.constrain((sk.mouseY - sk.pmouseY) * 3, 0, 200), 30 + Math.abs(sk.mouseY - sk.pmouseY) * 3);
-    amplitude = 0.01;
     sk.ellipse(sk.mouseX, sk.mouseY, 5, 5);
     sk.push();
     sk.textSize(18);
     sk.textAlign(sk.CENTER);
     sk.text(canvasNumber, 0.5 * sk.width, 0.9 * sk.height);
     sk.pop();
-    if (state === 0 && givenCanvas == null) {
+    if (sk.isPaused && givenCanvas == null) {
       sk.push();
       sk.noStroke();
       sk.fill(100, 0, 0, (Math.cos(sk.frameCount / 20) + 0.5) * 200 + 30 + sk.random(-20, 0));
@@ -214,9 +217,10 @@ export default function (sk) {
       Math.abs(sk.mouseY - sk.pmouseY) * 15,
     });
     xoff += 0.01;
+    sk.strokeWeight(Math.random() * 2);
     sk.stroke(0);
     sk.fill(0, 50 + sk.constrain(sk.mouseX - sk.pmouseX, -20, 100) + amplitude * 100);
-    if (state % 2 === 1) {
+    if (!sk.isPaused) {
       globleDrawArray[No].rec = true;
     } else {
       globleDrawArray[No].rec = false;
@@ -226,19 +230,8 @@ export default function (sk) {
         No = i;
       }
       globleDrawArray[i].mouse(inB);
-      globleDrawArray[i].display(xoff);
+      globleDrawArray[i].display(xoff, yoff);
     }
-  };
-
-
-  sk.scaleDrawing = (parts = globleDrawArray, scale) => {
-    parts.forEach((part) => {
-      const partPoints = part.mp ? part.mp : part;
-      partPoints.forEach((point) => {
-        point.x *= scale;
-        point.y *= scale;
-      });
-    });
   };
 
   sk.fitDrawingToWindow = (parts = globleDrawArray, center = false) => {
@@ -276,6 +269,16 @@ export default function (sk) {
       partPoints.forEach((point) => {
         point.x += x;
         point.y += y;
+      });
+    });
+  };
+
+  sk.scaleDrawing = (parts = globleDrawArray, scale) => {
+    parts.forEach((part) => {
+      const partPoints = part.mp ? part.mp : part;
+      partPoints.forEach((point) => {
+        point.x *= scale;
+        point.y *= scale;
       });
     });
   };
@@ -341,7 +344,7 @@ export default function (sk) {
   }, { passive: false });
   document.addEventListener('touchstart', Dclick, { passive: false });
   document.addEventListener('dblclick', () => {
-    state = (state + 1) % 2;
+    sk.isPaused = !sk.isPaused;
   },
   { passive: false });
   let tapedTwice = false;
@@ -352,10 +355,7 @@ export default function (sk) {
       return false;
     }
     event.preventDefault();
-    // action on double tap goes below
-    state = (state + 1) % 2;
-
-    // document.getElementById("myDropdown").classList.toggle("show");
+    sk.isPaused = !sk.isPaused;
   }
 }
 
