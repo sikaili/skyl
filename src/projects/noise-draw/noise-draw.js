@@ -1,19 +1,23 @@
 import Tone from 'tone';
 import setListeners from '@/js/utlis/addEventListeners';
+import setGestures from '@/js/utlis/addGestures';
+import { Vertices } from 'matter-js';
 
 
-const inB = false;
 let globleDrawArray = [];
-let givenCanvas = null;
+let viewMode = false;
 let xoff = 0;
-const yoff = 0;
-let canvasNumber;
+let yoff = 0;
 const amplitude = 0.01;
-let drawCount = 0;
-let No = 0;
 
 
 export default function (sk) {
+  sk.canvas = {
+    parts: globleDrawArray,
+    canvasCenter: { x: 0, y: 0 },
+    currentPartNo: 0,
+  };
+
   const tremolo = new Tone.JCReverb(0.3);
   tremolo.set({
     wet: 0.1,
@@ -73,45 +77,52 @@ export default function (sk) {
       {
         name: 'removeSnapshot', icon: 'trash',
       },
+      {
+        name: 'copyResult', icon: 'copy',
+      },
     ],
   };
 
 
-  function Draw(d, _m) {
-    this.d = d;
-    this.mp = [];
-    this.rec = false;
-    this.mouseI = 0;
-    this.m = _m;
-    this.count = 0;
-    this.mouse = (inB) => {
-      if (this.m) {
-        if (Math.abs(sk.mouseX - sk.pmouseX) > 0 || Math.abs(sk.mouseY - sk.pmouseY) > 0) {
-          for (let i = 0; i < this.m.length; i += 1) {
-            this.mp.push(this.m[i]);
-          }
-          this.m = [];
-        }
-      } else if (this.rec && !inB && !(sk.mouseX < sk.width / 10 && sk.mouseY < sk.width / 10) && !(sk.mouseX > sk.width * 0.9 && sk.mouseY > sk.height - sk.width * 0.1)) {
-        const ee = sk.createVector(sk.mouseX, sk.mouseY);
-        if ((Math.abs(sk.mouseX - sk.pmouseX) > 0 || Math.abs(sk.mouseY - sk.pmouseY) > 0) && !sk.keyIsPressed) {
-          this.mp.push(ee);
-        }
-        if (sk.touches.length > 1 || (sk.keyIsPressed && sk.mouseIsPressed)) {
-          this.mp.splice(this.mp.length - 1, 1);
-        }
+  function Part(receivedMousePositions = []) {
+    this.mousePositions = receivedMousePositions;
+    this.isRecording = true;
+    this.center = { x: 0, y: 0 };
+    this.givenCenter = null;
+    this.relativePositions = [];
+    this.addPoints = (x, y) => {
+      const shouldAdd = { x, y } !== this.mousePositions[this.mousePositions.length - 1] || this.mousePositions.length === 0;
+      if (shouldAdd && this.isRecording && !sk.isPaused) {
+        this.mousePositions.push({ x, y });
+      }
+      if (sk.touches.length > 1 || (sk.keyIsPressed && sk.mouseIsPressed)) {
+        this.mousePositions.splice(this.mousePositions.length - 1, 1);
+        this.mousePositions.splice(this.mousePositions.length - 1, 1);
       }
     };
+    this.centerPoints = (position) => {
+      if (position) {
+        this.givenCenter = position;
+      } else {
+        this.center = Vertices.centre(this.mousePositions);
+        console.log(this.center);
+        this.relativePositions = this.mousePositions.map((point) => ({ x: point.x - this.center.x, y: point.y - this.center.y }));
+      }
+    };
+
     this.display = (xoff, yoff) => {
       sk.push();
+      const points = this.relativePositions.length === 0 ? this.mousePositions : this.relativePositions;
+      const center = this.givenCenter || this.center;
+      sk.translate(center.x, center.y);
       sk.fill(0, 50 + sk.constrain(sk.mouseX - sk.pmouseX, -20, 100));
       sk.beginShape();
-      for (let ee = 0; ee < this.mp.length; ee += 1) {
-        this.mouseI = sk.map(Math.abs(sk.mouseX - sk.width / 2), 0, sk.width / 2 - 200, 1, 2);
-        this.offset = sk.map(sk.noise(yoff * xoff, ee / 100), 0, 1, -20 * this.mouseI, 20 * this.mouseI) / 3 / 2000 * (sk.width + sk.height);
+      for (let ee = 0; ee < points.length; ee += 1) {
+        // this.mouseI = sk.map(Math.abs(sk.mouseX - sk.width / 2), 0, sk.width / 2, 0.5, 1.5);
+        this.offset = (sk.map(sk.noise(yoff * xoff, ee / 100 * xoff), 0, 1, -8, 8) + Math.sin(ee / 100 + sk.frameCount / 100) * 5 * Math.random()) * (sk.width > 468 ? 1 : 0.5);
         // this.offset = (sk.noise(yoff * xoff, sk.frameCount / 400) - 0.5) * 20;
-        sk.vertex(this.mp[ee].x + this.offset * Math.sin(xoff), this.mp[ee].y + this.offset * sk.noise(xoff) * sk.constrain((sk.mouseY - sk.pmouseY) / 2, 0.5, 800));
-        yoff += 0.5 * sk.map(sk.mouseY, 0, sk.height, -0.1, 0.1);
+        // sk.vertex(points[ee].x + this.offset * Math.sin(xoff), points[ee].y + this.offset * sk.noise(xoff) * sk.constrain((sk.mouseY - sk.pmouseY) / 2, 0.5, 800));
+        sk.vertex(points[ee].x + this.offset, points[ee].y + this.offset * sk.noise(xoff) * sk.constrain((sk.mouseY - sk.pmouseY) / 2, 0.5, 800));
       }
       sk.endShape();
       sk.pop();
@@ -125,19 +136,30 @@ export default function (sk) {
     sk.noCursor();
   };
 
+  sk.copyResult = () => {
+    const copyToClipBoard = (str) => {
+      const el = document.createElement('textarea');
+      el.value = str;
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+    };
+    copyToClipBoard(localStorage.getItem(`noise-draw-${sk.canvasName}`));
+  };
+
   sk.updateList = () => {
     sk.settings.list.items = Object.keys(localStorage).filter((name) => name.includes('noise-draw-')).map((name) => name.slice('noise-draw-'.length));
   };
 
   sk.newCanvas = () => {
     sk.updateList();
-    canvasNumber = sk.settings.list.items.length;
-    sk.settings.list.current = `noise-draw-${ canvasNumber}`;
-    givenCanvas = null;
-    No = 0;
-    globleDrawArray = null;
+    sk.canvasName = `${sk.settings.list.items.length }-${ Math.random().toFixed(1)}`;
+    sk.settings.list.current = sk.canvasName;
+    viewMode = false;
+    sk.currentPartNo = 0;
     globleDrawArray = [];
-    globleDrawArray[0] = new Draw(0);
+    globleDrawArray[0] = new Part();
     sk.isPaused = true;
   };
 
@@ -150,44 +172,49 @@ export default function (sk) {
     sk.updateList();
   };
 
-  sk.getSnapshot = (localStorageId) => {
-    givenCanvas = true;
-    const canvas = JSON.parse(localStorage.getItem(`noise-draw-${localStorageId}`));
+  sk.getSnapshot = (sketchName) => {
+    globleDrawArray = [];
+    viewMode = true;
+    const canvas = JSON.parse(localStorage.getItem(`noise-draw-${sketchName}`));
     if (canvas) {
-      canvasNumber = localStorageId;
-      sk.settings.list.current = canvasNumber;
+      sk.canvasName = sketchName;
+      sk.settings.list.current = sk.canvasName;
       for (let e = 0; e < canvas.length; e += 1) {
-        const part = new Draw(e, canvas[e]);
+        const part = new Part(canvas[e]);
         globleDrawArray[e] = part;
       }
     }
     sk.updateList();
+    sk.fitDrawingToWindow();
+    sk.fitDrawingToWindow();
+    sk.fitDrawingToWindow();
+    sk.fitDrawingToWindow();
+    sk.fitDrawingToWindow(undefined, true);
   };
 
-  sk.addSnapshot = (id) => {
+  sk.addSnapshot = () => {
     const dumps = [];
     for (let mm = 0; mm < globleDrawArray.length; mm += 1) {
-      const dump = globleDrawArray[mm].mp.map((element) => ({ x: +element.x, y: +element.y }));
+      const dump = globleDrawArray[mm].mousePositions.map((element) => ({ x: +element.x, y: +element.y }));
       dumps.push(dump);
     }
-    if (globleDrawArray[0].mp.length > 30 && givenCanvas === null) {
-      localStorage.setItem(`noise-draw-sketch-${id}`, JSON.stringify(dumps));
+    if (globleDrawArray[0].mousePositions.length > 300 && !viewMode) {
+      localStorage.setItem(`noise-draw-${sk.canvasName}`, JSON.stringify(dumps));
     }
   };
 
   sk.newPartDrawing = () => {
-    if (givenCanvas !== null) {
-      canvasNumber = sk.settings.items.length + 1;
-      givenCanvas = null;
+    if (viewMode) {
+      sk.canvasName += Math.random().toFixed();
+      sk.settings.list.current = sk.canvasName;
+      viewMode = false;
     }
     for (let i = 0; i < globleDrawArray.length; i += 1) {
-      globleDrawArray[i].m = null;
+      globleDrawArray[i].receivedMousePositions = [];
+      globleDrawArray[i].centerPoints();
+      globleDrawArray[i].isRecording = false;
     }
-    drawCount += 1;
-    const draw = new Draw(drawCount);
-    draw.rec = true;
-    console.log('ok');
-    globleDrawArray.push(draw);
+    globleDrawArray.push(new Part());
   };
 
   sk.draw = () => {
@@ -196,9 +223,9 @@ export default function (sk) {
     sk.push();
     sk.textSize(18);
     sk.textAlign(sk.CENTER);
-    sk.text(canvasNumber, 0.5 * sk.width, 0.9 * sk.height);
+    sk.text(sk.canvasName, 0.5 * sk.width, 0.9 * sk.height);
     sk.pop();
-    if (sk.isPaused && givenCanvas == null) {
+    if (sk.isPaused && !viewMode) {
       sk.push();
       sk.noStroke();
       sk.fill(100, 0, 0, (Math.cos(sk.frameCount / 20) + 0.5) * 200 + 30 + sk.random(-20, 0));
@@ -216,28 +243,25 @@ export default function (sk) {
       frequency:
       Math.abs(sk.mouseY - sk.pmouseY) * 15,
     });
-    xoff += 0.01;
+    xoff += 0.02;
+    yoff += 1 * sk.map(sk.mouseY, 0, sk.height, -0.1, 0.1);
+
     sk.strokeWeight(Math.random() * 2);
     sk.stroke(0);
     sk.fill(0, 50 + sk.constrain(sk.mouseX - sk.pmouseX, -20, 100) + amplitude * 100);
-    if (!sk.isPaused) {
-      globleDrawArray[No].rec = true;
-    } else {
-      globleDrawArray[No].rec = false;
-    }
-    for (let i = 0; i < globleDrawArray.length; i += 1) {
-      if (globleDrawArray[i].rec) {
-        No = i;
+
+    globleDrawArray.forEach((part) => {
+      if (part.isRecording && !viewMode) {
+        part.addPoints(sk.mouseX, sk.mouseY);
       }
-      globleDrawArray[i].mouse(inB);
-      globleDrawArray[i].display(xoff, yoff);
-    }
+      part.display(xoff, yoff);
+    });
   };
 
   sk.fitDrawingToWindow = (parts = globleDrawArray, center = false) => {
     const allPoints = [];
     parts.forEach((part) => {
-      const partPoints = part.mp ? part.mp : part;
+      const partPoints = part.mousePositions ? part.mousePositions : part;
       partPoints.forEach((point) => {
         allPoints.push(point);
       });
@@ -265,7 +289,7 @@ export default function (sk) {
 
   sk.moveDrawing = (parts = globleDrawArray, x = 0, y = 0) => {
     parts.forEach((part) => {
-      const partPoints = part.mp ? part.mp : part;
+      const partPoints = part.mousePositions ? part.mousePositions : part;
       partPoints.forEach((point) => {
         point.x += x;
         point.y += y;
@@ -275,7 +299,7 @@ export default function (sk) {
 
   sk.scaleDrawing = (parts = globleDrawArray, scale) => {
     parts.forEach((part) => {
-      const partPoints = part.mp ? part.mp : part;
+      const partPoints = part.mousePositions ? part.mousePositions : part;
       partPoints.forEach((point) => {
         point.x *= scale;
         point.y *= scale;
@@ -287,9 +311,7 @@ export default function (sk) {
   };
 
   sk.handleTouchEnd = () => {
-    if (canvasNumber !== -100) {
-      sk.addSnapshot(canvasNumber);
-    }
+    sk.addSnapshot(sk.canvasName);
   };
 
   sk.keyPressed = () => {
@@ -317,11 +339,11 @@ export default function (sk) {
         break;
     }
     // if (keyCode >= 49 && keyCode < 54) {
-    //   canvasNumber = -100;
+    //   sk.canvasName = -100;
     //   drawsN = keyCode - 49;
     //   globleDrawArray = [];
     //   for (let e = 0; e < mm[drawsN].length; e++) {
-    //     const dra = new Draw(e, mm[drawsN][e]);
+    //     const dra = new Part(e, mm[drawsN][e]);
     //     globleDrawArray[e] = dra;
     //   }
     // }
@@ -337,7 +359,17 @@ export default function (sk) {
     sk.resizeCanvas(sk.windowWidth, sk.windowHeight);
     sk.background(50, 50, 200);
   };
+
+  sk.handleRotate = (event) => {
+    sk.clg = event.rotation;
+  };
+
+  sk.handlePinch = (event) => {
+    sk.clg = event.scale;
+  };
+
   setListeners(sk, Tone);
+  setGestures(sk);
 
   document.addEventListener('touchmove', (n) => {
     n.preventDefault();
@@ -363,6 +395,6 @@ export default function (sk) {
 function resetAllSnapshots() {
   if (confirm('You are about to delete all your drawings')) {
     localStorage.clear();
-    canvasNumber = 0;
+    sk.canvasName = 0;
   }
 }
