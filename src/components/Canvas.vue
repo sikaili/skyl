@@ -121,6 +121,7 @@ p5.disableFriendlyErrors = true;
 let current;
 let loaded = true;
 const changeSketch = (name) => {
+  name = name.toLowerCase();
   if (!loaded) {
     loaded = true;
     import("./../projects/" + name + "/" + name+ ".js").then(module => { //eslint-disable-line
@@ -365,6 +366,7 @@ export default {
 
             &Container {
                 margin: 16px;
+                overflow: visible;
 
                 &Input {
                     float: right;
