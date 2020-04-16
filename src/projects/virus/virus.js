@@ -11,7 +11,7 @@ import {
   Mouse,
   Vertices,
 } from 'matter-js';
-import calDistance from './utils/calDistance';
+import calDistance from '@/js/utlis/calDistance';
 import Particle from './sub/particles';
 import E3 from './sound/chasing.mp3';
 import D3 from './sound/light.mp3';

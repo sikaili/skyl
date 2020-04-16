@@ -3,21 +3,13 @@ import setListeners from '@/js/utlis/addEventListeners';
 import setGestures from '@/js/utlis/addGestures';
 import { Vertices } from 'matter-js';
 
-
 let globleDrawArray = [];
 let viewMode = false;
 let xoff = 0;
 let yoff = 0;
-const amplitude = 0.01;
 
 
 export default function (sk) {
-  sk.canvas = {
-    parts: globleDrawArray,
-    canvasCenter: { x: 0, y: 0 },
-    currentPartNo: 0,
-  };
-
   const tremolo = new Tone.JCReverb(0.3);
   tremolo.set({
     wet: 0.1,
@@ -26,7 +18,7 @@ export default function (sk) {
   const filt = new Tone.Filter(50, 'bandpass');
   const osc = new Tone.OmniOscillator('C#4', 'pwm').chain(new Tone.Volume(-4), filt, pan, tremolo, Tone.Master);
   osc.start();
-
+  let windowScale = 1;
 
   sk.stop = () => {
     sk.noLoop();
@@ -37,8 +29,18 @@ export default function (sk) {
     Tone.context.suspend();
     sk.remove();
   };
-
-
+  sk.dark = Math.random() > 0.3;
+  sk.toggleBackground = () => {
+    sk.dark = !sk.dark;
+  };
+  sk.drawing = {
+    parts: globleDrawArray,
+    canvasCenter: { x: 0, y: 0 },
+    currentPartNo: 0,
+    get background() { return sk.dark ? 0 : 255; },
+    get stroke() { return sk.dark ? [255, 150] : 0; },
+    get fill() { return sk.dark ? 180 : 0; },
+  };
   sk.settings = {
     name: 'noise-draw',
     list: {
@@ -69,11 +71,14 @@ export default function (sk) {
         name: 'fitDrawingToWindow', icon: 'contract', value: [undefined, true],
       },
       {
-        name: 'scaleDrawing', icon: 'add-circle', value: [undefined, 1.1],
+        name: 'toggleBackground', icon: 'contrast',
       },
-      {
-        name: 'scaleDrawing', icon: 'remove-circle', value: [undefined, 0.9],
-      },
+      // {
+      //   name: 'scaleDrawing', icon: 'add-circle', value: [undefined, 1.1 * windowScale],
+      // },
+      // {
+      //   name: 'scaleDrawing', icon: 'remove-circle', value: [undefined, 0.9 * windowScale],
+      // },
       {
         name: 'removeSnapshot', icon: 'trash',
       },
@@ -84,38 +89,43 @@ export default function (sk) {
   };
 
 
-  function Part(receivedMousePositions = []) {
-    this.mousePositions = receivedMousePositions;
+  function Part(receivedpositions = []) {
+    this.positions = receivedpositions;
     this.isRecording = true;
     this.center = { x: 0, y: 0 };
+    this.centerSetted = false;
     this.givenCenter = null;
-    this.relativePositions = [];
     this.addPoints = (x, y) => {
-      const shouldAdd = { x, y } !== this.mousePositions[this.mousePositions.length - 1] || this.mousePositions.length === 0;
+      const position = { x: x - (this.center.x || 0), y: y - (this.center.y || 0) };
+      const shouldAdd = position !== this.positions[this.positions.length - 1] || this.positions.length === 0;
       if (shouldAdd && this.isRecording && !sk.isPaused) {
-        this.mousePositions.push({ x, y });
+        this.positions.push(position);
       }
-      if (sk.touches.length > 1 || (sk.keyIsPressed && sk.mouseIsPressed)) {
-        this.mousePositions.splice(this.mousePositions.length - 1, 1);
-        this.mousePositions.splice(this.mousePositions.length - 1, 1);
+      if (sk.touches.length > 2 || (sk.keyIsPressed && sk.mouseIsPressed)) {
+        this.positions.splice(this.positions.length - 1, 1);
+        this.positions.splice(this.positions.length - 1, 1);
       }
     };
     this.centerPoints = (position) => {
       if (position) {
         this.givenCenter = position;
-      } else {
-        this.center = Vertices.centre(this.mousePositions);
-        console.log(this.center);
-        this.relativePositions = this.mousePositions.map((point) => ({ x: point.x - this.center.x, y: point.y - this.center.y }));
+      } else if (!this.centerSetted) {
+        this.center = Vertices.centre(this.positions);
+        this.positions = this.positions.map((point) => ({ x: point.x - this.center.x, y: point.y - this.center.y }));
+        this.centerSetted = true;
       }
     };
 
     this.display = (xoff, yoff) => {
       sk.push();
-      const points = this.relativePositions.length === 0 ? this.mousePositions : this.relativePositions;
+      const points = this.positions.length === 0 ? this.positions : this.positions;
       const center = this.givenCenter || this.center;
       sk.translate(center.x, center.y);
-      sk.fill(0, 50 + sk.constrain(sk.mouseX - sk.pmouseX, -20, 100));
+      // if (sk.isPaused) {
+      //   const markerColor = this.isRecording ? [100, 0, 0, 100] : [100, 100, 100, 100, 255];
+      //   sk.fill(markerColor);
+      //   sk.ellipse(0, 0, 100);
+      // }
       sk.beginShape();
       for (let ee = 0; ee < points.length; ee += 1) {
         // this.mouseI = sk.map(Math.abs(sk.mouseX - sk.width / 2), 0, sk.width / 2, 0.5, 1.5);
@@ -135,90 +145,8 @@ export default function (sk) {
     sk.newCanvas();
     sk.noCursor();
   };
-
-  sk.copyResult = () => {
-    const copyToClipBoard = (str) => {
-      const el = document.createElement('textarea');
-      el.value = str;
-      document.body.appendChild(el);
-      el.select();
-      document.execCommand('copy');
-      document.body.removeChild(el);
-    };
-    copyToClipBoard(localStorage.getItem(`noise-draw-${sk.canvasName}`));
-  };
-
-  sk.updateList = () => {
-    sk.settings.list.items = Object.keys(localStorage).filter((name) => name.includes('noise-draw-')).map((name) => name.slice('noise-draw-'.length));
-  };
-
-  sk.newCanvas = () => {
-    sk.updateList();
-    sk.canvasName = `${sk.settings.list.items.length }-${ Math.random().toFixed(1)}`;
-    sk.settings.list.current = sk.canvasName;
-    viewMode = false;
-    sk.currentPartNo = 0;
-    globleDrawArray = [];
-    globleDrawArray[0] = new Part();
-    sk.isPaused = true;
-  };
-
-  sk.removeSnapshot = () => {
-    const name = sk.settings.list.current;
-    if (confirm(`You are about to delete :${name}`)) {
-      localStorage.removeItem(`noise-draw-${name}`);
-      sk.newCanvas();
-    }
-    sk.updateList();
-  };
-
-  sk.getSnapshot = (sketchName) => {
-    globleDrawArray = [];
-    viewMode = true;
-    const canvas = JSON.parse(localStorage.getItem(`noise-draw-${sketchName}`));
-    if (canvas) {
-      sk.canvasName = sketchName;
-      sk.settings.list.current = sk.canvasName;
-      for (let e = 0; e < canvas.length; e += 1) {
-        const part = new Part(canvas[e]);
-        globleDrawArray[e] = part;
-      }
-    }
-    sk.updateList();
-    sk.fitDrawingToWindow();
-    sk.fitDrawingToWindow();
-    sk.fitDrawingToWindow();
-    sk.fitDrawingToWindow();
-    sk.fitDrawingToWindow(undefined, true);
-  };
-
-  sk.addSnapshot = () => {
-    const dumps = [];
-    for (let mm = 0; mm < globleDrawArray.length; mm += 1) {
-      const dump = globleDrawArray[mm].mousePositions.map((element) => ({ x: +element.x, y: +element.y }));
-      dumps.push(dump);
-    }
-    if (globleDrawArray[0].mousePositions.length > 300 && !viewMode) {
-      localStorage.setItem(`noise-draw-${sk.canvasName}`, JSON.stringify(dumps));
-    }
-  };
-
-  sk.newPartDrawing = () => {
-    if (viewMode) {
-      sk.canvasName += Math.random().toFixed();
-      sk.settings.list.current = sk.canvasName;
-      viewMode = false;
-    }
-    for (let i = 0; i < globleDrawArray.length; i += 1) {
-      globleDrawArray[i].receivedMousePositions = [];
-      globleDrawArray[i].centerPoints();
-      globleDrawArray[i].isRecording = false;
-    }
-    globleDrawArray.push(new Part());
-  };
-
   sk.draw = () => {
-    sk.background(255 - sk.constrain((sk.mouseY - sk.pmouseY) * 3, 0, 200), 30 + Math.abs(sk.mouseY - sk.pmouseY) * 3);
+    sk.background(sk.drawing.background - sk.constrain((sk.mouseY - sk.pmouseY) * 3, 0, 75), 60 + Math.abs(sk.mouseY - sk.pmouseY) * 3);
     sk.ellipse(sk.mouseX, sk.mouseY, 5, 5);
     sk.push();
     sk.textSize(18);
@@ -226,13 +154,14 @@ export default function (sk) {
     sk.text(sk.canvasName, 0.5 * sk.width, 0.9 * sk.height);
     sk.pop();
     if (sk.isPaused && !viewMode) {
+      sk.background(sk.drawing.background, 170);
       sk.push();
       sk.noStroke();
-      sk.fill(100, 0, 0, (Math.cos(sk.frameCount / 20) + 0.5) * 200 + 30 + sk.random(-20, 0));
-      sk.textSize(35 + sk.random(-0.2, 0.2));
+      sk.fill(150, 100, 100, (Math.cos(sk.frameCount / 20) + 0.5) * 100 + 150 + sk.random(-20, 0));
+      sk.textSize(25 + sk.random(-0.2, 0.2));
       sk.textAlign(sk.CENTER);
-      sk.textFont('courrier');
-      sk.text('double-click to draw/pause', 0.5 * sk.windowWidth + sk.map(sk.noise(xoff), 0, 1, -5, 10), sk.map(sk.noise(30 + xoff * 2), 0, 1, -10, 10) + 0.5 * sk.height);
+      sk.textFont('courier');
+      sk.text('press\nto\n draw/pause', 0.5 * sk.windowWidth + sk.map(sk.noise(xoff), 0, 1, -5, 10), sk.map(sk.noise(30 + xoff * 2), 0, 1, -10, 10) + 0.5 * sk.height);
       sk.pop();
     }
     pan.set({ pan: sk.mouseX / sk.width - 0.5 });
@@ -247,9 +176,9 @@ export default function (sk) {
     yoff += 1 * sk.map(sk.mouseY, 0, sk.height, -0.1, 0.1);
 
     sk.strokeWeight(Math.random() * 2);
-    sk.stroke(0);
-    sk.fill(0, 50 + sk.constrain(sk.mouseX - sk.pmouseX, -20, 100) + amplitude * 100);
-
+    sk.stroke(sk.drawing.stroke);
+    sk.fill(sk.drawing.fill, 30 + sk.constrain(sk.mouseX - sk.pmouseX, -20, 100));
+    // display parts
     globleDrawArray.forEach((part) => {
       if (part.isRecording && !viewMode) {
         part.addPoints(sk.mouseX, sk.mouseY);
@@ -258,10 +187,83 @@ export default function (sk) {
     });
   };
 
+  sk.updateList = () => {
+    sk.settings.list.items = Object.keys(localStorage).filter((name) => name.includes('noise-draw-')).map((name) => name.slice('noise-draw-'.length));
+  };
+  sk.copyResult = () => {
+    const copyToClipBoard = (str) => {
+      const el = document.createElement('textarea');
+      el.value = str;
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+    };
+    copyToClipBoard(localStorage.getItem(`noise-draw-${sk.canvasName}`));
+    window.location.href = `mailto:noise-draw@sikai.li?subject=noise-draw-${sk.canvasName}-positions&body=${localStorage.getItem(`noise-draw-${sk.canvasName}`)}`;
+  };
+  sk.removeSnapshot = () => {
+    const name = sk.settings.list.current;
+    if (confirm(`You are about to delete :${name}`)) {
+      localStorage.removeItem(`noise-draw-${name}`);
+      sk.newCanvas();
+    }
+    sk.updateList();
+  };
+  sk.getSnapshot = (sketchName) => {
+    globleDrawArray = [];
+    viewMode = true;
+    const canvas = JSON.parse(localStorage.getItem(`noise-draw-${sketchName}`));
+    if (canvas) {
+      sk.canvasName = sketchName;
+      sk.settings.list.current = sk.canvasName;
+      for (let e = 0; e < canvas.length; e += 1) {
+        globleDrawArray[e] = new Part(canvas[e]);
+      }
+    }
+    sk.updateList();
+    sk.fitDrawingToWindow();
+    sk.fitDrawingToWindow();
+    sk.fitDrawingToWindow(undefined, true);
+  };
+  sk.addSnapshot = () => {
+    const dumps = [];
+    for (let mm = 0; mm < globleDrawArray.length; mm += 1) {
+      const dump = globleDrawArray[mm].positions.map((element) => ({ x: +element.x, y: +element.y }));
+      dumps.push(dump);
+    }
+    if (globleDrawArray[0].positions.length > 300 && !viewMode) {
+      localStorage.setItem(`noise-draw-${sk.canvasName}`, JSON.stringify(dumps));
+    }
+  };
+
+  sk.newCanvas = () => {
+    sk.updateList();
+    sk.canvasName = `${sk.settings.list.items.length }-${ Math.random().toFixed(1)}`;
+    sk.settings.list.current = sk.canvasName;
+    viewMode = false;
+    sk.currentPartNo = 0;
+    globleDrawArray = [];
+    globleDrawArray[0] = new Part();
+    sk.isPaused = true;
+  };
+  sk.newPartDrawing = () => {
+    if (viewMode) {
+      sk.canvasName += Math.random().toFixed();
+      sk.settings.list.current = sk.canvasName;
+      viewMode = false;
+    }
+    for (let i = 0; i < globleDrawArray.length; i += 1) {
+      globleDrawArray[i].receivedpositions = [];
+      globleDrawArray[i].isRecording = false;
+    }
+    globleDrawArray.push(new Part());
+    sk.drawing.currentPartNo = globleDrawArray.length - 1;
+  };
   sk.fitDrawingToWindow = (parts = globleDrawArray, center = false) => {
     const allPoints = [];
     parts.forEach((part) => {
-      const partPoints = part.mousePositions ? part.mousePositions : part;
+      const partPoints = part.positions ? part.positions : part;
       partPoints.forEach((point) => {
         allPoints.push(point);
       });
@@ -283,37 +285,49 @@ export default function (sk) {
       sk.moveDrawing(undefined, moveX, moveY);
     } else {
       sk.moveDrawing(undefined, moveX, moveY);
-      sk.scaleDrawing(undefined, scale);
+      sk.scaleDrawing(undefined, windowScale * scale);
     }
   };
-
   sk.moveDrawing = (parts = globleDrawArray, x = 0, y = 0) => {
     parts.forEach((part) => {
-      const partPoints = part.mousePositions ? part.mousePositions : part;
-      partPoints.forEach((point) => {
+      part.positions.forEach((point) => {
         point.x += x;
         point.y += y;
       });
     });
   };
-
-  sk.scaleDrawing = (parts = globleDrawArray, scale) => {
+  sk.scaleDrawing = (parts = globleDrawArray, scale, center = { x: 0, y: 0 }) => {
+    scale /= windowScale;
     parts.forEach((part) => {
-      const partPoints = part.mousePositions ? part.mousePositions : part;
-      partPoints.forEach((point) => {
+      const relativePositions = part.positions.map((position) => ({ x: position.x - center.x, y: position.y - center.y }));
+      relativePositions.forEach((point) => {
         point.x *= scale;
         point.y *= scale;
       });
+      part.positions = relativePositions.map((position) => ({ x: position.x + center.x, y: position.y + center.y }));
     });
+    windowScale = scale;
   };
 
   sk.handleTouchStart = () => {
   };
-
+  sk.handleTouchMove = () => {
+    if (!sk.startPosition) {
+      sk.startPosition = { x: sk.pmouseX, y: sk.pmouseY };
+    }
+    if (sk.isPaused) {
+      const x = sk.mouseX - sk.startPosition.x;
+      const y = sk.mouseY - sk.startPosition.y;
+      if (Math.abs(x) + Math.abs(y) < 70) {
+        sk.moveDrawing(undefined, x, y);
+      }
+      sk.startPosition.y = sk.mouseY;
+      sk.startPosition.x = sk.mouseX;
+    }
+  };
   sk.handleTouchEnd = () => {
     sk.addSnapshot(sk.canvasName);
   };
-
   sk.keyPressed = () => {
     const { keyCode } = sk;
     switch (keyCode) {
@@ -322,7 +336,7 @@ export default function (sk) {
         break;
       case 187:
       case 189:
-        sk.scaleDrawing(globleDrawArray, 1 + (188 - keyCode) / 10);
+        sk.scaleDrawing(globleDrawArray, windowScale * (1 + (188 - keyCode) / 10));
         break;
       case 78:
         sk.newPartDrawing();
@@ -338,57 +352,32 @@ export default function (sk) {
       default:
         break;
     }
-    // if (keyCode >= 49 && keyCode < 54) {
-    //   sk.canvasName = -100;
-    //   drawsN = keyCode - 49;
-    //   globleDrawArray = [];
-    //   for (let e = 0; e < mm[drawsN].length; e++) {
-    //     const dra = new Part(e, mm[drawsN][e]);
-    //     globleDrawArray[e] = dra;
-    //   }
-    // }
   };
-
   sk.saveCapture = () => {
     if (sk.pixelDensity() > 0.5) {
-      sk.saveCanvas(document.querySelector('canvas'), `ok${Date()}`, 'png');
+      sk.saveCanvas(document.querySelector('canvas'), `noise-draw${sk.sketchName}`, 'png');
     }
   };
-
   sk.windowResized = () => {
     sk.resizeCanvas(sk.windowWidth, sk.windowHeight);
     sk.background(50, 50, 200);
   };
-
-  sk.handleRotate = (event) => {
-    sk.clg = event.rotation;
+  sk.handleRotate = () => {
   };
-
   sk.handlePinch = (event) => {
-    sk.clg = event.scale;
+    if (sk.isPaused) {
+      const { scale } = event;
+      const centerX = Math.min(...sk.touches.map((touch) => touch.x));
+      const centerY = Math.max(...sk.touches.map((touch) => touch.y));
+      sk.scaleDrawing(undefined, (scale - windowScale) / 25 + windowScale, { x: centerX, y: centerY });
+    }
+  };
+  sk.handlePress = () => {
+    sk.isPaused = !sk.isPaused;
   };
 
   setListeners(sk, Tone);
   setGestures(sk);
-
-  document.addEventListener('touchmove', (n) => {
-    n.preventDefault();
-  }, { passive: false });
-  document.addEventListener('touchstart', Dclick, { passive: false });
-  document.addEventListener('dblclick', () => {
-    sk.isPaused = !sk.isPaused;
-  },
-  { passive: false });
-  let tapedTwice = false;
-  function Dclick(event) {
-    if (!tapedTwice) {
-      tapedTwice = true;
-      setTimeout(() => { tapedTwice = false; }, 300);
-      return false;
-    }
-    event.preventDefault();
-    sk.isPaused = !sk.isPaused;
-  }
 }
 
 

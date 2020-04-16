@@ -357,7 +357,7 @@ export default {
         &__Menu {
             background-color: rgba(220,220,220,0.7);
             width: auto;
-            max-width: calc(100% - 28px);
+            max-width: calc(100% - 48px);
             position: fixed;
             right: 28px;
             height: 0%;

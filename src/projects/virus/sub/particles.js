@@ -1,5 +1,5 @@
 import { Bodies, Body } from 'matter-js';
-import calDistance from '../utils/calDistance';
+import calDistance from '@/js/utlis/calDistance';
 
 export default class Particle {
   constructor(x, y, virus, number) {
