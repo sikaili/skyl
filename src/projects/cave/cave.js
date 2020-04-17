@@ -1,7 +1,12 @@
 import Tone from 'tone';
 import PeakDetect from '@/js/utlis/PeakDetect';
 import setListeners from '@/js/utlis/addEventListeners';
+import { Vertices } from 'matter-js';
 
+if (!window.audioCtx) {
+  window.audioCtx = new AudioContext({ sampleRate: 44100 });
+  Tone.setContext(window.audioCtx);
+}
 
 export default (instance) => {
   const sk = instance;
@@ -20,7 +25,7 @@ export default (instance) => {
   sk.settings = {
     list: {
       current: '',
-      items: ['Amarrage', 'Rotation', 'La-Danse', 'flower', 'saturation-chinoise', '2019-12-YeChe', 'Rain-Addiction', 'Emb', 'c-syn', 'e-minor'],
+      items: ['Cripple', 'Amarrage', 'Rotation', 'La-Danse', 'flower', 'saturation-chinoise', '2019-12-YeChe', 'Rain-Addiction', 'Emb', 'c-syn', 'e-minor'],
     },
     red: {
       value: 255,
@@ -44,7 +49,7 @@ export default (instance) => {
       step: 1,
     },
     freq1: {
-      value: 700,
+      value: 650,
       // type: 'range',
       max: 950,
       min: 50,
@@ -98,15 +103,22 @@ export default (instance) => {
   sk.setSong(sk.settings.list.current);
 
   class Point {
-    constructor(i, scale = 2, toInner = -0.1, x, y) {
+    constructor(i, scale = 2, options, x, y) {
+      if (!options) {
+        options = {
+          toInner: -0.1,
+          speedScale: 0.04,
+        };
+      }
       this.x = x || (sk.noise(i / 100, Math.sin(sk.frameCount / 200) * sum) - 0.5) * (sk.width + sk.height) / scale;
       this.y = y || (sk.noise(i / 100, sk.frameCount / 200 * sum1) - 0.5) * (sk.width + sk.height) / scale;
       this.direction = 1;
-      this.toInner = toInner;
+      this.toInner = options.toInner;
+      this.speedScale = options.speedScale;
     }
 
     get speed() {
-      return (sk.noise(this.x / 100, this.y / 100) + this.toInner) / 25;
+      return (sk.noise(this.x / 100, this.y / 100) + this.toInner) * this.speedScale;
     }
 
     update(x = 0, y = 0) {
@@ -119,44 +131,70 @@ export default (instance) => {
     if (sk.keepPoints) {
       return sk.points;
     }
-    if (Math.random() > 0.8) number *= 5;
     const scale = (Math.random() > 0.3 && !big) ? 2 : 1;
     const points = [];
+    if (Math.random() > 0.8) number *= 5;
 
-    if (Math.random() > 0.79 && givenPoints.length === 0) {
-      number = Math.random() * 500 + 300;
-      const arr = [];
+
+    if (Math.random() > 0.6 && givenPoints.length === 0) {
+      let arr = [];
+      const names = Object.keys(localStorage).filter((name) => (name.includes('noise-draw-')));
+      const name = names[sk.count || Math.floor(Math.random() * names.length)];
+      const canvas = JSON.parse(localStorage.getItem(name));
+      if (names.length > 3 && canvas && canvas[0] && canvas[0].length > 0 && canvas.length < 4) {
+        canvas.forEach((part) => {
+          part.filter((point, index) => index % (Math.floor(part.length / 1000)) === 0)
+            .forEach((point) => {
+              arr.push(point);
+            });
+        });
+        // arr = canvas[0].filter((point, index) => index % (Math.floor(canvas[0].length / 1000)) === 0);
+        const center = Vertices.centre(arr);
+        arr = arr.map((point) => ({ x: point.x - center.x, y: point.y - center.y }));
+        const maxX = Math.max(...arr.map((point) => Math.abs(point.x)));
+        const maxY = Math.max(...arr.map((point) => Math.abs(point.y)));
+        const scaleX = (sk.width / 2 - 30) / maxX;
+        const scaleY = (sk.height / 2 - 30) / maxY;
+        const scale = scaleX > scaleY ? scaleY : scaleX;
+        arr = arr.map((point) => ({ x: point.x * scale, y: point.y * scale }));
+        number = arr.length + 300;
+      }
       if (Math.random() > 0.5) {
+        if (Math.random() > 0.5) {
+          number = 100 + Math.random() * 400;
+          arr = [];
+        }
+        if (Math.random() > 0.5) {
         // circle
-        for (let i = 0; i < 2 * 3.14; i += 0.1) {
-          const r = 150;
-          const x = r * Math.sin(i) + sk.noise(i / 100) * 10;
-          const y = r * Math.cos(i) + sk.noise(i / 100) * 10;
-          arr.push({ x, y });
-        }
-      } else {
+          for (let i = 0; i < 2 * 3.14; i += 0.1) {
+            const r = 150;
+            const x = r * Math.sin(i) + sk.noise(i / 100) * 10;
+            const y = r * Math.cos(i) + sk.noise(i / 100) * 10;
+            arr.push({ x, y });
+          }
+        } else {
         // rect
-        for (let x = -150; x <= 150; x += 10) {
-          arr.push({ x, y: 150 });
-        }
-        for (let y = 150; y >= -150; y -= 10) {
-          arr.push({ x: 150, y });
-        }
-        for (let x = 150; x >= -150; x -= 10) {
-          arr.push({ x, y: -150 });
-        }
-        for (let y = -150; y <= 150; y += 10) {
-          arr.push({ x: -150, y });
+          for (let x = -150; x <= 150; x += 10) {
+            arr.push({ x, y: 150 });
+          }
+          for (let y = 150; y >= -150; y -= 10) {
+            arr.push({ x: 150, y });
+          }
+          for (let x = 150; x >= -150; x -= 10) {
+            arr.push({ x, y: -150 });
+          }
+          for (let y = -150; y <= 150; y += 10) {
+            arr.push({ x: -150, y });
+          }
         }
       }
       givenPoints = arr;
     }
-
     for (let i = 0; i < number; i += 1) {
       if (givenPoints.length > 0) {
         const x = givenPoints[i % givenPoints.length].x + sk.noise(i / 30, sk.frameCount / 300) * 25;
         const y = givenPoints[i % givenPoints.length].y + sk.noise(i / 30, sk.frameCount / 300) * 25;
-        points[i] = new Point(i, scale, -0.4, x, y);
+        points[i] = new Point(i, scale, { toInner: -0.3, speedScale: 0.035 }, x, y);
       } else {
         points[i] = new Point(i, scale);
       }
@@ -178,6 +216,18 @@ export default (instance) => {
     sk.mouseY = sk.height / 2;
   };
   let xoff = 0;
+  sk.count = undefined;
+  sk.keyPressed = () => {
+    const { keyCode } = sk;
+    switch (keyCode) {
+      case 32:
+        sk.count += 1;
+        break;
+      default:
+        break;
+    }
+  };
+
   sk.draw = () => {
     xoff += 0.05;
     // const spectrum = fft.getValue().map((value) => { if (value) console.log(value); });
@@ -206,7 +256,7 @@ export default (instance) => {
         }, 600);
       } else if (Math.random() > 0.5) {
         // console.log('detect =>');
-        sk.points = generatePoints(sum * 6, 1);
+        sk.points = generatePoints(sum * 6);
       }
       if (Math.random() > 0.5 && sk.interval) {
         clearInterval(sk.interval);

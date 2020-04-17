@@ -3,6 +3,7 @@
     <div
       class="ToggleFullScreen"
       @mouseenter="handleFullScreenMouseIn()"
+      @click="handleFullScreenMouseIn()"
       @mouseleave="handleFullScreenMouseLeave()"
     />
     <TheHead v-if="!canvasFullScreen" />
