@@ -84,6 +84,9 @@
         >
           <p
             class="listItem ph1 bg-animate hover-bg-white hover-black white bg-black-60"
+            :class="{
+              'bg-black': $route.params.id===item.id
+            }"
             @click="handlePClick(item)"
           >
             {{ item.id }}

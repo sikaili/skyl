@@ -90,20 +90,20 @@
         <div class="Settings__MenuContainer pt3 pb2">
           <i
             v-if="settings && settings.red"
-            class="Settings__MenuActionButton icon ion-md-shuffle f3 white bg-black-80 bg-animate hover-bg-white hover-black pv2 ph3"
+            class="Settings__MenuActionButton icon ion-md-shuffle f3 white bg-black-80 bg-animate hover-bg-white hover-black"
             @click="setRGB()"
           />
           <template v-if="settings && settings.actions">
             <i
               v-for="(action, index) in settings.actions"
               :key="index"
-              class="Settings__MenuActionButton icon f3 white bg-black-80 bg-animate hover-bg-white hover-black pv2 ph3"
+              class="Settings__MenuActionButton icon f3 white bg-black-80 bg-animate hover-bg-white hover-black"
               :class="`ion-md-${action.icon}`"
               @click="actionButton(action.name, action)"
             />
           </template>
           <i
-            class="Settings__MenuActionButton icon ion-md-sync f3 white bg-white-50 bg-animate hover-bg-white hover-black pv2 ph3"
+            class="Settings__MenuActionButton icon ion-md-sync f3 white bg-white-50 bg-animate hover-bg-white hover-black"
             @click="forceUpdate()"
           />
         </div>
@@ -401,7 +401,9 @@ export default {
                 display: block;
                 float: left;
                 margin: 10px 0;
-                width: 48px;
+                padding: 12px 0;
+                text-align: center;
+                width: 56px;
             }
 
             &--active {
