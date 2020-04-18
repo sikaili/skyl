@@ -90,7 +90,7 @@ export default function (sk) {
 
 
   function Part(receivedpositions = []) {
-    this.positions = receivedpositions;
+    this.positions = receivedpositions.map((point) => ({ x: +point.x, y: +point.y }));
     this.isRecording = true;
     this.center = { x: 0, y: 0 };
     this.centerSetted = false;
