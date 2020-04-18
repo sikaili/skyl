@@ -90,20 +90,20 @@
         <div class="Settings__MenuContainer pt3 pb2">
           <i
             v-if="settings && settings.red"
-            class="icon ion-md-shuffle f3 white bg-black-80 bg-animate hover-bg-white hover-black pv2 ph3"
+            class="Settings__MenuActionButton icon ion-md-shuffle f3 white bg-black-80 bg-animate hover-bg-white hover-black pv2 ph3"
             @click="setRGB()"
           />
           <template v-if="settings && settings.actions">
             <i
               v-for="(action, index) in settings.actions"
               :key="index"
-              class="Settings__MenuActions icon f3 white bg-black-80 bg-animate hover-bg-white hover-black pv2 ph3"
+              class="Settings__MenuActionButton icon f3 white bg-black-80 bg-animate hover-bg-white hover-black pv2 ph3"
               :class="`ion-md-${action.icon}`"
               @click="actionButton(action.name, action)"
             />
           </template>
           <i
-            class="icon ion-md-sync f3 white bg-white-50 bg-animate hover-bg-white hover-black pv2 ph3"
+            class="Settings__MenuActionButton icon ion-md-sync f3 white bg-white-50 bg-animate hover-bg-white hover-black pv2 ph3"
             @click="forceUpdate()"
           />
         </div>
@@ -357,7 +357,7 @@ export default {
         &__Menu {
             background-color: rgba(220,220,220,0.7);
             width: auto;
-            max-width: calc(100% - 48px);
+            max-width: calc(100vw - 72px);
             position: fixed;
             right: 28px;
             height: 0%;
@@ -397,13 +397,17 @@ export default {
             }
 
 
-            &Actions {
-                line-height: 72px;
+            &ActionButton {
+                display: block;
+                float: left;
+                margin: 10px 0;
+                width: 48px;
             }
 
             &--active {
                 top: unset;
                 bottom: 30px;
+                padding-bottom: 18px;
                 height: auto;
             }
         }
