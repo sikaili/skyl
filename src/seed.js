@@ -306,7 +306,7 @@ allIframeLinks = allIframeLinks.map((iframeObject) => ({
 allIframeLinks.filter((iframeObject) => iframeObject.id);
 
 for (let i = 0; i < allIframeLinks.length; i += 1) {
-  if (!allIframeLinks[i].link.includes('https')) {
+  if (!allIframeLinks[i].link.includes('https') || allIframeLinks[i].link.includes('/play')) {
     allIframeLinks.splice(i, 1);
   }
   for (let t = 0; t < sketches.length; t += 1) {

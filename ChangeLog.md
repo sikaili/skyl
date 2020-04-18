@@ -1,8 +1,35 @@
+## [2.4.0] - 2019-04-18
+### Changed
+- Canvas support 2 players (840dad8ed4992)
+- canvas list items (8ad6cbf0351e412e6)
+- cave ajustment
+- cave add point class (4242732805)
+- export addlisteners
+- update noise-draw (82451650e59)
+- relative position noise-draw (76b0eb585e01178c7b)
+### Added
+- fullscreen canvas mode (1c83d4d1fb)
+- Cave ! (e0c1afe9e702538747)
+- Cave draw lines, add two given shapes : rect, circle (840dad8ed4992)
+- Cave : mouse tilt view (adb9b7a823a325)
+- Noise-draw (8ad6cbf0351e412e6)
+- sound for noise-draw (7ce5cae1033)
+- noise-draw fit to window, center drawing, other actions (e80dd781214)
+- noise-draw => gestures to scale & move (55113f6)
+- cripple (7f17baa49de)
+- import drawings shape in cave (7f17baa49de)
+- noise-draw drawings json (079583b940)
+- noise-draw hash to be displayed in cave (d4ea999b84f2)
+- cave, import drawings, color mode (6c9e2d44c5)
+### Fixed
+- visual bug when sample rate 96khz (7f17baa49de)
+
+
+
 ## [2.3.2] - 2019-04-12
 ### Changed
 - do not show read more when no imgs inside
 - add text action to traffic, debug canvas 
-
 ### Added
 - Traffic (d3a1b7ae4c93b51fa1db2d532e)
 - add text action to traffic, debug canvas (19811c2ed75760b22acc314)
