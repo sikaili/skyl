@@ -80,6 +80,9 @@ export default function (sk) {
       //   name: 'scaleDrawing', icon: 'remove-circle', value: [undefined, 0.9 * windowScale],
       // },
       {
+        name: 'addSnapshot', get icon() { return this.value[0] ? 'star-outline' : 'star'; }, get value() { return [!sk.settings.list.current.includes('#')]; },
+      },
+      {
         name: 'removeSnapshot', icon: 'trash',
       },
       {
@@ -151,7 +154,7 @@ export default function (sk) {
     sk.push();
     sk.textSize(18);
     sk.textAlign(sk.CENTER);
-    sk.text(sk.canvasName, 0.5 * sk.width, 0.9 * sk.height);
+    sk.text(sk.settings.list.current, 0.5 * sk.width, 0.9 * sk.height);
     sk.pop();
     if (sk.isPaused && !viewMode) {
       sk.background(sk.drawing.background, 170);
@@ -199,8 +202,8 @@ export default function (sk) {
       document.execCommand('copy');
       document.body.removeChild(el);
     };
-    copyToClipBoard(localStorage.getItem(`noise-draw-${sk.canvasName}`));
-    window.location.href = `mailto:noise-draw@sikai.li?subject=noise-draw-${sk.canvasName}-positions&body=${localStorage.getItem(`noise-draw-${sk.canvasName}`)}`;
+    copyToClipBoard(localStorage.getItem(`noise-draw-${sk.settings.list.current}`));
+    window.location.href = `mailto:noise-draw@sikai.li?subject=noise-draw-${sk.settings.list.current}-positions&body=${localStorage.getItem(`noise-draw-${sk.settings.list.current}`)}`;
   };
   sk.removeSnapshot = () => {
     const name = sk.settings.list.current;
@@ -215,8 +218,8 @@ export default function (sk) {
     viewMode = true;
     const canvas = JSON.parse(localStorage.getItem(`noise-draw-${sketchName}`));
     if (canvas) {
-      sk.canvasName = sketchName;
-      sk.settings.list.current = sk.canvasName;
+      sk.settings.list.current = sketchName;
+      sk.settings.list.current = sk.settings.list.current;
       for (let e = 0; e < canvas.length; e += 1) {
         globleDrawArray[e] = new Part(canvas[e]);
       }
@@ -226,21 +229,31 @@ export default function (sk) {
     sk.fitDrawingToWindow();
     sk.fitDrawingToWindow(undefined, true);
   };
-  sk.addSnapshot = () => {
+  sk.addSnapshot = (select) => {
     const dumps = [];
     for (let mm = 0; mm < globleDrawArray.length; mm += 1) {
       const dump = globleDrawArray[mm].positions.map((element) => ({ x: +element.x, y: +element.y }));
       dumps.push(dump);
     }
     if (globleDrawArray[0].positions.length > 300 && !viewMode) {
-      localStorage.setItem(`noise-draw-${sk.canvasName}`, JSON.stringify(dumps));
+      localStorage.setItem(`noise-draw-${sk.settings.list.current}`, JSON.stringify(dumps));
     }
+    // hash unhash
+    if (typeof select === 'boolean') {
+      localStorage.removeItem(`noise-draw-${sk.settings.list.current}`);
+      if (select) {
+        sk.settings.list.current = `#${sk.settings.list.current}`;
+      } else {
+        sk.settings.list.current = sk.settings.list.current.split('').filter((a) => a !== '#').join('');
+      }
+      localStorage.setItem(`noise-draw-${sk.settings.list.current}`, JSON.stringify(dumps));
+    }
+    sk.updateList();
   };
 
   sk.newCanvas = () => {
     sk.updateList();
-    sk.canvasName = `${sk.settings.list.items.length }-${ Math.random().toFixed(1)}`;
-    sk.settings.list.current = sk.canvasName;
+    sk.settings.list.current = `${sk.settings.list.items.length }-${ Math.random().toFixed(1)}`;
     viewMode = false;
     sk.currentPartNo = 0;
     globleDrawArray = [];
@@ -249,8 +262,7 @@ export default function (sk) {
   };
   sk.newPartDrawing = () => {
     if (viewMode) {
-      sk.canvasName += Math.random().toFixed();
-      sk.settings.list.current = sk.canvasName;
+      sk.settings.list.current += Math.random().toFixed();
       viewMode = false;
     }
     for (let i = 0; i < globleDrawArray.length; i += 1) {
@@ -326,7 +338,7 @@ export default function (sk) {
     }
   };
   sk.handleTouchEnd = () => {
-    sk.addSnapshot(sk.canvasName);
+    sk.addSnapshot();
   };
   sk.keyPressed = () => {
     const { keyCode } = sk;
@@ -384,6 +396,6 @@ export default function (sk) {
 function resetAllSnapshots() {
   if (confirm('You are about to delete all your drawings')) {
     localStorage.clear();
-    sk.canvasName = 0;
+    sk.settings.list.current = 0;
   }
 }
