@@ -1,6 +1,7 @@
 import Tone from 'tone';
 import setListeners from '@/js/utlis/addEventListeners';
 import setGestures from '@/js/utlis/addGestures';
+import copyToClipBoard from '@/js/utlis/copyToClipBoard';
 import { Vertices } from 'matter-js';
 import drawings from './drawings.json';
 
@@ -255,14 +256,6 @@ export default function (sk) {
     sk.settings.list.items = Object.keys(localStorage).filter((name) => name.includes('noise-draw-')).map((name) => name.slice('noise-draw-'.length));
   };
   sk.copyResult = () => {
-    const copyToClipBoard = (str) => {
-      const el = document.createElement('textarea');
-      el.value = str;
-      document.body.appendChild(el);
-      el.select();
-      document.execCommand('copy');
-      document.body.removeChild(el);
-    };
     copyToClipBoard(localStorage.getItem(`noise-draw-${sk.settings.list.current}`));
     window.location.href = `mailto:noise-draw@sikai.li?subject=noise-draw-${sk.settings.list.current}-positions&body=${localStorage.getItem(`noise-draw-${sk.settings.list.current}`)}`;
   };

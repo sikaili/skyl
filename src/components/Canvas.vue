@@ -103,6 +103,10 @@
             />
           </template>
           <i
+            class="Settings__MenuActionButton icon ion-md-share-alt f3 white bg-white-80 bg-animate hover-bg-white hover-black"
+            @click="copyToClipBoard()"
+          />
+          <i
             class="Settings__MenuActionButton icon ion-md-sync f3 white bg-white-50 bg-animate hover-bg-white hover-black"
             @click="forceUpdate()"
           />
@@ -115,6 +119,7 @@
 <script>
 import p5 from 'p5/lib/p5.min';
 import { mapGetters } from 'vuex';
+import copyToClipBoard from '@/js/utlis/copyToClipBoard';
 
 p5.disableFriendlyErrors = true;
 
@@ -303,7 +308,12 @@ export default {
     },
     forceUpdate() {
       if (window.confirm('Empty cache and update to the newest version?')) { //eslint-disable-line
-        window.location.reload(true);
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('/service-worker.js').then((registration) => {
+            registration.update();
+            window.location.reload(true);
+          });
+        }
       }
     },
     toggle(itemName) {
@@ -325,10 +335,13 @@ export default {
       document.querySelector('#canvasContainer').removeEventListener('click', () => { this.hide(itemName); });
       document.querySelector('#canvasContainer').removeEventListener('touchstart', () => { this.hide(itemName); });
     },
+    copyToClipBoard() {
+      copyToClipBoard(`https://skyl.fr/${this.$route.fullPath}`);
+      window.alert('The link is copied to the clip board'); //eslint-disable-line
+    },
   },
 };
 </script>
-
 <style lang="scss" scoped>
     #canvasContainer {
         position: absolute;
