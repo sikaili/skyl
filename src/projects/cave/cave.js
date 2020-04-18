@@ -2,6 +2,7 @@ import Tone from 'tone';
 import PeakDetect from '@/js/utlis/PeakDetect';
 import setListeners from '@/js/utlis/addEventListeners';
 import { Vertices } from 'matter-js';
+import drawings from '../noise-draw/drawings.json';
 
 if (!window.audioCtx) {
   window.audioCtx = new AudioContext({ sampleRate: 44100 });
@@ -27,27 +28,6 @@ export default (instance) => {
       current: '',
       items: ['Cripple', 'Amarrage', 'Rotation', 'La-Danse', 'flower', 'saturation-chinoise', '2019-12-YeChe', 'Rain-Addiction', 'Emb', 'c-syn', 'e-minor'],
     },
-    red: {
-      value: 255,
-      // type: 'range',
-      max: 255,
-      min: 0,
-      step: 1,
-    },
-    green: {
-      value: 50,
-      // type: 'range',
-      max: 155,
-      min: 0,
-      step: 1,
-    },
-    blue: {
-      value: 50,
-      // type: 'range',
-      max: 255,
-      min: 0,
-      step: 1,
-    },
     freq1: {
       value: 650,
       // type: 'range',
@@ -62,7 +42,24 @@ export default (instance) => {
       min: 50,
       step: 50,
     },
-    get getColor() { return [this.red.value, this.green.value, this.blue.value] || [255, 50, 50]; },
+    randomShape: {
+      value: 0.6,
+      type: 'range',
+      max: 1,
+      min: 0,
+      step: 0.05,
+    },
+    isDark: Math.random() > 0.5,
+    actions: [
+      {
+        name: 'toggleColor',
+        icon: 'contrast',
+      },
+    ],
+  };
+
+  sk.toggleColor = () => {
+    sk.settings.isDark = !sk.settings.isDark;
   };
 
   sk.settings.list.current = 'Amarrage';
@@ -136,16 +133,33 @@ export default (instance) => {
     if (Math.random() > 0.8) number *= 5;
 
 
-    if (Math.random() > 0.6 && givenPoints.length === 0) {
+    if (Math.random() > sk.settings.randomShape.value && givenPoints.length === 0) {
       let arr = [];
-      const names = Object.keys(localStorage).filter((name) => (name.includes('noise-draw-')));
+      if (!Object.keys(localStorage).includes('drawingImported')) {
+        Object.keys(drawings).forEach((name) => {
+          localStorage.setItem(name, JSON.stringify(drawings[name]));
+        });
+        console.log('drawingImported', 'true');
+        localStorage.setItem('drawingImported', 'true');
+      }
+      // export json of all # drawings
+      // const obj = {};
+      // names.forEach((name) => {
+      //   let canvas = JSON.parse(localStorage.getItem(name));
+      //   canvas = canvas[0].filter((point, index) => index % (Math.floor(canvas[0].length / 1000)) === 0);
+      //   canvas = canvas.map((point) => ({ x: point.x.toFixed(2), y: point.y.toFixed(2) }));
+      //   console.log(canvas.length);
+      //   obj[name] = [canvas];
+      // });
+      // console.log(JSON.stringify(obj));
+      const names = Object.keys(localStorage).filter((name) => (name.includes('noise-draw-#')));
       const name = names[sk.count || Math.floor(Math.random() * names.length)];
       const canvas = JSON.parse(localStorage.getItem(name));
       if (names.length > 3 && canvas && canvas[0] && canvas[0].length > 0 && canvas.length < 4) {
         canvas.forEach((part) => {
           part.filter((point, index) => index % (Math.floor(part.length / 1000)) === 0)
             .forEach((point) => {
-              arr.push(point);
+              arr.push({ x: +point.x, y: +point.y });
             });
         });
         // arr = canvas[0].filter((point, index) => index % (Math.floor(canvas[0].length / 1000)) === 0);
@@ -227,20 +241,39 @@ export default (instance) => {
         break;
     }
   };
-
   sk.draw = () => {
-    xoff += 0.05;
-    // const spectrum = fft.getValue().map((value) => { if (value) console.log(value); });
     const spectrum = fft.getValue().map((value) => Math.abs((value + 100) * 2.55));
-
     peakDetect.update(spectrum);
     const selectedFreq = spectrum.filter((freq, i) => (i > sk.settings.freq1.value) && (i < sk.settings.freq1.value + 200));
     sum = 255 - selectedFreq.reduce((a, b) => a + b) / 200;
     const selectedFreq1 = spectrum.filter((freq, i) => (i > sk.settings.freq2.value) && (i < sk.settings.freq2.value + 200));
-    sum1 = 300 - selectedFreq1.reduce((a, b) => a + b) / 200 * 2;
+    sum1 = 300 - selectedFreq1.reduce((a, b) => a + b) / 100;
     sum = sk.constrain(sum, 0, 500);
     sum1 = sk.constrain(sum1, 0, 500);
-    sk.background([0, 0, 0, sum / 2]);
+
+    const colors = {
+      get background() {
+        if (sk.settings.isDark) {
+          return [0, (sk.noise((sum + sum1) / 600, xoff / 600) + 0.3) * 150];
+        }
+        return [0, sum1 / 6 + sum / 4 + 30];
+      },
+      get fill() {
+        if (sk.settings.isDark) {
+          return [sum1 / 2 + sk.noise((sum + sum1) / 300, xoff / 200) * 255, 100 + sk.noise(sum / 300, xoff / 400) * 200];
+        }
+        return [328 - sum1, (sk.noise(sum1 / 300 + xoff) - 0.33) * 255];
+      },
+      get stroke() {
+        if (sk.settings.isDark) {
+          return [0, (1 - sk.noise((sum + sum1) / 600 + 100, xoff / 600) + 0.4) * 500];
+        }
+        return [sum1 * 2, 125 + sum1 / 1.5];
+      },
+    };
+    xoff += 0.05 * (sum1 / 255);
+    sk.background(...colors.background);
+
     // peak detection
     if (peakDetect.isDetected) {
       if (sk.points && (Math.random > 0.5 || (sum < 210 && sum1 < 210))) {
@@ -250,10 +283,10 @@ export default (instance) => {
       }
       if (sk.points[0].direction === 1 && Math.random() > 0.7) {
         // console.log('detect');
-        sk.points.forEach((point) => { point.direction = -3; });
+        sk.points.forEach((point) => { point.direction = -2; });
         setTimeout(() => {
           sk.points.forEach((point) => { point.direction = 0.3; });
-        }, 600);
+        }, 500);
       } else if (Math.random() > 0.5) {
         // console.log('detect =>');
         sk.points = generatePoints(sum * 6);
@@ -266,7 +299,7 @@ export default (instance) => {
       if (Math.random() > 0.8 && sum > 200 && sum1 > 230 && !sk.interval) {
         sk.interval = setInterval(() => {
           if (sk.points[0].direction === 1) {
-            sk.points.forEach((point) => { point.direction = -20; });
+            sk.points.forEach((point) => { point.direction = -10; });
           } else {
             sk.points = generatePoints(sum1 * 5, 1);
           }
@@ -289,11 +322,11 @@ export default (instance) => {
       sk.pop();
     }
     sk.push();
-    sk.strokeWeight(1);
     sk.translate(sk.width / 2, sk.height / 2);
     // default view
-    sk.fill(328 - sum1, (sk.noise(sum1 / 300 + xoff) - 0.33) * 255);
-    sk.stroke(sum1 * 2, 125 + sum1 / 1.5);
+    sk.fill(...colors.fill);
+    sk.stroke(...colors.stroke);
+    sk.strokeWeight(Math.random() * 2);
     // high gain view
     if (sum1 > 280 && Math.random() > 0.7) {
       const brightness = (Math.random() - 0.3) * 510;
@@ -322,10 +355,8 @@ export default (instance) => {
       sk.vertex(point.x + offsetA, point.y + offsetB);
       // to mouse center line
       if (index % 150 === 0 && (sk.touched || point.direction < 0)) {
-        sk.push();
-        sk.stroke(Math.random() * 255, 100);
+        sk.stroke((Math.random() - 0.5) * 600);
         sk.line(sk.mouseX - sk.width / 2, sk.mouseY - sk.height / 2, point.x + offsetA, point.y + offsetB);
-        sk.pop();
       }
     });
     sk.endShape();
