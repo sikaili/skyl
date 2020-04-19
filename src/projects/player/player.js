@@ -8,7 +8,7 @@ export default function (sk) {
   sk.settings = {
     list: {
       current: '',
-      items: ['Amarrage', 'Rotation', 'La-Danse', 'flower', 'saturation-chinoise', '2019-12-YeChe', 'Rain-Addiction', 'Emb', 'c-syn', 'e-minor'],
+      // items: ['Amarrage', 'Rotation', 'La-Danse', 'flower', 'saturation-chinoise', '2019-12-YeChe', 'Rain-Addiction', 'Emb', 'c-syn', 'e-minor'],
     },
     red: {
       value: 255,
@@ -63,9 +63,11 @@ export default function (sk) {
   if (vm.$route.query.id && typeof vm.$route.query.id === 'string') {
     sk.settings.list.current = vm.$route.query.id;
   } else {
-    vm.$router.push({ query: { id: sk.settings.list.current } });
+    const id = sk.settings.list.current;
+    if (vm.$route.query.id !== id) {
+      vm.$router.push({ query: { id } });
+    }
   }
-
   let player;
 
   sk.setSong = (songId) => {

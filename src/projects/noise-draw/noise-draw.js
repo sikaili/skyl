@@ -101,57 +101,6 @@ export default function (sk) {
     ],
   };
 
-  sk.removeSnapshot = () => {
-    const name = sk.settings.list.current;
-    if (confirm(`You are about to delete :${name}`)) {
-      localStorage.removeItem(`noise-draw-${name}`);
-      sk.newCanvas();
-    }
-    sk.updateList();
-  };
-  sk.getSnapshot = (sketchName) => {
-    if (sketchName === sk.settings.list.current) {
-      return;
-    }
-    globleDrawArray = [];
-    isViewMode = true;
-    sk.isPaused = false;
-    const canvas = JSON.parse(localStorage.getItem(`noise-draw-${sketchName}`));
-    if (canvas) {
-      sk.settings.list.current = sketchName;
-      for (let e = 0; e < canvas.length; e += 1) {
-        globleDrawArray[e] = new Part(canvas[e]);
-      }
-    }
-
-    sk.updateList();
-    vm.$router.push({ query: { id: sk.settings.list.current } });
-    sk.fitDrawingToWindow();
-    sk.fitDrawingToWindow();
-    sk.fitDrawingToWindow(undefined, true);
-  };
-  sk.addSnapshot = (select) => {
-    const dumps = [];
-    for (let mm = 0; mm < globleDrawArray.length; mm += 1) {
-      const dump = globleDrawArray[mm].positions.map((element) => ({ x: +element.x, y: +element.y }));
-      dumps.push(dump);
-    }
-    if (globleDrawArray[0].positions.length > 300 && !isViewMode) {
-      localStorage.setItem(`noise-draw-${sk.settings.list.current}`, JSON.stringify(dumps));
-    }
-    // hash unhash
-    if (typeof select === 'boolean') {
-      localStorage.removeItem(`noise-draw-${sk.settings.list.current}`);
-      if (select) {
-        sk.settings.list.current = `#${sk.settings.list.current}`;
-      } else {
-        sk.settings.list.current = sk.settings.list.current.split('').filter((a) => a !== '#').join('');
-      }
-      localStorage.setItem(`noise-draw-${sk.settings.list.current}`, JSON.stringify(dumps));
-    }
-    sk.updateList();
-  };
-
   function Part(receivedpositions = []) {
     this.positions = receivedpositions.map((point) => ({ x: +point.x, y: +point.y }));
     this.isRecording = true;
@@ -202,6 +151,59 @@ export default function (sk) {
       sk.pop();
     };
   }
+
+  sk.removeSnapshot = () => {
+    const name = sk.settings.list.current;
+    if (confirm(`You are about to delete :${name}`)) {
+      localStorage.removeItem(`noise-draw-${name}`);
+      sk.newCanvas();
+    }
+    sk.updateList();
+  };
+  sk.getSnapshot = (sketchName) => {
+    if (sketchName === sk.settings.list.current) {
+      return;
+    }
+    globleDrawArray = [];
+    isViewMode = true;
+    sk.isPaused = false;
+    const canvas = JSON.parse(localStorage.getItem(`noise-draw-${sketchName}`));
+    if (canvas) {
+      sk.settings.list.current = sketchName;
+      for (let e = 0; e < canvas.length; e += 1) {
+        globleDrawArray[e] = new Part(canvas[e]);
+      }
+    }
+
+    sk.updateList();
+    if (vm.$route.query.id !== sk.settings.list.current) {
+      vm.$router.push({ query: { id: sk.settings.list.current } });
+    }
+    sk.fitDrawingToWindow();
+    sk.fitDrawingToWindow();
+    sk.fitDrawingToWindow(undefined, true);
+  };
+  sk.addSnapshot = (select) => {
+    const dumps = [];
+    for (let mm = 0; mm < globleDrawArray.length; mm += 1) {
+      const dump = globleDrawArray[mm].positions.map((element) => ({ x: +element.x, y: +element.y }));
+      dumps.push(dump);
+    }
+    if (globleDrawArray[0].positions.length > 300 && !isViewMode) {
+      localStorage.setItem(`noise-draw-${sk.settings.list.current}`, JSON.stringify(dumps));
+    }
+    // hash unhash
+    if (typeof select === 'boolean') {
+      localStorage.removeItem(`noise-draw-${sk.settings.list.current}`);
+      if (select) {
+        sk.settings.list.current = `#${sk.settings.list.current}`;
+      } else {
+        sk.settings.list.current = sk.settings.list.current.split('').filter((a) => a !== '#').join('');
+      }
+      localStorage.setItem(`noise-draw-${sk.settings.list.current}`, JSON.stringify(dumps));
+    }
+    sk.updateList();
+  };
 
   sk.setup = () => {
     sk.createCanvas(sk.windowWidth, sk.windowHeight);

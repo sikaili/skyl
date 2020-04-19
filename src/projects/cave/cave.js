@@ -26,7 +26,7 @@ export default (instance) => {
   sk.settings = {
     list: {
       current: '',
-      items: ['Cripple', 'Amarrage', 'Rotation', 'La-Danse', 'flower', 'saturation-chinoise', '2019-12-YeChe', 'Rain-Addiction', 'Emb', 'c-syn', 'e-minor'],
+      // items: ['Cripple', 'Amarrage', 'Rotation', 'La Danse'],
     },
     freq1: {
       value: 650,
@@ -43,7 +43,7 @@ export default (instance) => {
       step: 50,
     },
     randomShape: {
-      value: 0.6,
+      value: 0.3,
       type: 'range',
       max: 1,
       min: 0,
@@ -67,7 +67,10 @@ export default (instance) => {
   if (vm.$route.query.id && typeof vm.$route.query.id === 'string') {
     sk.settings.list.current = vm.$route.query.id;
   } else {
-    vm.$router.push({ query: { id: sk.settings.list.current } });
+    const id = sk.settings.list.current;
+    if (vm.$route.query.id !== id) {
+      vm.$router.push({ query: { id } });
+    }
   }
   const fft = new Tone.FFT();
   const peakDetect = new PeakDetect(40, 20000, 0.2);
@@ -90,12 +93,6 @@ export default (instance) => {
       sk.player = new Tone.Player(soundFile, () => { sk.soundIsLoading = false; }).toMaster();
       sk.player.connect(fft);
     });
-    switch (songId) {
-      case 'rotation':
-      default:
-        sk.settings.grey = false;
-        break;
-    }
   };
   sk.setSong(sk.settings.list.current);
 

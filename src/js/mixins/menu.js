@@ -43,15 +43,20 @@ export default {
       return item.imgs.length > 1;
     },
     play(item) {
-      this.setActiveItem(item.id);
-      this.$router.push({ path: `/play/${item.app || item.id}` });
+      this.abortLoad();
+      this.setActiveItem(item.app || item.id);
+      this.$router.push({ path: `/play/${item.app || item.id}` })
+        .catch((err) => {});
+      if (item.app && item.id) {
+        this.$router.push({ query: { id: item.id } });
+      }
     },
     setItemActive(item, options) {
       this.$router
         .push({ name: this.name, params: { id: item.id } })
         .catch((err) => {});
       if (options === 'touchScreen') {
-        this.menuItems.filter((a) => a != item).map((a) => (a.show = false));
+        this.menuItems.filter((a) => a !== item).map((a) => (a.show = false));
         item.show = !item.show;
       } else {
         this.toggleItem({ name: this.name, obj: item });
@@ -78,7 +83,7 @@ export default {
       if (item.link.split(':')[0] !== 'https') return;
       this.loadingAnimation = true;
       setTimeout(() => {
-        this.setActiveItem(item.id);
+        this.setActiveItem(item.app || item.id);
         this.loadingAnimation = false;
       }, 1500);
     },

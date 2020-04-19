@@ -19,22 +19,22 @@ const seedData = {
       ],
       show: false,
     },
-    {
-      name: 'Ocean Loop',
-      des:
-        'An audio-visual experiment about ocean plastic pollution, randomly generated graphics, sound of plastic particles.',
-      link: 'https://apps.skyl.fr/plastic-ocean',
-      img: '/img/covers/plastic-ocean1.jpg',
-      year: 2019,
-      credits: [
-        {
-          role: 'Sound, code ',
-          name: 'Sikai Li',
-          link: 'https://skyl.fr',
-        },
-      ],
-      show: false,
-    },
+    // {
+    //   name: 'Ocean Loop',
+    //   des:
+    //     'An audio-visual experiment about ocean plastic pollution, randomly generated graphics, sound of plastic particles.',
+    //   link: 'https://apps.skyl.fr/plastic-ocean',
+    //   img: '/img/covers/plastic-ocean1.jpg',
+    //   year: 2019,
+    //   credits: [
+    //     {
+    //       role: 'Sound, code ',
+    //       name: 'Sikai Li',
+    //       link: 'https://skyl.fr',
+    //     },
+    //   ],
+    //   show: false,
+    // },
     {
       name: "Where's Jane",
       year: 2019,
@@ -61,6 +61,27 @@ const seedData = {
         },
       ],
       show: false,
+    },
+    {
+      name: 'Eyes',
+      year: 2018,
+      des:
+        'The 5000 most common hanzi sorted by frequency. Cute brother is watching you.',
+      link: 'https://eyes.skyl.fr',
+      img: '/img/covers/eyes.png',
+      show: false,
+      credits: [
+        {
+          role: 'Concept, sound, code ',
+          name: 'Sikai Li',
+          link: 'https://skyl.fr',
+        },
+        {
+          role: 'Host',
+          name: 'thecamp',
+          link: 'https://thecamp.fr',
+        },
+      ],
     },
     {
       name: 'Plastic Arcade',
@@ -93,27 +114,6 @@ const seedData = {
           role: 'Host',
           name: 'thecamp',
           link: 'https://www.thecamp.fr',
-        },
-      ],
-    },
-    {
-      name: 'Eyes',
-      year: 2018,
-      des:
-        'The 5000 most common hanzi sorted by frequency. Cute brother is watching you.',
-      link: 'https://eyes.skyl.fr',
-      img: '/img/covers/eyes.png',
-      show: false,
-      credits: [
-        {
-          role: 'Concept, sound, code ',
-          name: 'Sikai Li',
-          link: 'https://skyl.fr',
-        },
-        {
-          role: 'Host',
-          name: 'thecamp',
-          link: 'https://thecamp.fr',
         },
       ],
     },
@@ -186,6 +186,22 @@ const seedData = {
       credits: [
         {
           role: 'Music ',
+          name: 'Sikai Li',
+          link: 'https://skyl.fr',
+        },
+      ],
+      show: false,
+    },
+    {
+      name: 'Ocean Loop',
+      des:
+        'An audio-visual experiment about ocean plastic pollution, randomly generated graphics, sound of plastic particles.',
+      link: 'https://apps.skyl.fr/plastic-ocean',
+      img: '/img/covers/plastic-ocean1.jpg',
+      year: 2019,
+      credits: [
+        {
+          role: 'Sound, code ',
           name: 'Sikai Li',
           link: 'https://skyl.fr',
         },

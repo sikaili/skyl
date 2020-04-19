@@ -66,7 +66,7 @@ export default {
   computed: {
     ...mapGetters(['activeItem', 'canvasFullScreen']),
     iframeContainer() {
-      if (!this.activeItem.type) {
+      if (this.activeItem && !this.activeItem.type) {
         return `width:${this.$mq === 'sm' ? window.screen.width : this.width}px;
       height:${this.height}px;
       opacity:${this.$route.path.includes('play') ? 1 : ''};
@@ -103,6 +103,13 @@ export default {
     },
   },
   beforeCreate() {
+    const lastPlayed = localStorage.getItem('lastPlayed');
+    if (lastPlayed) {
+      this.$store.dispatch('setActiveItem', lastPlayed);
+      this.$router.push({ name: 'play', params: { id: lastPlayed } });
+      localStorage.removeItem('lastPlayed');
+      return;
+    }
     this.$root.$on('refreshCanvas', () => {
       this.key = Math.random().toFixed(2);
     });
@@ -122,12 +129,6 @@ export default {
     window.addEventListener('scroll', this.handleScroll);
     window.addEventListener('orientationchange', this.handleResize);
     this.handleResize();
-  },
-  mounted() {
-    if (localStorage.getItem('lastPage')) {
-      this.$router.push(localStorage.getItem('lastPage'));
-      localStorage.removeItem('lastPage');
-    }
   },
   destroyed() {
     window.removeEventListener('resize', this.handleResize);

@@ -145,7 +145,7 @@ export default {
       showList: this.type === 'musicIframe',
       showCanvasSettings: false,
       settings: null,
-      songs: { items: ['Amarrage', 'Rotation', 'La-Danse', 'flower', 'saturation-chinoise', '2019-12-YeChe', 'Rain-Addiction', 'Emb', 'c-syn', 'e-minor'] },
+      songs: { items: ['Amarrage', 'La-Danse', 'flower', 'saturation-chinoise', '2019-12-YeChe', 'Rain-Addiction', 'Emb', 'c-syn', 'e-minor'] },
       iframes: ['c-syn', 'e-minor', 'flower', 'saturation-chinoise'],
       songId: null,
     };
@@ -159,11 +159,11 @@ export default {
       return !this.showCanvasSettings && (this.settings || this.type === 'musicIframe') && !this.canvasFullScreen;
     },
     list() {
+      if (this.type === 'musicIframe' || this.current === 'player' || this.current === 'cave') {
+        return this.songs;
+      }
       if (this.settings && this.settings.list && this.settings.list.items) {
         return this.settings.list;
-      }
-      if (this.type === 'musicIframe') {
-        return this.songs;
       }
       return null;
     },
@@ -182,7 +182,7 @@ export default {
       },
     },
     songId(val) {
-      if (this.iframes.includes(val)) {
+      if (this.iframes.includes(val) || this.current !== 'player') {
         return;
       }
       switch (val) {
@@ -259,12 +259,11 @@ export default {
     current = undefined;
   },
   methods: {
-    setCurrentItem(item) {
-      if (this.list.action) {
-        current[this.list.action](item);
+    setCurrentItem(songId) {
+      if (this.list && this.list.action) {
+        current[this.list.action](songId);
         return;
       }
-      const songId = item;
       if (this.type === 'musicIframe') {
         if (this.iframes.includes(songId)) {
           this.$store.dispatch('setActiveItem', songId);
@@ -272,10 +271,11 @@ export default {
         } else {
           const playerId = Math.random() > 0.5 ? 'cave' : 'player';
           this.$store.dispatch('setActiveItem', playerId);
-          this.$router.push({ params: { id: 'playerId' }, query: { id: songId } });
+          this.$router.push({ params: { id: playerId }, query: { id: songId } });
         }
         return;
       }
+
       if (!this.iframes.includes(songId)) {
         current.setSong(songId);
         this.hide('showCanvasSettings');
@@ -307,14 +307,17 @@ export default {
       }
     },
     forceUpdate() {
-      if (window.confirm('Empty cache and update to the newest version?')) { //eslint-disable-line
+      if (window.confirm('Empty cache/settings and update to the newest version?')) { //eslint-disable-line
+        localStorage.removeItem(this.current);
+        localStorage.setItem('lastPlayed', this.$route.params.id);
+        this.$router.push({ name: 'home' });
         if ('serviceWorker' in navigator) {
           navigator.serviceWorker.register('/service-worker.js').then((registration) => {
             registration.update();
-            localStorage.setItem('lastPage', this.$route.fullPath);
-            this.$router.push({ name: 'home' });
             window.location.reload(true);
           });
+        } else {
+          window.location.reload(true);
         }
       }
     },
