@@ -49,7 +49,7 @@ export default (instance) => {
       min: 0,
       step: 0.05,
     },
-    isDark: Math.random() > 0.5,
+    isDark: true,
     actions: [
       {
         name: 'toggleColor',

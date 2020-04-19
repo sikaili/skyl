@@ -103,7 +103,7 @@
             />
           </template>
           <i
-            class="Settings__MenuActionButton icon ion-md-share-alt f3 white bg-white-80 bg-animate hover-bg-white hover-black"
+            class="Settings__MenuActionButton icon ion-md-share-alt f3 white bg-black-80 bg-animate hover-bg-white hover-black"
             @click="copyToClipBoard()"
           />
           <i
@@ -311,6 +311,8 @@ export default {
         if ('serviceWorker' in navigator) {
           navigator.serviceWorker.register('/service-worker.js').then((registration) => {
             registration.update();
+            localStorage.setItem('lastPage', this.$route.fullPath);
+            this.$router.push({ name: 'home' });
             window.location.reload(true);
           });
         }
@@ -337,7 +339,7 @@ export default {
     },
     copyToClipBoard() {
       copyToClipBoard(`https://skyl.fr/${this.$route.fullPath}`);
-      window.alert('The link is copied to the clip board'); //eslint-disable-line
+      window.alert('Link copied to clipboard.'); //eslint-disable-line
     },
   },
 };

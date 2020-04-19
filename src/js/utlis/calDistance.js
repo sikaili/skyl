@@ -1,1 +1,1 @@
-export default (x1, x2, y1, y2) => Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2);
+export default (positionA, positionB) => Math.sqrt((positionA.x - positionB.x) ** 2 + (positionA.y - positionB.y) ** 2);

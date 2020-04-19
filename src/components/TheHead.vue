@@ -4,7 +4,6 @@
       <router-link
         :class="classBySize"
         to="/work"
-        exact
       >
         Work
       </router-link>
@@ -59,23 +58,23 @@ export default {
 </script>
 
 <style>
-.bg-white-50 {
-  background-color: var(--bg-color);
-  color: var(--color);
-}
+    .bg-white-50 {
+        background-color: var(--bg-color);
+        color: var(--color);
+    }
 
-.min {
-  min-width: 5rem;
-  max-width: 10rem;
-}
-.autoM {
-  /* display: inline-block; */
-  max-width: 25rem;
-  margin-left: auto;
-  margin-right: auto;
-}
-.router-link-active {
-  background: var(--bg-white-80);
-  text-decoration: line-through;
-}
+    .min {
+        min-width: 5rem;
+        max-width: 10rem;
+    }
+    .autoM {
+        /* display: inline-block; */
+        max-width: 25rem;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .router-link-active {
+        background: var(--bg-white-80);
+        text-decoration: line-through;
+    }
 </style>

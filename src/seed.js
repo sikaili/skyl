@@ -4,7 +4,7 @@ import sketches from '@/assets/JSON/sketches.json';
 const seedData = {
   work: [
     {
-      name: 'P',
+      name: 'p',
       year: '2020',
       des:
         'Speed up a single sound object, move and compose your own',
@@ -186,22 +186,6 @@ const seedData = {
       credits: [
         {
           role: 'Music ',
-          name: 'Sikai Li',
-          link: 'https://skyl.fr',
-        },
-      ],
-      show: false,
-    },
-    {
-      name: 'P',
-      year: '2019',
-      des:
-        'Speed up a single sound object, move and compose your own',
-      link: 'https://skyl.fr/play/p/',
-      img: '/img/covers/p.png',
-      credits: [
-        {
-          role: 'Code, recording ',
           name: 'Sikai Li',
           link: 'https://skyl.fr',
         },

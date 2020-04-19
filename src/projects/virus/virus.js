@@ -333,7 +333,7 @@ const sketch = (instance) => {
     if (sk.staticBodyVertex) {
       if (sk.staticBodyVertex.length > 0) {
         const lastPoint = sk.staticBodyVertex[sk.staticBodyVertex.length - 1];
-        if (calDistance(lastPoint.x, lastPoint.y, sk.mouseX, sk.mouseY) > 2) {
+        if (calDistance(lastPoint, { x: sk.mouseX, y: sk.mouseY }) > 0) {
           sk.staticBodyVertex.push({ x: sk.mouseX, y: sk.mouseY });
         }
       } else {

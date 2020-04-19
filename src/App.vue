@@ -123,6 +123,12 @@ export default {
     window.addEventListener('orientationchange', this.handleResize);
     this.handleResize();
   },
+  mounted() {
+    if (localStorage.getItem('lastPage')) {
+      this.$router.push(localStorage.getItem('lastPage'));
+      localStorage.removeItem('lastPage');
+    }
+  },
   destroyed() {
     window.removeEventListener('resize', this.handleResize);
     window.removeEventListener('scroll', this.handleScroll);

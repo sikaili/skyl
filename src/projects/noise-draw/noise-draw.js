@@ -1,6 +1,7 @@
 import Tone from 'tone';
 import setListeners from '@/js/utlis/addEventListeners';
 import setGestures from '@/js/utlis/addGestures';
+import calDistance from '@/js/utlis/calDistance';
 import copyToClipBoard from '@/js/utlis/copyToClipBoard';
 import { Vertices } from 'matter-js';
 import drawings from './drawings.json';
@@ -159,8 +160,9 @@ export default function (sk) {
     this.givenCenter = null;
     this.addPoints = (x, y) => {
       const position = { x: x - (this.center.x || 0), y: y - (this.center.y || 0) };
-      const shouldAdd = position !== this.positions[this.positions.length - 1] || this.positions.length === 0;
+      const shouldAdd = this.positions.length === 0 || calDistance(position, this.positions[this.positions.length - 1]) > 0;
       if (shouldAdd && this.isRecording && !sk.isPaused) {
+        console.log('adding');
         this.positions.push(position);
       }
       if (sk.touches.length > 2 || (sk.keyIsPressed && sk.mouseIsPressed)) {

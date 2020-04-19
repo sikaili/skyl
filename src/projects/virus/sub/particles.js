@@ -27,10 +27,8 @@ export default class Particle {
   contagion(particles, timeToBeInfected = 1500) {
     particles.forEach((particle) => {
       const distance = calDistance(
-        particle.body.position.x,
-        this.body.position.x,
-        particle.body.position.y,
-        this.body.position.y,
+        particle.body.position,
+        this.body.position,
       );
       // contagion
       if (
@@ -113,7 +111,7 @@ export default class Particle {
       this.updating = true;
       let force;
       if (
-        calDistance(pos.x, pos.y, this.body.position.x, this.body.position.y)
+        calDistance(pos, this.body.position)
         < 50
       ) {
         force = {
@@ -165,10 +163,8 @@ export default class Particle {
     if (
       this.mother
       && calDistance(
-        this.mother.position.x,
-        this.body.position.x,
-        this.mother.position.y,
-        this.body.position.y,
+        this.mother.position,
+        this.body.position,
       )
         < this.r * 3
     ) {
