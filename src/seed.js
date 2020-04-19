@@ -174,24 +174,24 @@ const seedData = {
       ],
       show: false,
     },
-    {
-      name: 'Rotation',
-      app: 'cave',
-      type: 'sketch',
-      year: '2020',
-      des:
-        '锋利的碎片在旋转',
-      link: 'https://skyl.fr/play/player?id=Rotation',
-      img: '/img/covers/Rotation.jpg',
-      credits: [
-        {
-          role: 'Music ',
-          name: 'Sikai Li',
-          link: 'https://skyl.fr',
-        },
-      ],
-      show: false,
-    },
+    // {
+    //   name: 'Rotation',
+    //   app: 'cave',
+    //   type: 'sketch',
+    //   year: '2020',
+    //   des:
+    //     '锋利的碎片在旋转',
+    //   link: 'https://skyl.fr/play/player?id=Rotation',
+    //   img: '/img/covers/Rotation.jpg',
+    //   credits: [
+    //     {
+    //       role: 'Music ',
+    //       name: 'Sikai Li',
+    //       link: 'https://skyl.fr',
+    //     },
+    //   ],
+    //   show: false,
+    // },
     {
       name: 'Ocean Loop',
       des:

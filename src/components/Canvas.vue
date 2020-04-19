@@ -145,7 +145,7 @@ export default {
       showList: this.type === 'musicIframe',
       showCanvasSettings: false,
       settings: null,
-      songs: { items: ['Amarrage', 'La-Danse', 'flower', 'saturation-chinoise', '2019-12-YeChe', 'Rain-Addiction', 'Emb', 'c-syn', 'e-minor'] },
+      songs: { items: ['Cripple', 'Amarrage', 'La-Danse', 'flower', 'saturation-chinoise', '2019-12-YeChe', 'Rain-Addiction', 'Emb', 'c-syn', 'e-minor'] },
       iframes: ['c-syn', 'e-minor', 'flower', 'saturation-chinoise'],
       songId: null,
     };

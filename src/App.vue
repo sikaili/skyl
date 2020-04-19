@@ -13,13 +13,13 @@
       :style="iframeContainer"
     >
       <Canvas
-        v-if="activeItem.type === 'sketch' || activeItem.type === 'musicIframe'"
+        v-if="activeItem && activeItem.type === 'sketch' || activeItem.type === 'musicIframe'"
         :key="key + 2"
         :current="activeItem.app ? activeItem.app : activeItem.id"
         :type="activeItem.type"
       />
       <iframe
-        v-if="activeItem.type !== 'sketch'"
+        v-if="activeItem && activeItem.type !== 'sketch'"
         :key="key + 1"
         class="back bw0"
         scrolling="no"

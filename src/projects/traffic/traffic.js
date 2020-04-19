@@ -1,4 +1,5 @@
 import Tone from 'tone';
+import setListeners from '@/js/utlis/addEventListeners';
 
 
 const s = (instance) => {
@@ -263,30 +264,11 @@ const s = (instance) => {
     },
     { once: true, passive: false },
   );
-
-  divNode.addEventListener('touchstart', sk.handleTouchStart, {
-    passive: false,
-  });
-
-  divNode.addEventListener('mousedown', sk.handleTouchStart, {
-    passive: false,
-  });
-
-  divNode.addEventListener(
-    'ontouchmove',
-    (m) => {
-      m.preventDefault();
-    },
-    { passive: false },
-  );
-
-  divNode.addEventListener(
-    'touchmove',
-    (ev) => {
-      ev.preventDefault();
-    },
-    { passive: false },
-  );
+  setListeners(sk);
+  sk.windowResized = () => {
+    sk.resizeCanvas(sk.windowWidth, sk.windowHeight);
+    sk.background(0);
+  };
 };
 
 export default s;
