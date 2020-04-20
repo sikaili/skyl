@@ -257,7 +257,7 @@ export default (instance) => {
       },
       get fill() {
         if (sk.settings.isDark) {
-          return [sum1 / 2 + sk.noise((sum + sum1) / 300, xoff / 200) * 255, 100 + sk.noise(sum / 300, xoff / 400) * 200];
+          return [50 + sum1 / 2.5 + sk.noise((sum + sum1) / 300, xoff / 200) * 255, 100 + sk.noise(sum / 300, xoff / 400) * 200];
         }
         return [328 - sum1, (sk.noise(sum1 / 300 + xoff) - 0.33) * 255];
       },
@@ -269,10 +269,10 @@ export default (instance) => {
       },
     };
     if (sum < 170) {
-      sum /= 10;
+      sum /= 5;
     }
     if (sum1 < 170) {
-      sum1 /= 10;
+      sum1 /= 5;
     }
     xoff += 0.05 * (sum1 / 255);
     sk.background(...colors.background);
