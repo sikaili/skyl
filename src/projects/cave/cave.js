@@ -268,6 +268,12 @@ export default (instance) => {
         return [sum1 * 2, 125 + sum1 / 1.5];
       },
     };
+    if (sum < 170) {
+      sum /= 10;
+    }
+    if (sum1 < 170) {
+      sum1 /= 10;
+    }
     xoff += 0.05 * (sum1 / 255);
     sk.background(...colors.background);
 

@@ -243,7 +243,10 @@ export default function (sk) {
     });
     xoff += 0.02;
     yoff += 1 * sk.map(sk.mouseY, 0, sk.height, -0.1, 0.1);
-
+    if (xoff > 1000 || yoff > 1000) {
+      xoff = 0;
+      yoff = 0;
+    }
     sk.strokeWeight(Math.random() * 2);
     sk.stroke(sk.drawing.stroke);
     sk.fill(sk.drawing.fill, 30 + sk.constrain(sk.mouseX - sk.pmouseX, -20, 100));

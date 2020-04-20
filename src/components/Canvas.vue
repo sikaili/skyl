@@ -122,6 +122,12 @@ import { mapGetters } from 'vuex';
 import copyToClipBoard from '@/js/utlis/copyToClipBoard';
 
 p5.disableFriendlyErrors = true;
+window.addEventListener('resize', () => {
+  p5.prototype.windowWidth = window.innerWidth || document.documentElement.clientWidth
+      || document.body.clientWidth;
+  p5.prototype.windowHeight = window.innerHeight || document.documentElement.clientHeight
+      || document.body.clientHeight;
+});
 
 let current;
 let loaded = true;
