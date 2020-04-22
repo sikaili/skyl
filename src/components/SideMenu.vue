@@ -121,7 +121,7 @@ export default {
   created() {
     const { id } = this.$route.params;
     if (id === 'random') {
-      this.randomIframe();
+      this.randomIframe(true);
     }
   },
   mounted() {
@@ -149,8 +149,8 @@ export default {
     restart() {
       this.$root.$emit('refreshCanvas', true);
     },
-    randomIframe() {
-      const n = Math.floor(Math.random() * this.iframeItems.length);
+    randomIframe(sketch = false) {
+      const n = Math.floor(Math.random() * (sketch ? 6 : this.iframeItems.length));
       const item = this.iframeItems[n];
       this.displayList = false;
       this.setActiveItem(item);
