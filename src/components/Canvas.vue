@@ -17,6 +17,10 @@
         class="Settings Settings__Menu"
         :class="{ 'Settings__Menu--active' : showCanvasSettings }"
       >
+        <div class="Settings__Version">
+          version: {{ version }}
+        </div>
+
         <div
           v-if="showCanvasSettings"
           class="Settings__Close c-animate"
@@ -154,6 +158,7 @@ export default {
       songs: { items: ['Cripple', 'Amarrage', 'La-Danse', 'flower', 'saturation-chinoise', '2019-12-YeChe', 'Rain-Addiction', 'Emb', 'c-syn', 'e-minor'] },
       iframes: ['c-syn', 'e-minor', 'flower', 'saturation-chinoise'],
       songId: null,
+      version: process.env.VUE_APP_VERSION,
     };
   },
   computed: {
@@ -436,6 +441,13 @@ export default {
                 padding-bottom: 18px;
                 height: auto;
             }
+        }
+
+        &__Version {
+            position: absolute;
+            bottom: 4px;
+            left: 16px;
+            font-size: 10px;
         }
 
         &__Player {
