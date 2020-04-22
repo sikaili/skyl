@@ -3,6 +3,8 @@ node_modules
 /dist
 /ori/
 /src/assets/ori
+/full-size-imgs
+
 # local env files
 .env.local
 .env.*.local
