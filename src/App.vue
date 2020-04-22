@@ -2,7 +2,6 @@
   <div id="app">
     <div
       class="ToggleFullScreen"
-      @mouseenter="handleFullScreenMouseIn()"
       @click="handleFullScreenMouseIn()"
       @mouseleave="handleFullScreenMouseLeave()"
     />
@@ -217,7 +216,7 @@ export default {
     handleFullScreenMouseIn() {
       this.activeFullScreen = setTimeout(() => {
         this.$store.dispatch('setCanvasFullScreen', !this.canvasFullScreen);
-      }, 1500);
+      }, 300);
     },
     handleFullScreenMouseLeave() {
       clearTimeout(this.activeFullScreen);
@@ -230,9 +229,9 @@ export default {
     .ToggleFullScreen {
         position: fixed;
         right: 0;
-        top: 0;
-        width: 30px;
-        height: 40px;
+        top: 55px;
+        width: 15px;
+        height: 30px;
     }
     .slide-fade-main-enter-active {
         transition: all 0.2s ease;

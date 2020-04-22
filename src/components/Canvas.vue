@@ -352,7 +352,7 @@ export default {
       document.querySelector('#canvasContainer').removeEventListener('touchstart', () => { this.hide(itemName); });
     },
     copyToClipBoard() {
-      copyToClipBoard(`https://skyl.fr/${this.$route.fullPath}`);
+      copyToClipBoard(process.env.VUE_APP_PROD_URL + this.$route.fullPath);
       window.alert('Link copied to clipboard.'); //eslint-disable-line
     },
   },
