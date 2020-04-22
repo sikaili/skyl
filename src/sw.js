@@ -36,7 +36,17 @@ workbox.core.clientsClaim(); // Vue CLI 4 and Workbox v4
 
 
 self.__precacheManifest = [].concat(self.__precacheManifest || []);
-const arr = self.__precacheManifest.filter((obj) => (obj.url.indexOf('/src/projects/player/sound/') === -1 || obj.url.indexOf('amarrage') !== -1));
+const arr = self.__precacheManifest.filter((obj) => {
+  if (obj.url.indexOf('/src/projects/player/sound/') === -1 || obj.url.indexOf('amarrage') !== -1) {
+    return true;
+  }
+  if (obj.url.indexOf('img/') !== -1) {
+    if (obj.url.indexOf('img/covers/') !== -1) {
+      return true;
+    }
+    return false;
+  }
+});
 
 self.__precacheManifest = [].concat(arr || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});

@@ -11,13 +11,14 @@
       v-if="updateExists"
       class="Notification"
     >
-      new version is found,
+      <i class="icon ion-md-sync" />
+      new version available,
       <span
         class="Notification__click"
         @click="refreshApp()"
       >
         click here
-      </span> to refresh
+      </span> to refresh.
     </div>
     <div
       :key="key"
@@ -44,7 +45,7 @@
       <router-view />
     </transition>
     <transition name="slide-fade-main">
-      <TheFooter v-if="footer && $mq === 'lg' && !canvasFullScreen" />
+      <TheFooter v-if="footer && $mq === 'lg' && !canvasFullScreen && !updateExists" />
     </transition>
   </div>
 </template>
@@ -226,11 +227,11 @@ export default {
     }
     .Notification {
         background-color: rgba(0,0,0, 0.8);
-        padding: 0 24px;
+        padding: 12px 36px;
+        text-align: center;
         position: fixed;
         width: 100%;
         color: white;
-        line-height: 48px;
         bottom: 0px;
 
         &__click {
