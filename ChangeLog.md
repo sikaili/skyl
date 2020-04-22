@@ -1,3 +1,8 @@
+## [2.5.1] - 2019-04-22
+### Changed
+- notification to app.vue
+- clean public folder
+
 ## [2.5.0] - 2019-04-22
 ### Changed
 - highlight active item side menu

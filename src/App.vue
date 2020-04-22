@@ -44,6 +44,32 @@
     <transition name="slide-fade-main">
       <router-view />
     </transition>
+    <div
+      v-show="proposeDesktop && !updateExists"
+      class="flex menuItems-center justify-center pa3 f6 ph3 bg-black-30 white"
+    >
+      <svg
+        class="w1"
+        data-icon="info"
+        viewBox="0 0 32 32"
+        style="fill: currentcolor;"
+      >
+        <title>info icon</title>
+        <path
+          d="M16 0 A16 16 0 0 1 16 32 A16 16 0 0 1 16 0 M19 15 L13 15 L13 26 L19 26 z M16 6 A3 3 0 0 0 16 12 A3 3 0 0 0 16 6"
+        />
+      </svg>
+      <span
+        class="MenuSmall__Notification lh-title ml3"
+      >Please come back on a desktop for better expereince
+      </span>
+      <p
+        class="pl3"
+        @click="disablePromptDesktop()"
+      >
+        X
+      </p>
+    </div>
     <transition name="slide-fade-main">
       <TheFooter v-if="footer && $mq === 'lg' && !canvasFullScreen && !updateExists" />
     </transition>
@@ -68,6 +94,7 @@ export default {
   },
   data() {
     return {
+      proposeDesktop: !localStorage.getItem('propose-desktop'),
       refreshing: false,
       registration: null,
       updateExists: false,
@@ -172,6 +199,10 @@ export default {
       if (!this.registration || !this.registration.waiting) { return; }
       this.registration.waiting.postMessage('skipWaiting');
     },
+    disablePromptDesktop() {
+      localStorage.setItem('propose-desktop', true);
+      this.proposeDesktop = false;
+    },
     handleResize() {
       this.width = window.innerWidth;
       this.height = window.innerHeight;
@@ -227,7 +258,8 @@ export default {
     }
     .Notification {
         background-color: rgba(0,0,0, 0.8);
-        padding: 12px 36px;
+        padding: 18px 48px;
+        line-height: 24px;
         text-align: center;
         position: fixed;
         width: 100%;
