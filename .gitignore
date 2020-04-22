@@ -1,6 +1,7 @@
 .DS_Store
 node_modules
 /dist
+/ori/
 /src/assets/ori
 # local env files
 .env.local

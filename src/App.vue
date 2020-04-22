@@ -8,6 +8,18 @@
     />
     <TheHead v-if="!canvasFullScreen" />
     <div
+      v-if="updateExists"
+      class="Notification"
+    >
+      new version is found,
+      <span
+        class="Notification__click"
+        @click="refreshApp()"
+      >
+        click here
+      </span> to refresh
+    </div>
+    <div
       :key="key"
       class="back bw0"
       :style="iframeContainer"
@@ -55,6 +67,9 @@ export default {
   },
   data() {
     return {
+      refreshing: false,
+      registration: null,
+      updateExists: false,
       footer: true,
       width: 0,
       height: 0,
@@ -125,6 +140,17 @@ export default {
     }
   },
   created() {
+    document.addEventListener(
+      'swUpdated', this.showRefreshUI, { once: true },
+    );
+    navigator.serviceWorker.addEventListener(
+      'controllerchange', () => {
+        if (this.refreshing) return;
+        this.refreshing = true;
+        window.location.reload();
+      },
+    );
+
     window.addEventListener('resize', this.handleResize);
     window.addEventListener('scroll', this.handleScroll);
     window.addEventListener('orientationchange', this.handleResize);
@@ -136,6 +162,15 @@ export default {
     window.removeEventListener('orientationchange', this.handleResize);
   },
   methods: {
+    showRefreshUI(e) {
+      this.registration = e.detail;
+      this.updateExists = true;
+    },
+    refreshApp() {
+      this.updateExists = false;
+      if (!this.registration || !this.registration.waiting) { return; }
+      this.registration.waiting.postMessage('skipWaiting');
+    },
     handleResize() {
       this.width = window.innerWidth;
       this.height = window.innerHeight;
@@ -159,7 +194,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
     .ToggleFullScreen {
         position: fixed;
         right: 0;
@@ -188,5 +223,18 @@ export default {
     body {
         padding: 0 0 0 0;
         margin: 0 0 0 0;
+    }
+    .Notification {
+        background-color: rgba(0,0,0, 0.8);
+        padding: 0 24px;
+        position: fixed;
+        width: 100%;
+        color: white;
+        line-height: 48px;
+        bottom: 0px;
+
+        &__click {
+            color: rgba(150,150,255);
+        }
     }
 </style>
