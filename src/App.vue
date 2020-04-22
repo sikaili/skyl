@@ -45,7 +45,7 @@
       <router-view />
     </transition>
     <div
-      v-show="proposeDesktop && !updateExists"
+      v-show="proposeDesktop && !updateExists && $mq === 'sm' && ($route.name === 'work' || $route.name === 'music')"
       class="flex menuItems-center justify-center pa3 f6 ph3 bg-black-30 white"
     >
       <svg
