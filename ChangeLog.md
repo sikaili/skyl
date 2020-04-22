@@ -1,3 +1,17 @@
+## [2.5.0] - 2019-04-22
+### Changed
+- highlight active item side menu
+- cave.js compressor (<170)
+- custom sw.js, only cover img are precached
+### Added
+- copy link button, update sw (f8abc77c1791b54f1cfae)
+- service work workbox
+- notification for version (96b2436d4e)
+- display version (120dab6e2e3)
+### Fixed
+- canvas menu icon css
+- window resize p5 windowWidth not refreshing
+
 ## [2.4.0] - 2019-04-18
 ### Changed
 - Canvas support 2 players (840dad8ed4992)
