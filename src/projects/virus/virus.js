@@ -16,7 +16,6 @@ import Particle from './sub/particles';
 import E3 from './sound/chasing.mp3';
 import D3 from './sound/light.mp3';
 
-window.decomp = decomp;
 
 console.log('import virus');
 
@@ -152,9 +151,9 @@ const sketch = (instance) => {
     Particle.prototype.sampler2.dispose();
     Particle.prototype.samplers.map((a) => a.dispose());
     sk.remove();
-    particles = [];
     window.decomp = undefined;
     console.log('virus killed');
+    particles = [];
   };
 
   sk.addParticles = (number = 20) => {
@@ -178,6 +177,7 @@ const sketch = (instance) => {
   };
 
   sk.setup = () => {
+    window.decomp = decomp;
     sk.createCanvas(sk.windowWidth, sk.windowHeight);
     console.log('setup virus');
     setBordersAndMouse(sk);
@@ -199,7 +199,9 @@ const sketch = (instance) => {
     sk.background([200, 200, 200, touched ? 150 : 255]);
     particles.forEach((particle) => {
       if (!particle.updating) {
-        particle.contagion(particles, sk.settings.timeTobeInfected.value);
+        if (sk.soundIsReady) {
+          particle.contagion(particles, sk.settings.timeTobeInfected.value);
+        }
       }
       if (touched && sk.trigger) {
         particle.mouseForceTrigger({ x: sk.mouseX, y: sk.mouseY });

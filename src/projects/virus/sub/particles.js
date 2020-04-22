@@ -59,7 +59,13 @@ export default class Particle {
             }
             if (Math.random() > 0.97 && particle.fill[3] > 100) {
               particle.died = true;
-              this.sampler2.triggerAttack(130 + (particle.r - 20) * 2);
+              if (this.sampler2) {
+                try {
+                  this.sampler2.triggerAttack(130 + (particle.r - 20) * 2);
+                } catch (err) {
+                  //
+                }
+              }
             }
           }, timeToBeInfected * 2);
         }, (timeToBeInfected / this.fill[3]) ** 2);
@@ -103,7 +109,13 @@ export default class Particle {
   }
 
   triggerAttack() {
-    this.sampler2.triggerAttack(130 + (this.r - 20) * 2);
+    if (this.sampler2) {
+      try {
+        this.sampler2.triggerAttack(130 + (this.r - 20) * 2);
+      } catch (err) {
+        //
+      }
+    }
   }
 
   mouseForceTrigger(pos) {

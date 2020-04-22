@@ -3,25 +3,26 @@ const setListeners = (sk, Tone) => { //eslint-disable-line
   divNode.addEventListener(
     'click',
     async () => {
-      await Tone.start();
       try {
+        await Tone.start();
         sk.start();
+        sk.soundIsReady = true;
       } catch (err) {
         //
       }
-      sk.soundIsReady = true;
     },
     { once: true, passive: false },
   );
   divNode.addEventListener(
     'touchstart',
     async () => {
-      await Tone.start();
       try {
+        await Tone.start();
         sk.start();
+        sk.soundIsReady = true;
       } catch (err) {
         //
-      } sk.soundIsReady = true;
+      }
     },
     { once: true, passive: false },
   );
