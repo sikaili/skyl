@@ -230,7 +230,7 @@ export default function (sk) {
       sk.textSize(25 + sk.random(-0.2, 0.2));
       sk.textAlign(sk.CENTER);
       sk.textFont('courier');
-      sk.text('press\nto\n draw/pause', 0.5 * sk.windowWidth + sk.map(sk.noise(xoff), 0, 1, -5, 10), sk.map(sk.noise(30 + xoff * 2), 0, 1, -10, 10) + 0.5 * sk.height);
+      sk.text(`press ${sk.width > 512 ? 'space' : ''}\nto\n draw/pause`, 0.5 * sk.windowWidth + sk.map(sk.noise(xoff), 0, 1, -5, 10), sk.map(sk.noise(30 + xoff * 2), 0, 1, -10, 10) + 0.5 * sk.height);
       sk.pop();
     }
     pan.set({ pan: sk.mouseX / sk.width - 0.5 });
@@ -360,6 +360,10 @@ export default function (sk) {
     const { keyCode } = sk;
     switch (keyCode) {
       case 32:
+        sk.isPaused = !sk.isPaused;
+        break;
+      case 67:
+      case 83:
         sk.saveCapture();
         break;
       case 187:

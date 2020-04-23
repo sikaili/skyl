@@ -25,5 +25,14 @@
   {
     "id": "noise-draw",
     "type": "sketch"
+  },  
+  {
+    "id": "k-means-selfie",
+    "type": "sketch"
+  },
+  {
+    "id": "cave-2",
+    "type": "sketch"
   }
+  
 ]
