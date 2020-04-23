@@ -1,3 +1,10 @@
+## [2.6.2] - 2019-04-23
+### Fixed
+- share url
+- k-means vscale
+### Added
+- k-means selfie
+
 ## [2.5.2] - 2019-04-22
 ### Changed
 - entering random only on sketches
