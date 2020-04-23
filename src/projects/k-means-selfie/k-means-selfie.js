@@ -33,14 +33,7 @@ export default function (sk) {
       min: 0,
       step: 1,
     },
-    pixels: {
-      value: 5,
-      type: 'range',
-      max: 10,
-      min: 1,
-      step: 1,
-    },
-    actions: [{ name: 'saveCaputure', icon: 'camera' }],
+    actions: [{ name: 'saveCapture', icon: 'camera' }],
   };
 
   sk.saveCapture = () => {
@@ -50,12 +43,15 @@ export default function (sk) {
   };
 
   sk.setup = () => {
-    sk.pixelDensity(1);
+    // sk.pixelDensity(1);
     sk.createCanvas(sk.windowWidth, sk.windowHeight);
-    if (sk.height > sk.width) {
-      vScale = 5;
-      kScale = 150;
-    }
+    // if (sk.height > sk.width) {
+    //   vScale = 5;
+    //   kScale = 150;
+    // }
+    const shortSide = sk.height < sk.width ? sk.height : sk.width;
+    vScale = shortSide / 80;
+    kScale = shortSide / 20;
     Video = sk.createCapture(Video);
     console.log(Video);
     Video.loop();
@@ -137,11 +133,11 @@ export default function (sk) {
         sk.ellipse(
           a.x + Math.random(),
           a.y - Math.random(),
-          2,
-          2 + Math.random(),
+          2 * vScale / 5,
+          2 * vScale / 5 + Math.random(),
         );
       });
-      sk.fill(colors[i][0], colors[i][1], colors[i][2], 100);
+      sk.fill(colors[i][0], colors[i][1], colors[i][2], 80);
       if (i === kMoyen.length - 1)sk.fill(200, 0, 180, 200);
       sk.noStroke();
       sk.ellipse(
