@@ -43,22 +43,17 @@ export default function (sk) {
   };
 
   sk.setup = () => {
-    // sk.pixelDensity(1);
     sk.createCanvas(sk.windowWidth, sk.windowHeight);
-    // if (sk.height > sk.width) {
-    //   vScale = 5;
-    //   kScale = 150;
-    // }
     const shortSide = sk.height < sk.width ? sk.height : sk.width;
-    vScale = shortSide / 80;
-    kScale = shortSide / 20;
+    vScale = shortSide / 100;
+    kScale = shortSide / 15;
     Video = sk.createCapture(Video);
     console.log(Video);
     Video.loop();
     Video.size(sk.width / vScale, sk.height / vScale);
     sk.textSize(20);
     for (let i = 0; i < 10000; i += 1) {
-      const dump = sk.createVector(sk.random(0.3 * sk.width, 0.7 * sk.width), sk.random(0.3 * sk.height, 0.7 * sk.height));
+      const dump = { x: sk.random(0.3 * sk.width, 0.7 * sk.width), y: sk.random(0.3 * sk.height, 0.7 * sk.height) };
       points.push(dump);
     }
     kMoyen = [...points].slice(0, k + 1);
@@ -75,7 +70,7 @@ export default function (sk) {
 
   function aver(arr) {
     if (arr.length === 0) {
-      return sk.createVector(0, 0);
+      return { x: 0, y: 0 };
     }
     const [xs, ys] = [
       [],
@@ -87,7 +82,7 @@ export default function (sk) {
     });
     const x = xs.reduce((a, b) => a + b) / xs.length;
     const y = ys.reduce((a, b) => a + b) / ys.length;
-    return sk.createVector(x, y);
+    return { x, y };
   }
   sk.draw = () => {
     points = [];
@@ -103,14 +98,14 @@ export default function (sk) {
         const g = Video.pixels[index + 1];
         const b = Video.pixels[index + 2];
         const bright = (r + g + b) / 3;
-        const ee = sk.createVector(x * vScale, y * vScale);
+        const ee = { x: x * vScale, y: y * vScale };
         ee.r = r;
         ee.g = g;
         ee.b = b;
         if (bright > sk.settings.min.value && bright < sk.settings.max.value) points.push(ee);
       }
     }
-    kMoyen[k + 1] = sk.createVector(sk.mouseX, sk.mouseY);
+    kMoyen[k + 1] = { x: sk.mouseX, y: sk.mouseY };
     sk.background(0);
     sk.noStroke();
     sk.textAlign(sk.CENTER);
@@ -128,7 +123,6 @@ export default function (sk) {
     }
     for (let i = 0; i < kPoints.length; i += 1) {
       sk.fill(colors[i]);
-      sk.stroke(colors[i]);
       kPoints[i].forEach((a) => {
         sk.ellipse(
           a.x + Math.random(),
@@ -154,7 +148,7 @@ export default function (sk) {
     // starting points cases
     if (Math.random() > 0.5) {
       for (let i = 0; i < k + 1; i += 1) {
-        kMoyen[i] = sk.createVector(sk.random(0, sk.width), sk.random(0, sk.height));
+        kMoyen[i] = { x: sk.random(0, sk.width), y: sk.random(0, sk.height) };
       }
     } else {
       kMoyen = points.slice(0, k + 1);
