@@ -1,4 +1,12 @@
-## [2.6.2] - 2019-04-23
+## [2.6.1] - 2019-04-25
+### Fixed
+- share url
+- window resize probleme on ios, 505ms delay (b84c32e913aaa8)
+### Changed
+- k-means selfie sin osc
+
+
+## [2.6.0] - 2019-04-23
 ### Fixed
 - share url
 - k-means vscale
