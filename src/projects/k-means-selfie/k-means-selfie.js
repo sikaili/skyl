@@ -2,8 +2,8 @@ import calDistance from '@/js/utlis/calDistance';
 import setListeners from '@/js/utlis/addEventListeners';
 
 export default function (sk) {
+  const numberOfK = Math.floor(Math.random() * 20);
   let points = [];
-  const k = 50;
   let kMoyen = [];
   const kPoints = [];
   const dis = [];
@@ -46,17 +46,17 @@ export default function (sk) {
     sk.createCanvas(sk.windowWidth, sk.windowHeight);
     const shortSide = sk.height < sk.width ? sk.height : sk.width;
     vScale = shortSide / 100;
-    kScale = shortSide / 15;
-    Video = sk.createCapture(Video);
-    console.log(Video);
-    Video.loop();
+    kScale = shortSide / (200 / numberOfK) / vScale;
+    Video = sk.createCapture();
+    sk.frameRate(30);
     Video.size(sk.width / vScale, sk.height / vScale);
+    Video.loop();
     sk.textSize(20);
     for (let i = 0; i < 10000; i += 1) {
       const dump = { x: sk.random(0.3 * sk.width, 0.7 * sk.width), y: sk.random(0.3 * sk.height, 0.7 * sk.height) };
       points.push(dump);
     }
-    kMoyen = [...points].slice(0, k + 1);
+    kMoyen = [...points].slice(0, numberOfK + 1);
     for (let i = 0; i < kMoyen.length + 1; i += 1) {
       kPoints[i] = [];
       colors[i] = [
@@ -98,14 +98,15 @@ export default function (sk) {
         const g = Video.pixels[index + 1];
         const b = Video.pixels[index + 2];
         const bright = (r + g + b) / 3;
-        const ee = { x: x * vScale, y: y * vScale };
-        ee.r = r;
-        ee.g = g;
-        ee.b = b;
-        if (bright > sk.settings.min.value && bright < sk.settings.max.value) points.push(ee);
+        const ee = {
+          x: x * vScale, y: y * vScale, r, g, b, bright,
+        };
+        if (bright > sk.settings.min.value && bright < sk.settings.max.value) {
+          points.push(ee);
+        }
       }
     }
-    kMoyen[k + 1] = { x: sk.mouseX, y: sk.mouseY };
+    kMoyen[numberOfK + 1] = { x: sk.mouseX, y: sk.mouseY };
     sk.background(0);
     sk.noStroke();
     sk.textAlign(sk.CENTER);
@@ -117,27 +118,28 @@ export default function (sk) {
       const t = Math.min(...dis);
       const n = dis.indexOf(t);
       kPoints[n].push(points[i]);
+      // sk.fill([points[i].r + sk.noise(i / 100) * 30, points[i].g, points[i].b, 255]);
+      // sk.fill(points[i].bright + sk.noise(i / 100, sk.frameCount / 20) * 100);
+      // sk.ellipse(points[i].x, points[i].y, 0.5 * vScale - points[i].bright / 125 * 5 - Math.sin(sk.frameCount / 20 + points[i].bright / 10 * sk.frameCount / 20) * 5);
     }
     for (let i = 0; i < kPoints.length; i += 1) {
       kMoyen[i] = aver(kPoints[i]);
     }
     for (let i = 0; i < kPoints.length; i += 1) {
       sk.fill(colors[i]);
+      // const r = 0.5 * vScale + Math.random();
+      const scale = vScale;
       kPoints[i].forEach((a) => {
-        sk.ellipse(
-          a.x + Math.random(),
-          a.y - Math.random(),
-          2 * vScale / 5,
-          2 * vScale / 5 + Math.random(),
-        );
+        const r = scale / 2 - Math.cos(sk.frameCount / 100 + a.bright * sk.frameCount / 200 + i * 5) * scale / 6;
+        // sk.fill([a.r, a.g, a.b]);
+        sk.ellipse(a.x, a.y, r);
       });
-      sk.fill(colors[i][0], colors[i][1], colors[i][2], 80);
       if (i === kMoyen.length - 1)sk.fill(200, 0, 180, 200);
       sk.noStroke();
       sk.ellipse(
         kMoyen[i].x,
         kMoyen[i].y,
-        (Math.sqrt(kPoints[i].length) / k) * kScale,
+        (Math.sqrt(kPoints[i].length) / numberOfK) * kScale,
       );
     }
     for (let i = 0; i < kMoyen.length; i += 1) {
@@ -147,11 +149,11 @@ export default function (sk) {
   sk.handleTouchEnd = () => {
     // starting points cases
     if (Math.random() > 0.5) {
-      for (let i = 0; i < k + 1; i += 1) {
+      for (let i = 0; i < numberOfK + 1; i += 1) {
         kMoyen[i] = { x: sk.random(0, sk.width), y: sk.random(0, sk.height) };
       }
     } else {
-      kMoyen = points.slice(0, k + 1);
+      kMoyen = points.slice(0, numberOfK + 1);
     }
     // rest points for each center and set Color
     for (let i = 0; i < kMoyen.length; i += 1) {
