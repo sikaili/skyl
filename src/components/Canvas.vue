@@ -138,9 +138,9 @@ window.addEventListener('resize', () => {
     p5.prototype.windowHeight = height;
     p5.prototype.windowWidth = width;
     if (current) {
-      current.resize(width, height);
+      current.resizeCanvas(width, height);
     }
-  }, 300);
+  }, 505);
 });
 
 const changeSketch = (name) => {
