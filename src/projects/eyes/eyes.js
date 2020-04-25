@@ -434,10 +434,6 @@ const eyes = (instance) => {
     state = 0;
   };
 
-  sk.windowResized = () => {
-    sk.resizeCanvas(sk.windowWidth, sk.windowHeight);
-  };
-
   const setListeners = (divNode, sk) => { //eslint-disable-line
     divNode.addEventListener(
       'click',

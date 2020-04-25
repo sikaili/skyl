@@ -279,10 +279,6 @@ export default function (instance) {
     }
   };
 
-  sk.windowResized = () => {
-    sk.resizeCanvas(sk.windowWidth, sk.windowHeight);
-  };
-
   sk.calcDistance = (x, y, x1, y1) => Math.sqrt((x1 - x) * (x1 - x) + (y1 - y) * (y1 - y));
 
   divNode.addEventListener(

@@ -68,8 +68,5 @@ const setListeners = (sk, Tone) => { //eslint-disable-line
     sk.handleTouchMove,
     { passive: false },
   );
-  sk.windowResized = () => {
-    sk.resizeCanvas(sk.windowWidth, sk.windowHeight);
-  };
 };
 export default setListeners;

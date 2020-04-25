@@ -110,10 +110,10 @@
             class="Settings__MenuActionButton icon ion-md-share-alt f3 white bg-black-80 bg-animate hover-bg-white hover-black"
             @click="copyToClipBoard()"
           />
-          <i
+          <!-- <i
             class="Settings__MenuActionButton icon ion-md-sync f3 white bg-white-50 bg-animate hover-bg-white hover-black"
             @click="forceUpdate()"
-          />
+          /> -->
         </div>
       </div>
     </div>
@@ -126,15 +126,23 @@ import { mapGetters } from 'vuex';
 import copyToClipBoard from '@/js/utlis/copyToClipBoard';
 
 p5.disableFriendlyErrors = true;
-window.addEventListener('resize', () => {
-  p5.prototype.windowWidth = window.innerWidth || document.documentElement.clientWidth
-      || document.body.clientWidth;
-  p5.prototype.windowHeight = window.innerHeight || document.documentElement.clientHeight
-      || document.body.clientHeight;
-});
-
 let current;
 let loaded = true;
+
+window.addEventListener('resize', () => {
+  setTimeout(() => {
+    const width = document.documentElement.clientWidth
+      || window.innerWidth || document.body.clientWidth;
+    const height = document.documentElement.clientHeight
+      || window.innerHeight || document.body.clientHeight;
+    p5.prototype.windowHeight = height;
+    p5.prototype.windowWidth = width;
+    if (current) {
+      current.resize(width, height);
+    }
+  }, 300);
+});
+
 const changeSketch = (name) => {
   name = name.toLowerCase();
   if (!loaded) {
@@ -317,21 +325,21 @@ export default {
         this.settings[name].value = current.random(this.settings[name].min, this.settings[name].max);
       }
     },
-    forceUpdate() {
-      if (window.confirm('Empty cache/settings and update to the newest version?')) { //eslint-disable-line
-        localStorage.removeItem(this.current);
-        localStorage.setItem('lastPlayed', this.$route.params.id);
-        this.$router.push({ name: 'home' });
-        if ('serviceWorker' in navigator) {
-          navigator.serviceWorker.register('/service-worker.js').then((registration) => {
-            registration.update();
-            window.location.reload(true);
-          });
-        } else {
-          window.location.reload(true);
-        }
-      }
-    },
+    // forceUpdate() {
+    //   if (window.confirm('Empty cache/settings and update to the newest version?')) { //eslint-disable-line
+    //     localStorage.removeItem(this.current);
+    //     localStorage.setItem('lastPlayed', this.$route.params.id);
+    //     this.$router.push({ name: 'home' });
+    //     if ('serviceWorker' in navigator) {
+    //       navigator.serviceWorker.register('/service-worker.js').then((registration) => {
+    //         registration.update();
+    //         window.location.reload(true);
+    //       });
+    //     } else {
+    //       window.location.reload(true);
+    //     }
+    //   }
+    // },
     toggle(itemName) {
       if (this[itemName]) {
         this.hide(itemName);
