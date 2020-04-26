@@ -152,10 +152,10 @@ const handleResize = () => {
     }
   }, 505);
 };
-const toggleLoop = () => {
+const toggleLoop = (toPause = false) => {
   setTimeout(() => {
     if (current) {
-      if (current.stopped) {
+      if (!toPause) {
         current.loop();
         current.stopped = false;
       } else {
@@ -166,13 +166,12 @@ const toggleLoop = () => {
   }, 0);
 };
 window.addEventListener('resize', handleResize);
-window.addEventListener('focus', toggleLoop, false);
-window.addEventListener('blur', toggleLoop, false);
+window.addEventListener('focus', toggleLoop(false), false);
+window.addEventListener('blur', toggleLoop(true), false);
 window.addEventListener('visibilitychange', () => {
   setTimeout(() => {
     if (!document.hidden && current && current.stopped) {
-      current.loop();
-      current.stopped = false;
+      toggleLoop(false);
     }
   }, 200);
 });
