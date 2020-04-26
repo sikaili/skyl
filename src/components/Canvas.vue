@@ -129,7 +129,17 @@ p5.disableFriendlyErrors = true;
 let current;
 let loaded = true;
 
-window.addEventListener('resize', () => {
+const changeSketch = (name) => {
+  name = name.toLowerCase();
+  if (!loaded) {
+    loaded = true;
+    import("./../projects/" + name + "/" + name+ ".js").then(module => { //eslint-disable-line
+    current = new p5(module.default, 'canvasContainer'); //eslint-disable-line
+    });
+  }
+};
+
+const handleResize = () => {
   setTimeout(() => {
     const width = document.documentElement.clientWidth
       || window.innerWidth || document.body.clientWidth;
@@ -141,17 +151,32 @@ window.addEventListener('resize', () => {
       current.resizeCanvas(width, height);
     }
   }, 505);
+};
+const toggleLoop = () => {
+  setTimeout(() => {
+    if (current) {
+      if (current.stopped) {
+        current.loop();
+        current.stopped = false;
+      } else {
+        current.noLoop();
+        current.stopped = true;
+      }
+    }
+  }, 0);
+};
+window.addEventListener('resize', handleResize);
+window.addEventListener('focus', toggleLoop, false);
+window.addEventListener('blur', toggleLoop, false);
+window.addEventListener('visibilitychange', () => {
+  setTimeout(() => {
+    if (!document.hidden && current && current.stopped) {
+      current.loop();
+      current.stopped = false;
+    }
+  }, 200);
 });
 
-const changeSketch = (name) => {
-  name = name.toLowerCase();
-  if (!loaded) {
-    loaded = true;
-    import("./../projects/" + name + "/" + name+ ".js").then(module => { //eslint-disable-line
-    current = new p5(module.default, 'canvasContainer'); //eslint-disable-line
-    });
-  }
-};
 export default {
   name: 'Canvas',
   props: {
