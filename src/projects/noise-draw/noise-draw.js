@@ -111,7 +111,6 @@ export default function (sk) {
       const position = { x: x - (this.center.x || 0), y: y - (this.center.y || 0) };
       const shouldAdd = this.positions.length === 0 || calDistance(position, this.positions[this.positions.length - 1]) > 0;
       if (shouldAdd && this.isRecording && !sk.isPaused) {
-        console.log('adding');
         this.positions.push(position);
       }
       if (sk.touches.length > 2 || (sk.keyIsPressed && sk.mouseIsPressed)) {
@@ -267,9 +266,16 @@ export default function (sk) {
     window.location.href = `mailto:noise-draw@sikai.li?subject=noise-draw-${sk.settings.list.current}-positions&body=${localStorage.getItem(`noise-draw-${sk.settings.list.current}`)}`;
   };
 
+  const getFileName = (num = 0, prefix = 'sketch-') => {
+    if (Object.keys(localStorage).some((key) => (key).includes(prefix + num))) {
+      num += 1;
+      return getFileName(num, prefix);
+    }
+    return prefix + num;
+  };
   sk.newCanvas = () => {
     sk.updateList();
-    sk.settings.list.current = `${sk.settings.list.items.length }-${ Math.random().toFixed(1)}`;
+    sk.settings.list.current = getFileName();
     isViewMode = false;
     sk.currentPartNo = 0;
     globleDrawArray = [];
@@ -278,7 +284,7 @@ export default function (sk) {
   };
   sk.newPartDrawing = () => {
     if (isViewMode) {
-      sk.settings.list.current += Math.random().toFixed();
+      sk.settings.list.current = getFileName(undefined, `${sk.settings.list.current}-`);
       isViewMode = false;
     }
     for (let i = 0; i < globleDrawArray.length; i += 1) {
