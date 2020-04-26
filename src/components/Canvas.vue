@@ -71,7 +71,7 @@
             <label
               class="Settings__MenuContainerInputLabel"
               :for="name"
-            >{{ name }}</label>
+            >{{ name + (settings[name].value? ':' + settings[name].value:'') }}</label>
             <input
               v-if="value.type ==='range'"
               :id="name"
