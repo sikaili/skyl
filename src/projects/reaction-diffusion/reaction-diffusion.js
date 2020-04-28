@@ -6,6 +6,7 @@ export default (instance) => {
   sk.settings = {
     dA: {
       value: 1,
+      default: 1,
       type: 'range',
       max: 3,
       min: 0.2,
@@ -13,6 +14,7 @@ export default (instance) => {
     },
     dB: {
       value: 0.5,
+      default: 0.5,
       type: 'range',
       max: 3,
       min: 0.2,
@@ -20,6 +22,7 @@ export default (instance) => {
     },
     feed: {
       value: 0.0545,
+      default: 0.0545,
       type: 'range',
       max: 0.15,
       min: 0.01,
@@ -28,6 +31,7 @@ export default (instance) => {
     },
     k: {
       value: 0.062,
+      default: 0.062,
       type: 'range',
       max: 0.15,
       min: 0.01,
@@ -36,12 +40,22 @@ export default (instance) => {
     },
     t: {
       value: 1,
+      default: 1,
       type: 'range',
       max: 2,
       min: 0.2,
       step: 0.1,
     },
-    actions: [{ name: 'saveCapture', icon: 'camera' }, { name: 'randomParams', icon: 'shuffle' }],
+    threshold: {
+      value: 0.1,
+      default: 0.1,
+      type: 'range',
+      max: 1,
+      min: 0.0,
+      step: 0.1,
+    },
+    point: Math.random() > 0.5 && sk.windowWidth < 768,
+    actions: [{ name: 'saveCapture', icon: 'camera' }, { name: 'randomParams', icon: 'shuffle' }, { name: 'resetDefaultSettings', icon: 'refresh' }],
   };
   let grid;
   let next;
@@ -50,7 +64,10 @@ export default (instance) => {
   const feed = () => +sk.settings.feed.value;
   const k = () => +sk.settings.k.value;
   const t = () => +sk.settings.t.value;
-  const interval = 4;
+  const threshold = () => +sk.settings.threshold.value;
+  const interval = Math.floor(Math.random() * 3 + 2) * (sk.width > 512 ? 2 : 1);
+  // const interval = 4;
+
 
   sk.stop = () => {
     clearInterval(sk.interval);
@@ -65,14 +82,26 @@ export default (instance) => {
       }
     });
   };
+  sk.resetDefaultSettings = () => {
+    const keys = Object.keys(sk.settings).filter((key) => sk.settings[key].type === 'range');
+    keys.forEach((name) => {
+      if (sk.settings[name].value && sk.settings[name].default) {
+        sk.settings[name].value = sk.settings[name].default;
+      }
+    });
+  };
   sk.saveCapture = () => {
-    sk.pixelDensity(10);
-    sk.redraw();
+    sk.pixelDensity(sk.windowWidth < 512 ? 5 : 12);
     setTimeout(() => {
-      sk.saveCanvas(document.querySelector('canvas'), 'reaction', 'png');
+      sk.saveCanvas(document.querySelector('canvas'), `reaction_a${ dA() }b${dB() }f${feed() }k${k() }t${t()}`, 'png');
+      if (sk.width > 512) {
+        sk.settings.point = true;
+        sk.redraw();
+        sk.saveCanvas(document.querySelector('canvas'), `reaction_a${ dA() }b${dB() }f${feed() }k${k() }t${t()}`, 'png');
+        sk.settings.point = false;
+      }
       sk.pixelDensity(1);
-      sk.redraw();
-    }, 500);
+    }, 100);
   };
   sk.setup = () => {
     sk.createCanvas(sk.windowWidth, sk.windowHeight);
@@ -80,6 +109,10 @@ export default (instance) => {
     grid = [];
     next = [];
     sk.strokeCap(sk.SQUARE);
+    // sk.video = sk.createCapture();
+    // sk.frameRate(30);
+    // sk.video.size(sk.width / interval, sk.height / interval);
+    // sk.video.loop();
 
     for (let x = 0; x < sk.width / interval + 2; x += 1) {
       grid[x] = [];
@@ -97,7 +130,7 @@ export default (instance) => {
     }
   };
 
-
+  // make two laplace function, much better setInterval performance
   const laplaceA = (x, y) => {
     let sumA = 0;
     sumA += grid[x][y].a * -1;
@@ -111,7 +144,6 @@ export default (instance) => {
     sumA += grid[x - 1][y + 1].a * 0.05;
     return sumA;
   };
-
   const laplaceB = (x, y) => {
     let sumB = 0;
     sumB += grid[x][y].b * -1;
@@ -125,7 +157,11 @@ export default (instance) => {
     sumB += grid[x - 1][y + 1].b * 0.05;
     return sumB;
   };
-
+  const swap = () => {
+    const temp = grid;
+    grid = next;
+    next = temp;
+  };
   sk.interval = setInterval(() => {
     if (grid) {
       for (let x = 1; x < grid.length - 1; x += 1) {
@@ -134,8 +170,8 @@ export default (instance) => {
           const { b } = grid[x][y];
           const laplaceAValue = laplaceA(x, y);
           const laplaceBValue = laplaceB(x, y);
-          const noise = sk.noise(x / 100, y / 100 + x + y);
-          if (noise > 0.1) {
+          const noise = sk.noise(x / 100, y / 100);
+          if (noise > threshold()) {
             next[x][y].a = a + (dA() * laplaceAValue - a * b * b + feed() * (1 - a)) * t();
             next[x][y].b = b + (dB() * laplaceBValue + a * b * b - (k() + feed()) * b) * t();
             next[x][y].a = sk.constrain(next[x][y].a, 0, 1);
@@ -146,6 +182,7 @@ export default (instance) => {
       swap();
     }
   }, 5);
+
   sk.draw = () => {
     sk.background(255);
     for (let x = 1; x < grid.length; x += 1) {
@@ -154,22 +191,20 @@ export default (instance) => {
         const { b } = grid[x][y];
         let diffrence = Math.floor((a - b) * 255);
         if (diffrence < 230) {
-          // sk.noStroke();
-          if (diffrence > 127) {
-            diffrence = 127 + (diffrence - 127) * 3;
-          }
-          sk.stroke(diffrence, 200);
-          const weight = interval;
-          if (weight > 1) {
-            // sk.strokeWeight(weight);
-            sk.strokeWeight(sk.map(diffrence, 0, 230, 4, 1));
-
+          if (sk.settings.point) {
+            sk.stroke(diffrence);
+            sk.strokeWeight(interval);
+            sk.point(x * interval - interval, y * interval - interval);
+          } else {
+            if (diffrence > 127) {
+              diffrence = 127 + (diffrence - 127) * 3;
+            }
             sk.push();
+            sk.stroke(diffrence, 200);
+            sk.strokeWeight(sk.map(diffrence, 0, 230, sk.width > 512 ? 4 : 2, -1));
             sk.translate(x * interval - interval, y * interval - interval);
             sk.rotate(sk.noise(x / 50, y / 30) * 2 * 3.14);
-            // sk.point(x * interval - interval, y * interval - interval);
-            sk.line(0, 0, 0, interval + sk.noise(interval) * 5);
-            // sk.rect(x * interval - interval, y * interval - interval, weight, weight);
+            sk.line(0, 0, 0, interval + sk.noise(x / 100, y / 100) * 3);
             sk.pop();
           }
         }
@@ -177,11 +212,6 @@ export default (instance) => {
     }
   };
 
-  function swap() {
-    const temp = grid;
-    grid = next;
-    next = temp;
-  }
   sk.handleTouchEnd = () => {
     sk.staticBodyVertex = undefined;
   };

@@ -270,7 +270,11 @@ export default {
             const keys = Object.keys(savedSettings).filter((name) => !name.includes('get') && name !== 'actions');
             keys.forEach((key) => {
               if (current.settings[key] && current.settings[key].type) {
-                current.settings[key] = savedSettings[key];
+                if (current.settings[key].value) {
+                  current.settings[key].value = savedSettings[key].value;
+                } else {
+                  current.settings[key] = savedSettings[key];
+                }
               }
             });
           }
