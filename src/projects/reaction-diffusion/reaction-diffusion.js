@@ -65,8 +65,8 @@ export default (instance) => {
   const k = () => +sk.settings.k.value;
   const t = () => +sk.settings.t.value;
   const threshold = () => +sk.settings.threshold.value;
-  const interval = Math.floor(Math.random() * 3 + 2) * (sk.width > 512 ? 2 : 1);
-  // const interval = 4;
+  // const interval = Math.floor(Math.random() * 3 + 2) * (sk.width > 512 ? 2 : 1);
+  const interval = 8;
 
 
   sk.stop = () => {
@@ -103,32 +103,74 @@ export default (instance) => {
       sk.pixelDensity(1);
     }, 100);
   };
+  const initAB = (img) => {
+    const height = Math.floor(sk.height / interval);
+    const width = Math.floor(sk.width / interval);
+    let brightness = 1;
+    if (img) {
+      img.loadPixels();
+      // console.log(img.pixels);
+    }
+    for (let x = 0; x < width; x += 1) {
+      if (!sk.gridIsSet) {
+        grid[x] = [];
+        next[x] = [];
+      }
+      for (let y = 0; y < height; y += 1) {
+        if (img) {
+          const n = (y * width + x) * 4;
+          brightness = img.pixels.slice(n, n + 3).reduce((a, b) => a + b) / 3 / 255;
+        }
+        if (sk.gridIsSet && Math.abs(brightness - next[x][y].a) > 0.2) {
+          grid[x][y] = {
+            a: brightness,
+            b: 1 - brightness,
+            isBorder: x === 0 || y === 0 || x === width - 1 || y === height - 1,
+          };
+        }
+        if (!sk.gridIsSet) {
+          grid[x][y] = {
+            a: brightness,
+            b: 1 - brightness,
+            isBorder: x === 0 || y === 0 || x === width - 1 || y === height - 1,
+          };
+          next[x][y] = {
+            a: brightness,
+            b: 1 - brightness,
+            isBorder: x === 0 || y === 0 || x === width - 1 || y === height - 1,
+          };
+        }
+      }
+    }
+    sk.gridIsSet = true;
+  };
   sk.setup = () => {
     sk.createCanvas(sk.windowWidth, sk.windowHeight);
     sk.pixelDensity(1);
     grid = [];
     next = [];
     sk.strokeCap(sk.SQUARE);
-    // sk.video = sk.createCapture();
-    // sk.frameRate(30);
-    // sk.video.size(sk.width / interval, sk.height / interval);
-    // sk.video.loop();
+    sk.video = sk.createCapture();
+    sk.frameRate(30);
+    sk.video.size(Math.floor(sk.width / interval), Math.floor(sk.height / interval));
+    sk.video.loop();
+    setInterval(() => {
+      initAB(sk.video);
+    }, 300);
+    // const loadImage = new Promise((res) => {
+    //   sk.loadImage('/img/reaction.png', (img) => {
+    //     img.width = Math.floor(sk.width / interval);
+    //     img.height = Math.floor(sk.height / interval);
+    //     res(img);
+    //   });
+    // });
 
-    for (let x = 0; x < sk.width / interval + 2; x += 1) {
-      grid[x] = [];
-      next[x] = [];
-      for (let y = 0; y < sk.height / interval + 2; y += 1) {
-        grid[x][y] = {
-          a: 1,
-          b: 0,
-        };
-        next[x][y] = {
-          a: 1,
-          b: 0,
-        };
-      }
-    }
+    // loadImage.then((res) => {
+    //   console.log(res);
+    //   initAB(res);
+    // });
   };
+
 
   // make two laplace function, much better setInterval performance
   const laplaceA = (x, y) => {
@@ -164,10 +206,10 @@ export default (instance) => {
   };
   sk.interval = setInterval(() => {
     if (grid) {
-      for (let x = 1; x < grid.length - 1; x += 1) {
-        for (let y = 1; y < grid[1].length - 1; y += 1) {
-          const { a } = grid[x][y];
-          const { b } = grid[x][y];
+      for (let x = 0; x < grid.length; x += 1) {
+        for (let y = 0; y < grid[1].length; y += 1) {
+          const { a, b, isBorder } = grid[x][y];
+          if (isBorder) return;
           const laplaceAValue = laplaceA(x, y);
           const laplaceBValue = laplaceB(x, y);
           const noise = sk.noise(x / 100, y / 100);
@@ -185,8 +227,8 @@ export default (instance) => {
 
   sk.draw = () => {
     sk.background(255);
-    for (let x = 1; x < grid.length; x += 1) {
-      for (let y = 1; y < grid[0].length - 1; y += 1) {
+    for (let x = 0; x < grid.length; x += 1) {
+      for (let y = 0; y < grid[0].length; y += 1) {
         const { a } = grid[x][y];
         const { b } = grid[x][y];
         let diffrence = Math.floor((a - b) * 255);
@@ -194,7 +236,7 @@ export default (instance) => {
           if (sk.settings.point) {
             sk.stroke(diffrence);
             sk.strokeWeight(interval);
-            sk.point(x * interval - interval, y * interval - interval);
+            sk.point(x * interval, y * interval);
           } else {
             if (diffrence > 127) {
               diffrence = 127 + (diffrence - 127) * 3;
