@@ -54,20 +54,6 @@ export default (instance) => {
       min: 0.0,
       step: 0.1,
     },
-    max: {
-      value: 230,
-      type: 'range',
-      max: 256,
-      min: 0,
-      step: 1,
-    },
-    min: {
-      value: 90,
-      type: 'range',
-      max: 256,
-      min: 0,
-      step: 1,
-    },
     interval: {
       value: 4,
       type: 'range',
@@ -157,11 +143,21 @@ export default (instance) => {
       for (let y = 0; y < height; y += 1) {
         if (img && img.pixels && !grid[x][y].isBorder) {
           const n = (y * width + x) * 4;
-          brightness = img.pixels.slice(n, n + 3).reduce((a, b) => a + b) / 3 / 255;
-          if (brightness > sk.settings.min.value / 255 && brightness < sk.settings.max.value / 255) {
-            grid[x][y].color = img.pixels.slice(n, n + 3);
-            next[x][y].color = img.pixels.slice(n, n + 3);
-            grid[x][y].b = 0.01;
+          const r = img.pixels[n];
+          const g = img.pixels[n + 1];
+          const b = img.pixels[n + 2];
+
+          // if (brightness > sk.settings.min.value / 255 && brightness < sk.settings.max.value / 255) {
+          // if (r > 95 && g > 40 && b > 20 && r > g && r > b && Math.abs(r - g) > 15) {
+          // const kovacClassification = (r > 95 && g > 40 && b > 20 && r > g && r > b && (r - g) > 15 && r - Math.min([g, b] > 15));
+          const ratioModelClassification = ((r - g) / (r + g) >= 0) && ((r - g) / (r + g) <= 0.5) && (b / (r + g) <= 0.5);
+          if (ratioModelClassification) {
+            brightness = img.pixels.slice(n, n + 3).reduce((a, b) => a + b) / 3 / 255;
+            // grid[x][y].color = img.pixels.slice(n, n + 3);
+            // next[x][y].color = img.pixels.slice(n, n + 3);
+            grid[x][y].b = 0.02;
+            grid[x][y].scale = brightness + 0.5;
+            next[x][y].scale = brightness + 0.5;
           }
         }
         if (!sk.gridIsSet) {
@@ -247,14 +243,16 @@ export default (instance) => {
       if (grid && grid.length > 0) {
         for (let x = 0; x < grid.length; x += 1) {
           for (let y = 0; y < grid[0].length; y += 1) {
-            const { a, b, isBorder } = grid[x][y];
+            const {
+              a, b, isBorder, scale,
+            } = grid[x][y];
             if (isBorder) {
               next[x][y] = grid[x][y];
             } else {
               const noise = sk.noise(x / 100, y / 100);
               if (noise > threshold()) {
-                next[x][y].a = a + (dA() * laplaceA(x, y) - a * b * b + feed() * (1 - a)) * t();
-                next[x][y].b = b + (dB() * laplaceB(x, y) + a * b * b - (k() + feed()) * b) * t();
+                next[x][y].a = a + (dA() * laplaceA(x, y) - a * b * b + feed() * (1 - a)) * t() * (scale || 1);
+                next[x][y].b = b + (dB() * laplaceB(x, y) + a * b * b - (k() + feed()) * b) * t() * (scale || 1);
                 next[x][y].a = sk.constrain(next[x][y].a, 0, 1);
                 next[x][y].b = sk.constrain(next[x][y].b, 0, 1);
               }
