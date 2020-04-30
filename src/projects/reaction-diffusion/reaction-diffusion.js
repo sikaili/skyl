@@ -55,7 +55,7 @@ export default (instance) => {
       step: 0.1,
     },
     interval: {
-      value: 4,
+      value: 8,
       type: 'range',
       max: 9,
       min: 2,
@@ -150,14 +150,14 @@ export default (instance) => {
           // if (brightness > sk.settings.min.value / 255 && brightness < sk.settings.max.value / 255) {
           // if (r > 95 && g > 40 && b > 20 && r > g && r > b && Math.abs(r - g) > 15) {
           // const kovacClassification = (r > 95 && g > 40 && b > 20 && r > g && r > b && (r - g) > 15 && r - Math.min([g, b] > 15));
-          const ratioModelClassification = ((r - g) / (r + g) >= 0) && ((r - g) / (r + g) <= 0.5) && (b / (r + g) <= 0.5);
-          if (ratioModelClassification) {
-            brightness = img.pixels.slice(n, n + 3).reduce((a, b) => a + b) / 3 / 255;
+          // const ratioModelClassification = ((r - g) / (r + g) >= 0) && ((r - g) / (r + g) <= 0.5) && (b / (r + g) <= 0.5);
+          brightness = img.pixels.slice(n, n + 3).reduce((a, b) => a + b) / 3 / 255;
+          if (brightness < 0.2) {
             // grid[x][y].color = img.pixels.slice(n, n + 3);
             // next[x][y].color = img.pixels.slice(n, n + 3);
-            grid[x][y].b = 0.02;
-            grid[x][y].scale = brightness + 0.5;
-            next[x][y].scale = brightness + 0.5;
+            grid[x][y].b = 1;
+            // grid[x][y].scale = brightness + 0.5;
+            // next[x][y].scale = brightness + 0.5;
           }
         }
         if (!sk.gridIsSet) {
@@ -176,6 +176,17 @@ export default (instance) => {
       }
     }
     sk.gridIsSet = true;
+  };
+  const sendText = (canvas = sk.textContent, text = 'hi') => {
+    canvas.background(255);
+    canvas.push();
+    canvas.fill(0);
+    canvas.textSize(canvas.width * 0.5);
+    canvas.textAlign(sk.CENTER, sk.CENTER);
+    canvas.translate(canvas.width / 2, canvas.height / 2);
+    canvas.text(text, 0, 0);
+    canvas.pop();
+    initAB(canvas);
   };
   sk.setup = () => {
     sk.createCanvas(sk.windowWidth, sk.windowHeight);
@@ -198,7 +209,8 @@ export default (instance) => {
     //     res(img);
     //   });
     // });
-
+    sk.textContent = sk.createGraphics(Math.ceil(sk.width / interval), Math.ceil(sk.height / interval));
+    sendText();
     // loadImage.then((res) => {
     //   console.log(res);
     //   initAB(res);
@@ -278,7 +290,7 @@ export default (instance) => {
             if (sk.settings.point) {
               sk.stroke(diffrence);
               if (color) {
-                sk.stroke([...color, diffrence]);
+                sk.stroke([...color, 255]);
               }
               sk.strokeWeight(interval);
               sk.point(x * interval, y * interval);
@@ -299,19 +311,19 @@ export default (instance) => {
       }
     }
   };
-  sk.handleTouchEnd = () => {
-    if (!sk.staticBodyVertex || sk.staticBodyVertex.length < 3) {
-      grid.map((arrX, x) => {
-        arrX.map((arrY, y) => {
-          grid[x][y].a = 1;
-          grid[x][y].b = 0;
-        });
-      });
-      sk.video.loop();
-      initAB(sk.video);
-    }
-    sk.staticBodyVertex = undefined;
-  };
+  // sk.handleTouchEnd = () => {
+  //   if (!sk.staticBodyVertex || sk.staticBodyVertex.length < 3) {
+  //     grid.map((arrX, x) => {
+  //       arrX.map((arrY, y) => {
+  //         grid[x][y].a = 1;
+  //         grid[x][y].b = 0;
+  //       });
+  //     });
+  //     sk.video.loop();
+  //     initAB(sk.video);
+  //   }
+  //   sk.staticBodyVertex = undefined;
+  // };
   sk.handleTouchMove = (ev) => {
     ev.preventDefault();
     if (sk.staticBodyVertex) {
@@ -332,6 +344,36 @@ export default (instance) => {
         sk.staticBodyVertex.push({ x: sk.mouseX, y: sk.mouseY });
       }
     }
+  };
+  sk.keyPressed = () => {
+    sk.background(255);
+    const { keyCode } = sk;
+    sendText(undefined, String.fromCharCode(keyCode));
+    clearTimeout(sk.inputTimeout);
+    if (!sk.tapping) {
+      sk.tapping = [];
+    }
+    sk.inputTimeout = setTimeout(() => {
+      console.log(sk.tapping);
+      sendText(undefined, String.fromCharCode(...sk.tapping));
+      sk.tapping = undefined;
+    }, 200);
+    sk.tapping.push(keyCode);
+    if (!sk.staticBodyVertex || sk.staticBodyVertex.length < 3) {
+      grid.map((arrX, x) => {
+        arrX.map((arrY, y) => {
+          grid[x][y].a = 1;
+          grid[x][y].b = 0;
+        });
+      });
+    }
+    // switch (keyCode) {
+    //   case 32:
+    //     sk.isPaused = !sk.isPaused;
+    //     break;
+    //   default:
+    //     break;
+    // }
   };
   sk.handleTouchStart = (ev) => {
     ev.preventDefault();
