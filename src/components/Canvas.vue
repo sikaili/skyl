@@ -83,6 +83,7 @@
               :min="settings[name].min"
               :max="settings[name].max"
               :step="settings[name].step"
+              @change="handleSliderChange(settings[name])"
             >
             <input
               v-if="value.type==='text'"
@@ -302,10 +303,21 @@ export default {
     }
     this.$root.$emit('emit-showSideMenu', true);
   },
+
   destroyed() {
     current = undefined;
   },
   methods: {
+    handleSliderChange(settingObj) {
+      if (settingObj.callback) {
+        if (settingObj.callback.value) {
+          console.log(settingObj);
+          current[settingObj.callback.name](...settingObj.callback.value);
+        } else {
+          current[settingObj.callback.name]();
+        }
+      }
+    },
     setCurrentItem(songId) {
       if (this.list && this.list.action) {
         current[this.list.action](songId);

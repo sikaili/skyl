@@ -54,8 +54,34 @@ export default (instance) => {
       min: 0.0,
       step: 0.1,
     },
-    point: Math.random() > 0.5 && sk.windowWidth < 768,
-    actions: [{ name: 'saveCapture', icon: 'camera' }, { name: 'randomParams', icon: 'shuffle' }, { name: 'resetDefaultSettings', icon: 'refresh' }],
+    max: {
+      value: 230,
+      type: 'range',
+      max: 256,
+      min: 0,
+      step: 1,
+    },
+    min: {
+      value: 90,
+      type: 'range',
+      max: 256,
+      min: 0,
+      step: 1,
+    },
+    interval: {
+      value: 4,
+      type: 'range',
+      max: 9,
+      min: 2,
+      step: 1,
+      callback: { name: 'changeInterval', get value() { return sk.settings.interval.value; } },
+    },
+    point: Math.random() > 0.5,
+    actions: [
+      { name: 'saveCapture', icon: 'camera' },
+      { name: 'randomParams', icon: 'shuffle' },
+      { name: 'resetDefaultSettings', icon: 'refresh' },
+    ],
   };
   let grid;
   let next;
@@ -65,14 +91,20 @@ export default (instance) => {
   const k = () => +sk.settings.k.value;
   const t = () => +sk.settings.t.value;
   const threshold = () => +sk.settings.threshold.value;
-  // const interval = Math.floor(Math.random() * 3 + 2) * (sk.width > 512 ? 2 : 1);
-  const interval = 8;
+  let interval = sk.settings.interval.value;
 
-
-  sk.stop = () => {
-    clearInterval(sk.interval);
+  sk.changeInterval = (val) => {
     sk.noLoop();
-    sk.remove();
+    clearInterval(sk.interval);
+    grid = [];
+    next = [];
+    sk.gridIsSet = false;
+    interval = parseInt(val, 10);
+    sk.video.noLoop();
+    sk.video.size(Math.ceil(sk.width / interval), Math.ceil(sk.height / interval));
+    initAB();
+    sk.beginInterval();
+    sk.loop();
   };
   sk.randomParams = () => {
     const keys = Object.keys(sk.settings).filter((key) => sk.settings[key].type === 'range');
@@ -81,6 +113,13 @@ export default (instance) => {
         sk.settings[name].value = sk.random(sk.settings[name].min, sk.settings[name].max).toFixed(2);
       }
     });
+  };
+  sk.stop = () => {
+    clearInterval(sk.interval);
+    sk.video.stop();
+    sk.vidoe.disconnect();
+    sk.noLoop();
+    sk.remove();
   };
   sk.resetDefaultSettings = () => {
     const keys = Object.keys(sk.settings).filter((key) => sk.settings[key].type === 'range');
@@ -95,21 +134,20 @@ export default (instance) => {
     setTimeout(() => {
       sk.saveCanvas(document.querySelector('canvas'), `reaction_a${ dA() }b${dB() }f${feed() }k${k() }t${t()}`, 'png');
       if (sk.width > 512) {
-        sk.settings.point = true;
+        sk.settings.point = !sk.settings.point;
         sk.redraw();
         sk.saveCanvas(document.querySelector('canvas'), `reaction_a${ dA() }b${dB() }f${feed() }k${k() }t${t()}`, 'png');
-        sk.settings.point = false;
+        sk.settings.point = !sk.settings.point;
       }
       sk.pixelDensity(1);
     }, 100);
   };
   const initAB = (img) => {
-    const height = Math.floor(sk.height / interval);
-    const width = Math.floor(sk.width / interval);
+    const height = Math.ceil(sk.height / interval);
+    const width = Math.ceil(sk.width / interval);
     let brightness = 1;
     if (img) {
       img.loadPixels();
-      // console.log(img.pixels);
     }
     for (let x = 0; x < width; x += 1) {
       if (!sk.gridIsSet) {
@@ -117,26 +155,25 @@ export default (instance) => {
         next[x] = [];
       }
       for (let y = 0; y < height; y += 1) {
-        if (img) {
+        if (img && img.pixels && !grid[x][y].isBorder) {
           const n = (y * width + x) * 4;
           brightness = img.pixels.slice(n, n + 3).reduce((a, b) => a + b) / 3 / 255;
-        }
-        if (sk.gridIsSet && Math.abs(brightness - next[x][y].a) > 0.2) {
-          grid[x][y] = {
-            a: brightness,
-            b: 1 - brightness,
-            isBorder: x === 0 || y === 0 || x === width - 1 || y === height - 1,
-          };
+          if (brightness > sk.settings.min.value / 255 && brightness < sk.settings.max.value / 255) {
+            grid[x][y].color = img.pixels.slice(n, n + 3);
+            next[x][y].color = img.pixels.slice(n, n + 3);
+            grid[x][y].b = 0.01;
+          }
         }
         if (!sk.gridIsSet) {
+          brightness = 1;
           grid[x][y] = {
             a: brightness,
             b: 1 - brightness,
             isBorder: x === 0 || y === 0 || x === width - 1 || y === height - 1,
           };
           next[x][y] = {
-            a: brightness,
-            b: 1 - brightness,
+            a: 1 - brightness,
+            b: brightness,
             isBorder: x === 0 || y === 0 || x === width - 1 || y === height - 1,
           };
         }
@@ -150,17 +187,18 @@ export default (instance) => {
     grid = [];
     next = [];
     sk.strokeCap(sk.SQUARE);
-    sk.video = sk.createCapture();
-    sk.frameRate(30);
-    sk.video.size(Math.floor(sk.width / interval), Math.floor(sk.height / interval));
-    sk.video.loop();
-    setInterval(() => {
-      initAB(sk.video);
-    }, 300);
+    const constraints = { video: { frameRate: { ideal: 10, max: 30 } } };
+    sk.settings.point = true;
+    sk.video = sk.createCapture(constraints);
+    sk.video.size(Math.ceil(sk.width / interval), Math.ceil(sk.height / interval));
+
+    initAB();
+
+    sk.beginInterval();
     // const loadImage = new Promise((res) => {
-    //   sk.loadImage('/img/reaction.png', (img) => {
-    //     img.width = Math.floor(sk.width / interval);
-    //     img.height = Math.floor(sk.height / interval);
+    //   sk.loadImage('/img/reaction1.png', (img) => {
+    //     img.width = Math.ceil(sk.width / interval);
+    //     img.height = Math.ceil(sk.height / interval);
     //     res(img);
     //   });
     // });
@@ -204,57 +242,76 @@ export default (instance) => {
     grid = next;
     next = temp;
   };
-  sk.interval = setInterval(() => {
-    if (grid) {
-      for (let x = 0; x < grid.length; x += 1) {
-        for (let y = 0; y < grid[1].length; y += 1) {
-          const { a, b, isBorder } = grid[x][y];
-          if (isBorder) return;
-          const laplaceAValue = laplaceA(x, y);
-          const laplaceBValue = laplaceB(x, y);
-          const noise = sk.noise(x / 100, y / 100);
-          if (noise > threshold()) {
-            next[x][y].a = a + (dA() * laplaceAValue - a * b * b + feed() * (1 - a)) * t();
-            next[x][y].b = b + (dB() * laplaceBValue + a * b * b - (k() + feed()) * b) * t();
-            next[x][y].a = sk.constrain(next[x][y].a, 0, 1);
-            next[x][y].b = sk.constrain(next[x][y].b, 0, 1);
+  sk.beginInterval = () => {
+    sk.interval = setInterval(() => {
+      if (grid && grid.length > 0) {
+        for (let x = 0; x < grid.length; x += 1) {
+          for (let y = 0; y < grid[0].length; y += 1) {
+            const { a, b, isBorder } = grid[x][y];
+            if (isBorder) {
+              next[x][y] = grid[x][y];
+            } else {
+              const noise = sk.noise(x / 100, y / 100);
+              if (noise > threshold()) {
+                next[x][y].a = a + (dA() * laplaceA(x, y) - a * b * b + feed() * (1 - a)) * t();
+                next[x][y].b = b + (dB() * laplaceB(x, y) + a * b * b - (k() + feed()) * b) * t();
+                next[x][y].a = sk.constrain(next[x][y].a, 0, 1);
+                next[x][y].b = sk.constrain(next[x][y].b, 0, 1);
+              }
+            }
           }
         }
+        swap();
       }
-      swap();
-    }
-  }, 5);
+    }, 5);
+  };
 
   sk.draw = () => {
     sk.background(255);
     for (let x = 0; x < grid.length; x += 1) {
       for (let y = 0; y < grid[0].length; y += 1) {
-        const { a } = grid[x][y];
-        const { b } = grid[x][y];
-        let diffrence = Math.floor((a - b) * 255);
-        if (diffrence < 230) {
-          if (sk.settings.point) {
-            sk.stroke(diffrence);
-            sk.strokeWeight(interval);
-            sk.point(x * interval, y * interval);
-          } else {
-            if (diffrence > 127) {
-              diffrence = 127 + (diffrence - 127) * 3;
+        if (!grid[x][y].isBorder) {
+          const {
+            a, b, color,
+          } = grid[x][y];
+
+          let diffrence = Math.floor((a - b) * 255);
+          if (diffrence < 200) {
+            if (sk.settings.point) {
+              sk.stroke(diffrence);
+              if (color) {
+                sk.stroke([...color, diffrence]);
+              }
+              sk.strokeWeight(interval);
+              sk.point(x * interval, y * interval);
+            } else {
+              if (diffrence > 127) {
+                diffrence = 127 + (diffrence - 127) * 3;
+              }
+              sk.push();
+              sk.stroke(diffrence, 255 - diffrence);
+              sk.strokeWeight(sk.map(diffrence, 0, 230, sk.width > 512 ? 4 : 2, -1));
+              sk.translate(x * interval, y * interval);
+              sk.rotate(sk.noise(x / 50, y / 30) * 2 * 3.14);
+              sk.line(0, 0, 0, interval + sk.noise(x / 100, y / 100) * 3);
+              sk.pop();
             }
-            sk.push();
-            sk.stroke(diffrence, 200);
-            sk.strokeWeight(sk.map(diffrence, 0, 230, sk.width > 512 ? 4 : 2, -1));
-            sk.translate(x * interval - interval, y * interval - interval);
-            sk.rotate(sk.noise(x / 50, y / 30) * 2 * 3.14);
-            sk.line(0, 0, 0, interval + sk.noise(x / 100, y / 100) * 3);
-            sk.pop();
           }
         }
       }
     }
   };
-
   sk.handleTouchEnd = () => {
+    if (!sk.staticBodyVertex || sk.staticBodyVertex.length < 3) {
+      grid.map((arrX, x) => {
+        arrX.map((arrY, y) => {
+          grid[x][y].a = 1;
+          grid[x][y].b = 0;
+        });
+      });
+      sk.video.loop();
+      initAB(sk.video);
+    }
     sk.staticBodyVertex = undefined;
   };
   sk.handleTouchMove = (ev) => {
@@ -266,7 +323,11 @@ export default (instance) => {
           sk.staticBodyVertex.push({ x: sk.mouseX, y: sk.mouseY });
           const gridPoint = { x: Math.floor(sk.mouseX / interval), y: Math.floor(sk.mouseY / interval) };
           for (let i = gridPoint.x - 4; i < gridPoint.x + 4; i += 1) {
-            grid[i][gridPoint.y].b = 1;
+            try {
+              grid[i][gridPoint.y].b = 1;
+            } catch (e) {
+              //
+            }
           }
         }
       } else {
