@@ -15,6 +15,7 @@ export default function (sk) {
     sk.noLoop();
     Video.stop();
     Video.disconnect();
+    clearInterval(sk.interval);
     sk.remove();
   };
 
