@@ -1,3 +1,10 @@
+## [2.6.2] - 2019-04-30
+### Fixed
+- ios safari background freeze, focus, blur, visibilitychange
+### Changed
+- k means skin tone classification
+- noise-draw rename system
+
 ## [2.6.1] - 2019-04-25
 ### Fixed
 - share url
