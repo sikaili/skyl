@@ -84,9 +84,13 @@ export default function (sk) {
     const y = ys.reduce((a, b) => a + b) / ys.length;
     return { x, y };
   }
+  sk.setInterval = setInterval(() => {
+    if (Video) {
+      Video.loadPixels();
+    }
+  }, 30);
   sk.draw = () => {
     points = [];
-    Video.loadPixels();
     sk.loadPixels();
     // const intP = Math.floor((sk.map(sk.mouseX, 0, sk.width, 0.1, 5) + 0.5) * sk.width > 512 ? 2 : 1);
     // intP = sk.settings.pixels.value;
@@ -98,10 +102,11 @@ export default function (sk) {
         const g = Video.pixels[index + 1];
         const b = Video.pixels[index + 2];
         const bright = (r + g + b) / 3;
-        const ee = {
-          x: x * vScale, y: y * vScale, r, g, b, bright,
-        };
-        if (bright > sk.settings.min.value && bright < sk.settings.max.value) {
+        const kovacClassification = (r > 95 && g > 40 && b > 20 && r > g && r > b && (r - g) > 15 && r - Math.min([g, b] > 15));
+        if (bright > sk.settings.min.value && bright < sk.settings.max.value && kovacClassification) {
+          const ee = {
+            x: x * vScale, y: y * vScale, r, g, b, bright,
+          };
           points.push(ee);
         }
       }
@@ -118,20 +123,15 @@ export default function (sk) {
       const t = Math.min(...dis);
       const n = dis.indexOf(t);
       kPoints[n].push(points[i]);
-      // sk.fill([points[i].r + sk.noise(i / 100) * 30, points[i].g, points[i].b, 255]);
-      // sk.fill(points[i].bright + sk.noise(i / 100, sk.frameCount / 20) * 100);
-      // sk.ellipse(points[i].x, points[i].y, 0.5 * vScale - points[i].bright / 125 * 5 - Math.sin(sk.frameCount / 20 + points[i].bright / 10 * sk.frameCount / 20) * 5);
     }
     for (let i = 0; i < kPoints.length; i += 1) {
       kMoyen[i] = aver(kPoints[i]);
     }
     for (let i = 0; i < kPoints.length; i += 1) {
       sk.fill(colors[i]);
-      // const r = 0.5 * vScale + Math.random();
       const scale = vScale;
       kPoints[i].forEach((a) => {
-        const r = scale / 2 - Math.cos(sk.frameCount / 100 + a.bright * sk.frameCount / 200 + i * 5) * scale / 6;
-        // sk.fill([a.r, a.g, a.b]);
+        const r = scale / 1.5;
         sk.ellipse(a.x, a.y, r);
       });
       if (i === kMoyen.length - 1)sk.fill(200, 0, 180, 200);
