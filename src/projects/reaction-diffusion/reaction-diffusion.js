@@ -7,11 +7,11 @@ export default (instance) => {
   sk.settings = {
     dA: {
       value: 1,
-      default: 1.1,
+      default: 1.23,
       type: 'range',
       max: 3,
       min: 0.2,
-      step: 0.1,
+      step: 0.01,
     },
     dB: {
       value: 0.5,
@@ -19,7 +19,7 @@ export default (instance) => {
       type: 'range',
       max: 3,
       min: 0.2,
-      step: 0.1,
+      step: 0.01,
     },
     feed: {
       value: 0.0545,
@@ -28,7 +28,6 @@ export default (instance) => {
       max: 0.15,
       min: 0.01,
       step: 0.001,
-      noRandom: true,
     },
     k: {
       value: 0.062,
@@ -41,19 +40,20 @@ export default (instance) => {
     },
     t: {
       value: 1.0,
-      default: 1.1,
+      default: 1.03,
       type: 'range',
       max: 2,
       min: 0.2,
-      step: 0.1,
+      step: 0.01,
     },
     threshold: {
       value: 0.1,
-      default: 0.3,
+      default: 0.45,
       type: 'range',
       max: 1,
       min: 0.0,
-      step: 0.1,
+      step: 0.01,
+      noRandom: true,
     },
     interval: {
       value: 4,
@@ -62,6 +62,7 @@ export default (instance) => {
       max: 9,
       min: 2,
       step: 1,
+      noRandom: true,
       callback: { name: 'changeInterval', get value() { return sk.settings.interval.value; } },
     },
     point: Math.random() > 0.5,
@@ -104,11 +105,19 @@ export default (instance) => {
         sk.settings[name].value = sk.random(sk.settings[name].min, sk.settings[name].max).toFixed(2);
       }
     });
+
+    new Array(Math.ceil(Math.random() * 3)).fill(null).map(() => {
+      sk.keyCode = Math.floor(sk.random(50, 70));
+      sk.keyPressed();
+    });
   };
   sk.stop = () => {
     clearInterval(sk.interval);
-    sk.video.stop();
-    sk.vidoe.disconnect();
+    sk.textContent.remove();
+    if (sk.video) {
+      sk.video.stop();
+      sk.vidoe.disconnect();
+    }
     sk.noLoop();
     sk.remove();
   };
@@ -160,7 +169,6 @@ export default (instance) => {
             // grid[x][y].color = img.pixels.slice(n, n + 3);
             // next[x][y].color = img.pixels.slice(n, n + 3);
             grid[x][y].b = 1;
-
             // grid[x][y].scale = brightness + 0.5;
             // next[x][y].scale = brightness + 0.5;
           }
@@ -171,25 +179,31 @@ export default (instance) => {
             a: brightness,
             b: 1 - brightness,
             isBorder: x === 0 || y === 0 || x === width - 1 || y === height - 1,
-            noise: sk.noise(x / 20 / (7 / interval), y / 20 / (7 / interval)),
+            noise: sk.noise(x / 20 / (7 / interval) + sk.frameCount, y / 20 / (7 / interval)),
           };
           next[x][y] = {
             a: 1 - brightness,
             b: brightness,
             isBorder: x === 0 || y === 0 || x === width - 1 || y === height - 1,
-            noise: sk.noise(x / 20 / (7 / interval), y / 20 / (7 / interval)),
+            noise: sk.noise(x / 20 / (7 / interval) + sk.frameCount, y / 20 / (7 / interval)),
           };
         }
       }
     }
     sk.gridIsSet = true;
   };
-  const sendText = (canvas = sk.textContent, text = '') => {
+  const sendText = (canvas = sk.textContent, text = 'home,I,had,a,lot.of,questions&and&no-answers.') => {
     canvas.pixelDensity(1);
     canvas.background(255);
     canvas.push();
     canvas.fill(0);
-    canvas.textSize(canvas.width * 0.4 / Math.sqrt(text.length / 2));
+    // add \n every 6 letters
+    let textDump = text;
+    for (let index = 1; index < text.length / 6; index += 1) {
+      textDump = `${textDump.slice(0, index * 6 + (index - 1))}\n${textDump.slice(index * 6)}`;
+    }
+    text = textDump;
+    canvas.textSize((canvas.width + canvas.height) / 4 / Math.sqrt(text.length / 2));
     canvas.textAlign(sk.CENTER, sk.CENTER);
     canvas.translate(canvas.width / 2, canvas.height / 2);
     canvas.text(text, 0, 0);
@@ -342,7 +356,8 @@ export default (instance) => {
     if (sk.staticBodyVertex) {
       if (sk.staticBodyVertex.length > 0) {
         const lastPoint = sk.staticBodyVertex[sk.staticBodyVertex.length - 1];
-        if (calDistance(lastPoint, { x: sk.mouseX, y: sk.mouseY }) > 0) {
+        const distance = calDistance(lastPoint, { x: sk.mouseX, y: sk.mouseY });
+        if (distance > 0 && distance < 25 && sk.touches.length === 1) {
           sk.staticBodyVertex.push({ x: sk.mouseX, y: sk.mouseY });
           const gridPoint = { x: Math.floor(sk.mouseX / interval), y: Math.floor(sk.mouseY / interval) };
           for (let i = gridPoint.x - 4; i < gridPoint.x + 4; i += 1) {
@@ -352,18 +367,17 @@ export default (instance) => {
               //
             }
           }
-        }
-        if ((Math.random() > 0.8 && !sk.waiting) || sk.touches.length > 1) {
+        } else if ((distance > 25 && !sk.waiting) || sk.touches.length > 1) {
           sk.keyCode = Math.floor(sk.random(50, 100));
-          sk.keyPressed(Math.random() > 0.7);
+          sk.keyPressed();
           sk.skipCount += 1;
-          if (sk.skipCount > 5) {
+          if (sk.skipCount > 10) {
             clearTimeout(sk.debounce);
             sk.waiting = true;
             sk.debounce = setTimeout(() => {
               sk.waiting = false;
               sk.skipCount = 0;
-            }, 1000);
+            }, 700);
           }
         }
       } else {
@@ -376,7 +390,7 @@ export default (instance) => {
     switch (keyCode) {
       case 32:
         sk.saveCapture();
-        break;
+        return;
       default:
         break;
     }
@@ -400,10 +414,6 @@ export default (instance) => {
   sk.handleTouchStart = (ev) => {
     ev.preventDefault();
     sk.staticBodyVertex = [];
-    sk.trigger = true;
-    setTimeout(() => {
-      sk.trigger = false;
-    }, 150);
   };
   setListeners(sk);
 };
