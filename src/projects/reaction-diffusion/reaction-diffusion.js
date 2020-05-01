@@ -1,12 +1,13 @@
 import calDistance from '@/js/utlis/calDistance';
 import setListeners from '@/js/utlis/addEventListeners';
+import texts from '../eyes/assets/hanzi.json';
 
 export default (instance) => {
   const sk = instance;
   sk.settings = {
     dA: {
       value: 1,
-      default: 1,
+      default: 1.1,
       type: 'range',
       max: 3,
       min: 0.2,
@@ -14,7 +15,7 @@ export default (instance) => {
     },
     dB: {
       value: 0.5,
-      default: 0.5,
+      default: 1.3,
       type: 'range',
       max: 3,
       min: 0.2,
@@ -39,8 +40,8 @@ export default (instance) => {
       noRandom: true,
     },
     t: {
-      value: 1,
-      default: 1,
+      value: 1.0,
+      default: 1.1,
       type: 'range',
       max: 2,
       min: 0.2,
@@ -48,14 +49,15 @@ export default (instance) => {
     },
     threshold: {
       value: 0.1,
-      default: 0.1,
+      default: 0.3,
       type: 'range',
       max: 1,
       min: 0.0,
       step: 0.1,
     },
     interval: {
-      value: 8,
+      value: 4,
+      default: 4,
       type: 'range',
       max: 9,
       min: 2,
@@ -71,13 +73,13 @@ export default (instance) => {
   };
   let grid;
   let next;
+  let interval = sk.settings.interval.value;
   const dA = () => +sk.settings.dA.value;
   const dB = () => +sk.settings.dB.value;
   const feed = () => +sk.settings.feed.value;
   const k = () => +sk.settings.k.value;
   const t = () => +sk.settings.t.value;
   const threshold = () => +sk.settings.threshold.value;
-  let interval = sk.settings.interval.value;
 
   sk.changeInterval = (val) => {
     sk.noLoop();
@@ -86,8 +88,11 @@ export default (instance) => {
     next = [];
     sk.gridIsSet = false;
     interval = parseInt(val, 10);
-    sk.video.noLoop();
-    sk.video.size(Math.ceil(sk.width / interval), Math.ceil(sk.height / interval));
+    sk.textContent.resizeCanvas(Math.ceil(sk.width / interval), Math.ceil(sk.height / interval));
+    if (sk.video) {
+      sk.video.noLoop();
+      sk.video.size(Math.ceil(sk.width / interval), Math.ceil(sk.height / interval));
+    }
     initAB();
     sk.beginInterval();
     sk.loop();
@@ -117,16 +122,15 @@ export default (instance) => {
   };
   sk.saveCapture = () => {
     sk.pixelDensity(sk.windowWidth < 512 ? 5 : 12);
-    setTimeout(() => {
-      sk.saveCanvas(document.querySelector('canvas'), `reaction_a${ dA() }b${dB() }f${feed() }k${k() }t${t()}`, 'png');
-      if (sk.width > 512) {
-        sk.settings.point = !sk.settings.point;
-        sk.redraw();
-        sk.saveCanvas(document.querySelector('canvas'), `reaction_a${ dA() }b${dB() }f${feed() }k${k() }t${t()}`, 'png');
-        sk.settings.point = !sk.settings.point;
-      }
-      sk.pixelDensity(1);
-    }, 100);
+    sk.redraw();
+    sk.saveCanvas(sk.canvas, `reaction_a${ dA() }b${dB() }f${feed() }k${k() }t${t()}`, 'png');
+    if (sk.width > 512) {
+      sk.settings.point = !sk.settings.point;
+      sk.redraw();
+      sk.saveCanvas(sk.canvas, `reaction_a${ dA() }b${dB() }f${feed() }k${k() }t${t()}`, 'png');
+      sk.settings.point = !sk.settings.point;
+    }
+    sk.pixelDensity(1);
   };
   const initAB = (img) => {
     const height = Math.ceil(sk.height / interval);
@@ -156,6 +160,7 @@ export default (instance) => {
             // grid[x][y].color = img.pixels.slice(n, n + 3);
             // next[x][y].color = img.pixels.slice(n, n + 3);
             grid[x][y].b = 1;
+
             // grid[x][y].scale = brightness + 0.5;
             // next[x][y].scale = brightness + 0.5;
           }
@@ -166,22 +171,25 @@ export default (instance) => {
             a: brightness,
             b: 1 - brightness,
             isBorder: x === 0 || y === 0 || x === width - 1 || y === height - 1,
+            noise: sk.noise(x / 20 / (7 / interval), y / 20 / (7 / interval)),
           };
           next[x][y] = {
             a: 1 - brightness,
             b: brightness,
             isBorder: x === 0 || y === 0 || x === width - 1 || y === height - 1,
+            noise: sk.noise(x / 20 / (7 / interval), y / 20 / (7 / interval)),
           };
         }
       }
     }
     sk.gridIsSet = true;
   };
-  const sendText = (canvas = sk.textContent, text = 'hi') => {
+  const sendText = (canvas = sk.textContent, text = '') => {
+    canvas.pixelDensity(1);
     canvas.background(255);
     canvas.push();
     canvas.fill(0);
-    canvas.textSize(canvas.width * 0.5);
+    canvas.textSize(canvas.width * 0.4 / Math.sqrt(text.length / 2));
     canvas.textAlign(sk.CENTER, sk.CENTER);
     canvas.translate(canvas.width / 2, canvas.height / 2);
     canvas.text(text, 0, 0);
@@ -189,19 +197,18 @@ export default (instance) => {
     initAB(canvas);
   };
   sk.setup = () => {
-    sk.createCanvas(sk.windowWidth, sk.windowHeight);
+    sk.canvas = sk.createCanvas(sk.windowWidth, sk.windowHeight);
     sk.pixelDensity(1);
     grid = [];
     next = [];
     sk.strokeCap(sk.SQUARE);
-    const constraints = { video: { frameRate: { ideal: 10, max: 30 } } };
+    // const constraints = { video: { frameRate: { ideal: 10, max: 30 } } };
+    // sk.video = sk.createCapture(constraints);
+    // sk.video.size(Math.ceil(sk.width / interval), Math.ceil(sk.height / interval));
+
     sk.settings.point = true;
-    sk.video = sk.createCapture(constraints);
-    sk.video.size(Math.ceil(sk.width / interval), Math.ceil(sk.height / interval));
 
     initAB();
-
-    sk.beginInterval();
     // const loadImage = new Promise((res) => {
     //   sk.loadImage('/img/reaction1.png', (img) => {
     //     img.width = Math.ceil(sk.width / interval);
@@ -209,12 +216,13 @@ export default (instance) => {
     //     res(img);
     //   });
     // });
-    sk.textContent = sk.createGraphics(Math.ceil(sk.width / interval), Math.ceil(sk.height / interval));
-    sendText();
     // loadImage.then((res) => {
     //   console.log(res);
     //   initAB(res);
     // });
+    sk.textContent = sk.createGraphics(Math.ceil(sk.width / interval), Math.ceil(sk.height / interval));
+    sendText();
+    sk.beginInterval();
   };
 
 
@@ -256,18 +264,17 @@ export default (instance) => {
         for (let x = 0; x < grid.length; x += 1) {
           for (let y = 0; y < grid[0].length; y += 1) {
             const {
-              a, b, isBorder, scale,
+              a, b, isBorder, scale, noise,
             } = grid[x][y];
-            if (isBorder) {
-              next[x][y] = grid[x][y];
+            if (noise > threshold() && !isBorder) {
+              let aa = a + (dA() * laplaceA(x, y) - a * b * b + feed() * (1 - a)) * t() * (scale || 1);
+              let bb = b + (dB() * laplaceB(x, y) + a * b * b - (k() + feed()) * b) * t() * (scale || 1);
+              aa = aa > 1 ? 1 : aa;
+              next[x][y].a = aa < 0 ? 0 : aa;
+              bb = bb > 1 ? 1 : bb;
+              next[x][y].b = bb < 0 ? 0 : bb;
             } else {
-              const noise = sk.noise(x / 100, y / 100);
-              if (noise > threshold()) {
-                next[x][y].a = a + (dA() * laplaceA(x, y) - a * b * b + feed() * (1 - a)) * t() * (scale || 1);
-                next[x][y].b = b + (dB() * laplaceB(x, y) + a * b * b - (k() + feed()) * b) * t() * (scale || 1);
-                next[x][y].a = sk.constrain(next[x][y].a, 0, 1);
-                next[x][y].b = sk.constrain(next[x][y].b, 0, 1);
-              }
+              next[x][y] = grid[x][y];
             }
           }
         }
@@ -299,7 +306,7 @@ export default (instance) => {
                 diffrence = 127 + (diffrence - 127) * 3;
               }
               sk.push();
-              sk.stroke(diffrence, 255 - diffrence);
+              sk.stroke(diffrence, 127);
               sk.strokeWeight(sk.map(diffrence, 0, 230, sk.width > 512 ? 4 : 2, -1));
               sk.translate(x * interval, y * interval);
               sk.rotate(sk.noise(x / 50, y / 30) * 2 * 3.14);
@@ -311,19 +318,25 @@ export default (instance) => {
       }
     }
   };
-  // sk.handleTouchEnd = () => {
-  //   if (!sk.staticBodyVertex || sk.staticBodyVertex.length < 3) {
-  //     grid.map((arrX, x) => {
-  //       arrX.map((arrY, y) => {
-  //         grid[x][y].a = 1;
-  //         grid[x][y].b = 0;
-  //       });
-  //     });
-  //     sk.video.loop();
-  //     initAB(sk.video);
-  //   }
-  //   sk.staticBodyVertex = undefined;
-  // };
+  const resetGrid = () => {
+    grid.map((arrX, x) => {
+      arrX.map((arrY, y) => {
+        grid[x][y].a = 1;
+        grid[x][y].b = 0;
+      });
+    });
+  };
+  sk.handleTouchEnd = () => {
+    if (!sk.staticBodyVertex || sk.staticBodyVertex.length < 3) {
+      if (sk.video) {
+        resetGrid();
+        sk.video.loop();
+        initAB(sk.video);
+      }
+    }
+    sk.staticBodyVertex = undefined;
+  };
+  sk.skipCount = 0;
   sk.handleTouchMove = (ev) => {
     ev.preventDefault();
     if (sk.staticBodyVertex) {
@@ -340,40 +353,49 @@ export default (instance) => {
             }
           }
         }
+        if ((Math.random() > 0.8 && !sk.waiting) || sk.touches.length > 1) {
+          sk.keyCode = Math.floor(sk.random(50, 100));
+          sk.keyPressed(Math.random() > 0.7);
+          sk.skipCount += 1;
+          if (sk.skipCount > 5) {
+            clearTimeout(sk.debounce);
+            sk.waiting = true;
+            sk.debounce = setTimeout(() => {
+              sk.waiting = false;
+              sk.skipCount = 0;
+            }, 1000);
+          }
+        }
       } else {
         sk.staticBodyVertex.push({ x: sk.mouseX, y: sk.mouseY });
       }
     }
   };
-  sk.keyPressed = () => {
-    sk.background(255);
+  sk.keyPressed = (reset = true) => {
     const { keyCode } = sk;
+    switch (keyCode) {
+      case 32:
+        sk.saveCapture();
+        break;
+      default:
+        break;
+    }
+    sk.background(255);
+    if (reset) { resetGrid(); }
     sendText(undefined, String.fromCharCode(keyCode));
+    // sendText(undefined, texts[Math.floor(Math.random() * 1000)]);
     clearTimeout(sk.inputTimeout);
-    if (!sk.tapping) {
-      sk.tapping = [];
+    if (!sk.toucheMoveArray) {
+      sk.toucheMoveArray = [];
     }
     sk.inputTimeout = setTimeout(() => {
-      console.log(sk.tapping);
-      sendText(undefined, String.fromCharCode(...sk.tapping));
-      sk.tapping = undefined;
-    }, 200);
-    sk.tapping.push(keyCode);
-    if (!sk.staticBodyVertex || sk.staticBodyVertex.length < 3) {
-      grid.map((arrX, x) => {
-        arrX.map((arrY, y) => {
-          grid[x][y].a = 1;
-          grid[x][y].b = 0;
-        });
-      });
-    }
-    // switch (keyCode) {
-    //   case 32:
-    //     sk.isPaused = !sk.isPaused;
-    //     break;
-    //   default:
-    //     break;
-    // }
+      if (sk.toucheMoveArray.length > 1) {
+        resetGrid();
+        sendText(undefined, String.fromCharCode(...sk.toucheMoveArray));
+      }
+      sk.toucheMoveArray = undefined;
+    }, 400);
+    sk.toucheMoveArray.push(keyCode);
   };
   sk.handleTouchStart = (ev) => {
     ev.preventDefault();
