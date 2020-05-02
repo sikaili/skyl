@@ -152,6 +152,7 @@ const s = (instance) => {
   };
 
   sk.setup = () => {
+    sk.pixelDensity(12);
     sk.createCanvas(sk.windowWidth, sk.windowHeight);
     sk.scaleRef = (sk.width + sk.height) / 2;
     sk.background(0);
@@ -241,6 +242,7 @@ const s = (instance) => {
     if (sk.pixelDensity() > 1) {
       sk.saveCanvas(document.querySelector('canvas'), `traffic-${Math.random().toFixed(1)}`, 'png');
     }
+    sk.background(0);
   };
 
   divNode.addEventListener(

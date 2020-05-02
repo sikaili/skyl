@@ -331,7 +331,7 @@ export default function (sk) {
     sk.randomSeed(2200);
     peakDetect = new PeakDetect();
 
-    sk.createCanvas(sk.windowWidth, sk.windowHeight);
+    sk.canvas = sk.createCanvas(sk.windowWidth, sk.windowHeight);
     if (sk.width > 640)sk.pixelDensity(1.0);
     sk.stroke(255, 255, 255);
     sk.strokeWeight(10);

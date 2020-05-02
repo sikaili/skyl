@@ -44,7 +44,7 @@ export default function (sk) {
   };
 
   sk.setup = () => {
-    sk.createCanvas(sk.windowWidth, sk.windowHeight);
+    sk.canvas = sk.createCanvas(sk.windowWidth, sk.windowHeight);
     const shortSide = sk.height < sk.width ? sk.height : sk.width;
     vScale = shortSide / 100;
     kScale = shortSide / (200 / numberOfK) / vScale;

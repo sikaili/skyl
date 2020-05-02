@@ -218,7 +218,7 @@ export default (instance) => {
     sk.points = generatePoints(5, [{ x: -50, y: 50 }, { x: 50, y: 50 }, { x: 50, y: -50 }, { x: -50, y: -50 }]);
     sk.randomSeed(2200);
     sk.rectMode(sk.CENTER);
-    sk.createCanvas(sk.windowWidth, sk.windowHeight);
+    sk.canvas = sk.createCanvas(sk.windowWidth, sk.windowHeight);
     sk.peakDetect = new PeakDetect();
     sk.stroke(255, 255, 255);
     sk.textFont('Helvetica');

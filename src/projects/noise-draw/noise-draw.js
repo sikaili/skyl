@@ -205,7 +205,7 @@ export default function (sk) {
   };
 
   sk.setup = () => {
-    sk.createCanvas(sk.windowWidth, sk.windowHeight);
+    sk.canvas = sk.createCanvas(sk.windowWidth, sk.windowHeight);
     sk.strokeWeight(1);
     sk.newCanvas();
     sk.noCursor();

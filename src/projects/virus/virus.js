@@ -178,7 +178,7 @@ const sketch = (instance) => {
 
   sk.setup = () => {
     window.decomp = decomp;
-    sk.createCanvas(sk.windowWidth, sk.windowHeight);
+    sk.canvas = sk.createCanvas(sk.windowWidth, sk.windowHeight);
     console.log('setup virus');
     setBordersAndMouse(sk);
     sk.scaleRef = (sk.width + sk.height) / 2;

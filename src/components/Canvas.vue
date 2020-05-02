@@ -136,6 +136,7 @@ const changeSketch = (name) => {
     loaded = true;
     import("./../projects/" + name + "/" + name+ ".js").then(module => { //eslint-disable-line
     current = new p5(module.default, 'canvasContainer'); //eslint-disable-line
+      current.name = name;
     });
   }
 };
