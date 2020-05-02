@@ -191,6 +191,9 @@ const sketch = (instance) => {
     sk.mouseX = sk.width / 2;
     sk.mouseY = sk.height / 2;
     sk.addParticles(200);
+    sk.autoAddTimeout = setTimeout(() => {
+      sk.addVirus();
+    }, 2000);
   };
 
   sk.draw = () => {
@@ -199,9 +202,7 @@ const sketch = (instance) => {
     sk.background([200, 200, 200, touched ? 150 : 255]);
     particles.forEach((particle) => {
       if (!particle.updating) {
-        if (sk.soundIsReady) {
-          particle.contagion(particles, sk.settings.timeTobeInfected.value);
-        }
+        particle.contagion(particles, sk.settings.timeTobeInfected.value);
       }
       if (touched && sk.trigger) {
         particle.mouseForceTrigger({ x: sk.mouseX, y: sk.mouseY });
@@ -329,6 +330,8 @@ const sketch = (instance) => {
         }
       });
     }
+
+    clearTimeout(sk.autoAddTimeout);
   };
   sk.handleTouchMove = (ev) => {
     ev.preventDefault();
