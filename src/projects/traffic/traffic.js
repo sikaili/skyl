@@ -152,7 +152,7 @@ const s = (instance) => {
   };
 
   sk.setup = () => {
-    sk.pixelDensity(12);
+    // sk.pixelDensity(12);
     sk.createCanvas(sk.windowWidth, sk.windowHeight);
     sk.scaleRef = (sk.width + sk.height) / 2;
     sk.background(0);

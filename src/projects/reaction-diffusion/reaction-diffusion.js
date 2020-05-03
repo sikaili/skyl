@@ -294,7 +294,7 @@ export default (instance) => {
         }
         swap();
       }
-    }, 5);
+    }, 20);
   };
 
   sk.draw = () => {
