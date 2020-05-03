@@ -6,7 +6,8 @@ export default (instance) => {
   const sk = instance;
   sk.settings = {
     dA: {
-      value: 1,
+      // value: 1,
+      value: 1.23,
       default: 1.23,
       type: 'range',
       max: 3,
@@ -14,7 +15,8 @@ export default (instance) => {
       step: 0.01,
     },
     dB: {
-      value: 0.5,
+      // value: 0.5,
+      value: 1.3,
       default: 1.3,
       type: 'range',
       max: 3,
@@ -39,7 +41,8 @@ export default (instance) => {
       noRandom: true,
     },
     t: {
-      value: 1.0,
+      // value: 1.0,
+      value: 1.03,
       default: 1.03,
       type: 'range',
       max: 2,
@@ -47,7 +50,8 @@ export default (instance) => {
       step: 0.01,
     },
     threshold: {
-      value: 0.1,
+      // value: 0.1,
+      value: 0.45,
       default: 0.45,
       type: 'range',
       max: 1,
@@ -56,10 +60,10 @@ export default (instance) => {
       noRandom: true,
     },
     interval: {
-      value: 4,
+      value: sk.windowWidth > 512 ? 4 : 3,
       default: 4,
       type: 'range',
-      max: 9,
+      max: 8,
       min: 2,
       step: 1,
       noRandom: true,
@@ -94,7 +98,7 @@ export default (instance) => {
       sk.video.noLoop();
       sk.video.size(Math.ceil(sk.width / interval), Math.ceil(sk.height / interval));
     }
-    initAB();
+    initGridAB();
     sk.beginInterval();
     sk.loop();
   };
@@ -141,7 +145,7 @@ export default (instance) => {
     }
     sk.pixelDensity(1);
   };
-  const initAB = (img) => {
+  const initGridAB = (img) => {
     const height = Math.ceil(sk.height / interval);
     const width = Math.ceil(sk.width / interval);
     let brightness = 1;
@@ -159,7 +163,6 @@ export default (instance) => {
           const r = img.pixels[n];
           const g = img.pixels[n + 1];
           const b = img.pixels[n + 2];
-
           // if (brightness > sk.settings.min.value / 255 && brightness < sk.settings.max.value / 255) {
           // if (r > 95 && g > 40 && b > 20 && r > g && r > b && Math.abs(r - g) > 15) {
           // const kovacClassification = (r > 95 && g > 40 && b > 20 && r > g && r > b && (r - g) > 15 && r - Math.min([g, b] > 15));
@@ -208,7 +211,7 @@ export default (instance) => {
     canvas.translate(canvas.width / 2, canvas.height / 2);
     canvas.text(text, 0, 0);
     canvas.pop();
-    initAB(canvas);
+    initGridAB(canvas);
   };
   sk.setup = () => {
     sk.canvas = sk.createCanvas(sk.windowWidth, sk.windowHeight);
@@ -219,10 +222,8 @@ export default (instance) => {
     // const constraints = { video: { frameRate: { ideal: 10, max: 30 } } };
     // sk.video = sk.createCapture(constraints);
     // sk.video.size(Math.ceil(sk.width / interval), Math.ceil(sk.height / interval));
-
     sk.settings.point = true;
-
-    initAB();
+    initGridAB();
     // const loadImage = new Promise((res) => {
     //   sk.loadImage('/img/reaction1.png', (img) => {
     //     img.width = Math.ceil(sk.width / interval);
@@ -232,13 +233,12 @@ export default (instance) => {
     // });
     // loadImage.then((res) => {
     //   console.log(res);
-    //   initAB(res);
+    //   initGridAB(res);
     // });
     sk.textContent = sk.createGraphics(Math.ceil(sk.width / interval), Math.ceil(sk.height / interval));
     sendText();
     sk.beginInterval();
   };
-
 
   // make two laplace function, much better setInterval performance
   const laplaceA = (x, y) => {
@@ -345,7 +345,7 @@ export default (instance) => {
       if (sk.video) {
         resetGrid();
         sk.video.loop();
-        initAB(sk.video);
+        initGridAB(sk.video);
       }
     }
     sk.staticBodyVertex = undefined;
@@ -396,8 +396,8 @@ export default (instance) => {
     }
     sk.background(255);
     if (reset) { resetGrid(); }
-    sendText(undefined, String.fromCharCode(keyCode));
-    // sendText(undefined, texts[Math.floor(Math.random() * 1000)]);
+    const stringToSend = Math.random() > 0.3 ? String.fromCharCode(keyCode) : texts[Math.floor(Math.random() * 500)];
+    sendText(undefined, stringToSend);
     clearTimeout(sk.inputTimeout);
     if (!sk.toucheMoveArray) {
       sk.toucheMoveArray = [];
@@ -405,11 +405,11 @@ export default (instance) => {
     sk.inputTimeout = setTimeout(() => {
       if (sk.toucheMoveArray.length > 1) {
         resetGrid();
-        sendText(undefined, String.fromCharCode(...sk.toucheMoveArray));
+        sendText(undefined, sk.toucheMoveArray.join(''));
       }
       sk.toucheMoveArray = undefined;
     }, 400);
-    sk.toucheMoveArray.push(keyCode);
+    sk.toucheMoveArray.push(stringToSend);
   };
   sk.handleTouchStart = (ev) => {
     ev.preventDefault();
