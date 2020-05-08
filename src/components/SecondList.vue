@@ -31,11 +31,11 @@ export default {
 </script>
 
 <style scoped>
-* {
-  font-family: "Helvetica Neue", sans-serif;
-}
+    * {
+        font-family: "Helvetica Neue", sans-serif;
+    }
 
-ul li {
-  padding: 0.5rem 0;
-}
+    ul li {
+        padding: 0.5rem 0;
+    }
 </style>
