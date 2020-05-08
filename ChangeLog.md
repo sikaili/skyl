@@ -1,3 +1,24 @@
+## [2.7.2] - 2020-05-08
+### Added
+-  changelog.js ([e9d205](https://github.com/sikaili/skyl.fr/commit/e9d205738eba6e3f4125b4cb9bfdc6e83d9c7de6))
+-  worley noise ([ca1e30](https://github.com/sikaili/skyl.fr/commit/ca1e30eaa59a22e026755a8a441e616a4f38875f))
+- reaction-diffusion b value from new text canvas pixel array ([2b9342](https://github.com/sikaili/skyl.fr/commit/2b934289183c867c88d2a9af85b9379edcc4d172))
+- [WIP]change scale, vidoe mapping ([1f830a](https://github.com/sikaili/skyl.fr/commit/1f830a5a167accfae538b28ce9714625d5450d18))
+-  reaction-diffusion video pixels ([805b42](https://github.com/sikaili/skyl.fr/commit/805b42a84a380877f4aca6bdaccec08736d94ef1))
+- reaction-diffusion reset default values [CHANGED] save canvas save point & line ([76b674](https://github.com/sikaili/skyl.fr/commit/76b674c02537714e46738add7649de43fe196d19))
+-  random params [CHANGED] use lines ([547148](https://github.com/sikaili/skyl.fr/commit/5471480feeac3179c2fe6428d8a8c07b2758a4b2))
+- reaction-diffusion [CHANGED]canvas settings display value ([309fb1](https://github.com/sikaili/skyl.fr/commit/309fb1a4306360814511dcf0f794ad59a58040c5))
+
+### Changed
+-  cv ajustement, hide 2 sketches ([bb4ec3](https://github.com/sikaili/skyl.fr//commit/bb4ec368adad15d33593b30d7d55ed074ea67fcc))
+- refacto CV page, move data to json ([cb0a07](https://github.com/sikaili/skyl.fr//commit/cb0a0723811271eefa6bbddffa926f72adf11717))
+-  worley-noise change ([7393fc](https://github.com/sikaili/skyl.fr//commit/7393fc11c8ebffae5112183967da2dc7e0e70bba))
+-  reaction-diffusiion default value ([c73bfb](https://github.com/sikaili/skyl.fr//commit/c73bfbe456788542300d95a3968d956bbae75d81))
+- auto add virus after 2s ([e6f80b](https://github.com/sikaili/skyl.fr//commit/e6f80b806860bfad2eb02083b151596c73415346))
+-  reaction diffusion random params etc ([c28365](https://github.com/sikaili/skyl.fr//commit/c283653e7fdaccf109ebde23f4092894ffce2519))
+-  reaction diffusion ajustment ([[ADDED](https://github.com/sikaili/skyl.fr//commit/[ADDED] touch move to show random caracters))
+-  reaction-diffusion skin tone classification ([9e0b2e](https://github.com/sikaili/skyl.fr//commit/9e0b2e35f352e4b1195a19ffae7b2cf926e5fa9b))
+
 ## [2.6.2] - 2019-04-30
 ### Fixed
 - ios safari background freeze, focus, blur, visibilitychange
