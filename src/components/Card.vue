@@ -2,7 +2,7 @@
   <a
     :href="props.link"
     target="_blank"
-    class="mh3"
+    :class="props.mq === 'lg' ? 'mr4' : 'mr2'"
   >
     <div class="relative card pa3 bg-white-30 border-box">
       <img :src="props.img">
@@ -15,20 +15,20 @@
 </template>
 
 <style scoped>
-.card {
-  max-width: 300px;
-}
-.card:hover {
-  background-color: rgba(255, 255, 255, 0.7);
-  transition: background-color 1s ease-in;
-}
-a,
-a:hover {
-  color: black;
-  text-decoration: none;
-}
-span {
-  position: absolute;
-  bottom: 1rem;
-}
+    .card {
+        max-width: 300px;
+    }
+    .card:hover {
+        background-color: rgba(255, 255, 255, 0.7);
+        transition: background-color 1s ease-in;
+    }
+    a,
+    a:hover {
+        color: black;
+        text-decoration: none;
+    }
+    span {
+        position: absolute;
+        bottom: 1rem;
+    }
 </style>

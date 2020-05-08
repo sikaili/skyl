@@ -29,13 +29,5 @@
   {
     "id": "k-means-selfie",
     "type": "sketch"
-  },
-  {
-    "id": "reaction-diffusion",
-    "type": "sketch"
-  },
-  {
-    "id": "worley-noise",
-    "type": "sketch"
   }
 ]

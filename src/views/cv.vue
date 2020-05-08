@@ -1,17 +1,15 @@
 <template>
-  <div
-    class="bg-white-70 fr"
-    :class="$mq !== `lg` ? 'ma0' : 'ma6 mt4 mw8'"
-  >
-    <i
-      class="fr right-0 pr2 f2 icon ion-md-close gray c-animate hover-black"
-      @click="$router.go(-1)"
-    />
+  <div>
     <div
+      class="CV__container bg-white-70"
       :class="
-        $mq !== `lg` ? 'pv4 mb5 ph1' : 'pa5 flex justify-center flex-column'
+        $mq !== 'lg' ? 'pv4 mb5 ph3' : 'mt4 mb 5 mw8 pa5 flex justify-center flex-column'
       "
     >
+      <i
+        class="CV__close pr2 f2 icon ion-md-close gray c-animate hover-black"
+        @click="$router.go(-1)"
+      />
       <h1 class="fw3">
         Expérience Professionnelle
       </h1>
@@ -37,6 +35,7 @@
             :caption="card.caption"
             :link="card.link"
             :img="card.img"
+            :mq="$mq"
           />
         </div>
         <h4 class="mt4 mb3">
@@ -162,8 +161,18 @@ export default {
 
 <style lang="scss" scoped>
     .CV {
+        &__container {
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+        }
         &__button {
             margin-top: 32px;
+        }
+        &__close {
+            top: 0;
+            right: 0;
+            position: absolute;
         }
     }
     * {

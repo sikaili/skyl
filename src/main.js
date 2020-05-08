@@ -9,7 +9,7 @@ import './registerServiceWorker';
 Vue.use(VueMq, {
   breakpoints: {
     sm: 675,
-    md: 1000,
+    md: 768,
     lg: Infinity,
   },
   defaultBreakpoint: 'sm', // customize this for SSR

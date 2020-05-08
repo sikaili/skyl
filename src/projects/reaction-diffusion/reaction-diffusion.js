@@ -51,8 +51,8 @@ export default (instance) => {
     },
     threshold: {
       // value: 0.1,
-      value: 0.45,
-      default: 0.45,
+      value: 0.5,
+      default: 0.5,
       type: 'range',
       max: 1,
       min: 0.0,
