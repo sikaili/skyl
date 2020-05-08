@@ -115,7 +115,8 @@ export default (instance) => {
 
   let featurePoints;
   const nth = 0;
-  const interval = 10;
+  const interval = 8;
+  const featurePointsNumber = 10;
   const canvasX = () => Math.ceil(sk.width / interval);
   const canvasY = () => Math.ceil(sk.height / interval);
   let canvasPoints = [];
@@ -127,46 +128,98 @@ export default (instance) => {
         points[n] = { x, y };
       }
     }
-    console.log(points);
     return points;
   };
   sk.setup = () => {
     sk.pixelDensity(1.0);
+    sk.rectMode(sk.CENTER);
     sk.canvas = sk.createCanvas(sk.windowWidth, sk.windowHeight);
     sk.noStroke();
-    featurePoints = Array(10).fill(null).map((a) => ({ x: Math.random() * canvasX(), y: Math.random() * canvasY() }));
+    featurePoints = Array(featurePointsNumber).fill(null).map((a) => ({ x: Math.random() * canvasX(), y: Math.random() * canvasY(), active: true }));
     canvasPoints = setPoints();
-    console.log(featurePoints);
   };
   sk.interval = setInterval(() => {
+    if (featurePoints.every((point) => point.faster)) {
+      setTimeout(() => {
+        sk.noLoop();
+      }, 40000);
+    }
     featurePoints.forEach((point) => {
-      point.x += (Math.random() - 0.5) * 5;
-      point.y += (Math.random() - 0.5) * 5;
+      const randomDuration = Math.floor(Math.random() * 250);
+      if (sk.frameCount / randomDuration === 1) {
+        point.faster = true;
+      }
+      if (point.active) {
+        let velocityX = ((Math.random() - 0.5) * 8 * Math.sin(sk.frameCount / 30));
+        let velocityY = ((Math.random() - 0.5) * 8 * Math.sin(sk.frameCount / 30));
+
+        if (point.faster) {
+          velocityX = (canvasX() / 2 - point.x) * 0.05;
+          velocityY = (canvasY() / 2 - point.y) * 0.05;
+        }
+        point.x += velocityX;
+        point.y += velocityY;
+      }
     });
     canvasPoints.forEach((point) => {
-      const distances = featurePoints.map((pointA) => (calDistance(pointA, point)));
-      distances.sort((a, b) => a - b);
-      // console.log(distances.length);
-      point.noise = distances[nth];
+      const distances = featurePoints.map((pointA) => ({ distance: calDistance(pointA, point), point: pointA }));
+      distances.sort((a, b) => a.distance - b.distance);
+      point.noise = distances[nth].distance;
+      if (distances[nth].point.active) {
+        point.active = true;
+        if (distances[nth].point.faster) {
+          point.noise *= 1.5;
+        }
+      } else {
+        point.active = false;
+      }
     });
-  }, 30);
+  }, 40);
 
 
   sk.draw = () => {
     sk.background(255);
     canvasPoints.forEach((point) => {
-      sk.fill(255 - point.noise * interval);
-      sk.ellipse(point.x * interval, point.y * interval, interval);
+      const {
+        x, y, active, noise,
+      } = point;
+      if (active) {
+        sk.fill(255 - noise * interval);
+        sk.ellipse(x * interval, y * interval, interval);
+      }
     });
-    // featurePoints.forEach((point) => {
-    //   sk.fill(255, 0, 0);
-    //   sk.ellipse(point.x * interval, point.y * interval, interval);
-    // });
-    // sk.noLoop();
   };
   sk.handleTouchEnd = () => {
+    sk.staticBodyVertex = undefined;
   };
-  sk.handleTouchMove = () => {
+  sk.handleTouchMove = (ev) => {
+    ev.preventDefault();
+    if (sk.staticBodyVertex) {
+      if (sk.staticBodyVertex.length > 0) {
+        const lastPoint = sk.staticBodyVertex[sk.staticBodyVertex.length - 1];
+        const distance = calDistance(lastPoint, { x: sk.mouseX, y: sk.mouseY });
+        if (distance > 0) {
+          sk.staticBodyVertex.push({ x: sk.mouseX, y: sk.mouseY });
+          const gridPoint = { x: Math.floor(sk.mouseX / interval), y: Math.floor(sk.mouseY / interval) };
+          canvasPoints.forEach((point) => {
+            if (calDistance(point, gridPoint) < 10) {
+              // point.active = false;
+            }
+          });
+          featurePoints.forEach((point) => {
+            if (calDistance(point, gridPoint) < 10) {
+              point.faster = true;
+            }
+          });
+        }
+      } else {
+        sk.staticBodyVertex.push({ x: sk.mouseX, y: sk.mouseY });
+      }
+    }
+  };
+  sk.handleTouchStart = (ev) => {
+    ev.preventDefault();
+    sk.staticBodyVertex = [];
   };
   sk.keyPressed = () => {
     const { keyCode } = sk;
@@ -178,7 +231,6 @@ export default (instance) => {
         break;
     }
   };
-  sk.handleTouchStart = () => {
-  };
+
   setListeners(sk);
 };
