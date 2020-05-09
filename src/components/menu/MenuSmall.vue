@@ -1,6 +1,6 @@
 <template>
   <div class="Menu cl">
-    <intro />
+    <the-intro />
     <div
       v-if="menuShow"
       class="Menu__menuItems w-100 bg-white-80"

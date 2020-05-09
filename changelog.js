@@ -1,5 +1,8 @@
 const child = require('child_process');
 const fs = require('fs');
+// <version core> ::= <major> "." <minor> "." <patch>
+// 0, 1, 2
+const versionCore = 2;
 
 const latestTag = child.execSync('git describe --long').toString('utf-8').split('-')[0];
 
@@ -19,8 +22,8 @@ const commitsArray = output
 const currentChangelog = fs.readFileSync('./CHANGELOG.md', 'utf-8');
 const currentVersion = require('./package.json').version.split('.');
 
-currentVersion[1] = +currentVersion[1] + 1;
-const newVersion = `${currentVersion[0]}.${currentVersion[1]}.${currentVersion[2]}`;
+currentVersion[versionCore] = +currentVersion[versionCore] + 1;
+const newVersion = currentVersion;
 let newChangelog = `## [${newVersion}] - ${
   new Date().toISOString().split('T')[0]
 }\n`;
@@ -31,9 +34,9 @@ const changed = [];
 
 
 commitsArray.forEach((commit) => {
-  if (commit.message.startsWith('[ADDED]')) {
+  if (commit.message.startsWith('added:')) {
     added.push(
-      `- ${commit.message.replace('[ADDED]', '')} ([${commit.sha.substring(
+      `- ${commit.message.replace('added:', '')} ([${commit.sha.substring(
         0,
         6,
       )}](https://github.com/sikaili/skyl.fr/commit/${
@@ -41,9 +44,9 @@ commitsArray.forEach((commit) => {
       }))\n`,
     );
   }
-  if (commit.message.startsWith('[FIXED]')) {
+  if (commit.message.startsWith('fixed:')) {
     fixed.push(
-      `- ${commit.message.replace('[FIXED]', '')} ([${commit.sha.substring(
+      `- ${commit.message.replace('fixed:', '')} ([${commit.sha.substring(
         0,
         6,
       )}](https://github.com/sikaili/skyl.fr//commit/${
@@ -51,9 +54,9 @@ commitsArray.forEach((commit) => {
       }))\n`,
     );
   }
-  if (commit.message.startsWith('[CHANGED]')) {
+  if (commit.message.startsWith('changed:')) {
     changed.push(
-      `- ${commit.message.replace('[CHANGED]', '')} ([${commit.sha.substring(
+      `- ${commit.message.replace('changed:', '')} ([${commit.sha.substring(
         0,
         6,
       )}](https://github.com/sikaili/skyl.fr//commit/${

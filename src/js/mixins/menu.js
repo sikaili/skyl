@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import { mapGetters, mapActions } from 'vuex';
-import intro from '@/components/Intro.vue';
+import TheIntro from '@/components/TheIntro.vue';
 
 export default {
   watch: {
@@ -14,7 +14,7 @@ export default {
     },
   },
   components: {
-    intro,
+    TheIntro,
   },
   computed: {
     ...mapGetters({

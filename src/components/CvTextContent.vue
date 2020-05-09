@@ -13,12 +13,13 @@
 </template>
 
 <style scoped>
-* {
-  font-family: "Helvetica Neue", sans-serif;
-  line-height: 1rem;
-}
-p,
-h3 {
-  margin: 12px 0 0 0;
-}
+    * {
+        font-family: "Helvetica Neue", sans-serif;
+        line-height: 1rem;
+    }
+
+    p,
+    h3 {
+        margin: 12px 0 0 0;
+    }
 </style>

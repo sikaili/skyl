@@ -1,113 +1,111 @@
 <template>
-  <div>
-    <div
-      class="CV__container bg-white-70"
-      :class="
-        $mq !== 'lg' ? 'pv4 mb5 ph3' : 'mt4 mb 5 mw8 pa5 flex justify-center flex-column'
-      "
+  <div
+    class="CV CV__container bg-white-70"
+    :class="
+      $mq !== 'lg' ? 'pv4 mb5 ph3' : 'mt4 mb 5 mw8 pa5 flex justify-center flex-column'
+    "
+  >
+    <i
+      class="CV__close pr2 f2 icon ion-md-close gray c-animate hover-black"
+      @click="$router.go(-1)"
+    />
+    <h1 class="fw3">
+      Expérience Professionnelle
+    </h1>
+    <section
+      v-for="(project,index) in projects"
+      :key="index"
+      class="pv3"
     >
-      <i
-        class="CV__close pr2 f2 icon ion-md-close gray c-animate hover-black"
-        @click="$router.go(-1)"
-      />
-      <h1 class="fw3">
-        Expérience Professionnelle
+      <h1>
+        {{ project.companyName }}
+        <span class="f5">{{ project.cityAndDate }}</span>
       </h1>
-      <section
-        v-for="(project,index) in projects"
-        :key="index"
-        class="pv3"
+      <h3>
+        {{ project.description }}
+      </h3>
+      <div
+        v-if="project.cards"
+        class="flex flex-row"
       >
-        <h1>
-          {{ project.companyName }}
-          <span class="f5">{{ project.cityAndDate }}</span>
-        </h1>
-        <h3>
-          {{ project.description }}
-        </h3>
-        <div
-          v-if="project.cards"
-          class="flex flex-row"
-        >
-          <Card
-            v-for="card in project.cards"
-            :key="card.caption"
-            :caption="card.caption"
-            :link="card.link"
-            :img="card.img"
-            :mq="$mq"
-          />
-        </div>
-        <h4 class="mt4 mb3">
-          Responsabilités occupées :
-        </h4>
-
-        <ul class="lh-copy bt mt0">
-          <SecondList
-            v-for="(mission, i) in splitText(project.firstMissons)"
-            :key="i"
-            :item="mission"
-            :children="
-              i === project.secondMissons.number
-                ? splitText(project.secondMissons.text)
-                : []
-            "
-          />
-        </ul>
-        <h4 class="mt4 mb3">
-          Environnement Technique :
-        </h4>
-        <Table
-          v-if="project.technologies"
-          :categories="['Langages', 'Librairies', 'Outils & Plug-ins']"
-          :content="project.technologies"
+        <base-card
+          v-for="card in project.cards"
+          :key="card.caption"
+          :caption="card.caption"
+          :link="card.link"
+          :img="card.img"
+          :mq="$mq"
         />
-      </section>
-      <h1 class="fw3 mv4">
-        Expositions & Concerts
-      </h1>
-      <TextContent
-        v-for="expo in expos"
-        :key="expo.title"
-        :title="expo.title"
-        :caption="expo.place"
-        :content="expo.content"
-      />
-      <h1 class="fw3 mt5 mb4">
-        Formations
-      </h1>
-      <TextContent
-        v-for="formation in formations"
-        :key="formation.title"
-        :title="formation.title"
-        :caption="formation.place"
-        :content="formation.content"
-      />
-      <span
-        class="CV__button f5 no-underline white bg-black-40 bg-animate hover-bg-black hover-white inline-flex items-center pa3 border-box mr1"
-        @click="$router.go(-1)"
-      >
-        <i class="icon ion-md-return-left" />
+      </div>
+      <h4 class="mt4 mb3">
+        Responsabilités occupées :
+      </h4>
 
-        <span class="pl1">Return</span>
-      </span>
-    </div>
+      <ul class="lh-copy bt mt0">
+        <SecondList
+          v-for="(mission, i) in splitText(project.firstMissons)"
+          :key="i"
+          :item="mission"
+          :children="
+            i === project.secondMissons.number
+              ? splitText(project.secondMissons.text)
+              : []
+          "
+        />
+      </ul>
+      <h4 class="mt4 mb3">
+        Environnement Technique :
+      </h4>
+      <base-table
+        v-if="project.technologies"
+        :categories="['Langages', 'Librairies', 'Outils & Plug-ins']"
+        :content="project.technologies"
+      />
+    </section>
+    <h1 class="fw3 mv4">
+      Expositions & Concerts
+    </h1>
+    <cv-text-content
+      v-for="expo in expos"
+      :key="expo.title"
+      :title="expo.title"
+      :caption="expo.place"
+      :content="expo.content"
+    />
+    <h1 class="fw3 mt5 mb4">
+      Formations
+    </h1>
+    <cv-text-content
+      v-for="formation in formations"
+      :key="formation.title"
+      :title="formation.title"
+      :caption="formation.place"
+      :content="formation.content"
+    />
+    <span
+      class="CV__button f5 no-underline white bg-black-40 bg-animate hover-bg-black hover-white inline-flex items-center pa3 border-box mr1"
+      @click="$router.go(-1)"
+    >
+      <i class="icon ion-md-return-left" />
+
+      <span class="pl1">Return</span>
+    </span>
   </div>
 </template>
 
 <script>
-import Card from '@/components/Card.vue';
-import Table from '@/components/Table.vue';
+import BaseCard from '@/components/base/BaseCard.vue';
+import BaseTable from '@/components/base/BaseTable.vue';
 import SecondList from '@/components/SecondList.vue';
-import TextContent from '@/components/TextContent.vue';
+import CvTextContent from '@/components/CvTextContent.vue';
 import cvData from '@/assets/JSON/cv.json';
 
 export default {
   components: {
-    Card,
-    Table,
+    BaseCard,
+    BaseTable,
     SecondList,
-    TextContent,
+    CvTextContent,
   },
   data() {
     return {
@@ -161,34 +159,40 @@ export default {
 
 <style lang="scss" scoped>
     .CV {
+
         &__container {
             margin-left: auto;
             margin-right: auto;
             position: relative;
         }
+
         &__button {
             margin-top: 32px;
         }
+
         &__close {
             top: 0;
             right: 0;
             position: absolute;
         }
-    }
-    * {
-        font-family: "Helvetica Neue", sans-serif;
-    }
 
-    ul li {
-        padding: 0.5rem 0;
-    }
-    span {
-        font-weight: 400;
-    }
+        ul li {
+            padding: 0.5rem 0;
+        }
 
-    @media (max-width: 600px) {
-        html {
-            font-size: 10px;
+        span {
+            font-weight: 400;
+        }
+
+        @media (max-width: 600px) {
+
+            html {
+                font-size: 10px;
+            }
+        }
+
+        * {
+            font-family: "Helvetica Neue", sans-serif;
         }
     }
 </style>

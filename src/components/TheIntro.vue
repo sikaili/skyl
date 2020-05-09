@@ -11,11 +11,8 @@
 </template>
 
 <script>
-import { shellMxn } from '@/js/mixins';
-
 export default {
-  name: 'Intro',
-  mixins: [shellMxn],
+  name: 'TheIntro',
   data() {
     return {
       style: {

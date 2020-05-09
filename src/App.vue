@@ -5,34 +5,29 @@
       @click="handleFullScreenMouseIn()"
       @mouseleave="handleFullScreenMouseLeave()"
     />
-    <TheHead v-if="!canvasFullScreen" />
-    <div
+    <the-header v-if="!canvasFullScreen" />
+    <base-notification-bar
       v-if="updateExists"
-      class="Notification"
+      :icon="'sync'"
+      @click="refreshApp()"
     >
-      <i class="icon ion-md-sync" />
       new version available,
-      <span
-        class="Notification__click"
-        @click="refreshApp()"
-      >
-        click here
-      </span> to refresh.
-    </div>
+      <span style="color: rgba(150,150,255);"> click here </span> to refresh.
+    </base-notification-bar>
     <div
-      :key="key"
-      class="back bw0"
+      :key="canvasWrapperKey"
+      class="sketchContainer back bw0"
       :style="iframeContainer"
     >
-      <Canvas
+      <the-canvas-wrapper
         v-if="activeItem && activeItem.type === 'sketch' || activeItem.type === 'musicIframe'"
-        :key="key + 2"
+        :key="canvasWrapperKey + 2"
         :current="activeItem.app ? activeItem.app : activeItem.id"
         :type="activeItem.type"
       />
       <iframe
         v-if="activeItem && activeItem.type !== 'sketch'"
-        :key="key + 1"
+        :key="canvasWrapperKey + 1"
         class="back bw0"
         scrolling="no"
         scroll="no"
@@ -70,16 +65,17 @@
       </p>
     </div>
     <transition name="slide-fade-main">
-      <TheFooter v-if="footer && $mq === 'lg' && !canvasFullScreen && !updateExists" />
+      <the-footer v-if="footer && $mq === 'lg' && !canvasFullScreen && !updateExists" />
     </transition>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-import TheHead from './components/TheHead.vue';
+import TheHeader from './components/TheHeader.vue';
 import TheFooter from './components/TheFooter.vue';
-import Canvas from './components/Canvas.vue';
+import BaseNotificationBar from './components/base/BaseNotificationBar.vue';
+import TheCanvasWrapper from './components/TheCanvasWrapper.vue';
 
 document.ontouchmove = function(e) { //eslint-disable-line
   return true;
@@ -87,9 +83,10 @@ document.ontouchmove = function(e) { //eslint-disable-line
 export default {
   name: 'App',
   components: {
-    TheHead,
+    TheHeader,
     TheFooter,
-    Canvas,
+    TheCanvasWrapper,
+    BaseNotificationBar,
   },
   data() {
     return {
@@ -101,7 +98,7 @@ export default {
       width: 0,
       height: 0,
       showIframe: false,
-      key: 0,
+      canvasWrapperKey: 0,
       sketches: {},
     };
   },
@@ -141,7 +138,7 @@ export default {
   },
   watch: {
     activeItem() {
-      this.key = Math.random().toFixed(2);
+      this.canvasWrapperKey = Math.random().toFixed(2);
     },
   },
   beforeCreate() {
@@ -153,7 +150,7 @@ export default {
       return;
     }
     this.$root.$on('refreshCanvas', () => {
-      this.key = Math.random().toFixed(2);
+      this.canvasWrapperKey = Math.random().toFixed(2);
     });
     const { id } = this.$route.params;
     if (id !== 'random') {
@@ -254,19 +251,5 @@ export default {
     body {
         padding: 0 0 0 0;
         margin: 0 0 0 0;
-    }
-    .Notification {
-        background-color: rgba(0,0,0, 0.8);
-        padding: 18px 48px;
-        line-height: 24px;
-        text-align: center;
-        position: fixed;
-        width: 100%;
-        color: white;
-        bottom: 0px;
-
-        &__click {
-            color: rgba(150,150,255);
-        }
     }
 </style>

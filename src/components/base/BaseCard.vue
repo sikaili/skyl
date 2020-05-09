@@ -18,15 +18,18 @@
     .card {
         max-width: 300px;
     }
+
     .card:hover {
         background-color: rgba(255, 255, 255, 0.7);
         transition: background-color 1s ease-in;
     }
+
     a,
     a:hover {
         color: black;
         text-decoration: none;
     }
+
     span {
         position: absolute;
         bottom: 1rem;

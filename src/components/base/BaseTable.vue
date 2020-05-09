@@ -20,7 +20,7 @@
 </template>
 
 <style scoped>
-* {
-  font-family: "Helvetica Neue", sans-serif;
-}
+    * {
+        font-family: "Helvetica Neue", sans-serif;
+    }
 </style>

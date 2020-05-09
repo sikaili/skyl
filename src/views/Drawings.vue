@@ -1,3 +1,4 @@
+/* eslint-disable */
 <template>
   <div>
     <VueGallery
@@ -9,7 +10,7 @@
     <span
       class="ph2 pv1 no-underline white bg-black-40 bg-animate hover-bg-black-80 hover-white inline-flex items-center border-box"
       :class="$mq === `sm` ? `f4 ml3 mt0` : `fixed f2 ph3 mt4`"
-      style="z-index:1000;margin-bottom:-100px;"
+      style="z-index: 1000; margin-bottom: -100px;"
       @click="grid = !grid"
     >
       <i
@@ -21,7 +22,6 @@
         class="icon ion-md-menu"
       />
     </span>
-    <!-- grid -->
     <div
       v-if="grid === true"
       class="mt3 center b--black-20 flex flex-wrap items-start"
@@ -49,7 +49,6 @@
         </a>
       </div>
     </div>
-    <!-- list -->
     <div
       v-else
       class="b--black-20 cl"
@@ -75,10 +74,9 @@
           </dl>
         </a>
       </div>
-      <!-- back to 0 0 -->
       <span
         class="fl w-100  mt5 tc pb5 pt3 f2 center no-underline black-59 bg-white-50 bg-animate hover-bg-black-50 hover-white-50 border-box"
-        style="z-index:1000;"
+        style="z-index: 1000;"
         @click="scroll"
       >
         <i class="icon ion-md-arrow-up" />
@@ -93,17 +91,82 @@
 import VueGallery from 'vue-gallery';
 
 export default {
+  name: 'Draw',
   components: {
     VueGallery,
   },
-  props: {
-    drawings: {
-      type: Array,
-      required: true,
-    },
-  },
   data() {
     return {
+      drawings: [
+        {
+          name: 'a dream',
+          link: require('@/assets/drawings/1.jpg'),
+        },
+        {
+          name: 'Leg',
+          link: require('@/assets/drawings/6.jpg'),
+        },
+        {
+          name: 'supermarket',
+          link: require('@/assets/drawings/2.jpg'),
+        },
+        {
+          name: 'twist',
+          link: require('@/assets/drawings/5.jpg'),
+        },
+        {
+          name: 'mushroom',
+          link: require('@/assets/drawings/4.jpg'),
+        },
+        {
+          name: 'down',
+          link: require('@/assets/drawings/8.jpg'),
+        },
+        {
+          name: 'up',
+          link: require('@/assets/drawings/9.jpg'),
+        },
+        {
+          name: 'parts 01',
+          link: require('@/assets/drawings/parts1.jpg'),
+        },
+        {
+          name: 'no escape',
+          link: require('@/assets/drawings/7.jpg'),
+        },
+        {
+          name: 'parts 02',
+          link: require('@/assets/drawings/parts2.jpg'),
+        },
+        {
+          name: 'the witch',
+          link: require('@/assets/drawings/10.jpg'),
+        },
+        {
+          name: 'green',
+          link: require('@/assets/drawings/lv1.jpg'),
+        },
+        {
+          name: 'the witch 02',
+          link: require('@/assets/drawings/11.jpg'),
+        },
+        {
+          name: 'green 02',
+          link: require('@/assets/drawings/lv2.jpg'),
+        },
+        // {
+        //   name: "cell",
+        //   link: require("@/assets/drawings/cell.jpg")
+        // }
+        // {
+        //   name: "cell",
+        //   link: require("@/assets/drawings/up.jpg")
+        // },
+        // {
+        //   name: "cell",
+        //   link: require("@/assets/drawings/up1.jpg")
+        // }
+      ],
       grid: false,
       index: null,
     };
@@ -121,13 +184,4 @@ export default {
 };
 </script>
 
-<style>
-.blueimp-gallery > .slides > .slide > .slide-content {
-  margin: auto;
-  border: solid rgba(255, 255, 255, 0.3) 30px;
-  /* height: auto; */
-  max-width: 95%;
-  opacity: 0.9;
-  max-height: 95%;
-}
-</style>
+<style></style>

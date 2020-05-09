@@ -14,9 +14,9 @@
 </template>
 
 <script>
-import MenuSmall from '@/components/MenuSmall.vue';
-import MenuDesktop from '@/components/MenuDesktop.vue';
-import MenuIpad from '@/components/MenuIpad.vue';
+import MenuSmall from '@/components/menu/MenuSmall.vue';
+import MenuDesktop from '@/components/menu/MenuDesktop.vue';
+import MenuIpad from '@/components/menu/MenuIpad.vue';
 
 export default {
   name: 'Work',

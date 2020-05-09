@@ -1,12 +1,12 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import VueAnalytics from 'vue-analytics';
-import draw from './views/draw.vue';
-import work from './views/work.vue';
-import play from './views/play.vue';
-import music from './views/music.vue';
-import page from './views/page.vue';
-import cv from './views/cv.vue';
+import Drawings from './views/Drawings.vue';
+import Work from './views/Work.vue';
+import Play from './views/Play.vue';
+import Music from './views/Music.vue';
+import Page from './views/Page.vue';
+import Cv from './views/Cv.vue';
 
 Vue.use(Router);
 
@@ -20,33 +20,33 @@ const router = new Router({
     },
     {
       path: '/drawings',
-      name: 'draw',
-      component: draw,
+      name: 'Drawings',
+      component: Drawings,
     },
     {
       path: '/work/:id?',
       name: 'work',
-      component: work,
+      component: Work,
     },
     {
       path: '/page/:category/:id?',
       name: 'contentPage',
-      component: page,
+      component: Page,
     },
     {
       path: '/play/:id?',
       name: 'play',
-      component: play,
+      component: Play,
     },
     {
       path: '/music/:id?',
       name: 'music',
-      component: music,
+      component: Music,
     },
     {
       path: '/cv',
       name: 'cv/',
-      component: cv,
+      component: Cv,
     },
     { path: '*', redirect: '/play/random' },
   ],
