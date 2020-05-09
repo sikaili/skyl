@@ -1,3 +1,13 @@
+## [2.7.5] - 2020-05-09
+### Fixed
+- cave change song screen block ([be4ae5](https://github.com/sikaili/skyl.fr/commit/be4ae5))
+- changelog.js ([e7ff62](https://github.com/sikaili/skyl.fr/commit/e7ff62))
+### Changed
+- remove player, change song list ([ab13e7](https://github.com/sikaili/skyl.fr/commit/ab13e7))
+- use absolute path, move views folder ([da0ab2](https://github.com/sikaili/skyl.fr/commit/da0ab2))
+- rename components ([fd9a67](https://github.com/sikaili/skyl.fr/commit/fd9a67))
+- changelog.js version core ([352266](https://github.com/sikaili/skyl.fr/commit/352266))
+
 ## [2.7.4] - 2020-05-09
 ### Changed
 - changelog.js ([4e01d4](https://github.com/sikaili/skyl.fr/commit/4e01d4))
