@@ -1,6 +1,6 @@
 {
 	"name": "skyl.fr",
-	"version": "2.7.8",
+	"version": "2.7.6",
 	"private": true,
 	"scripts": {
 		"serve": "vue-cli-service serve",
