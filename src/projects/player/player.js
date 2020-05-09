@@ -73,7 +73,7 @@ export default function (sk) {
   sk.setSong = (songId) => {
     sk.settings.list.current = songId;
     songId = songId.toLowerCase();
-    const sound = () => import('./sound/' + songId + '.m4a'); //eslint-disable-line
+    const sound = () => import('@/projects/player/sound/' + songId + '.m4a'); //eslint-disable-line
     sound().then((module) => {
       const soundFile = module.default;
       state = -1;
@@ -330,8 +330,7 @@ export default function (sk) {
   sk.setup = () => {
     sk.randomSeed(2200);
     peakDetect = new PeakDetect();
-
-    sk.canvas = sk.createCanvas(sk.windowWidth, sk.windowHeight);
+    sk.createCanvas(sk.windowWidth, sk.windowHeight);
     if (sk.width > 640)sk.pixelDensity(1.0);
     sk.stroke(255, 255, 255);
     sk.strokeWeight(10);

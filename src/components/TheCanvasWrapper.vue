@@ -189,7 +189,7 @@ export default {
       showList: this.type === 'musicIframe',
       showCanvasSettings: false,
       settings: null,
-      songs: { items: ['Cripple', 'Amarrage', 'La-Danse', 'flower', 'saturation-chinoise', '2019-12-YeChe', 'Rain-Addiction', 'Emb', 'c-syn', 'e-minor'] },
+      songs: { items: ['Cripple', 'Amarrage', 'La-Danse', 'flower', 'saturation-chinoise', 'c-syn', 'e-minor'] },
       iframes: ['c-syn', 'e-minor', 'flower', 'saturation-chinoise'],
       songId: null,
       version: process.env.VUE_APP_VERSION,
