@@ -19,14 +19,14 @@
 - random params [CHANGED] use lines ([547148](https://github.com/sikaili/skyl.fr/commit/5471480feeac3179c2fe6428d8a8c07b2758a4b2))
 - reaction-diffusion [CHANGED]canvas settings display value ([309fb1](https://github.com/sikaili/skyl.fr/commit/309fb1a4306360814511dcf0f794ad59a58040c5))
 ### Changed
-- cv ajustement, hide 2 sketches ([bb4ec3](https://github.com/sikaili/skyl.fr//commit/bb4ec368adad15d33593b30d7d55ed074ea67fcc))
-- refacto CV page, move data to json ([cb0a07](https://github.com/sikaili/skyl.fr//commit/cb0a0723811271eefa6bbddffa926f72adf11717))
-- worley-noise change ([7393fc](https://github.com/sikaili/skyl.fr//commit/7393fc11c8ebffae5112183967da2dc7e0e70bba))
-- reaction-diffusiion default value ([c73bfb](https://github.com/sikaili/skyl.fr//commit/c73bfbe456788542300d95a3968d956bbae75d81))
-- auto add virus after 2s ([e6f80b](https://github.com/sikaili/skyl.fr//commit/e6f80b806860bfad2eb02083b151596c73415346))
-- reaction diffusion random params etc ([c28365](https://github.com/sikaili/skyl.fr//commit/c283653e7fdaccf109ebde23f4092894ffce2519))
-- reaction diffusion ajustment ([[ADDED](https://github.com/sikaili/skyl.fr//commit/[ADDED] touch move to show random caracters))
-- reaction-diffusion skin tone classification ([9e0b2e](https://github.com/sikaili/skyl.fr//commit/9e0b2e35f352e4b1195a19ffae7b2cf926e5fa9b))
+- cv ajustement, hide 2 sketches ([bb4ec3](https://github.com/sikaili/skyl.fr/commit/bb4ec368adad15d33593b30d7d55ed074ea67fcc))
+- refacto CV page, move data to json ([cb0a07](https://github.com/sikaili/skyl.fr/commit/cb0a0723811271eefa6bbddffa926f72adf11717))
+- worley-noise change ([7393fc](https://github.com/sikaili/skyl.fr/commit/7393fc11c8ebffae5112183967da2dc7e0e70bba))
+- reaction-diffusiion default value ([c73bfb](https://github.com/sikaili/skyl.fr/commit/c73bfbe456788542300d95a3968d956bbae75d81))
+- auto add virus after 2s ([e6f80b](https://github.com/sikaili/skyl.fr/commit/e6f80b806860bfad2eb02083b151596c73415346))
+- reaction diffusion random params etc ([c28365](https://github.com/sikaili/skyl.fr/commit/c283653e7fdaccf109ebde23f4092894ffce2519))
+- reaction diffusion ajustment ([[ADDED](https://github.com/sikaili/skyl.fr/commit/[ADDED] touch move to show random caracters))
+- reaction-diffusion skin tone classification ([9e0b2e](https://github.com/sikaili/skyl.fr/commit/9e0b2e35f352e4b1195a19ffae7b2cf926e5fa9b))
 
 ## [2.6.2] - 2019-04-30
 ### Fixed
