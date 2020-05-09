@@ -1,3 +1,10 @@
+## [2.7.3] - 2020-05-09
+### Fixed
+- changelog.js ([c09997](https://github.com/sikaili/skyl.fr//commit/c099972a2f54063cef7f95a5b3fc6dd4143837eb))
+
+### Changed
+- rename components ([b5abc7](https://github.com/sikaili/skyl.fr//commit/b5abc715557d94c8649373116f249964027876f2))
+
 ## [2.7.2] - 2020-05-08
 ### Added
 -  changelog.js ([e9d205](https://github.com/sikaili/skyl.fr/commit/e9d205738eba6e3f4125b4cb9bfdc6e83d9c7de6))
