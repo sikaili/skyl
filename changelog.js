@@ -23,7 +23,7 @@ const currentChangelog = fs.readFileSync('./CHANGELOG.md', 'utf-8');
 const currentVersion = require('./package.json').version.split('.');
 
 currentVersion[versionCore] = +currentVersion[versionCore] + 1;
-const newVersion = currentVersion;
+const newVersion = currentVersion.join('.');
 let newChangelog = `## [${newVersion}] - ${
   new Date().toISOString().split('T')[0]
 }\n`;
