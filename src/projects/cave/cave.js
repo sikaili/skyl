@@ -77,24 +77,35 @@ export default (instance) => {
   let sum;
   let sum1;
 
-  sk.setSong = (songId) => {
+  sk.setSong = (songId, notInit = true) => {
+    if (sk.settings.list.current === songId && notInit) {
+      return;
+    }
     sk.settings.list.current = songId;
     songId = songId.toLowerCase();
-    const sound = () => import('../player/sound/' + songId + '.m4a'); //eslint-disable-line
+    sk.isPlayed = false;
+    sk.soundIsLoading = true;
+    const sound = () => import('@/projects/player/sound/' + songId + '.m4a'); //eslint-disable-line
     sound().then((module) => {
       const soundFile = module.default;
-      sk.soundIsLoading = true;
-      sk.isPlayed = false;
       if (sk.player) {
         sk.player.disconnect(fft);
         sk.player.disconnect();
         sk.player.dispose();
       }
-      sk.player = new Tone.Player(soundFile, () => { sk.soundIsLoading = false; }).toMaster();
+      sk.player = new Tone.Player(soundFile, () => {
+        sk.redraw();
+        sk.loop();
+        sk.soundIsLoading = false;
+        if (notInit) {
+          sk.player.start();
+          sk.isPlayed = true;
+        }
+      }).toMaster();
       sk.player.connect(fft);
     });
   };
-  sk.setSong(sk.settings.list.current);
+  sk.setSong(sk.settings.list.current, false);
 
   class Point {
     constructor(i, scale = 2, options, x, y) {
@@ -245,8 +256,8 @@ export default (instance) => {
     sum = 255 - selectedFreq.reduce((a, b) => a + b) / 200;
     const selectedFreq1 = spectrum.filter((freq, i) => (i > sk.settings.freq2.value) && (i < sk.settings.freq2.value + 200));
     sum1 = 300 - selectedFreq1.reduce((a, b) => a + b) / 100;
-    sum = sk.constrain(sum, 0, 500);
-    sum1 = sk.constrain(sum1, 0, 500);
+    sum = sk.constrain(sum, 1, 500);
+    sum1 = sk.constrain(sum1, 1, 500);
 
     const colors = {
       get background() {
@@ -395,7 +406,7 @@ export default (instance) => {
       sk.noStroke(0);
       sk.fill(200, 100, 100, (Math.sin((sk.frameCount / 50) * sk.PI) + 1) * 180);
       sk.textSize(sk.width > 768 ? 36 : 24);
-      if (sk.soundIsLoading === false) {
+      if (!sk.soundIsLoading) {
         sk.text('Touch to Play', 0.5 * sk.width, sk.windowHeight * 0.6);
       } else {
         sk.text('Loading...', 0.5 * sk.windowWidth, sk.windowHeight * 0.6);
@@ -419,8 +430,6 @@ export default (instance) => {
       }
       sk.staticBodyVertex = null;
     }
-
-    sk.background(0);
     if (!sk.soundIsLoading) {
       if (sk.player.state === 'stopped') {
         sk.player.start();
