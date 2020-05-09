@@ -1,12 +1,12 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import VueAnalytics from 'vue-analytics';
-import Drawings from './views/Drawings.vue';
-import Work from './views/Work.vue';
-import Play from './views/Play.vue';
-import Music from './views/Music.vue';
-import Page from './views/Page.vue';
-import Cv from './views/Cv.vue';
+import Drawings from '@/components/views/Drawings.vue';
+import Work from '@/components/views/Work.vue';
+import Play from '@/components/views/Play.vue';
+import Music from '@/components/views/Music.vue';
+import Page from '@/components/views/Page.vue';
+import Cv from '@/components/views/Cv.vue';
 
 Vue.use(Router);
 

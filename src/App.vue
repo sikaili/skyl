@@ -72,10 +72,10 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import TheHeader from './components/TheHeader.vue';
-import TheFooter from './components/TheFooter.vue';
-import BaseNotificationBar from './components/base/BaseNotificationBar.vue';
-import TheCanvasWrapper from './components/TheCanvasWrapper.vue';
+import TheHeader from '@/components/TheHeader.vue';
+import TheFooter from '@/components/TheFooter.vue';
+import BaseNotificationBar from '@/components/base/BaseNotificationBar.vue';
+import TheCanvasWrapper from '@/components/TheCanvasWrapper.vue';
 
 document.ontouchmove = function(e) { //eslint-disable-line
   return true;
