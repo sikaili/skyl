@@ -1,3 +1,7 @@
+## [2.7.6] - 2020-05-09
+### Changed
+- google analytics events ([8b9803](https://github.com/sikaili/skyl.fr/commit/8b9803))
+
 ## [2.7.5] - 2020-05-09
 ### Fixed
 - cave change song screen block ([be4ae5](https://github.com/sikaili/skyl.fr/commit/be4ae5))

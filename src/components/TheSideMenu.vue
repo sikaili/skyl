@@ -140,8 +140,10 @@ export default {
     },
     handleClickActionButton() {
       if (this.actionButton === 'Random') {
+        this.$ga.event('random-sketch', 'click', 'usage', 1);
         this.randomIframe();
       } else if (this.actionButton === 'Restart') {
+        this.$ga.event('restart-sketch', 'click', 'usage', 1);
         this.restart();
       }
       this.setActionButton();

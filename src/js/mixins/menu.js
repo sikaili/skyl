@@ -50,6 +50,7 @@ export default {
       if (item.app && item.id) {
         this.$router.push({ query: { id: item.id } });
       }
+      this.$ga.event(`play-${item}`, 'click', 'usage-menu', 1);
     },
     setItemActive(item, options) {
       this.$router
@@ -88,6 +89,7 @@ export default {
       }, 1500);
     },
     goToPage(item) {
+      this.$ga.event(`read-more-${item}`, 'click', 'usage-menu', 1);
       this.$router.push({ path: `/page/${this.name}/${item.id}` });
     },
   },

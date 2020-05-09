@@ -54,7 +54,7 @@ const router = new Router({
 export default router;
 
 Vue.use(VueAnalytics, {
-  id: 'UA-143317718-1',
+  id: 'UA-143317718-4',
   router,
   disableScriptLoader: true,
   autoTracking: {
