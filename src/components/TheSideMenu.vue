@@ -100,7 +100,7 @@
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
-  name: 'SideMenu',
+  name: 'TheSideMenu',
   data() {
     return {
       displayList: false,

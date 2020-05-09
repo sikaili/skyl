@@ -42,7 +42,7 @@
       </h4>
 
       <ul class="lh-copy bt mt0">
-        <SecondList
+        <base-list-clickable
           v-for="(mission, i) in splitText(project.firstMissons)"
           :key="i"
           :item="mission"
@@ -65,7 +65,7 @@
     <h1 class="fw3 mv4">
       Expositions & Concerts
     </h1>
-    <cv-text-content
+    <base-text-content
       v-for="expo in expos"
       :key="expo.title"
       :title="expo.title"
@@ -75,7 +75,7 @@
     <h1 class="fw3 mt5 mb4">
       Formations
     </h1>
-    <cv-text-content
+    <base-text-content
       v-for="formation in formations"
       :key="formation.title"
       :title="formation.title"
@@ -96,16 +96,16 @@
 <script>
 import BaseCard from '@/components/base/BaseCard.vue';
 import BaseTable from '@/components/base/BaseTable.vue';
-import SecondList from '@/components/SecondList.vue';
-import CvTextContent from '@/components/CvTextContent.vue';
+import BaseListClickable from '@/components/base/BaseListClickable.vue';
+import BaseTextContent from '@/components/base/BaseTextContent.vue';
 import cvData from '@/assets/JSON/cv.json';
 
 export default {
   components: {
     BaseCard,
     BaseTable,
-    SecondList,
-    CvTextContent,
+    BaseListClickable,
+    BaseTextContent,
   },
   data() {
     return {

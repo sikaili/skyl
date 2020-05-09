@@ -1,9 +1,12 @@
 <template>
-  <div>
+  <div class="List">
     <li @click="show = !show">
       {{ item }}
     </li>
-    <ul v-if="children && show">
+    <ul
+      v-if="children && show"
+      class="List__secondLevel"
+    >
       <li
         v-for="child in children"
         :key="child"
@@ -16,11 +19,16 @@
 
 <script>
 export default {
+  name: 'BaseList',
   props: {
     item: {
       type: String,
+      default: '',
     },
-    children: { type: Array },
+    children: {
+      type: Array,
+      default: () => [],
+    },
   },
   data() {
     return {

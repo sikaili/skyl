@@ -1,14 +1,14 @@
 <template>
-  <SideMenu v-show="showSideMenu" />
+  <the-side-menu v-show="showSideMenu" />
 </template>
 
 <script>
-import SideMenu from '@/components/SideMenu.vue';
+import TheSideMenu from '@/components/TheSideMenu.vue';
 
 export default {
   name: 'Play',
   components: {
-    SideMenu,
+    TheSideMenu,
   },
   data() {
     return {
