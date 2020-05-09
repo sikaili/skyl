@@ -100,6 +100,7 @@ export default {
       showIframe: false,
       canvasWrapperKey: 0,
       sketches: {},
+      version: process.env.VUE_APP_VERSION,
     };
   },
   computed: {
@@ -189,9 +190,11 @@ export default {
     showRefreshUI(e) {
       this.registration = e.detail;
       this.updateExists = true;
+      this.$ga.event('refresh-app-shown', 'notification', 'update', this.version);
     },
     refreshApp() {
       this.updateExists = false;
+      this.$ga.event('refresh-app-clicked', 'click', 'update', this.version);
       if (!this.registration || !this.registration.waiting) { return; }
       this.registration.waiting.postMessage('skipWaiting');
     },
