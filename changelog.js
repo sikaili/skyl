@@ -26,7 +26,7 @@ currentVersion[versionCore] = +currentVersion[versionCore] + 1;
 const newVersion = currentVersion.join('.');
 let newChangelog = `## [${newVersion}] - ${
   new Date().toISOString().split('T')[0]
-}\n`;
+}`;
 
 const added = [];
 const fixed = [];
@@ -40,7 +40,7 @@ commitsArray.forEach((commit) => {
         0,
         6,
       )}](https://github.com/sikaili/skyl.fr/commit/${
-        commit.sha
+        commit.sha.slice(0, 6)
       }))\n`,
     );
   }
@@ -49,8 +49,8 @@ commitsArray.forEach((commit) => {
       `- ${commit.message.replace('fixed:', '')} ([${commit.sha.substring(
         0,
         6,
-      )}](https://github.com/sikaili/skyl.fr//commit/${
-        commit.sha
+      )}](https://github.com/sikaili/skyl.fr/commit/${
+        commit.sha.slice(0, 6)
       }))\n`,
     );
   }
@@ -59,8 +59,8 @@ commitsArray.forEach((commit) => {
       `- ${commit.message.replace('changed:', '')} ([${commit.sha.substring(
         0,
         6,
-      )}](https://github.com/sikaili/skyl.fr//commit/${
-        commit.sha
+      )}](https://github.com/sikaili/skyl.fr/commit/${
+        commit.sha.slice(0, 6)
       }))\n`,
     );
   }
@@ -71,7 +71,6 @@ if (added.length) {
   added.forEach((added) => {
     newChangelog += added;
   });
-  newChangelog += '\n';
 }
 
 if (fixed.length) {
@@ -79,7 +78,6 @@ if (fixed.length) {
   fixed.forEach((fixed) => {
     newChangelog += fixed;
   });
-  newChangelog += '\n';
 }
 
 if (changed.length) {
@@ -87,8 +85,8 @@ if (changed.length) {
   changed.forEach((changed) => {
     newChangelog += changed;
   });
-  newChangelog += '\n';
 }
+newChangelog += '\n';
 
 // prepend the newChangelog to the current one
 fs.writeFileSync('./CHANGELOG.md', `${newChangelog}${currentChangelog}`);
