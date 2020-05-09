@@ -1,3 +1,9 @@
+## [2.7.7] - 2020-05-09
+### Fixed
+- update button not working ([a26d20](https://github.com/sikaili/skyl.fr/commit/a26d20))
+### Changed
+- rename components ([bc0fce](https://github.com/sikaili/skyl.fr/commit/bc0fce))
+
 ## [2.7.6] - 2020-05-09
 ### Changed
 - google analytics events ([8b9803](https://github.com/sikaili/skyl.fr/commit/8b9803))
