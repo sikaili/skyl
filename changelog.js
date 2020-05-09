@@ -26,7 +26,7 @@ currentVersion[versionCore] = +currentVersion[versionCore] + 1;
 const newVersion = currentVersion.join('.');
 let newChangelog = `## [${newVersion}] - ${
   new Date().toISOString().split('T')[0]
-}`;
+}\n`;
 
 const added = [];
 const fixed = [];

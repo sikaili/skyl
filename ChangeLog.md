@@ -1,4 +1,5 @@
-## [2.7.4] - 2020-05-09### Changed
+## [2.7.4] - 2020-05-09
+### Changed
 - changelog.js ([4e01d4](https://github.com/sikaili/skyl.fr/commit/4e01d4))
 
 ## [2.7.3] - 2020-05-09
