@@ -91,16 +91,21 @@ if (changed.length) {
 }
 newChangelog += '\n';
 
+if (!fixed.length && !changed.length && !added.length) {
+  newChangelog = '';
+}
+if (newChangelog) {
 // prepend the newChangelog to the current one
-fs.writeFileSync('./CHANGELOG.md', `${newChangelog}${currentChangelog}`);
-const packageData = require('./package.json');
+  fs.writeFileSync('./CHANGELOG.md', `${newChangelog}${currentChangelog}`);
+  const packageData = require('./package.json');
 
-packageData.version = newVersion;
-fs.writeFileSync('./package.json', JSON.stringify(packageData, null, '\t'));
+  packageData.version = newVersion;
+  fs.writeFileSync('./package.json', JSON.stringify(packageData, null, '\t'));
 
-// create a new commit
-child.execSync('git add .');
-child.execSync(`git commit -m "chore: Bump to version ${newVersion}"`);
+  // create a new commit
+  child.execSync('git add .');
+  child.execSync(`git commit -m "chore: Bump to version ${newVersion}"`);
 
-// tag the commit
-child.execSync(`git tag -a -m "Tag for version ${newVersion}" ${newVersion}`);
+  // tag the commit
+  child.execSync(`git tag -a -m "Tag for version ${newVersion}" ${newVersion}`);
+}

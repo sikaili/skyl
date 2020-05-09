@@ -6,14 +6,19 @@
       @mouseleave="handleFullScreenMouseLeave()"
     />
     <the-header v-if="!canvasFullScreen" />
-    <base-notification-bar
+    <div
       v-if="updateExists"
-      :icon="'sync'"
-      @click="refreshApp()"
+      class="Notification"
     >
+      <i class="icon ion-md-sync" />
       new version available,
-      <span style="color: rgba(150,150,255);"> click here </span> to refresh.
-    </base-notification-bar>
+      <span
+        class="Notification__click"
+        @click="refreshApp()"
+      >
+        click here
+      </span> to refresh.
+    </div>
     <div
       :key="canvasWrapperKey"
       class="sketchContainer back bw0"
@@ -194,9 +199,9 @@ export default {
     },
     refreshApp() {
       this.updateExists = false;
-      this.$ga.event('refresh-app-clicked', 'click', 'update', this.version);
       if (!this.registration || !this.registration.waiting) { return; }
       this.registration.waiting.postMessage('skipWaiting');
+      this.$ga.event('refresh-app-clicked', 'click', 'update', this.version);
     },
     disablePromptDesktop() {
       localStorage.setItem('propose-desktop', true);
@@ -249,6 +254,20 @@ export default {
         margin-left: auto;
         margin-right: auto;
         padding: 0 0 0 0;
+    }
+    .Notification {
+        background-color: rgba(0,0,0, 0.8);
+        padding: 18px 48px;
+        line-height: 24px;
+        text-align: center;
+        position: fixed;
+        width: 100%;
+        color: white;
+        bottom: 0px;
+
+        &__click {
+            color: rgba(150,150,255);
+        }
     }
 
     body {
