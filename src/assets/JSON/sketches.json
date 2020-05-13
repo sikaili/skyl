@@ -25,5 +25,9 @@
   {
     "id": "k-means-selfie",
     "type": "sketch"
+  },
+  {
+    "id": "quadtree",
+    "type": "sketch"
   }
 ]
