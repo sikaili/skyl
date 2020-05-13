@@ -1,0 +1,85 @@
+{
+  "projects": {
+    "lequipe": {
+      "companyName": "Exomind, client L'Équipe",
+      "cityAndDate": "Boulogne-Billancourt, from September 2019",
+      "description": "JS engineer, works at l'Équipe on their lequipe.fr universal website, a progressive web app created with VueJS. Implemented various features such as dark mode, landing pages, 3ds paiement tunnel, from concept through deployment.",
+      "firstMissons": "Collaborate with product, marketing team, and back-end developers to implement new features;Assess UX and UI designs for technical feasibility;Maintain sites and pages ex: le journal, la chaine L'Équipe, customer service, refactoring and debug of existing code;Data, advertising, SEO (tracking, DFP, smart refresh, user consents);Account generation, subscription (google sign-in, one tap sign-in, auto-promo management, targeted offer and pop-ins);Tests and code review;Projects from scratch to deployment: dark mode, landing pages, 3d secure payment tunnel, player pip…",
+      "secondMissons": {
+        "number": null
+      },
+      "technologies": ["Javascript, Sass, HTML", "Vue.js, Angular, Axios", "GitLab, Jira, Jenkins, Docker, Git, VS Code, Webpack, ESLint, StyleLint, Babel, Vue CLI, Zeplin, Sketch, Adobe Suite"]
+    },
+    "orange": {
+      "companyName": "Orange",
+      "cityAndDate": "Paris, Janvier – Juillet 2019",
+      "description": "Coder, designer, facilitator. Worked closely with the innovation and development manager, on UX / UI design and website development at the request of internal customers.",
+      "firstMissons": "Analysis of customer needs and transform them into wireframe;Construction of single-page-application in Vue.js;Visual, interactive experiments, data visualization;Modifications and Maintenance of existing sites (jQuery and other technologies);Coaching clients on interface design, participation in the design of collective intelligence workshops",
+      "secondMissons": {
+        "text": "Quick prototyping using Tachyons CSS and Bootstrap;Responsive Design and Adaptive Design.",
+        "number": 2
+      },
+      "technologies": ["Javascript, CSS, HTML", "Vue.js, p5.js, Bootstrap, Tachyons, jQuery", "Vue CLI, Git, Visual Studio, ESLint, Prettier, Babel, Sketch, Adobe Suite"]
+    },
+    "thecamp": {
+      "companyName": "thecamp",
+      "cityAndDate": "Aix-en-Provence, Avril - Novembre 2018",
+      "cards": [{
+        "caption": "Konbini: 'Plastic Arcade', quand le jeu vidéo devient écolo",
+        "link": "https://www.konbini.com/fr/gaming/video-plastic-arcade-quand-le-jeu-video-devient-ecolo/",
+        "img": "/img/plastic-arcade.jpg"
+      }, {
+        "caption": "France 24: Sensibiliser à la pollution plastique grâce au jeu vidéo",
+        "link": "https://www.france24.com/fr/video/20181002-sensibiliser-a-pollution-plastique-grace-jeu-video-plastic-arcade-a-the-camp",
+        "img": "img/plastic-arcade-24.png"
+      }],
+      "firstMissons": "Make prototypes and interaction ideas with Javascript (p5.js and Canvas API);Supervise the development of the games, review design according to technical feasibility;Creation of interactive art installations, explore interaction possibilities with Kinect, Arduino, Leap Motion etc;Proof of concepts during different phases of the residency, with experts of the domaine;Participate in workshops with sponsors of thecamp: SNCF, Airbus, LVMH, etc…",
+      "secondMissons": {
+        "text": "",
+        "number": null
+      },
+      "technologies": ["Javascript, CSS, HTML", "p5.js, d3.js, Arduino", "Git, Visual Studio, Vue CLI, AWS CLI, Arduino IDE, Processing IDE, Unity"]
+    }
+  },
+  "expos": [{
+    "title": "Biennal SIANA, 2019",
+    "place": "\nÉvry, France",
+    "content": "\nDatalaxy presents 'where-s-jane', an installation that questions the transparency and clarity of the data collection behind our daily usage of social network, by showing an interactive visualisation of a Facebook user's data"
+  }, {
+    "title": "\n\nInventivités digitales, Le Cube, 2019",
+    "place": "\nIssy-les-Moulineaux, France",
+    "content": "\nExposition of the major Id-dim by IMT-BS, Télécom Sud Paris and ESAD Reims, where Datalaxy presents 'where-s-jane'"
+  }, {
+    "title": "\n\nFestival Rouxteur, Mains d'Œuvres, 2018",
+    "place": "\nSaint-Ouen, France",
+    "content": "\nAn increased exhibition with three works on the theme 'Traverser la mer sans que le ciel ne le sache'"
+  }, {
+    "title": " \n\nTintamarres, Cité de la Musique de Marseille, 2017",
+    "place": "\nMarseille, France",
+    "content": "\nTintamarres #7, Tintamarres #8, Composition: \"Machine 1-10\", \"CB2\" \n\nLe Printemps de Bourges, 2016"
+  }, {
+    "title": " \n\nLe Printemps de Bourges, 2016",
+    "place": "\nBourges, France",
+    "content": "\nPerforms at the Printemps de Bourges, Scène Berry, contest 'Printemps des Grandes Écoles'."  }],
+  "education": [{
+    "title": "IMT-BS + Télécom SudParis + ESAD Reims, 2018 - 2019",
+    "place": "\nÉvry, France",
+    "content": "\nPost-Diploma, BAC + 5, Specialization \"Digital Inventivities\": multidisciplinary and collaborative, halfway between management, gesign and engineering"
+  }, {
+    "title": "\n\nÉcole Supérieure d'Art et de Design de Marseille, 2016 - 2018",
+    "place": "\nMarseille, France",
+    "content": "\nBAC + 5, web technologies, coding, interface and user experience design (UX / UI), interaction design, generative design"
+  }, {
+    "title": "\n\nDongguan University of Technology, 2011 - 2015",
+    "place": "\nDongguan, China",
+    "content": "\nBAC + 4, engineering, design, the school is in partnership with CNAM"
+  }, {
+    "title": "\n\nÉcole de Design Nantes Atlantique, 2016",
+    "place": "\nNantes, France",
+    "content": "\nBAC + 3, web technologies, coding, interface and user experience design (UX / UI), interaction design, generative design"
+  }, {
+    "title": "\n\nUniversité de Poitiers, 2015",
+    "place": "\nPoitiers, France",
+    "content": "\nFrench language, literature, history, culture"
+  }]
+}

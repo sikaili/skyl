@@ -10,7 +10,7 @@
       @click="$router.go(-1)"
     />
     <h1 class="fw3">
-      Expérience Professionnelle
+      {{ categories[lang].h1 }}
     </h1>
     <section
       v-for="(project,index) in projects"
@@ -21,7 +21,7 @@
         {{ project.companyName }}
         <span class="f5">{{ project.cityAndDate }}</span>
       </h1>
-      <h3>
+      <h3 class="CV__descriptioin">
         {{ project.description }}
       </h3>
       <div
@@ -38,7 +38,7 @@
         />
       </div>
       <h4 class="mt4 mb3">
-        Responsabilités occupées :
+        {{ categories[lang].responsability }}
       </h4>
 
       <ul class="lh-copy bt mt0">
@@ -54,16 +54,16 @@
         />
       </ul>
       <h4 class="mt4 mb3">
-        Environnement Technique :
+        {{ categories[lang].environnement }}
       </h4>
       <base-table
         v-if="project.technologies"
-        :categories="['Langages', 'Librairies', 'Outils & Plug-ins']"
+        :categories="categories[lang].categories"
         :content="project.technologies"
       />
     </section>
     <h1 class="fw3 mv4">
-      Expositions & Concerts
+      {{ categories[lang].expositions }}
     </h1>
     <base-text-content
       v-for="expo in expos"
@@ -73,7 +73,7 @@
       :content="expo.content"
     />
     <h1 class="fw3 mt5 mb4">
-      Formations
+      {{ categories[lang].education }}
     </h1>
     <base-text-content
       v-for="formation in formations"
@@ -98,7 +98,7 @@ import BaseCard from '@/components/base/BaseCard.vue';
 import BaseTable from '@/components/base/BaseTable.vue';
 import BaseListClickable from '@/components/base/BaseListClickable.vue';
 import BaseTextContent from '@/components/base/BaseTextContent.vue';
-import cvData from '@/assets/JSON/cv.json';
+import cvData from '@/assets/JSON/cv_en.json';
 
 export default {
   components: {
@@ -112,6 +112,25 @@ export default {
       projects: cvData.projects,
       expos: cvData.expos,
       formations: cvData.education,
+      categories: {
+        fr: {
+          h1: 'Expérience Professionnelle',
+          responsability: 'Responsabilités occupées :',
+          environnement: 'Environnement Technique :',
+          expositions: 'Expositions & Concerts',
+          education: 'Formations',
+          categories: ['Langages', 'Librairies', 'Outils & Plug-ins'],
+        },
+        en: {
+          h1: 'Professional experience',
+          responsability: 'Responsibilities:',
+          environnement: 'Environment:',
+          expositions: 'Exhibitions & Concerts',
+          education: 'Education',
+          categories: ['Languages', 'Librairies', 'Tools, environment, good practices'],
+        },
+      },
+      lang: 'en',
     };
   },
   methods: {
@@ -135,6 +154,8 @@ export default {
 //   });
 //   return dump;
 // };
+
+// console.log(JSON.stringify(traiteText(text)));
 
 // const traiteTextEx = `Biennal SIANA, 2019@
 // Évry, France@
@@ -164,6 +185,12 @@ export default {
             margin-left: auto;
             margin-right: auto;
             position: relative;
+        }
+
+        &__descriptioin {
+            margin-top: 24px;
+            font-weight: 500;
+            line-height: 1.4em;
         }
 
         &__button {
