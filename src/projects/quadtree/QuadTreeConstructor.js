@@ -8,16 +8,6 @@ export default class QuadTree {
     this.points = [];
   }
 
-  showBorder(display) {
-    if (this.d < 1) {
-      return;
-    }
-    display(this.x, this.y, this.d, this.points);
-    if (this.divided) {
-      ['lt', 'rt', 'lb', 'rb'].forEach((corner) => this[corner].showBorder(display));
-    }
-  }
-
   addPoint(point) {
     if (!this.divided) {
       if (this.points.length < this.capacity) {
@@ -41,24 +31,25 @@ export default class QuadTree {
     ['lt', 'rt', 'lb', 'rb'].forEach((corner) => this[corner].addPoint(point));
   }
 
-  // lt() {
-  //   return { x: this.x - this.d / 2, y: this.y - this.d / 2 };
-  // }
-
-  // rt() {
-  //   return { x: this.x + this.d / 2, y: this.y - this.d / 2 };
-  // }
-
-  // lb() {
-  //   return { x: this.x + this.d / 2, y: this.y + this.d / 2 };
-  // }
-
-  // rb() {
-  //   return { x: this.x - this.d / 2, y: this.y + this.d / 2 };
-  // }
-
   isInRange(point) {
     const { x, y } = point;
     return x > (this.x - this.d / 2) && x < (this.x + this.d / 2) && y > (this.y - this.d / 2) && y < (this.y + this.d / 2);
+  }
+
+  query(range, points = []) {
+    const collision = true;
+    if (collision) {
+      const points = this.points.filter();
+    }
+  }
+
+  showBorder(display) {
+    if (this.d < 1) {
+      return;
+    }
+    display(this.x, this.y, this.d, this.points);
+    if (this.divided) {
+      ['lt', 'rt', 'lb', 'rb'].forEach((corner) => this[corner].showBorder(display));
+    }
   }
 }

@@ -5,71 +5,6 @@ import QuadTree from '@/projects/quadtree/QuadTreeConstructor';
 export default (instance) => {
   const sk = instance;
   sk.settings = {
-    dA: {
-      // value: 1,
-      value: 1.23,
-      default: 1.23,
-      type: 'range',
-      max: 3,
-      min: 0.2,
-      step: 0.01,
-    },
-    dB: {
-      // value: 0.5,
-      value: 1.3,
-      default: 1.3,
-      type: 'range',
-      max: 3,
-      min: 0.2,
-      step: 0.01,
-    },
-    feed: {
-      value: 0.0545,
-      default: 0.0545,
-      type: 'range',
-      max: 0.15,
-      min: 0.01,
-      step: 0.001,
-    },
-    k: {
-      value: 0.062,
-      default: 0.062,
-      type: 'range',
-      max: 0.15,
-      min: 0.01,
-      step: 0.001,
-      noRandom: true,
-    },
-    t: {
-      // value: 1.0,
-      value: 1.03,
-      default: 1.03,
-      type: 'range',
-      max: 2,
-      min: 0.2,
-      step: 0.01,
-    },
-    threshold: {
-      // value: 0.1,
-      value: 0.45,
-      default: 0.45,
-      type: 'range',
-      max: 1,
-      min: 0.0,
-      step: 0.01,
-      noRandom: true,
-    },
-    interval: {
-      value: sk.windowWidth > 512 ? 4 : 3,
-      default: 4,
-      type: 'range',
-      max: 8,
-      min: 2,
-      step: 1,
-      noRandom: true,
-      callback: { name: 'changeInterval', get value() { return sk.settings.interval.value; } },
-    },
-    point: Math.random() > 0.5,
     actions: [
       { name: 'saveCapture', icon: 'camera' },
       { name: 'randomParams', icon: 'shuffle' },
@@ -164,6 +99,8 @@ export default (instance) => {
   //     }
   //   });
   //   canvasPoints.forEach((point) => {
+  //     quadTree = new QuadTree(sk.width / 2, sk.height / 2, 400);
+  //     quadTree.addPoint(point);
   //     const distances = featurePoints.map((pointA) => ({ distance: calDistance(pointA, point), point: pointA }));
   //     distances.sort((a, b) => a.distance - b.distance);
   //     point.noise = distances[nth].distance;
@@ -176,20 +113,22 @@ export default (instance) => {
   //       point.active = false;
   //     }
   //   });
-  // }, 40);
+  // }, 100);
 
   const showRect = (x, y, d, points) => {
     sk.push();
-    sk.fill(0, 600 / d);
     sk.noStroke();
+    sk.fill(50, 800 / d);
     // sk.ellipse(x, y, d / 2 * (Math.sin(sk.frameCount / 100) + 2));
     // sk.stroke(128);
     if (d < 400) {
-      sk.translate(x, y);
+      sk.translate(x, y, Math.sin(sk.frameCount / 30 + x + y) * 50);
+      // const dBox = d / 2 * (Math.sin(sk.frameCount / 100) + 2);
       sk.box(d / 2, d / 2, 400 / d);
+      // const dC = d / 2 * (Math.cos(sk.frameCount / 100) + 2);
       if (points && points[0] && d < 50) {
         sk.translate(0, 0, points[0].z);
-        sk.fill(255, 50, 50, 800 / d);
+        sk.fill(255, 50, 50, 1000 / d);
         sk.sphere(d / 4);
       }
     }
@@ -197,22 +136,22 @@ export default (instance) => {
   };
   let mousePositions = [];
   sk.draw = () => {
-    mousePositions.push({
-      x: sk.mouseX, y: sk.mouseY, z: 200 * (sk.noise(sk.frameCount / 120) - 0.5), timeStamp: sk.millis(),
-    });
     sk.scale(1.5);
     sk.rotateX(1.1);
-    sk.rotateZ(sk.frameCount / 150);
-    sk.rotateY(sk.frameCount / 100);
-
+    sk.rotateZ(sk.frameCount / 150 + sk.mouseY / 100);
+    sk.rotateY(sk.frameCount / 100 + sk.mouseX / 100);
     sk.translate(-sk.width / 2, -sk.height / 2);
-    sk.background(255);
+
+    sk.background(0);
     sk.noFill();
-    sk.points = Array(1000).fill('').map((a, index) => ({
+    sk.points = Array(1000).fill(null).map((a, index) => ({
       x: sk.width / 2 + (sk.noise(index / 300 + sk.frameCount / 100) - 0.5) * 600,
       y: sk.height / 2 + (sk.noise(index / 200 + sk.frameCount / 60) - 0.5) * 600,
       z: 200 * (sk.noise(index / 500 + sk.frameCount / 120) - 0.5),
     }));
+    mousePositions.push({
+      x: sk.mouseX, y: sk.mouseY, z: 200 * (sk.noise(sk.frameCount / 120) - 0.5), timeStamp: sk.millis(),
+    });
     sk.points = sk.points.concat(mousePositions);
     mousePositions = mousePositions.filter((position) => sk.millis() - position.timeStamp < 2000);
     quadTree = new QuadTree(sk.width / 2, sk.height / 2, 400);
@@ -229,16 +168,20 @@ export default (instance) => {
       sk.strokeWeight(20);
       sk.point(point.x, point.y, point.z);
     });
-    // sk.noLoop();
-    canvasPoints.forEach((point) => {
-      const {
-        x, y, active, noise,
-      } = point;
-      if (active) {
-        sk.fill(255 - noise * interval);
-        sk.ellipse(x * interval, y * interval, interval);
-      }
-    });
+    // canvasPoints.forEach((point) => {
+    //   const {
+    //     x, y, active, noise,
+    //   } = point;
+    //   if (active) {
+    //     sk.push();
+    //     sk.noStroke();
+    //     const d = interval;
+    //     sk.fill(255 - noise * interval);
+    //     sk.translate(x * interval, y * interval);
+    //     sk.sphere(d / 2);
+    //     sk.pop();
+    //   }
+    // });
   };
   sk.handleTouchEnd = () => {
     sk.staticBodyVertex = undefined;
@@ -251,17 +194,6 @@ export default (instance) => {
         const distance = calDistance(lastPoint, { x: sk.mouseX, y: sk.mouseY });
         if (distance > 0) {
           sk.staticBodyVertex.push({ x: sk.mouseX, y: sk.mouseY });
-          const gridPoint = { x: Math.floor(sk.mouseX / interval), y: Math.floor(sk.mouseY / interval) };
-          canvasPoints.forEach((point) => {
-            if (calDistance(point, gridPoint) < 10) {
-              // point.active = false;
-            }
-          });
-          featurePoints.forEach((point) => {
-            if (calDistance(point, gridPoint) < 10) {
-              point.faster = true;
-            }
-          });
         }
       } else {
         sk.staticBodyVertex.push({ x: sk.mouseX, y: sk.mouseY });
