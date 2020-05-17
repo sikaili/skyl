@@ -60,7 +60,7 @@ export default (instance) => {
       noRandom: true,
     },
     interval: {
-      value: sk.windowWidth > 512 ? 4 : 3,
+      value: sk.windowWidth > 512 ? 6 : 6,
       default: 4,
       type: 'range',
       max: 8,
@@ -196,7 +196,7 @@ export default (instance) => {
     sk.gridIsSet = true;
   };
   const sendText = (canvas = sk.textContent, text = 'home,I,had,a,lot.of,questions&and&no-answers.') => {
-    canvas.pixelDensity(1);
+    // canvas.pixelDensity(1);
     canvas.background(255);
     canvas.push();
     canvas.fill(0);
@@ -214,7 +214,7 @@ export default (instance) => {
     initGridAB(canvas);
   };
   sk.setup = () => {
-    sk.canvas = sk.createCanvas(sk.windowWidth, sk.windowHeight);
+    sk.canvas = sk.createCanvas(sk.windowWidth, sk.windowHeight, sk.WEBGL);
     sk.pixelDensity(1);
     grid = [];
     next = [];
@@ -298,6 +298,12 @@ export default (instance) => {
   };
 
   sk.draw = () => {
+    // webgl
+    sk.rotateY(sk.noise(sk.frameCount / 30) - 0.5);
+    sk.rotateZ(sk.noise(sk.frameCount / 30) - 0.5);
+    sk.rotateX(sk.noise(sk.frameCount / 30) / 3);
+    sk.translate(-sk.width / 2, -sk.height / 2);
+
     sk.background(255);
     for (let x = 0; x < grid.length; x += 1) {
       for (let y = 0; y < grid[0].length; y += 1) {
@@ -309,12 +315,26 @@ export default (instance) => {
           let diffrence = Math.floor((a - b) * 255);
           if (diffrence < 200) {
             if (sk.settings.point) {
-              sk.stroke(diffrence);
-              if (color) {
-                sk.stroke([...color, 255]);
+              sk.push();
+              if (diffrence < 50) {
+                sk.stroke(96, 200 - diffrence);
+              } else {
+                sk.noStroke();
               }
-              sk.strokeWeight(interval);
-              sk.point(x * interval, y * interval);
+              sk.fill(diffrence, 200 - diffrence);
+              sk.translate(x * interval, y * interval);
+              sk.box(interval / 1.3, interval / 1.3, diffrence / 3 + 5);
+              // sk.normalMaterial();
+              // sk.rotateX(-sk.PI / 2);
+              // sk.cone(interval / 4, diffrence / 1.5);
+              sk.pop();
+
+              // if (color) {
+              //   sk.stroke([...color, 255]);
+              // }
+              // sk.stroke(diffrence);
+              // sk.strokeWeight(interval);
+              // sk.point(x * interval, y * interval);
             } else {
               if (diffrence > 127) {
                 diffrence = 127 + (diffrence - 127) * 3;
