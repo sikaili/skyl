@@ -1,3 +1,11 @@
+## [2.8.0] - 2020-05-17
+### Added
+- quadtree & 3d ([1630be](https://github.com/sikaili/skyl.fr/commit/1630be))
+- cv version en, cv.vue multi languages ([d2ec8c](https://github.com/sikaili/skyl.fr/commit/d2ec8c))
+### Changed
+- clean quadtree ([545c50](https://github.com/sikaili/skyl.fr/commit/545c50))
+- reaction-diffusion 3d ([2f12d8](https://github.com/sikaili/skyl.fr/commit/2f12d8))
+
 ## [2.7.7] - 2020-05-09
 ### Fixed
 - update button not working ([a26d20](https://github.com/sikaili/skyl.fr/commit/a26d20))
