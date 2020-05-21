@@ -51,8 +51,8 @@ export default (instance) => {
     },
     threshold: {
       // value: 0.1,
-      value: 0.5,
-      default: 0.5,
+      value: 0.3,
+      default: 0.3,
       type: 'range',
       max: 1,
       min: 0.0,
@@ -84,7 +84,7 @@ export default (instance) => {
   const feed = () => +sk.settings.feed.value;
   const k = () => +sk.settings.k.value;
   const t = () => +sk.settings.t.value;
-  const threshold = () => +sk.settings.threshold.value;
+  const threshold = () => +sk.settings.threshold.value + sk.noise(sk.frameCount / 50) / 3;
 
   sk.changeInterval = (val) => {
     sk.noLoop();
@@ -134,10 +134,10 @@ export default (instance) => {
     });
   };
   sk.saveCapture = () => {
-    sk.pixelDensity(sk.windowWidth < 512 ? 5 : 12);
+    // sk.pixelDensity(sk.windowWidth < 512 ? 5 : 12);
     sk.redraw();
     sk.saveCanvas(sk.canvas, `reaction_a${ dA() }b${dB() }f${feed() }k${k() }t${t()}`, 'png');
-    if (sk.width > 512) {
+    if (sk.width > 512 && null) {
       sk.settings.point = !sk.settings.point;
       sk.redraw();
       sk.saveCanvas(sk.canvas, `reaction_a${ dA() }b${dB() }f${feed() }k${k() }t${t()}`, 'png');
@@ -163,17 +163,27 @@ export default (instance) => {
           const r = img.pixels[n];
           const g = img.pixels[n + 1];
           const b = img.pixels[n + 2];
-          // if (brightness > sk.settings.min.value / 255 && brightness < sk.settings.max.value / 255) {
-          // if (r > 95 && g > 40 && b > 20 && r > g && r > b && Math.abs(r - g) > 15) {
-          // const kovacClassification = (r > 95 && g > 40 && b > 20 && r > g && r > b && (r - g) > 15 && r - Math.min([g, b] > 15));
-          // const ratioModelClassification = ((r - g) / (r + g) >= 0) && ((r - g) / (r + g) <= 0.5) && (b / (r + g) <= 0.5);
           brightness = img.pixels.slice(n, n + 3).reduce((a, b) => a + b) / 3 / 255;
-          if (brightness < 0.2) {
-            // grid[x][y].color = img.pixels.slice(n, n + 3);
-            // next[x][y].color = img.pixels.slice(n, n + 3);
-            grid[x][y].b = 1;
-            // grid[x][y].scale = brightness + 0.5;
-            // next[x][y].scale = brightness + 0.5;
+          if (!sk.video) {
+            grid[x][y].b = 1 - brightness;
+          } else {
+            // if (brightness > sk.settings.min.value / 255 && brightness < sk.settings.max.value / 255) {
+            // const ratioModelClassification = ((r - g) / (r + g) >= 0) && ((r - g) / (r + g) <= 0.5) && (b / (r + g) <= 0.5);
+            const kovacClassification = (r > 95 && g > 40 && b > 20 && r > g && r > b && (r - g) > 15 && r - Math.min([g, b] > 15));
+            if (brightness < 1 && kovacClassification) {
+              grid[x][y].color = img.pixels.slice(n, n + 3);
+              next[x][y].color = img.pixels.slice(n, n + 3);
+              grid[x][y].b = 1 - brightness;
+              grid[x][y].a = brightness;
+              grid[x][y].z = (1 - brightness) * -110;
+              grid[x][y].scale = brightness + 0.5;
+              next[x][y].scale = brightness + 0.5;
+            } else {
+              grid[x][y].color = null;
+              next[x][y].color = null;
+              grid[x][y].scale = 1;
+              next[x][y].scale = 1;
+            }
           }
         }
         if (!sk.gridIsSet) {
@@ -183,19 +193,25 @@ export default (instance) => {
             b: 1 - brightness,
             isBorder: x === 0 || y === 0 || x === width - 1 || y === height - 1,
             noise: sk.noise(x / 20 / (7 / interval) + sk.frameCount, y / 20 / (7 / interval)),
+            z: 0,
           };
           next[x][y] = {
             a: 1 - brightness,
             b: brightness,
             isBorder: x === 0 || y === 0 || x === width - 1 || y === height - 1,
             noise: sk.noise(x / 20 / (7 / interval) + sk.frameCount, y / 20 / (7 / interval)),
+            z: 0,
           };
         }
       }
     }
     sk.gridIsSet = true;
   };
-  const sendText = (canvas = sk.textContent, text = 'home,I,had,a,lot.of,questions&and&no-answers.') => {
+  let img;
+  sk.preload = () => {
+    img = sk.loadImage('/img/sl.jpg');
+  };
+  const sendTextCanvas = (canvas = sk.textContent, text = 'home,I,had,a,lot.of,questions&and&no-answers.') => {
     // canvas.pixelDensity(1);
     canvas.background(255);
     canvas.push();
@@ -219,9 +235,11 @@ export default (instance) => {
     grid = [];
     next = [];
     sk.strokeCap(sk.SQUARE);
-    // const constraints = { video: { frameRate: { ideal: 10, max: 30 } } };
-    // sk.video = sk.createCapture(constraints);
-    // sk.video.size(Math.ceil(sk.width / interval), Math.ceil(sk.height / interval));
+    const constraints = { video: { frameRate: { ideal: 10, max: 30 } } };
+    if (false) {
+      sk.video = sk.createCapture(constraints);
+      sk.video.size(Math.ceil(sk.width / interval), Math.ceil(sk.height / interval));
+    }
     sk.settings.point = true;
     initGridAB();
     // const loadImage = new Promise((res) => {
@@ -236,7 +254,7 @@ export default (instance) => {
     //   initGridAB(res);
     // });
     sk.textContent = sk.createGraphics(Math.ceil(sk.width / interval), Math.ceil(sk.height / interval));
-    sendText();
+    sendTextCanvas();
     sk.beginInterval();
   };
 
@@ -274,6 +292,9 @@ export default (instance) => {
   };
   sk.beginInterval = () => {
     sk.interval = setInterval(() => {
+      if (sk.video) {
+        initGridAB(sk.video);
+      }
       if (grid && grid.length > 0) {
         for (let x = 0; x < grid.length; x += 1) {
           for (let y = 0; y < grid[0].length; y += 1) {
@@ -294,14 +315,14 @@ export default (instance) => {
         }
         swap();
       }
-    }, 20);
+    }, 30);
   };
 
   sk.draw = () => {
     // webgl
-    sk.rotateY(sk.noise(sk.frameCount / 30) - 0.5);
-    sk.rotateZ(sk.noise(sk.frameCount / 30) - 0.5);
-    sk.rotateX(sk.noise(sk.frameCount / 30) / 3);
+    sk.rotateY((sk.noise(sk.frameCount / 30) - 0.5) + (sk.y ? sk.y : 0));
+    sk.rotateZ(sk.noise(sk.frameCount / 30) - 0.5 + (sk.z ? sk.z : 0));
+    sk.rotateX(sk.noise(sk.frameCount / 30) / 2 + (sk.x ? sk.x : 0));
     sk.translate(-sk.width / 2, -sk.height / 2);
 
     sk.background(255);
@@ -309,32 +330,29 @@ export default (instance) => {
       for (let y = 0; y < grid[0].length; y += 1) {
         if (!grid[x][y].isBorder) {
           const {
-            a, b, color,
+            a, b, color, z,
           } = grid[x][y];
 
           let diffrence = Math.floor((a - b) * 255);
           if (diffrence < 200) {
+            // point mode
             if (sk.settings.point) {
               sk.push();
-              if (diffrence < 50) {
-                sk.stroke(96, 200 - diffrence);
+              if (diffrence < 100) {
+                sk.stroke(96 * (1 + sk.noise(x / 50 * diffrence, y / 50)), 200 - diffrence);
               } else {
                 sk.noStroke();
               }
-              sk.fill(diffrence, 200 - diffrence);
               sk.translate(x * interval, y * interval);
-              sk.box(interval / 1.3, interval / 1.3, diffrence / 3 + 5);
-              // sk.normalMaterial();
-              // sk.rotateX(-sk.PI / 2);
-              // sk.cone(interval / 4, diffrence / 1.5);
+              const fill = 255 - (diffrence * diffrence) / 30;
+              sk.fill(fill, -diffrence);
+              if (z < 30 && color) {
+                // const color1 = [...color].map((color) => (color + fill) / 2);
+                // sk.fill([...color, 100]);
+              }
+              sk.box(interval, interval, (50 - diffrence) * diffrence / 700 + 10 + z);
               sk.pop();
-
-              // if (color) {
-              //   sk.stroke([...color, 255]);
-              // }
-              // sk.stroke(diffrence);
-              // sk.strokeWeight(interval);
-              // sk.point(x * interval, y * interval);
+            // stroke mode
             } else {
               if (diffrence > 127) {
                 diffrence = 127 + (diffrence - 127) * 3;
@@ -417,7 +435,7 @@ export default (instance) => {
     sk.background(255);
     if (reset) { resetGrid(); }
     const stringToSend = Math.random() > 0.3 ? String.fromCharCode(keyCode) : texts[Math.floor(Math.random() * 500)];
-    sendText(undefined, stringToSend);
+    sendTextCanvas(undefined, stringToSend);
     clearTimeout(sk.inputTimeout);
     if (!sk.toucheMoveArray) {
       sk.toucheMoveArray = [];
@@ -425,7 +443,11 @@ export default (instance) => {
     sk.inputTimeout = setTimeout(() => {
       if (sk.toucheMoveArray.length > 1) {
         resetGrid();
-        sendText(undefined, sk.toucheMoveArray.join(''));
+        if (sk.width < 512) {
+          sendTextCanvas(undefined, sk.toucheMoveArray.join('').slice(sk.toucheMoveArray.length - 1));
+        } else {
+          sendTextCanvas(undefined, sk.toucheMoveArray.join(''));
+        }
       }
       sk.toucheMoveArray = undefined;
     }, 400);
