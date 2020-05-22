@@ -207,10 +207,6 @@ export default (instance) => {
     }
     sk.gridIsSet = true;
   };
-  let img;
-  sk.preload = () => {
-    img = sk.loadImage('/img/sl.jpg');
-  };
   const sendTextCanvas = (canvas = sk.textContent, text = 'home,I,had,a,lot.of,questions&and&no-answers.') => {
     // canvas.pixelDensity(1);
     canvas.background(255);
