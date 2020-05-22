@@ -1,7 +1,7 @@
 ## [2.8.1] - 2020-05-22
 ### Changed
 - reaction-diffusion to prod ([bc7703](https://github.com/sikaili/skyl.fr/commit/bc7703))
-- reaction-diffusion 3d video mode, ([and qu](https://github.com/sikaili/skyl.fr/commit/and qu))
+- reaction-diffusion 3d video mode, ([5a886a](https://github.com/sikaili/skyl.fr/commit/5a886a))
 
 ## [2.8.0] - 2020-05-17
 ### Added
