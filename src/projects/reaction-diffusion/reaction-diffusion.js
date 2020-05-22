@@ -134,7 +134,7 @@ export default (instance) => {
     });
   };
   sk.saveCapture = () => {
-    // sk.pixelDensity(sk.windowWidth < 512 ? 5 : 12);
+    sk.pixelDensity(sk.windowWidth < 512 ? 5 : 12);
     sk.redraw();
     sk.saveCanvas(sk.canvas, `reaction_a${ dA() }b${dB() }f${feed() }k${k() }t${t()}`, 'png');
     if (sk.width > 512 && null) {
