@@ -1,3 +1,7 @@
+## [2.8.2] - 2020-05-22
+### Fixed
+- reaction-diffusion preload ([5241d5](https://github.com/sikaili/skyl.fr/commit/5241d5))
+
 ## [2.8.1] - 2020-05-22
 ### Changed
 - reaction-diffusion to prod ([bc7703](https://github.com/sikaili/skyl.fr/commit/bc7703))
