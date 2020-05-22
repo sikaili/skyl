@@ -1,3 +1,7 @@
+## [2.8.3] - 2020-05-22
+### Changed
+- reaction-diffusion capture pixel density ([e435e9](https://github.com/sikaili/skyl.fr/commit/e435e9))
+
 ## [2.8.2] - 2020-05-22
 ### Fixed
 - reaction-diffusion preload ([5241d5](https://github.com/sikaili/skyl.fr/commit/5241d5))
