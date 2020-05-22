@@ -29,5 +29,9 @@
   {
     "id": "quadtree",
     "type": "sketch"
+  },
+  {
+    "id": "reaction-diffusion",
+    "type": "sketch"
   }
 ]
