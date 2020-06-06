@@ -1,8 +1,36 @@
 import calDistance from '@/js/utlis/calDistance';
 import setListeners from '@/js/utlis/addEventListeners';
+import Tone from 'tone';
 import texts from '../eyes/assets/hanzi.json';
 
+
 export default (instance) => {
+  const pan = new Tone.Panner();
+  const pan1 = new Tone.Panner();
+  const pan2 = new Tone.Panner();
+  const pan3 = new Tone.Panner();
+  const osc = new Tone.OmniOscillator('C#4', 'pulse').chain(new Tone.Volume(-10), pan, Tone.Master);
+  const osc1 = new Tone.OmniOscillator('C#4', 'sine').chain(new Tone.Volume(-10), pan1, Tone.Master);
+  const osc2 = new Tone.OmniOscillator('C#4', 'pulse').chain(new Tone.Volume(-10), pan2, Tone.Master);
+  const osc3 = new Tone.OmniOscillator('C#4', 'sine').chain(new Tone.Volume(-10), pan3, Tone.Master);
+  osc.width.value = 4;
+  osc2.width.value = 2;
+
+  osc.count = 4;
+  osc1.count = 2;
+  osc2.count = 2;
+  osc3.count = 2;
+
+  osc.spread = 2;
+  osc1.spread = 5;
+  osc2.spread = 5;
+  osc3.spread = 5;
+
+  osc.start();
+  osc1.start();
+  osc2.start();
+  osc3.start();
+
   const sk = instance;
   sk.settings = {
     dA: {
@@ -346,7 +374,41 @@ export default (instance) => {
                 // const color1 = [...color].map((color) => (color + fill) / 2);
                 // sk.fill([...color, 100]);
               }
-              sk.box(interval - 1, interval - 1, (50 - diffrence) * diffrence / 700 + 10 + z);
+              const height = diffrence * diffrence / 700 + 10 + z;
+              if (height > 102.5 && Math.random() > 0.8) {
+                sk.normalMaterial();
+                if (x / grid.length > 0.5) {
+                  pan.set({ pan: (x / grid.length - 0.5) * 2 });
+                  if (y / grid.length > 0.5) {
+                    osc.set({
+                      frequency:
+                      sk.noise(x / 2, y / 2) * 2000 + 50,
+                    });
+                  } else {
+                    pan1.set({ pan: (x / grid.length - 0.5) * 2 });
+
+                    osc1.set({
+                      frequency:
+                      sk.noise(x / 2, y / 2) * 1000 + 25,
+                    });
+                  }
+                } else if (y / grid.length > 0.5) {
+                  pan2.set({ pan: (x / grid.length - 0.5) * 2 });
+
+                  osc2.set({
+                    frequency:
+                    sk.noise(x / 2, y / 2) * 2000 + 50,
+                  });
+                } else {
+                  pan3.set({ pan: (x / grid.length - 0.5) * 2 });
+
+                  osc3.set({
+                    frequency:
+                    sk.noise(x / 2, y / 2) * 1000 + 25,
+                  });
+                }
+              }
+              sk.box(interval - 1, interval - 1, height);
               sk.pop();
             // stroke mode
             } else {
