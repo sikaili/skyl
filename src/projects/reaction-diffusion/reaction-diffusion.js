@@ -60,8 +60,8 @@ export default (instance) => {
       noRandom: true,
     },
     interval: {
-      value: sk.windowWidth > 512 ? 6 : 6,
-      default: 4,
+      value: sk.windowWidth > 512 ? 7 : 7,
+      default: 6,
       type: 'range',
       max: 8,
       min: 2,
@@ -84,7 +84,7 @@ export default (instance) => {
   const feed = () => +sk.settings.feed.value;
   const k = () => +sk.settings.k.value;
   const t = () => +sk.settings.t.value;
-  const threshold = () => +sk.settings.threshold.value + sk.noise(sk.frameCount / 50) / 3;
+  const threshold = () => +sk.settings.threshold.value + sk.noise(sk.frameCount / 30) / 2;
 
   sk.changeInterval = (val) => {
     sk.noLoop();
@@ -316,9 +316,9 @@ export default (instance) => {
 
   sk.draw = () => {
     // webgl
-    sk.rotateY((sk.noise(sk.frameCount / 30) - 0.5) + (sk.y ? sk.y : 0));
+    sk.rotateY((sk.noise(sk.frameCount / 100) - 0.5) + (sk.y ? sk.y : 0));
     sk.rotateZ(sk.noise(sk.frameCount / 30) - 0.5 + (sk.z ? sk.z : 0));
-    sk.rotateX(sk.noise(sk.frameCount / 30) / 2 + (sk.x ? sk.x : 0));
+    sk.rotateX(sk.noise(sk.frameCount / 50) / 2 + (sk.x ? sk.x : 0));
     sk.translate(-sk.width / 2, -sk.height / 2);
 
     sk.background(255);
@@ -330,7 +330,7 @@ export default (instance) => {
           } = grid[x][y];
 
           let diffrence = Math.floor((a - b) * 255);
-          if (diffrence < 200) {
+          if (diffrence < 50) {
             // point mode
             if (sk.settings.point) {
               sk.push();
@@ -346,7 +346,7 @@ export default (instance) => {
                 // const color1 = [...color].map((color) => (color + fill) / 2);
                 // sk.fill([...color, 100]);
               }
-              sk.box(interval, interval, (50 - diffrence) * diffrence / 700 + 10 + z);
+              sk.box(interval - 1, interval - 1, (50 - diffrence) * diffrence / 700 + 10 + z);
               sk.pop();
             // stroke mode
             } else {
