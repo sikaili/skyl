@@ -5,32 +5,21 @@ import texts from '../eyes/assets/hanzi.json';
 
 
 export default (instance) => {
-  const pan = new Tone.Panner();
-  const pan1 = new Tone.Panner();
-  const pan2 = new Tone.Panner();
-  const pan3 = new Tone.Panner();
-  const osc = new Tone.OmniOscillator('C#4', 'pulse').chain(new Tone.Volume(-10), pan, Tone.Master);
-  const osc1 = new Tone.OmniOscillator('C#4', 'sine').chain(new Tone.Volume(-10), pan1, Tone.Master);
-  const osc2 = new Tone.OmniOscillator('C#4', 'pulse').chain(new Tone.Volume(-10), pan2, Tone.Master);
-  const osc3 = new Tone.OmniOscillator('C#4', 'sine').chain(new Tone.Volume(-10), pan3, Tone.Master);
-  osc.width.value = 4;
-  osc2.width.value = 2;
+  const pans = Array(4).fill(new Tone.Panner());
+  const oscs = Array(4).fill(null).map((a, n) => {
+    const type = ['pulse', 'fmsine', 'amsine', 'fatsawtooth', 'square4'][Math.floor(Math.random() * 5)];
+    return new Tone.OmniOscillator('C#4', type).chain(new Tone.Volume(-20), pans[n], Tone.Master);
+  });
 
-  osc.count = 4;
-  osc1.count = 2;
-  osc2.count = 2;
-  osc3.count = 2;
-
-  osc.spread = 2;
-  osc1.spread = 5;
-  osc2.spread = 5;
-  osc3.spread = 5;
-
-  osc.start();
-  osc1.start();
-  osc2.start();
-  osc3.start();
-
+  oscs.forEach((osc) => {
+    if (osc.width) {
+      osc.width.value = Math.random() * 4;
+    }
+    osc.count = Math.floor(Math.random() * 5);
+    osc.spread = Math.floor(Math.random() * 5);
+    osc.start();
+  });
+  console.log(oscs);
   const sk = instance;
   sk.settings = {
     dA: {
@@ -112,7 +101,7 @@ export default (instance) => {
   const feed = () => +sk.settings.feed.value;
   const k = () => +sk.settings.k.value;
   const t = () => +sk.settings.t.value;
-  const threshold = () => +sk.settings.threshold.value + sk.noise(sk.frameCount / 30) / 2;
+  const threshold = () => +sk.settings.threshold.value + sk.noise(sk.frameCount / 20) / 2;
 
   sk.changeInterval = (val) => {
     sk.noLoop();
@@ -343,6 +332,8 @@ export default (instance) => {
   };
 
   sk.draw = () => {
+    let count = 0;
+
     // webgl
     sk.rotateY((sk.noise(sk.frameCount / 100) - 0.5) + (sk.y ? sk.y : 0));
     sk.rotateZ(sk.noise(sk.frameCount / 30) - 0.5 + (sk.z ? sk.z : 0));
@@ -375,38 +366,26 @@ export default (instance) => {
                 // sk.fill([...color, 100]);
               }
               const height = diffrence * diffrence / 700 + 10 + z;
-              if (height > 102.5 && Math.random() > 0.8) {
+              let i = 0;
+              if (height > 88 && Math.random() > 0.8) {
+                count += 1;
                 sk.normalMaterial();
                 if (x / grid.length > 0.5) {
-                  pan.set({ pan: (x / grid.length - 0.5) * 2 });
                   if (y / grid.length > 0.5) {
-                    osc.set({
-                      frequency:
-                      sk.noise(x / 2, y / 2) * 2000 + 50,
-                    });
+                    i = 0;
                   } else {
-                    pan1.set({ pan: (x / grid.length - 0.5) * 2 });
-
-                    osc1.set({
-                      frequency:
-                      sk.noise(x / 2, y / 2) * 1000 + 25,
-                    });
+                    i = 1;
                   }
                 } else if (y / grid.length > 0.5) {
-                  pan2.set({ pan: (x / grid.length - 0.5) * 2 });
-
-                  osc2.set({
-                    frequency:
-                    sk.noise(x / 2, y / 2) * 2000 + 50,
-                  });
+                  i = 2;
                 } else {
-                  pan3.set({ pan: (x / grid.length - 0.5) * 2 });
-
-                  osc3.set({
-                    frequency:
-                    sk.noise(x / 2, y / 2) * 1000 + 25,
-                  });
+                  i = 3;
                 }
+                pans[i].set({ pan: (x / grid.length - 0.5) + [0.75, 0.5, -0.5, -0.75][i] });
+                oscs[i].set({
+                  frequency:
+                  sk.noise(x, y) * oscs[i].type.includes('sine') ? 440 : 880,
+                });
               }
               sk.box(interval - 1, interval - 1, height);
               sk.pop();
@@ -427,6 +406,10 @@ export default (instance) => {
         }
       }
     }
+
+    Tone.Master.set({
+      volume: count === 0 ? -Infinity : -25 + Math.sqrt(count),
+    });
   };
   const resetGrid = () => {
     grid.map((arrX, x) => {
