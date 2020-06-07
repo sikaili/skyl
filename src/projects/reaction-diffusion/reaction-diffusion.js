@@ -7,20 +7,23 @@ import texts from '../eyes/assets/hanzi.json';
 export default (instance) => {
   const pans = Array(4).fill(new Tone.Panner());
   const oscs = Array(4).fill(null).map((a, n) => {
-    const type = ['pulse', 'fmsine', 'amsine', 'fatsawtooth', 'square4'][Math.floor(Math.random() * 5)];
+    const type = ['pulse', 'fmsine', 'amsine', 'fatsawtooth', 'square4', 'amsine', 'amsine'][Math.floor(Math.random() * 7)];
     return new Tone.OmniOscillator('C#4', type).chain(new Tone.Volume(-20), pans[n], Tone.Master);
   });
+  const sk = instance;
 
-  oscs.forEach((osc) => {
-    if (osc.width) {
-      osc.width.value = Math.random() * 4;
-    }
-    osc.count = Math.floor(Math.random() * 5);
-    osc.spread = Math.floor(Math.random() * 5);
-    osc.start();
+  Tone.start().then(() => {
+    oscs.forEach((osc) => {
+      if (osc.width) {
+        osc.width.value = Math.random() * 4;
+      }
+      osc.count = Math.floor(Math.random() * 5);
+      osc.spread = Math.floor(Math.random() * 5);
+      osc.start();
+    });
   });
   console.log(oscs);
-  const sk = instance;
+
   sk.settings = {
     dA: {
       // value: 1,
@@ -77,7 +80,7 @@ export default (instance) => {
       noRandom: true,
     },
     interval: {
-      value: sk.windowWidth > 512 ? 7 : 7,
+      value: sk.windowWidth > 512 ? 8 : 7,
       default: 6,
       type: 'range',
       max: 8,
@@ -101,7 +104,7 @@ export default (instance) => {
   const feed = () => +sk.settings.feed.value;
   const k = () => +sk.settings.k.value;
   const t = () => +sk.settings.t.value;
-  const threshold = () => +sk.settings.threshold.value + sk.noise(sk.frameCount / 20) / 2;
+  const threshold = () => +sk.settings.threshold.value + sk.noise(sk.frameCount / 20) * (sk.noise(sk.frameCount / 5) - 0.5);
 
   sk.changeInterval = (val) => {
     sk.noLoop();
@@ -140,6 +143,10 @@ export default (instance) => {
       sk.vidoe.disconnect();
     }
     sk.noLoop();
+    oscs.map((osc) => osc.dispose());
+    pans.map((pan) => pan.dispose());
+    Tone.context.suspend();
+
     sk.remove();
   };
   sk.resetDefaultSettings = () => {
@@ -367,7 +374,7 @@ export default (instance) => {
               }
               const height = diffrence * diffrence / 700 + 10 + z;
               let i = 0;
-              if (height > 88 && Math.random() > 0.8) {
+              if (height > 88) {
                 count += 1;
                 sk.normalMaterial();
                 if (x / grid.length > 0.5) {
@@ -381,13 +388,14 @@ export default (instance) => {
                 } else {
                   i = 3;
                 }
-                pans[i].set({ pan: (x / grid.length - 0.5) + [0.75, 0.5, -0.5, -0.75][i] });
+                const pan = sk.constrain((x / grid.length - 0.5) + [0.75, 0.5, -0.5, -0.75][i], -1, 1);
+                pans[i].set({ pan });
                 oscs[i].set({
                   frequency:
-                  sk.noise(x, y) * oscs[i].type.includes('sine') ? 440 : 880,
+                  sk.noise(x, y) * oscs[i].type && oscs[i].type.includes('sine') ? 440 : 880,
                 });
               }
-              sk.box(interval - 1, interval - 1, height);
+              sk.box(interval, interval, height);
               sk.pop();
             // stroke mode
             } else {
@@ -408,7 +416,7 @@ export default (instance) => {
     }
 
     Tone.Master.set({
-      volume: count === 0 ? -Infinity : -25 + Math.sqrt(count),
+      volume: sk.constrain(count === 0 ? -Infinity : -25 + Math.sqrt(count), -Infinity, -5),
     });
   };
   const resetGrid = () => {
