@@ -1,3 +1,12 @@
+## [2.8.4] - 2020-06-07
+### Added
+- reaction-diffusion sound ([7c9c6b](https://github.com/sikaili/skyl.fr/commit/7c9c6b))
+### Changed
+- reaction-diffusion interval ([e3d48d](https://github.com/sikaili/skyl.fr/commit/e3d48d))
+- reaction-diffusion sound stop & minor changes ([7cffee](https://github.com/sikaili/skyl.fr/commit/7cffee))
+- refacto reaction-diffusion oscs ([063024](https://github.com/sikaili/skyl.fr/commit/063024))
+- reaction-diffusion graphic ([def9c8](https://github.com/sikaili/skyl.fr/commit/def9c8))
+
 ## [2.8.3] - 2020-05-22
 ### Changed
 - reaction-diffusion capture pixel density ([e435e9](https://github.com/sikaili/skyl.fr/commit/e435e9))
