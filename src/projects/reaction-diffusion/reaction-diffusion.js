@@ -80,7 +80,7 @@ export default (instance) => {
       noRandom: true,
     },
     interval: {
-      value: sk.windowWidth > 512 ? 8 : 7,
+      value: sk.windowWidth > 512 ? 8 : 6,
       default: 6,
       type: 'range',
       max: 8,
@@ -374,7 +374,7 @@ export default (instance) => {
               }
               const height = diffrence * diffrence / 700 + 10 + z;
               let i = 0;
-              if (height > 88) {
+              if (height > 88 && height < 103) {
                 count += 1;
                 sk.normalMaterial();
                 if (x / grid.length > 0.5) {
