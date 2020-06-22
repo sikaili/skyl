@@ -1,3 +1,7 @@
+## [2.8.5] - 2020-06-22
+### Fixed
+- reaction-diffusion sound ([05bbfd](https://github.com/sikaili/skyl.fr/commit/05bbfd))
+
 ## [2.8.4] - 2020-06-07
 ### Added
 - reaction-diffusion sound ([7c9c6b](https://github.com/sikaili/skyl.fr/commit/7c9c6b))
