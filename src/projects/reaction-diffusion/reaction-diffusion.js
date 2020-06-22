@@ -5,24 +5,7 @@ import texts from '../eyes/assets/hanzi.json';
 
 
 export default (instance) => {
-  const pans = Array(4).fill(new Tone.Panner());
-  const oscs = Array(4).fill(null).map((a, n) => {
-    const type = ['pulse', 'fmsine', 'amsine', 'fatsawtooth', 'square4', 'amsine', 'amsine'][Math.floor(Math.random() * 7)];
-    return new Tone.OmniOscillator('C#4', type).chain(new Tone.Volume(-20), pans[n], Tone.Master);
-  });
   const sk = instance;
-
-  Tone.start().then(() => {
-    oscs.forEach((osc) => {
-      if (osc.width) {
-        osc.width.value = Math.random() * 4;
-      }
-      osc.count = Math.floor(Math.random() * 5);
-      osc.spread = Math.floor(Math.random() * 5);
-      osc.start();
-    });
-  });
-  console.log(oscs);
 
   sk.settings = {
     dA: {
@@ -96,6 +79,13 @@ export default (instance) => {
       { name: 'resetDefaultSettings', icon: 'refresh' },
     ],
   };
+
+  const pans = Array(4).fill(new Tone.Panner());
+  const oscs = Array(4).fill(null).map((a, n) => {
+    const type = ['pulse', 'fmsine', 'amsine', 'fatsawtooth', 'square4', 'amsine', 'amsine'][Math.floor(Math.random() * 7)];
+    return new Tone.OmniOscillator('C#4', type).chain(new Tone.Volume(-20), pans[n], Tone.Master);
+  });
+
   let grid;
   let next;
   let interval = sk.settings.interval.value;
@@ -428,6 +418,19 @@ export default (instance) => {
     });
   };
   sk.handleTouchEnd = () => {
+    if (!sk.soundIsOn) {
+      Tone.start().then(() => {
+        oscs.forEach((osc) => {
+          if (osc.width) {
+            osc.width.value = Math.random() * 4;
+          }
+          osc.count = Math.floor(Math.random() * 5);
+          osc.spread = Math.floor(Math.random() * 5);
+          osc.start();
+          sk.soundIsOn = true;
+        });
+      });
+    }
     if (!sk.staticBodyVertex || sk.staticBodyVertex.length < 3) {
       if (sk.video) {
         resetGrid();
