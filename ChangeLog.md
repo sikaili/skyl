@@ -1,3 +1,7 @@
+## [2.8.6] - 2020-06-28
+### Changed
+- reaction-diffusion:set text distance threshold ([224193](https://github.com/sikaili/skyl.fr/commit/224193))
+
 ## [2.8.5] - 2020-06-22
 ### Fixed
 - reaction-diffusion sound ([05bbfd](https://github.com/sikaili/skyl.fr/commit/05bbfd))
