@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import VueAnalytics from 'vue-analytics';
+import Article from '@/components/views/Article.vue';
 import Drawings from '@/components/views/Drawings.vue';
 import Work from '@/components/views/Work.vue';
 import Play from '@/components/views/Play.vue';
@@ -47,6 +48,11 @@ const router = new Router({
       path: '/cv',
       name: 'cv/',
       component: Cv,
+    },
+    {
+      path: '/article',
+      name: 'article',
+      component: Article,
     },
     { path: '*', redirect: '/play/random' },
   ],

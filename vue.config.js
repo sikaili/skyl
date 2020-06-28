@@ -30,4 +30,14 @@ module.exports = {
       ],
     },
   },
+  css: {
+    loaderOptions: {
+      sass: {
+        prependData: '@import "src/scss/config/index.scss";',
+      },
+      scss: {
+        prependData: '@import "src/scss/config/index.scss";',
+      },
+    },
+  },
 };

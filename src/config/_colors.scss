@@ -1,0 +1,121 @@
+$color-white: #fff;
+$color-grey1: #f8f8f8;
+$color-grey2: #eee;
+$color-grey3: #ddd;
+$color-grey4: #cccbcb;
+$color-grey5: #c5c5c5;
+$color-grey6: #b2b2b1;
+$color-grey7: #909090;
+$color-grey8: #7b7b7a;
+$color-grey9: #6f6f6f;
+$color-grey10: #575756;
+$color-grey11: #3c3c3b;
+$color-black: #1d1d1b;
+
+$color-red: #d61e00;
+$color-red-hover: #c20e19;
+$color-brick: #b34040;
+$color-salmon: #e8947b;
+$color-pink: #e099c3;
+$color-violet: #a68abf;
+$color-yellow: #fff482;
+$color-yellowcard: #eada25;
+$color-aqua: #75abd8;
+$color-blue-light: #4592FE;
+$color-blue: #3873b8;
+$color-green: #3fa435;
+$color-apple: #74b958;
+$color-grass: #e0f0c0;
+$color-mango: #fabc50;
+$color-orange: #e67f1b;
+$color-gold: #ddc164;
+$color-silver: $color-grey4;
+$color-bronze: #c4a749;
+
+$color-adrenaline: #596374;
+$color-adrenalinelight: #dae2ee;
+$color-ilosport: $color-salmon;
+$color-ilosportlight: #be6b53;
+$color-esport: $color-black;
+$color-esportlight: $color-grey10;
+$color-wtf: $color-black;
+$color-wtflight: $color-grey7;
+
+$color-facebook: #3b5998;
+$color-twitter: #55acee;
+$color-google: #dd4b39;
+$color-whatsapp: #29d366;
+$color-milibris: #000000;
+$color-passmedia-1: #51beca;
+$color-passmedia-2: #66559f;
+
+.is-dark {
+    --color-black: #{$color-white};
+    --color-grey11: #{$color-grey2};
+    --color-grey10: #{$color-grey3};
+    --color-grey9: #{$color-grey4};
+    --color-grey8: #{$color-grey5};
+    --color-grey7: #{$color-grey6};
+    --color-grey6: #{$color-grey7};
+    --color-grey5: #{$color-grey8};
+    --color-grey4: #{$color-grey9};
+    --color-grey3: #{$color-grey10};
+    --color-grey2: #{$color-grey11};
+    --color-grey1: #{$color-black};
+    --color-green: #6ab727;
+    --color-blue: #4592FE;
+    --color-red: #ff5033;
+    --color-white: #000;
+
+    --color-white-original: #{$color-white};
+    --color-grey1-original: #{$color-grey1};
+    --color-grey2-original: #{$color-grey2};
+    --color-grey3-original: #{$color-grey3};
+    --color-grey4-original: #{$color-grey4};
+    --color-grey5-original: #{$color-grey5};
+    --color-grey6-original: #{$color-grey6};
+    --color-grey7-original: #{$color-grey7};
+    --color-grey8-original: #{$color-grey8};
+    --color-grey9-original: #{$color-grey9};
+    --color-grey10-original: #{$color-grey10};
+    --color-grey11-original: #{$color-grey11};
+    --color-black-original: #{$color-black};
+    --color-red-original: #{$color-red};
+    --color-blue-original: #{$color-blue};
+}
+
+.is-light {
+    --color-white: initial;
+    --color-grey1: initial;
+    --color-grey2: initial;
+    --color-grey3: initial;
+    --color-grey4: initial;
+    --color-grey5: initial;
+    --color-grey6: initial;
+    --color-grey7: initial;
+    --color-grey8: initial;
+    --color-grey9: initial;
+    --color-grey10: initial;
+    --color-grey11: initial;
+    --color-black: initial;
+    --color-green: initial;
+    --color-blue: initial;
+    --color-red: initial;
+
+    --color-white-original: initial;
+    --color-grey1-original: initial;
+    --color-grey2-original: initial;
+    --color-grey3-original: initial;
+    --color-grey4-original: initial;
+    --color-grey5-original: initial;
+    --color-grey6-original: initial;
+    --color-grey7-original: initial;
+    --color-grey8-original: initial;
+    --color-grey9-original: initial;
+    --color-grey10-original: initial;
+    --color-grey11-original: initial;
+    --color-black-original: initial;
+    --color-red-original: initial;
+    --color-blue-original: initial;
+}
+

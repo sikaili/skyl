@@ -9,7 +9,9 @@
 		"changelog": "node changelog.js"
 	},
 	"dependencies": {
+		"@vue/composition-api": "^0.6.7",
 		"axios": "^0.19.2",
+		"date-fns": "^2.14.0",
 		"hammerjs": "^2.0.8",
 		"matter-js": "^0.14.2",
 		"p5": "^1.0.0",

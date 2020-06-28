@@ -1,0 +1,30 @@
+$height-header: 44px;
+$height-main-nav: 44px;
+$height-redirect-nav: 48px;
+$height-tabbar: 60px;
+$width-sidebar: 375px;
+$width-col: 304px;
+
+$span-hr-small: 16px;
+$span-hr: 24px;
+$span-hr-large: 32px;
+
+$span-vr-small: 16px;
+$span-vr: 24px;
+$span-vr-large: 32px;
+
+:export {
+    height-header: $height-header;
+    height-main-nav: $height-main-nav;
+    height-tabbar: $height-tabbar;
+    width-sidebar: $width-sidebar;
+    width-col: $width-col;
+
+    span-hr-small: $span-hr-small;
+    span-hr: $span-hr;
+    span-hr-large: $span-hr-large;
+
+    span-vr-small: $span-vr-small;
+    span-vr: $span-vr;
+    span-vr-large: $span-vr-large;
+}

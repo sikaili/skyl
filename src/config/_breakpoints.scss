@@ -1,0 +1,19 @@
+$bp-phone: 320px;
+$bp-phone-l: 360px;
+$bp-phone-xl: 480px;
+$bp-phone-xxl: 540px;
+$bp-tablet: 768px;
+$bp-desktop: 928px;
+$bp-desktop-l: 1240px;
+$bp-max: 960px;
+
+:export {
+    bp-phone: $bp-phone + 1;
+    bp-phone-l: $bp-phone-l;
+    bp-phone-xl: $bp-phone-xl;
+    bp-phone-xxl: $bp-phone-xxl;
+    bp-tablet: $bp-tablet;
+    bp-desktop: $bp-desktop;
+    bp-desktop-l: $bp-desktop-l;
+    bp-max: $bp-max;
+}
