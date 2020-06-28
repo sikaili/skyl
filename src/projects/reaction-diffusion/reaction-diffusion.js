@@ -442,12 +442,13 @@ export default (instance) => {
   };
   sk.skipCount = 0;
   sk.handleTouchMove = (ev) => {
+    const sendTextDistanceThreshold = 40;
     ev.preventDefault();
     if (sk.staticBodyVertex) {
       if (sk.staticBodyVertex.length > 0) {
         const lastPoint = sk.staticBodyVertex[sk.staticBodyVertex.length - 1];
         const distance = calDistance(lastPoint, { x: sk.mouseX, y: sk.mouseY });
-        if (distance > 0 && distance < 25 && sk.touches.length === 1) {
+        if (distance > 0 && distance < sendTextDistanceThreshold && sk.touches.length === 1) {
           sk.staticBodyVertex.push({ x: sk.mouseX, y: sk.mouseY });
           const gridPoint = { x: Math.floor(sk.mouseX / interval), y: Math.floor(sk.mouseY / interval) };
           for (let i = gridPoint.x - 4; i < gridPoint.x + 4; i += 1) {
@@ -457,7 +458,7 @@ export default (instance) => {
               //
             }
           }
-        } else if ((distance > 25 && !sk.waiting) || sk.touches.length > 1) {
+        } else if ((distance > sendTextDistanceThreshold && !sk.waiting) || sk.touches.length > 1) {
           sk.keyCode = Math.floor(sk.random(50, 100));
           sk.keyPressed();
           sk.skipCount += 1;
