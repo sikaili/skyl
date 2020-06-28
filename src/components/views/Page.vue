@@ -26,7 +26,6 @@
           v-for="picLink in item.imgs"
           :key="picLink"
           class="w-100 pv3"
-          :class="$mq === `sm` ? `ph3` : 'ph5'"
           :src="picLink"
         >
         <br>
