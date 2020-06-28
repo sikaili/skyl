@@ -1,13 +1,14 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import VueAnalytics from 'vue-analytics';
-import Article from '@/components/views/Article.vue';
 import Drawings from '@/components/views/Drawings.vue';
 import Work from '@/components/views/Work.vue';
 import Play from '@/components/views/Play.vue';
 import Music from '@/components/views/Music.vue';
 import Page from '@/components/views/Page.vue';
-import Cv from '@/components/views/Cv.vue';
+
+const Cv = () => import(/* webpackChunkName: "Cv" */ '@/components/views/Cv.vue');
+const Article = () => import(/* webpackChunkName: "Article" */'@/components/views/Article.vue');
 
 Vue.use(Router);
 

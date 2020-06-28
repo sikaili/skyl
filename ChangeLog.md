@@ -1,3 +1,9 @@
+## [2.8.7] - 2020-06-28
+### Added
+- article component, image component, date-fns, data, scss config & colors ([0da5f5](https://github.com/sikaili/skyl.fr/commit/0da5f5))
+### Fixed
+- article image css ([b9e333](https://github.com/sikaili/skyl.fr/commit/b9e333))
+
 ## [2.8.6] - 2020-06-28
 ### Changed
 - reaction-diffusion:set text distance threshold ([224193](https://github.com/sikaili/skyl.fr/commit/224193))
