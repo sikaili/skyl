@@ -1,3 +1,7 @@
+## [2.9.0] - 2020-07-22
+### Added
+- music player ([ec22d9](https://github.com/sikaili/skyl.fr/commit/ec22d9))
+
 ## [2.8.7] - 2020-06-28
 ### Added
 - article component, image component, date-fns, data, scss config & colors ([0da5f5](https://github.com/sikaili/skyl.fr/commit/0da5f5))

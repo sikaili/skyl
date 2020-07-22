@@ -2,7 +2,7 @@ const child = require('child_process');
 const fs = require('fs');
 // <version core> ::= <major> "." <minor> "." <patch>
 // 0, 1, 2
-const versionCore = 2;
+const versionCore = 1;
 
 const latestTag = child.execSync('git describe --long').toString('utf-8').split('-')[0];
 
@@ -34,7 +34,6 @@ let newChangelog = `## [${newVersion}] - ${
 const added = [];
 const fixed = [];
 const changed = [];
-
 
 commitsArray.forEach((commit) => {
   if (commit.message.startsWith('added:')) {
