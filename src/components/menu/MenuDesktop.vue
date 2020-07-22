@@ -5,8 +5,17 @@
       class="fl bg-black-50 w-40 flex justify-end"
       @click="menuShow = !menuShow"
     >
-      <h1 class="ph5 f3 white tr">
+      <h1
+        v-if="$mq === 'lg'"
+        class="ph5 f3 white tr"
+      >
         {{ type }}
+      </h1>
+      <h1
+        v-else
+        class="ph3 f3 white tr"
+      >
+        <i :class="menuShow ? `icon ion-md-close` : `icon ion-md-add`" />
       </h1>
     </div>
     <div
@@ -67,6 +76,16 @@
                 <span class="f4 f1-ns b dib pr3">{{ w.name }}</span>
                 <b class="dib bg-blue">{{ w.year }}</b>
                 <blockquote class="ph0 pb2 mb1 bb mh0 mt0">
+                  <div
+                    v-if="$route.name.includes('music')"
+                    class="mt3"
+                  >
+                    <player-component
+                      :theme="'#1d1d1b'"
+                      :music="playerProps(w)"
+                    />
+                  </div>
+
                   <p class="lh-copy measure f6">
                     {{ w.des }}
                     <br>
@@ -76,7 +95,7 @@
                       @click="goToPage(w)"
                     >Read more..</span>
                     <span
-                      v-if="w.link.split(':')[0] === `https`"
+                      v-if="showPlayButton(w)"
                       class="tc w4 f6 link ba bw2 ph3 pv1 mt3 dib black dim"
                       @click="play(w)"
                     >
@@ -124,8 +143,12 @@
 
 <script>
 import { menuMxn } from '@/js/mixins';
+import PlayerComponent from 'vue-aplayer';
 
 export default {
+  components: {
+    PlayerComponent,
+  },
   mixins: [menuMxn],
   props: {
     type: {

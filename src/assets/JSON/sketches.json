@@ -33,5 +33,9 @@
   {
     "id": "reaction-diffusion",
     "type": "sketch"
+  },
+  {
+    "id": "bubbles",
+    "type": "sketch"
   }
 ]

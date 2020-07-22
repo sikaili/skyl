@@ -28,6 +28,12 @@ export default {
     name() {
       return this.type.toLowerCase();
     },
+    isTouchDevice() {
+      return 'ontouchstart' in window;
+    },
+    isIpad() {
+      return navigator.userAgent.match(/Tablet|iPad/i);
+    },
   },
   created() {
     if (this.$mq !== 'sm') {
@@ -40,7 +46,20 @@ export default {
   methods: {
     ...mapActions(['setActiveItem', 'toggleItem', 'changeLoadingState']),
     showReadMoreButton(item) {
-      return item.imgs.length > 1;
+      return item.imgs.length > 1 && this.type !== 'music';
+    },
+    showPlayButton(item) {
+      return item.link.split(':')[0] === 'https' && this.type !== 'music';
+    },
+    playerProps(item) {
+      const songName = item.name.replace(' ', '-').toLowerCase();
+      console.log('playerProps -> songName', songName);
+      return {
+        title: item.name,
+        artist: 'Sikai Li',
+        src: `/src/projects/player/sound/${songName}.m4a`,
+        pic: item.img,
+      };
     },
     play(item) {
       this.abortLoad();
@@ -64,12 +83,14 @@ export default {
       }
     },
     handleMouseIn(itemToEmit) {
-      if (itemToEmit) {
+      if (itemToEmit && !this.isIpad && this.type !== 'music') {
         this.load(itemToEmit);
       }
     },
     handleMouseOut() {
-      this.abortLoad();
+      if (!this.isIpad && this.type !== 'music') {
+        this.abortLoad();
+      }
     },
     abortLoad() {
       let id = window.setTimeout(() => {}, 0);

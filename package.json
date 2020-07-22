@@ -20,6 +20,7 @@
 		"tone": "^13.8.25",
 		"vue": "^2.6.11",
 		"vue-analytics": "^5.22.1",
+		"vue-aplayer": "^1.6.1",
 		"vue-gallery": "^2.0.1",
 		"vue-mq": "^1.0.1",
 		"vue-router": "^3.1.6",

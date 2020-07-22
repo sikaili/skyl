@@ -476,7 +476,6 @@ export default {
                 }
             }
 
-
             &ActionButton {
                 display: block;
                 float: left;
@@ -599,6 +598,5 @@ export default {
     input[type=range].Settings__MenuContainerInput:focus::-ms-fill-upper {
         background: #ffffff;
     }
-
 
 </style>

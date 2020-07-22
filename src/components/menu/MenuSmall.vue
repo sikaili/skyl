@@ -42,6 +42,15 @@
             v-show="item.show"
             class="Menu__details bg-black-10 w-100 tl ma0"
           >
+            <div
+              v-if="type=='music'"
+              class="Menu__player"
+            >
+              <player-component
+                :theme="'#1d1d1b'"
+                :music="playerProps(item)"
+              />
+            </div>
             <div class="ph4 pv3">
               <!-- <span class="f4 f1-ns b dib pr3">{{ item.name }}</span> -->
               <blockquote class="ph0 pb2 mb0 bb mh0 mt0">
@@ -54,7 +63,7 @@
                     @click="goToPage(item)"
                   >Read more..</span>
                   <span
-                    v-if="item.link.split(':')[0] === `https`"
+                    v-if="showPlayButton(item)"
                     class="fr tc w4 f6 link ba bw2 ph3 pv1 mt3 dib black dim"
                     @click="play(item)"
                   >
@@ -107,9 +116,13 @@
 
 <script>
 import { menuMxn } from '@/js/mixins';
+import PlayerComponent from 'vue-aplayer';
 
 export default {
   name: 'Menu',
+  components: {
+    PlayerComponent,
+  },
   mixins: [menuMxn],
   props: {
     type: {
@@ -126,10 +139,21 @@ export default {
   },
 };
 </script>
-<style>
+<style lang="scss">
+    .Menu {
+        &__player {
+            margin: 16px 24px 16px;
+        }
+    }
+
+    .aplayer .aplayer-body .aplayer-info {
+        padding: 14px 7px 14px 10px !important;
+    }
+
     svg.w1 {
         max-height: 44px;
     }
+
     .loading {
         width: 100%;
         height: 30px;

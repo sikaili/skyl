@@ -2,9 +2,8 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import VueAnalytics from 'vue-analytics';
 import Drawings from '@/components/views/Drawings.vue';
-import Work from '@/components/views/Work.vue';
+import Menu from '@/components/views/Menu.vue';
 import Play from '@/components/views/Play.vue';
-import Music from '@/components/views/Music.vue';
 import Page from '@/components/views/Page.vue';
 
 const Cv = () => import(/* webpackChunkName: "Cv" */ '@/components/views/Cv.vue');
@@ -28,7 +27,7 @@ const router = new Router({
     {
       path: '/work/:id?',
       name: 'work',
-      component: Work,
+      component: Menu,
     },
     {
       path: '/page/:category/:id?',
@@ -43,7 +42,7 @@ const router = new Router({
     {
       path: '/music/:id?',
       name: 'music',
-      component: Music,
+      component: Menu,
     },
     {
       path: '/cv',
