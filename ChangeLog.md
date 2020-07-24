@@ -1,3 +1,8 @@
+## [2.9.2] - 2020-07-24
+### Fixed
+- graphic ajustment ([73b9c0](https://github.com/sikaili/skyl.fr/commit/73b9c0))
+- add skipwaiting ([db03d9](https://github.com/sikaili/skyl.fr/commit/db03d9))
+
 ## [2.9.1] - 2020-07-24
 ### Fixed
 - service worker causing refresh ([958cb7](https://github.com/sikaili/skyl.fr/commit/958cb7))
