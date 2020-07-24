@@ -4,6 +4,8 @@ import setListeners from '@/js/utlis/addEventListeners';
 import { Vertices } from 'matter-js';
 import drawings from '../noise-draw/drawings.json';
 
+window.Tone = window.Tone ? window.Tone : Tone;
+
 if (!window.audioCtx) {
   window.audioCtx = new AudioContext({ sampleRate: 44100 });
   Tone.setContext(window.audioCtx);
@@ -139,7 +141,6 @@ export default (instance) => {
     const scale = (Math.random() > 0.3 && !big) ? 2 : 1;
     const points = [];
     if (Math.random() > 0.8) number *= 5;
-
 
     if (Math.random() > sk.settings.randomShape.value && givenPoints.length === 0) {
       let arr = [];

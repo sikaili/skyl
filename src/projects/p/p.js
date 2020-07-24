@@ -2,6 +2,8 @@ import Tone from 'tone';
 import F4 from './sound/ling.mp3';
 import E3 from './sound/bouton_reverb.mp3';
 
+window.Tone = window.Tone ? window.Tone : Tone;
+
 console.log('import p');
 
 export default function (instance) {

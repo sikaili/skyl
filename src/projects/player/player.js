@@ -3,6 +3,8 @@ import Tone from 'tone';
 import setListeners from '@/js/utlis/addEventListeners';
 import PeakDetect from '@/js/utlis/PeakDetect';
 
+window.Tone = window.Tone ? window.Tone : Tone;
+
 export default function (sk) {
   console.log('player setup');
   sk.settings = {
@@ -101,7 +103,6 @@ export default function (sk) {
   };
 
   sk.setSong(sk.settings.list.current);
-
 
   sk.stop = () => {
     sk.stopped = true;

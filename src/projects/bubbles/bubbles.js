@@ -15,6 +15,8 @@ import Particle from './particles';
 import E3 from '../virus/sound/chasing.mp3';
 import D3 from '../virus/sound/light.mp3';
 
+window.Tone = window.Tone ? window.Tone : Tone;
+
 console.log('import bubbles');
 
 const sketch = (instance) => {

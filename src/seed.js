@@ -198,7 +198,7 @@ const seedData = {
         'An audio-visual experiment about ocean plastic pollution, randomly generated graphics, sound of plastic particles.',
       link: 'https://apps.skyl.fr/plastic-ocean',
       img: '/img/covers/plastic-ocean1.jpg',
-      year: 2019,
+      year: 2018,
       credits: [
         {
           role: 'Sound, code ',
@@ -335,6 +335,5 @@ if (!navigator.onLine) {
 }
 
 // console.log(JSON.stringify(allIframeLinks));
-
 
 export { seedData, allIframeLinks };

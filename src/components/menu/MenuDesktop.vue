@@ -81,8 +81,7 @@
                     class="mt3"
                   >
                     <player-component
-                      :theme="'#1d1d1b'"
-                      :music="playerProps(w)"
+                      v-bind="playerProps(w)"
                     />
                   </div>
 

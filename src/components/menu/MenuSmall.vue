@@ -39,7 +39,7 @@
         </a>
         <transition name="slide-fade">
           <div
-            v-show="item.show"
+            v-if="item.show"
             class="Menu__details bg-black-10 w-100 tl ma0"
           >
             <div
@@ -47,8 +47,7 @@
               class="Menu__player"
             >
               <player-component
-                :theme="'#1d1d1b'"
-                :music="playerProps(item)"
+                v-bind="playerProps(item)"
               />
             </div>
             <div class="ph4 pv3">

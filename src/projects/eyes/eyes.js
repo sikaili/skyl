@@ -4,6 +4,8 @@ import A3 from './sound/chasing.mp3';
 import E3 from './sound/bouton_reverb.mp3';
 import texts from './assets/hanzi.json';
 
+window.Tone = window.Tone ? window.Tone : Tone;
+
 console.log('import eyes');
 const eyes = (instance) => {
   const sk = instance;

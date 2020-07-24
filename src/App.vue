@@ -195,13 +195,11 @@ export default {
     showRefreshUI(e) {
       this.registration = e.detail;
       this.updateExists = true;
-      this.$ga.event('refresh-app-shown', 'notification', 'update', this.version);
     },
     refreshApp() {
       this.updateExists = false;
       if (!this.registration || !this.registration.waiting) { return; }
       this.registration.waiting.postMessage('skipWaiting');
-      this.$ga.event('refresh-app-clicked', 'click', 'update', this.version);
     },
     disablePromptDesktop() {
       localStorage.setItem('propose-desktop', true);

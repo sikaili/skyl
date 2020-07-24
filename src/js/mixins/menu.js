@@ -36,12 +36,29 @@ export default {
     },
   },
   created() {
-    if (this.$mq !== 'sm') {
+    if (this.$mq !== 'sm' || this.$route.params.id) {
+      const item = this.menuItems.filter((item) => item.id === this.$route.params.id)[0];
       this.toggleItem({
         name: this.name,
-        obj: this.menuItems[0],
+        obj: item || this.menuItems[0],
       });
     }
+  },
+  mounted() {
+    window.addEventListener('click', this.pauseToneAudioContext);
+  },
+  updated() {
+    if (this.name === 'music' && window.Tone && window.Tone.context.state === 'running') {
+      window.Tone.context.suspend();
+    } else if (this.name !== 'music' && window.Tone && window.Tone.context.state === 'suspended') {
+      window.Tone.context.resume();
+    }
+  },
+  beforeDestroy() {
+    if (window.Tone && window.Tone.context.state === 'suspended') {
+      window.Tone.context.resume();
+    }
+    window.removeEventListener('click', this.pauseToneAudioContext);
   },
   methods: {
     ...mapActions(['setActiveItem', 'toggleItem', 'changeLoadingState']),
@@ -51,14 +68,25 @@ export default {
     showPlayButton(item) {
       return item.link.split(':')[0] === 'https' && this.type !== 'music';
     },
+    pauseToneAudioContext() {
+      if (this.name === 'music' && window.Tone && window.Tone.context.state === 'running') {
+        window.Tone.context.suspend();
+      }
+    },
     playerProps(item) {
       const songName = item.name.replace(' ', '-').toLowerCase();
-      console.log('playerProps -> songName', songName);
       return {
-        title: item.name,
-        artist: 'Sikai Li',
-        src: `/src/projects/player/sound/${songName}.m4a`,
-        pic: item.img,
+        theme: '#1d1d1b',
+        audio: {
+          preload: 'metadata',
+          volume: 1,
+        },
+        music: {
+          title: item.name,
+          artist: 'Sikai Li',
+          src: `/src/projects/player/sound/${songName}.m4a`,
+          pic: item.img,
+        },
       };
     },
     play(item) {
