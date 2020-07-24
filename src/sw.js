@@ -1,55 +1,40 @@
+workbox.setConfig({ debug: true });
 
-self.addEventListener('message', (e) => {
-  if (!e.data) {
-    return;
-  }
-
-  switch (e.data) {
-    case 'skipWaiting':
-      self.skipWaiting();
-      break;
-    default:
-      // NOOP
-      break;
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
   }
 });
 
-// Listen to Push
-// self.addEventListener('push', (e) => {
-//   let data;
-//   if (e.data) {
-//     data = e.data.json();
-//   }
-
-//   const options = {
-//     body: data.body,
-//     icon: '/img/icons/android-chrome-192x192.png',
-//     image: '/img/autumn-forest.png',
-//     vibrate: [300, 200, 300],
-//     badge: '/img/icons/plint-badge-96x96.png',
-//   };
-
-//   e.waitUntil(self.registration.showNotification(data.title, options));
-// });
-
-workbox.core.clientsClaim(); // Vue CLI 4 and Workbox v4
-
-
+// workbox.core.clientsClaim(); // Vue CLI 4 and Workbox v4
 self.__precacheManifest = [].concat(self.__precacheManifest || []);
+
 const arr = self.__precacheManifest.filter((obj) => {
-  if (obj.url.indexOf('/src/projects/player/sound/') === -1 || obj.url.indexOf('amarrage') !== -1) {
+  if ((obj.url && obj.url.indexOf('/src/projects/player/sound/') === -1) && (obj.url.indexOf('img/') === -1 || obj.url.indexOf('img/covers') !== -1)) {
     return true;
   }
-  if (obj.url.indexOf('img/') !== -1) {
-    if (obj.url.indexOf('img/covers/') !== -1) {
-      return true;
-    }
-    return false;
-  }
+  return false;
 });
 
 self.__precacheManifest = [].concat(arr || []);
-workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
+console.log(arr);
+console.log(self.__precacheManifest);
+
+const precacheController = new workbox.precaching.PrecacheController();
+precacheController.addToCacheList(self.__precacheManifest);
+
+self.addEventListener('install', (event) => {
+  event.waitUntil(precacheController.install());
+});
+
+self.addEventListener('activate', (event) => {
+  event.waitUntil(precacheController.activate());
+});
+
+// self.addEventListener('fetch', (event) => {
+//   const cacheKey = precacheController.getCacheKeyForURL(event.request.url);
+//   event.respondWith(caches.match(cacheKey).then(...));
+// });
 
 // Make sure to return a specific response for all navigation requests.
 // Since we have a SPA here, this should be index.html always.
@@ -97,7 +82,7 @@ workbox.routing.registerRoute(/\.(?:m4a|mp3|png|gif|jpg)$/,
         statuses: [0, 200],
       }),
       new workbox.expiration.Plugin({
-        maxAgeSeconds: 60 * 60 * 24 * 365,
+        maxAgeSeconds: 60 * 60 * 24 * 30,
         maxEntries: 30,
       }),
     ],

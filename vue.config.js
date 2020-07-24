@@ -9,9 +9,9 @@ module.exports = {
       swSrc: './src/sw.js',
       swDest: 'service-worker.js',
       exclude: [
-        /\.map$/,
         /manifest\.json$/,
       ],
+      maximumFileSizeToCacheInBytes: 1000000,
     },
     themeColor: '#1d1d1e',
   },
