@@ -1,4 +1,18 @@
 // workbox.setConfig({ debug: true });
+self.addEventListener('message', (e) => {
+  if (!e.data) {
+    return;
+  }
+
+  switch (e.data) {
+    case 'skipWaiting':
+      self.skipWaiting();
+      break;
+    default:
+      // NOOP
+      break;
+  }
+});
 
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
