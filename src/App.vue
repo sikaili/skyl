@@ -1,5 +1,8 @@
 <template>
-  <div id="app">
+  <div
+    id="app"
+    class="App"
+  >
     <div
       class="ToggleFullScreen"
       @click="handleFullScreenMouseIn()"
@@ -229,6 +232,10 @@ export default {
 </script>
 
 <style lang="scss">
+    .App {
+        overflow: hidden;
+    }
+
     .ToggleFullScreen {
         position: fixed;
         right: 0;

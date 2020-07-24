@@ -11,7 +11,7 @@ Vue.use(VueCompositionAPI);
 Vue.use(VueMq, {
   breakpoints: {
     sm: 675,
-    md: 768,
+    md: 1024,
     lg: Infinity,
   },
   defaultBreakpoint: 'sm', // customize this for SSR

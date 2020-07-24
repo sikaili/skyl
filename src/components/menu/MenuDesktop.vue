@@ -2,14 +2,15 @@
   <div class="Menu cl">
     <the-intro />
     <div
-      class="fl bg-black-50 w-40 flex justify-end"
+      class="fl bg-black-50 flex justify-end"
+      :class="$mq === 'lg' ? 'w-40' : 'w-20'"
       @click="menuShow = !menuShow"
     >
       <h1
         v-if="$mq === 'lg'"
         class="ph5 f3 white tr"
       >
-        {{ type }}
+        {{ type.charAt(0).toUpperCase() + type.slice(1) }}
       </h1>
       <h1
         v-else
@@ -20,7 +21,8 @@
     </div>
     <div
       v-if="menuShow"
-      class="fl w-20 bg-white-80"
+      class="fl bg-white-80"
+      :class="$mq === 'lg' ? 'w-20' : 'w-30'"
     >
       <div class="flex flex-column justify-center">
         <a
@@ -51,7 +53,10 @@
         </a>
       </div>
     </div>
-    <div class="fl w-40 bg-white">
+    <div
+      class="fl w-40 bg-white"
+      :class="$mq === 'lg' ?'w-40':'w-50'"
+    >
       <div>
         <transition name="loading">
           <div
