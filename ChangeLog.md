@@ -1,3 +1,10 @@
+## [2.9.1] - 2020-07-24
+### Fixed
+- service worker causing refresh ([958cb7](https://github.com/sikaili/skyl.fr/commit/958cb7))
+### Changed
+- disable sw debug ([77fd64](https://github.com/sikaili/skyl.fr/commit/77fd64))
+- pause tone when on music page; go to menu item with router params ([95bd2e](https://github.com/sikaili/skyl.fr/commit/95bd2e))
+
 ## [2.9.0] - 2020-07-22
 ### Added
 - music player ([ec22d9](https://github.com/sikaili/skyl.fr/commit/ec22d9))
