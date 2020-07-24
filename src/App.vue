@@ -44,7 +44,9 @@
       />
     </div>
     <transition name="slide-fade-main">
-      <router-view />
+      <keep-alive include="Menu">
+        <router-view />
+      </keep-alive>
     </transition>
     <div
       v-show="proposeDesktop && !updateExists && $mq === 'sm' && ($route.name === 'work' || $route.name === 'music')"
