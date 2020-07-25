@@ -1,4 +1,4 @@
-workbox.setConfig({ debug: true });
+// workbox.setConfig({ debug: true });
 self.addEventListener('message', (e) => {
   if (!e.data) {
     return;

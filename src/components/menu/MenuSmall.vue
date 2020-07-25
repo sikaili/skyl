@@ -119,6 +119,8 @@
 import { menuMxn } from '@/js/mixins';
 import PlayerComponent from 'vue-aplayer';
 
+PlayerComponent.disableVersionBadge = true;
+
 export default {
   name: 'Menu',
   components: {

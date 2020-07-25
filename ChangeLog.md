@@ -1,3 +1,11 @@
+## [2.9.3] - 2020-07-25
+### Added
+- loader ([e5f48c](https://github.com/sikaili/skyl.fr/commit/e5f48c))
+- loader animation ([3e6d1b](https://github.com/sikaili/skyl.fr/commit/3e6d1b))
+- multi songs, add song slug ([b980cb](https://github.com/sikaili/skyl.fr/commit/b980cb))
+### Changed
+- keep menu alive ([13b04c](https://github.com/sikaili/skyl.fr/commit/13b04c))
+
 ## [2.9.2] - 2020-07-24
 ### Fixed
 - graphic ajustment ([73b9c0](https://github.com/sikaili/skyl.fr/commit/73b9c0))
