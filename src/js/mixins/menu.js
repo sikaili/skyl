@@ -90,7 +90,7 @@ export default {
         },
       };
       if (item.list && item.list.length > 0) {
-        props.list = item.list;
+        props.list = item.list.filter((item) => item);
         [props.music] = item.list;
         if (this.$route.params.songSlug) {
           const song = item.list.filter((song) => song.title.toLowerCase().replace(' ', '-') === this.$route.params.songSlug.toLowerCase().replace(' ', '-'))[0];

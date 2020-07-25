@@ -240,24 +240,6 @@ const seedData = {
       ],
       show: false,
     },
-    // {
-    //   name: 'Rotation',
-    //   app: 'cave',
-    //   type: 'sketch',
-    //   year: '2020',
-    //   des:
-    //     '锋利的碎片在旋转',
-    //   link: 'https://skyl.fr/play/player?id=Rotation',
-    //   img: '/img/covers/Rotation.jpg',
-    //   credits: [
-    //     {
-    //       role: 'Music ',
-    //       name: 'Sikai Li',
-    //       link: 'https://skyl.fr',
-    //     },
-    //   ],
-    //   show: false,
-    // },
     {
       name: 'Ocean Loop',
       des:
@@ -265,6 +247,12 @@ const seedData = {
       link: 'https://apps.skyl.fr/plastic-ocean',
       img: '/img/covers/plastic-ocean1.jpg',
       year: 2018,
+      list: [{
+        title: 'Ocean Loop',
+        artist: 'Sikai Li',
+        src: '/src/projects/player/sound/ocean-loop.m4a',
+        pic: '/img/covers/plastic-ocean1.jpg',
+      }],
       credits: [
         {
           role: 'Sound, code ',
@@ -283,6 +271,12 @@ const seedData = {
         "Music for the video game 'Plastic Arcade' I've been working on during my residency at thecamp, 80's style guitar riff & retro synth sound.",
       img: '/img/covers/saturation-chinoise.jpg',
       show: false,
+      list: [{
+        title: 'Saturation Chinoise',
+        artist: 'Sikai Li',
+        src: '/src/projects/player/sound/saturation-chinoise.m4a',
+        pic: '/img/covers/saturation-chinoise.jpg',
+      }],
       credits: [
         {
           role: 'Music ',
@@ -304,6 +298,12 @@ const seedData = {
       link: 'https://apps.skyl.fr/hua/',
       img: '/img/covers/hua.jpg',
       show: false,
+      list: [{
+        title: 'Flower',
+        artist: 'Sikai Li',
+        src: '/src/projects/player/sound/flower.m4a',
+        pic: '/img/covers/hua.jpg',
+      }],
       credits: [
         {
           role: 'Music ',

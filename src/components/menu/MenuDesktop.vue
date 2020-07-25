@@ -181,7 +181,7 @@ export default {
         }
 
         &__player {
-            margin: 16px 24px 16px;
+            margin: 16px 24px 0;
         }
     }
 
