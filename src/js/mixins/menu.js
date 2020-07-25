@@ -12,6 +12,14 @@ export default {
         });
       }
     },
+    $route() {
+      if (this.menuItems && this.menuItems.filter((item) => item.show).length === 0 && this.$mq !== 'sm') {
+        this.toggleItem({
+          name: this.name,
+          obj: this.menuItems[0],
+        });
+      }
+    },
   },
   components: {
     TheIntro,
@@ -74,20 +82,30 @@ export default {
       }
     },
     playerProps(item) {
-      const songName = item.name.replace(' ', '-').toLowerCase();
-      return {
-        theme: '#1d1d1b',
+      const props = {
+        theme: '#357edd',
         audio: {
           preload: 'metadata',
           volume: 1,
         },
-        music: {
+      };
+      if (item.list && item.list.length > 0) {
+        props.list = item.list;
+        [props.music] = item.list;
+        if (this.$route.params.songSlug) {
+          const song = item.list.filter((song) => song.title.toLowerCase().replace(' ', '-') === this.$route.params.songSlug.toLowerCase().replace(' ', '-'))[0];
+          props.music = song;
+        }
+      } else {
+        const songSlug = item.name.replace(' ', '-').toLowerCase();
+        props.music = {
           title: item.name,
           artist: 'Sikai Li',
-          src: `/src/projects/player/sound/${songName}.m4a`,
+          src: `/src/projects/player/sound/${songSlug}.m4a`,
           pic: item.img,
-        },
-      };
+        };
+      }
+      return props;
     },
     play(item) {
       this.abortLoad();

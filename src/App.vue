@@ -24,7 +24,7 @@
     </div>
     <div
       :key="canvasWrapperKey"
-      class="sketchContainer back bw0"
+      class="sketchContainer bw0"
       :style="iframeContainer"
     >
       <the-canvas-wrapper
@@ -36,7 +36,7 @@
       <iframe
         v-if="activeItem && activeItem.type !== 'sketch'"
         :key="canvasWrapperKey + 1"
-        class="back bw0"
+        class="sketchContainer bw0"
         scrolling="no"
         scroll="no"
         :src="activeItem.link"
@@ -235,7 +235,19 @@ export default {
 
 <style lang="scss">
     .App {
+        font-family: 'Roboto Mono', monospace, 'helvetica neue', helvetica, sans-serif;
         overflow: hidden;
+        user-select: none;
+        z-index: 100;
+        box-sizing: border-box;
+
+        .sketchContainer {
+            z-index: -100;
+            position: fixed;
+            left: 0;
+            top: 0;
+            opacity: 0.5;
+        }
     }
 
     .ToggleFullScreen {

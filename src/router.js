@@ -40,7 +40,7 @@ const router = new Router({
       component: Play,
     },
     {
-      path: '/music/:id?',
+      path: '/music/:id?/:songSlug?',
       name: 'music',
       component: Menu,
     },

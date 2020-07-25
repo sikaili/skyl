@@ -1,4 +1,4 @@
-// workbox.setConfig({ debug: true });
+workbox.setConfig({ debug: true });
 self.addEventListener('message', (e) => {
   if (!e.data) {
     return;
@@ -87,6 +87,11 @@ workbox.routing.registerRoute(
     cacheName: 'ionicons',
   }),
 );
+
+workbox.routing.registerRoute(/\.tachyons.min.css$/,
+  new workbox.strategies.StaleWhileRevalidate({
+    cacheName: 'tachyons',
+  }));
 
 workbox.routing.registerRoute(/\.(?:m4a|mp3|png|gif|jpg)$/,
   new workbox.strategies.CacheFirst({

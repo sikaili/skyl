@@ -162,9 +162,75 @@ const seedData = {
       type: 'sketch',
       year: '2020',
       des:
-        '慢慢移动到岸边',
-      link: 'https://skyl.fr/play/player?id=Amarrage',
+        '禁足期间，远离了人的噪音，大自然对比强烈的声音给了我很多灵感：骤雨打在玻璃上的暴力，树叶摇在微风里的轻柔。我想探索电吉他这个纯电声乐器的动态，从在琴桥后拨弦的最小的微动，到六根空弦和拾音器碰撞，到失真开到极限的刺耳噪音。经过复杂而随机的后处理，我得到了让我想要的对比度和故事。虽然这听起来已不再是吉他。',
+      link: 'https://skyl.fr/music/amarrage',
       img: '/img/covers/Amarrage.jpg',
+      list: [
+        {
+          title: 'Amarrage',
+          artist: 'Sikai Li',
+          src: '/src/projects/player/sound/amarrage.m4a',
+          pic: '/img/covers/Amarrage.jpg',
+        },
+        {
+          title: 'Cripple',
+          artist: 'Sikai Li',
+          src: '/src/projects/player/sound/cripple.m4a',
+          pic: '/img/covers/Amarrage.jpg',
+        },
+        {
+          title: 'Rotation',
+          artist: 'Sikai Li',
+          src: '/src/projects/player/sound/rotation.m4a',
+          pic: '/img/covers/Amarrage.jpg',
+
+        },
+      ],
+      credits: [
+        {
+          role: 'Music ',
+          name: 'Sikai Li',
+          link: 'https://skyl.fr',
+        },
+      ],
+      show: false,
+    },
+    {
+      name: 'Little Garden',
+      app: 'p',
+      type: 'sketch',
+      year: '2020',
+      des:
+        '一九年十一月，我去到南法的 Mâcon 去买一把绿色 Jazzmaster，试完琴离回巴黎的火车出发还有两个小时，卖家便带我去登了 Roche de Solutré。虽然只待了短短几个小时，那里宁静的气氛还是感染了我，现在想起来还是很清晰。 回到巴黎，嘈杂的地铁和工作，让我没有什么精力去好好弄一首歌，但这把绿色的 Jazzmaster 还是经常会弹，时不时想起 Roche de Solutré 的草，马，阳光，云。不想费脑筋，随便录下一些碎片，然后不再去管他。这些练琴的‘记录’有意义吗？',
+      link: 'https://skyl.fr/music/little-garden',
+      img: '/img/covers/little-garden.png',
+      list: [
+        {
+          title: '7 am 1 pm',
+          artist: 'Sikai Li',
+          src: '/src/projects/player/sound/7am.-0pm.m4a',
+          pic: '/img/covers/little-garden.png',
+        },
+        {
+          title: 'Again',
+          artist: 'Sikai Li',
+          src: '/src/projects/player/sound/again.m4a',
+          pic: '/img/covers/little-garden.png',
+        },
+        {
+          title: 'Phasmids',
+          artist: 'Sikai Li',
+          src: '/src/projects/player/sound/phasmids.m4a',
+          pic: '/img/covers/little-garden.png',
+
+        },
+        {
+          title: 'Embolism',
+          artist: 'Sikai Li',
+          src: '/src/projects/player/sound/embolism.m4a',
+          pic: '/img/covers/little-garden.png',
+        },
+      ],
       credits: [
         {
           role: 'Music ',

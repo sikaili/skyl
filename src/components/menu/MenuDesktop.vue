@@ -79,7 +79,7 @@
             >
               <div class="pa4">
                 <span class="f4 f1-ns b dib pr3">{{ w.name }}</span>
-                <b class="dib bg-blue">{{ w.year }}</b>
+                <b class="ml1 mt2 dib bg-blue">{{ w.year }}</b>
                 <blockquote class="ph0 pb2 mb1 bb mh0 mt0">
                   <div
                     v-if="$route.name.includes('music')"
@@ -90,17 +90,17 @@
                     />
                   </div>
 
-                  <p class="lh-copy measure f6">
+                  <p class="lh-copy f6">
                     {{ w.des }}
                     <br>
                     <span
                       v-if="showReadMoreButton(w)"
-                      class="tc w4 f6 dim link ba bw2 ph2 pv1 mt3 mr3 dib black"
+                      class="Menu__button tc f6 dim link ba bw2 ph2 pv1 mt3 mr2 dib black"
                       @click="goToPage(w)"
                     >Read more..</span>
                     <span
                       v-if="showPlayButton(w)"
-                      class="tc w4 f6 link ba bw2 ph3 pv1 mt3 dib black dim"
+                      class="Menu__button tc f6 link ba bw2 ph2 pv1 mt3 dib black dim"
                       @click="play(w)"
                     >
                       <span class="pr1">Play!</span>
@@ -116,26 +116,30 @@
                   :alt="w.name"
                   class="w-100 dim"
                 >
-                <h5>Credits</h5>
-                <div
-                  v-for="person in w.credits"
-                  :key="person.link + person.role"
-                  class="f7 flex"
-                  style="line-height: 1;"
-                >
-                  <p class="truncate w-60">
-                    {{ person.role }}:
-                  </p>
-                  <p class="truncate">
-                    <a
-                      target="_blank"
-                      class="ml3 black-90"
-                      :href="person.link"
-                    >
-                      {{ person.name }}
-                    </a>
-                  </p>
-                </div>
+                <template v-if="w.credits.length > 1">
+                  <h5 v-if="w.credits.length > 1">
+                    Credits
+                  </h5>
+                  <div
+                    v-for="person in w.credits"
+                    :key="person.link + person.role"
+                    class="f7 flex"
+                    style="line-height: 1;"
+                  >
+                    <p class="truncate w-60">
+                      {{ person.role }}:
+                    </p>
+                    <p class="truncate">
+                      <a
+                        target="_blank"
+                        class="ml3 black-90"
+                        :href="person.link"
+                      >
+                        {{ person.name }}
+                      </a>
+                    </p>
+                  </div>
+                </template>
               </div>
             </div>
           </transition>
@@ -170,7 +174,21 @@ export default {
   },
 };
 </script>
-<style>
+<style lang="scss">
+    .Menu {
+        &__button {
+            width: 30%;
+        }
+
+        &__player {
+            margin: 16px 24px 16px;
+        }
+    }
+
+    .aplayer .aplayer-body .aplayer-info {
+        padding: 14px 7px 14px 10px !important;
+    }
+
     span.black {
         color: black;
     }

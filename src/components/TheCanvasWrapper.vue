@@ -137,7 +137,10 @@ const changeSketch = (name) => {
     import("./../projects/" + name + "/" + name+ ".js").then(module => { //eslint-disable-line
     current = new p5(module.default, 'canvasContainer'); //eslint-disable-line
       current.name = name;
-    });
+    })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 };
 

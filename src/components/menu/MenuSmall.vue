@@ -58,12 +58,12 @@
                   <br>
                   <span
                     v-if="showReadMoreButton(item)"
-                    class="tc w4 f6 dim link ba bw2 ph2 pv1 mt3 mr3 dib black"
+                    class="Menu__button tc f6 dim link ba bw2 ph2 pv1 mt3 mr3 dib black"
                     @click="goToPage(item)"
                   >Read more..</span>
                   <span
                     v-if="showPlayButton(item)"
-                    class="fr tc w4 f6 link ba bw2 ph3 pv1 mt3 dib black dim"
+                    class="Menu__button fr tc f6 link ba bw2 ph3 pv1 mt3 dib black dim"
                     @click="play(item)"
                   >
                     <i class="icon ion-md-return-right" />
@@ -139,15 +139,6 @@ export default {
 };
 </script>
 <style lang="scss">
-    .Menu {
-        &__player {
-            margin: 16px 24px 16px;
-        }
-    }
-
-    .aplayer .aplayer-body .aplayer-info {
-        padding: 14px 7px 14px 10px !important;
-    }
 
     svg.w1 {
         max-height: 44px;

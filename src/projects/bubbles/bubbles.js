@@ -21,15 +21,19 @@ console.log('import bubbles');
 
 const sketch = (instance) => {
   const sk = instance;
-  const str = `660,nicomede;
+  const str = `660,nicomede workwear jacket;
+119, nicomede shell jacket; 
 48,acnes studio bag;
 80,acnes studio t-shirt;
 220,acnes studio parka;
-110,adidas;
-60,cos sur chemise;
+144,acnes studio jumper;
+37, uniclo;
+27, muji;
+288, kiko X ascis jacket;
+110, adidas runner;
 24,cos pantalons;
 12,tabi sockets;
-457,maison margiela;`;
+457,maison margiela tabi;`;
   const traiteStr = (str) => {
     const itemsArr = str.split(';').map((item) => ({
       price: item.trim().split(',')[0],
@@ -42,7 +46,7 @@ const sketch = (instance) => {
   sk.settings = {
     type: 'large',
     gravity: {
-      value: 0.5,
+      value: 1,
       type: 'range',
       max: 1.0,
       min: -1.0,
@@ -158,11 +162,11 @@ const sketch = (instance) => {
   };
 
   sk.addParticles = (items) => {
-    items.forEach((item) => {
+    items.forEach((item, index) => {
       const particle = new Particle(
-        sk.random(0, sk.width),
-        sk.random(0, sk.height),
-        Math.sqrt(item.price) * 10,
+        sk.width / 2 + index * 5,
+        50 * Math.floor((index / 3)),
+        Math.sqrt(item.price) * 8,
         item,
       );
       particles.push(particle);
@@ -188,7 +192,7 @@ const sketch = (instance) => {
     sk.strokeCap(sk.SQUARE);
     sk.rectMode(sk.CENTER);
     sk.textAlign(sk.CENTER);
-    sk.textSize(30);
+    sk.textSize(sk.width < 600 ? 20 : 30);
     sk.mouseX = sk.width / 2;
     sk.mouseY = sk.height / 2;
     sk.addParticles(items);
@@ -199,9 +203,6 @@ const sketch = (instance) => {
     sk.noFill();
     sk.background([200, 200, 200, touched ? 150 : 255]);
     particles.forEach((particle) => {
-      if (particle.body.position.x > sk.width || particle.body.position.x < 0 || particle.body.position.y > sk.height || particle.body.position.y < 0) {
-        Composite.remove(engine.world, particle.body);
-      }
       particle.display(sk);
     });
     if (touched) {
