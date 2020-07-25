@@ -39,7 +39,7 @@
         </a>
         <transition name="slide-fade">
           <div
-            v-if="item.show"
+            v-show="item.show"
             class="Menu__details bg-black-10 w-100 tl ma0"
           >
             <div
@@ -84,27 +84,29 @@
                 :alt="item.name"
                 class="w-100 dim"
               >
-              <h4>Credits</h4>
-              <div
-                v-for="(person, n) in item.credits"
-                :key="person.link + n"
-                class="f7 flex"
-                style="line-height: 1;"
-              >
-                <p class="truncate w-60">
-                  {{ person.role }}:
-                </p>
-                <p class="truncate">
-                  <a
-                    target="_blank"
-                    class="ml3 black"
-                    :href="person.link"
-                  >
-                    {{ person.name }}
-                  </a>
-                </p>
-                <br>
-              </div>
+              <template v-if="item.credits.length > 1">
+                <h4>Credits</h4>
+                <div
+                  v-for="(person, n) in item.credits"
+                  :key="person.link + n"
+                  class="f7 flex"
+                  style="line-height: 1;"
+                >
+                  <p class="truncate w-60">
+                    {{ person.role }}:
+                  </p>
+                  <p class="truncate">
+                    <a
+                      target="_blank"
+                      class="ml3 black"
+                      :href="person.link"
+                    >
+                      {{ person.name }}
+                    </a>
+                  </p>
+                  <br>
+                </div>
+              </template>
             </div>
           </div>
         </transition>
