@@ -1,3 +1,9 @@
+## [2.9.4] - 2020-07-26
+### Added
+- gtag ([500773](https://github.com/sikaili/skyl.fr/commit/500773))
+### Changed
+- delete useless media file, vue-analytics ([8aa4be](https://github.com/sikaili/skyl.fr/commit/8aa4be))
+
 ## [2.9.3] - 2020-07-25
 ### Added
 - loader ([e5f48c](https://github.com/sikaili/skyl.fr/commit/e5f48c))
