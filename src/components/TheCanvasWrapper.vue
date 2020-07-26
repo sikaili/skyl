@@ -192,7 +192,7 @@ export default {
       showList: this.type === 'musicIframe',
       showCanvasSettings: false,
       settings: null,
-      songs: { items: ['Cripple', 'Amarrage', 'La-Danse', 'flower', 'saturation-chinoise', 'c-syn', 'e-minor'] },
+      songs: { items: ['Cripple', 'Amarrage', 'La Danse', 'Rotation', 'flower', 'saturation-chinoise', 'c-syn', 'e-minor'] },
       iframes: ['c-syn', 'e-minor', 'flower', 'saturation-chinoise'],
       songId: null,
       version: process.env.VUE_APP_VERSION,
@@ -242,9 +242,6 @@ export default {
           break;
         case 'La-Danse':
           this.setRGB([159, 45, 58]);
-          break;
-        case 'Hua':
-          this.setRGB([0, 0, 36]);
           break;
         case 'Rain-Addiction':
           this.setRGB([255, 50, 50]);

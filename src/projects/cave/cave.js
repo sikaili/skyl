@@ -84,10 +84,9 @@ export default (instance) => {
       return;
     }
     sk.settings.list.current = songId;
-    songId = songId.toLowerCase();
     sk.isPlayed = false;
     sk.soundIsLoading = true;
-    const sound = () => import('@/projects/player/sound/' + songId + '.m4a'); //eslint-disable-line
+    const sound = () => import('@/projects/player/sound/' + songId.toLowerCase().replace(' ', '-') + '.m4a'); //eslint-disable-line
     sound().then((module) => {
       const soundFile = module.default;
       if (sk.player) {

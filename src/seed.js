@@ -162,7 +162,7 @@ const seedData = {
       type: 'sketch',
       year: '2020',
       des:
-        '禁足期间，远离了人的噪音，大自然对比强烈的声音给了我很多灵感：骤雨打在玻璃上的暴力，树叶摇在微风里的轻柔。我想探索电吉他这个纯电声乐器的动态，从在琴桥后拨弦的最小的微动，到六根空弦和拾音器碰撞，到失真开到极限的刺耳噪音。经过复杂而随机的后处理，我得到了让我想要的对比度和故事。虽然这听起来已不再是吉他。',
+        '禁足期间，远离了人的噪音，大自然对比强烈的声音给了我很多灵感：骤雨打在玻璃上的暴力，树叶摇在微风里的轻柔。我想探索电吉他这个纯电声乐器的动态，从在琴桥后拨弦的最小的微动，到六根空弦和拾音器碰撞，到失真开到极限的刺耳噪音。经过复杂而随机的后处理，我得到了想要的对比度和故事。虽然这听起来已不再是吉他。',
       link: 'https://skyl.fr/music/amarrage',
       img: '/img/covers/Amarrage.jpg',
       list: [
@@ -228,6 +228,12 @@ const seedData = {
           title: 'Embolism',
           artist: 'Sikai Li',
           src: '/src/projects/player/sound/embolism.m4a',
+          pic: '/img/covers/little-garden.png',
+        },
+        {
+          title: 'Carriage Return',
+          artist: 'Sikai Li',
+          src: '/src/projects/player/sound/carriage-return.m4a',
           pic: '/img/covers/little-garden.png',
         },
       ],

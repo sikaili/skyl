@@ -58,14 +58,6 @@
       :class="$mq === 'lg' ?'w-40':'w-50'"
     >
       <div>
-        <transition name="loading">
-          <div
-            v-show="loadingAnimation"
-            class="loading bg-blue f3"
-          >
-            Loading...
-          </div>
-        </transition>
         <div
           v-for="(w, index) in menuItems"
           :key="type + index"
@@ -77,6 +69,14 @@
               @mouseenter="handleMouseIn(w)"
               @mouseleave="handleMouseOut()"
             >
+              <transition name="loading">
+                <div
+                  v-show="loadingAnimation"
+                  class="loading bg-blue f3"
+                >
+                  Loading...
+                </div>
+              </transition>
               <div class="pa4">
                 <span class="f4 f1-ns b dib pr3">{{ w.name }}</span>
                 <b class="ml1 mt2 dib bg-blue">{{ w.year }}</b>
@@ -209,7 +209,7 @@ export default {
         opacity: 0 0.15s;
     }
     .loading-enter-active {
-        transition: all 1.5s;
+        transition: all linear 1s;
     }
     .loading-leave-active {
         transition: all 0s;

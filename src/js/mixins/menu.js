@@ -153,7 +153,7 @@ export default {
       setTimeout(() => {
         this.setActiveItem(item.app || item.id);
         this.loadingAnimation = false;
-      }, 1500);
+      }, 1000);
     },
     goToPage(item) {
       this.$ga.event(`read-more-${item}`, 'click', 'usage-menu', 1);
