@@ -47,7 +47,9 @@
               class="Menu__player"
             >
               <player-component
+                v-if="playerProps(item) && playerProps(item).music"
                 v-bind="playerProps(item)"
+                @emitCurrentSong="setCurrentSong"
               />
             </div>
             <div class="ph4 pv3">

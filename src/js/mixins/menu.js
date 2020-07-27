@@ -45,6 +45,7 @@ export default {
   },
   created() {
     if (this.$mq !== 'sm' || this.$route.params.id) {
+      // set active router item from params id
       const item = this.menuItems.filter((item) => item.id === this.$route.params.id)[0];
       this.toggleItem({
         name: this.name,
@@ -73,6 +74,9 @@ export default {
     showReadMoreButton(item) {
       return item.imgs.length > 1 && this.type !== 'music';
     },
+    setCurrentSong(emit) {
+      this.$router.push({ params: { songSlug: emit.title.toLowerCase().replace(' ', '-') } });
+    },
     showPlayButton(item) {
       return item.link.split(':')[0] === 'https' && this.type !== 'music';
     },
@@ -94,7 +98,9 @@ export default {
         [props.music] = item.list;
         if (this.$route.params.songSlug) {
           const song = item.list.filter((song) => song.title.toLowerCase().replace(' ', '-') === this.$route.params.songSlug.toLowerCase().replace(' ', '-'))[0];
-          props.music = song;
+          if (song) {
+            props.music = song;
+          }
         }
       } else {
         const songSlug = item.name.replace(' ', '-').toLowerCase();
