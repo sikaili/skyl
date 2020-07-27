@@ -385,7 +385,7 @@ export default {
       if (this[itemName]) {
         this.hide(itemName);
       } else {
-        this.$ga.event(`open-${itemName}`, 'click', 'usage', 1);
+        // this.$ga.event(`open-${itemName}`, 'click', 'usage', 1);
         this.show(itemName);
       }
     },
@@ -403,7 +403,7 @@ export default {
     },
     copyToClipBoard() {
       copyToClipBoard(process.env.VUE_APP_PROD_URL + this.$route.fullPath);
-      this.$ga.event('use-copy-to-clipborard', 'click', 'usage', 1);
+      // this.$ga.event('use-copy-to-clipborard', 'click', 'usage', 1);
       window.alert('Link copied to clipboard.'); //eslint-disable-line
     },
   },

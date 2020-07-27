@@ -4,7 +4,6 @@ import Drawings from '@/components/views/Drawings.vue';
 import Menu from '@/components/views/Menu.vue';
 import Play from '@/components/views/Play.vue';
 import Page from '@/components/views/Page.vue';
-import VueGtag from 'vue-gtag';
 
 const Cv = () => import(/* webpackChunkName: "Cv" */ '@/components/views/Cv.vue');
 const Article = () => import(/* webpackChunkName: "Article" */'@/components/views/Article.vue');
@@ -57,13 +56,5 @@ const router = new Router({
     { path: '*', redirect: '/play/random' },
   ],
 });
-
-Vue.use(VueGtag, {
-  config: {
-    id: 'UA-143317118-5',
-    bootstrap: false,
-  }
-  ,
-}, router);
 
 export default router;

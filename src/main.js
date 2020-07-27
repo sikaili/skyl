@@ -3,11 +3,18 @@ import VueMq from 'vue-mq';
 import App from '@/App.vue';
 import store from '@/store';
 import router from '@/router';
+import VueGtag from 'vue-gtag';
 
 import './registerServiceWorker';
 // import VueCompositionAPI from '@vue/composition-api';
 
 // Vue.use(VueCompositionAPI);
+
+Vue.use(VueGtag, {
+  disableScriptLoad: true,
+  config: { id: 'UA-143317718-5' },
+}, router);
+
 Vue.use(VueMq, {
   breakpoints: {
     sm: 675,
