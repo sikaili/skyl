@@ -86,7 +86,9 @@
                     class="mt3"
                   >
                     <player-component
+                      v-if="playerProps(w) && playerProps(w).music"
                       v-bind="playerProps(w)"
+                      @emitCurrentSong="setCurrentSong"
                     />
                   </div>
 
