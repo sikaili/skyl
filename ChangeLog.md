@@ -1,3 +1,10 @@
+## [2.9.5] - 2020-07-27
+### Fixed
+- google analytics ([64fe97](https://github.com/sikaili/skyl.fr/commit/64fe97))
+### Changed
+- push songslug when change song, modified vue-aplayergit s ([47dfa4](https://github.com/sikaili/skyl.fr/commit/47dfa4))
+- push songslug when change song, modified vue-aplayergit s ([4f332f](https://github.com/sikaili/skyl.fr/commit/4f332f))
+
 ## [2.9.4] - 2020-07-26
 ### Added
 - gtag ([500773](https://github.com/sikaili/skyl.fr/commit/500773))
