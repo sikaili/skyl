@@ -1,4 +1,4 @@
-// workbox.setConfig({ debug: true });
+workbox.setConfig({ debug: true });
 self.addEventListener('message', (e) => {
   if (!e.data) {
     return;
@@ -88,18 +88,38 @@ workbox.routing.registerRoute(
   }),
 );
 
+// workbox.routing.registerRoute(/\.tachyons.min.css$/,
+//   new workbox.strategies.StaleWhileRevalidate({
+//     cacheName: 'tachyons',
+//   }));
+
 workbox.routing.registerRoute(/\.tachyons.min.css$/,
-  new workbox.strategies.StaleWhileRevalidate({
+  new workbox.strategies.CacheFirst({
     cacheName: 'tachyons',
+    plugins: [
+      new workbox.cacheableResponse.Plugin({
+        statuses: [200],
+      }),
+    ],
   }));
+
+const cacheName = 'assets-cache';
+// self.addEventListener('install', (event) => {
+//   const cacheVideos = async () => {
+//     const cache = await caches.open(cacheName);
+//     await cache.add(videoURL);
+//   };
+//   event.waitUntil(cacheVideos());
+// });
 
 workbox.routing.registerRoute(/\.(?:m4a|mp3|png|gif|jpg)$/,
   new workbox.strategies.CacheFirst({
-    cacheName: 'google-fonts-webfonts',
+    cacheName,
     plugins: [
       new workbox.cacheableResponse.Plugin({
-        statuses: [0, 200],
+        statuses: [200],
       }),
+      new workbox.rangeRequests.Plugin(),
       new workbox.expiration.Plugin({
         maxAgeSeconds: 60 * 60 * 24 * 30,
         maxEntries: 30,
