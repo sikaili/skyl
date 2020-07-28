@@ -1,3 +1,11 @@
+## [2.9.6] - 2020-07-28
+### Fixed
+- sw audio cache ([77c790](https://github.com/sikaili/skyl.fr/commit/77c790))
+- songslug desktop (forgotten) ([b44223](https://github.com/sikaili/skyl.fr/commit/b44223))
+### Changed
+- load service work after page is loaded ([4e7aa9](https://github.com/sikaili/skyl.fr/commit/4e7aa9))
+- next song songslug ([4b81e8](https://github.com/sikaili/skyl.fr/commit/4b81e8))
+
 ## [2.9.5] - 2020-07-27
 ### Fixed
 - google analytics ([64fe97](https://github.com/sikaili/skyl.fr/commit/64fe97))
