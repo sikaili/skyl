@@ -6,9 +6,6 @@ import router from '@/router';
 import VueGtag from 'vue-gtag';
 
 import './registerServiceWorker';
-// import VueCompositionAPI from '@vue/composition-api';
-
-// Vue.use(VueCompositionAPI);
 
 Vue.use(VueGtag, {
   disableScriptLoad: true,

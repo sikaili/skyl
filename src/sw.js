@@ -1,39 +1,20 @@
 workbox.setConfig({ debug: true });
-self.addEventListener('message', (e) => {
-  if (!e.data) {
-    return;
-  }
-
-  switch (e.data) {
-    case 'skipWaiting':
-      self.skipWaiting();
-      break;
-    default:
-      // NOOP
-      break;
-  }
-});
 
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
   }
 });
-
 // workbox.core.clientsClaim(); // Vue CLI 4 and Workbox v4
-self.__precacheManifest = [].concat(self.__precacheManifest || []);
 
+self.__precacheManifest = [].concat(self.__precacheManifest || []);
 const arr = self.__precacheManifest.filter((obj) => {
   if ((obj.url && obj.url.indexOf('/src/projects/player/sound/') === -1) && (obj.url.indexOf('img/') === -1 || obj.url.indexOf('img/covers') !== -1)) {
     return true;
   }
   return false;
 });
-
 self.__precacheManifest = [].concat(arr || []);
-console.log(arr);
-console.log(self.__precacheManifest);
-
 const precacheController = new workbox.precaching.PrecacheController();
 precacheController.addToCacheList(self.__precacheManifest);
 
@@ -44,11 +25,6 @@ self.addEventListener('install', (event) => {
 self.addEventListener('activate', (event) => {
   event.waitUntil(precacheController.activate());
 });
-
-// self.addEventListener('fetch', (event) => {
-//   const cacheKey = precacheController.getCacheKeyForURL(event.request.url);
-//   event.respondWith(caches.match(cacheKey).then(...));
-// });
 
 // Make sure to return a specific response for all navigation requests.
 // Since we have a SPA here, this should be index.html always.
@@ -93,7 +69,7 @@ workbox.routing.registerRoute(
 //     cacheName: 'tachyons',
 //   }));
 
-workbox.routing.registerRoute(/\.tachyons.min.css$/,
+workbox.routing.registerRoute(/tachyons.min.css$/,
   new workbox.strategies.CacheFirst({
     cacheName: 'tachyons',
     plugins: [
@@ -103,7 +79,16 @@ workbox.routing.registerRoute(/\.tachyons.min.css$/,
     ],
   }));
 
+workbox.routing.registerRoute(
+  ({ request }) => request.destination === 'script'
+                    || request.destination === 'style',
+  new workbox.strategies.StaleWhileRevalidate({
+    cacheName: 'static-resources',
+  }),
+);
+
 const cacheName = 'assets-cache';
+// code for video audio media
 // self.addEventListener('install', (event) => {
 //   const cacheVideos = async () => {
 //     const cache = await caches.open(cacheName);
@@ -122,7 +107,7 @@ workbox.routing.registerRoute(/\.(?:m4a|mp3|png|gif|jpg)$/,
       new workbox.rangeRequests.Plugin(),
       new workbox.expiration.Plugin({
         maxAgeSeconds: 60 * 60 * 24 * 30,
-        maxEntries: 30,
+        maxEntries: 60,
       }),
     ],
   }));

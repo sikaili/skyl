@@ -203,8 +203,9 @@ export default {
     },
     refreshApp() {
       this.updateExists = false;
-      if (!this.registration || !this.registration.waiting) { return; }
-      this.registration.waiting.postMessage('skipWaiting');
+      if (this.registration && this.registration.waiting) {
+        this.registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+      }
     },
     disablePromptDesktop() {
       localStorage.setItem('propose-desktop', true);
