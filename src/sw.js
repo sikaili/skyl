@@ -1,4 +1,4 @@
-workbox.setConfig({ debug: true });
+// workbox.setConfig({ debug: true });
 
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
@@ -34,10 +34,17 @@ workbox.routing.registerNavigationRoute('/index.html');
 // Setup cache strategy for Google Fonts. They consist of two parts, a static one
 // coming from fonts.gstatic.com (strategy CacheFirst) and a more ferquently updated on
 // from fonts.googleapis.com. Hence, split in two registerroutes
+
 workbox.routing.registerRoute(
   /^https:\/\/fonts\.googleapis\.com/,
   new workbox.strategies.StaleWhileRevalidate({
     cacheName: 'google-fonts-stylesheets',
+    plugins: [
+      new workbox.expiration.Plugin({
+        maxAgeSeconds: 60 * 60 * 24 * 365,
+        maxEntries: 30,
+      }),
+    ],
   }),
 );
 
@@ -59,15 +66,19 @@ workbox.routing.registerRoute(
 
 workbox.routing.registerRoute(
   /^https:\/\/cdnjs\.cloudflare\.com/,
-  new workbox.strategies.StaleWhileRevalidate({
+  new workbox.strategies.CacheFirst({
     cacheName: 'ionicons',
+    plugins: [
+      new workbox.cacheableResponse.Plugin({
+        statuses: [200],
+      }),
+      new workbox.expiration.Plugin({
+        maxAgeSeconds: 60 * 60 * 24 * 365,
+        maxEntries: 60,
+      }),
+    ],
   }),
 );
-
-// workbox.routing.registerRoute(/\.tachyons.min.css$/,
-//   new workbox.strategies.StaleWhileRevalidate({
-//     cacheName: 'tachyons',
-//   }));
 
 workbox.routing.registerRoute(/tachyons.min.css$/,
   new workbox.strategies.CacheFirst({
@@ -75,6 +86,10 @@ workbox.routing.registerRoute(/tachyons.min.css$/,
     plugins: [
       new workbox.cacheableResponse.Plugin({
         statuses: [200],
+      }),
+      new workbox.expiration.Plugin({
+        maxAgeSeconds: 60 * 60 * 24 * 365,
+        maxEntries: 60,
       }),
     ],
   }));
@@ -88,16 +103,8 @@ workbox.routing.registerRoute(
 );
 
 const cacheName = 'assets-cache';
-// code for video audio media
-// self.addEventListener('install', (event) => {
-//   const cacheVideos = async () => {
-//     const cache = await caches.open(cacheName);
-//     await cache.add(videoURL);
-//   };
-//   event.waitUntil(cacheVideos());
-// });
 
-workbox.routing.registerRoute(/\.(?:m4a|mp3|png|gif|jpg)$/,
+workbox.routing.registerRoute(/\.(?:png|gif|jpg|mp3|m4a|mp4)$/,
   new workbox.strategies.CacheFirst({
     cacheName,
     plugins: [

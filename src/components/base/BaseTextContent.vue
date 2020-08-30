@@ -15,6 +15,7 @@
 <style scoped>
     * {
         font-family: "Helvetica Neue", sans-serif;
+        font-display: swap;
         line-height: 1rem;
     }
 

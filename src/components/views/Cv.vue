@@ -220,6 +220,7 @@ export default {
 
         * {
             font-family: "Helvetica Neue", sans-serif;
+            font-display: swap;
         }
     }
 </style>

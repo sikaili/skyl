@@ -41,6 +41,7 @@ export default {
 <style scoped>
     * {
         font-family: "Helvetica Neue", sans-serif;
+        font-display: swap;
     }
 
     ul li {

@@ -122,11 +122,9 @@
 </template>
 
 <script>
-import p5 from 'p5/lib/p5.min';
 import { mapGetters } from 'vuex';
 import copyToClipBoard from '@/js/utlis/copyToClipBoard';
 
-p5.disableFriendlyErrors = true;
 let current;
 let loaded = true;
 
@@ -134,13 +132,25 @@ const changeSketch = (name) => {
   name = name.toLowerCase();
   if (!loaded) {
     loaded = true;
-    import("./../projects/" + name + "/" + name+ ".js").then(module => { //eslint-disable-line
-    current = new p5(module.default, 'canvasContainer'); //eslint-disable-line
-      current.name = name;
-    })
-      .catch((err) => {
-        console.log(err);
-      });
+    import(/* webpackChunkName: "p5" */ 'p5/lib/p5.min').then(module => { //eslint-disable-line
+      const p5 = module.default;
+      window.p5 = p5;
+      p5.disableFriendlyErrors = true;
+      import("./../projects/" + name + "/" + name+ ".js").then(module => { //eslint-disable-line
+      current = new p5(module.default, 'canvasContainer'); //eslint-disable-line
+        current.name = name;
+        console.log(current.pixelDensity());
+        if (current.pixelDensity() > 2) {
+          current.pixelDensity(2);
+          console.log(current.pixelDensity());
+        }
+      })
+        .catch((err) => {
+          console.log(err);
+        });
+    }).catch((err) => {
+      console.log(err);
+    });
   }
 };
 
@@ -150,13 +160,14 @@ const handleResize = () => {
       || window.innerWidth || document.body.clientWidth;
     const height = document.documentElement.clientHeight
       || window.innerHeight || document.body.clientHeight;
-    p5.prototype.windowHeight = height;
-    p5.prototype.windowWidth = width;
+    window.p5.prototype.windowHeight = height;
+    window.p5.prototype.windowWidth = width;
     if (current) {
       current.resizeCanvas(width, height);
     }
   }, 505);
 };
+
 const toggleLoop = (toPause = false) => {
   setTimeout(() => {
     if (current) {
@@ -170,6 +181,7 @@ const toggleLoop = (toPause = false) => {
     }
   }, 0);
 };
+
 window.addEventListener('resize', handleResize);
 window.addEventListener('focus', toggleLoop(false), false);
 window.addEventListener('blur', toggleLoop(true), false);

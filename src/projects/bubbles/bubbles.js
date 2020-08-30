@@ -21,28 +21,33 @@ console.log('import bubbles');
 
 const sketch = (instance) => {
   const sk = instance;
-  const str = `660,nicomede workwear jacket;
-119, nicomede shell jacket; 
+  const str = `396,nicomede workwear jacket;
+57, nicomede shell jacket;
+83,craig green hoddie;
 48,acnes studio bag;
 80,acnes studio t-shirt;
 220,acnes studio parka;
-144,acnes studio jumper;
-37, uniclo;
-27, muji;
-288, kiko X ascis jacket;
-110, adidas runner;
+144,acnes studio maille;
+37,uniclo;
+57,isabel benenato trousers;
+50,muji;
+268,kiko X ascis;
+110,adidas runner;
 24,cos pantalons;
-12,tabi sockets;
-457,maison margiela tabi;`;
+17,cos kimono;
+17,cos t-shirt;
+12,tabi sockets;`;
   const traiteStr = (str) => {
     const itemsArr = str.split(';').map((item) => ({
-      price: item.trim().split(',')[0],
+      price: +item.trim().split(',')[0],
       name: item.trim().split(',')[1],
     }));
     return itemsArr;
   };
   const items = traiteStr(str);
   items.sort((a, b) => a.price - b.price);
+  const total = Object.values(items).reduce((t, { price }) => t + price, 0);
+  console.log(total);
   sk.settings = {
     type: 'large',
     gravity: {

@@ -153,7 +153,8 @@
 
 <script>
 import { menuMxn } from '@/js/mixins';
-import PlayerComponent from 'vue-aplayer';
+
+const PlayerComponent = () => import(/* webpackChunkName: "vue-player" */'vue-aplayer');
 
 PlayerComponent.disableVersionBadge = true;
 

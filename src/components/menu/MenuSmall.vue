@@ -39,7 +39,7 @@
         </a>
         <transition name="slide-fade">
           <div
-            v-show="item.show"
+            v-if="item.show"
             class="Menu__details bg-black-10 w-100 tl ma0"
           >
             <div
@@ -119,8 +119,8 @@
 
 <script>
 import { menuMxn } from '@/js/mixins';
-import PlayerComponent from 'vue-aplayer';
 
+const PlayerComponent = () => import(/* webpackChunkName: "vue-player" */'vue-aplayer');
 PlayerComponent.disableVersionBadge = true;
 
 export default {

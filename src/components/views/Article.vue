@@ -119,6 +119,7 @@ export default {
 
             &__paragraph {
                 font-family: Helvetica, Arial, sans-serif;
+                font-display: swap;
                 margin: $span-hr-small 0;
             }
         }

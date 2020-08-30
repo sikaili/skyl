@@ -19,10 +19,6 @@ export default {
     this.$root.$on('emit-showSideMenu', (show) => {
       this.showSideMenu = show;
     });
-    const { id } = this.$store.getters.activeItem;
-    if (this.$route.params.id !== id) {
-      this.$router.push({ params: { id } });
-    }
   },
   beforeDestroy() {
     this.$root.$off('emit-showSideMenu');

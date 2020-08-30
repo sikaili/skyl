@@ -245,7 +245,7 @@ export default (instance) => {
     sk.pixelDensity(1);
     grid = [];
     next = [];
-    sk.strokeCap(sk.SQUARE);
+    // sk.strokeCap(sk.SQUARE);
     const constraints = { video: { frameRate: { ideal: 10, max: 30 } } };
     if (false) {
       sk.video = sk.createCapture(constraints);

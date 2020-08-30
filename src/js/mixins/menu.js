@@ -93,6 +93,10 @@ export default {
           volume: 1,
         },
       };
+      if (!item.show && !item.played) {
+        return {};
+      }
+      item.played = true;
       if (item.list && item.list.length > 0) {
         props.list = item.list.filter((item) => item);
         [props.music] = item.list;

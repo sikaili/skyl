@@ -39,9 +39,9 @@ export default class Particle {
         && !this.updating
         && !particle.immu
       ) {
-        if (this.fill[3] > 200 && this.id) {
+        if (this.fill[3] > 200 && this.id && Math.random() > 0.5) {
           try {
-            this.samplers[this.id % 3].volume.value = -3 - 100 / (this.r + this.fill[3] / 5);
+            this.samplers[this.id % 3].volume.value = -12 - 100 / (this.r + this.fill[3] / 5);
             this.samplers[this.id % 3].triggerAttack(40 + this.fill[2]);
           } catch (err) {
             //

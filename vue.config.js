@@ -1,4 +1,5 @@
 process.env.VUE_APP_VERSION = require('./package.json').version;
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 module.exports = {
   productionSourceMap: false,
@@ -29,6 +30,9 @@ module.exports = {
         },
       ],
     },
+    plugins: [
+      // new BundleAnalyzerPlugin(),
+    ],
   },
   css: {
     loaderOptions: {
