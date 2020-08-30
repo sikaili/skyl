@@ -140,7 +140,7 @@ const changeSketch = (name) => {
       current = new p5(module.default, 'canvasContainer'); //eslint-disable-line
         current.name = name;
         console.log(current.pixelDensity());
-        if (current.pixelDensity() > 2) {
+        if (current.pixelDensity() >= 2) {
           current.pixelDensity(2);
           console.log(current.pixelDensity());
         }

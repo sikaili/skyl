@@ -1,3 +1,7 @@
+## [2.9.7] - 2020-08-30
+### Changed
+- async import canvas wrapper, remove workbox rules for media file, fix player bug ([2e22a4](https://github.com/sikaili/skyl.fr/commit/2e22a4))
+
 ## [2.9.6] - 2020-07-28
 ### Fixed
 - sw audio cache ([77c790](https://github.com/sikaili/skyl.fr/commit/77c790))

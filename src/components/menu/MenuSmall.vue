@@ -39,7 +39,7 @@
         </a>
         <transition name="slide-fade">
           <div
-            v-if="item.show"
+            v-show="item.show"
             class="Menu__details bg-black-10 w-100 tl ma0"
           >
             <div
