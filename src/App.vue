@@ -84,16 +84,9 @@
 import { mapGetters } from 'vuex';
 import TheHeader from '@/components/TheHeader.vue';
 import TheFooter from '@/components/TheFooter.vue';
-import BaseNotificationBar from '@/components/base/BaseNotificationBar.vue';
+// import BaseNotificationBar from '@/components/base/BaseNotificationBar.vue';
 import { allIframeLinks as sketches } from '@/seed.js';
-import Loading from '@/components/base/BaseLoading.vue';
-
-const TheCanvasWrapper = () => ({
-  component: import(/* webpackChunkName: "TheCanvasWrapper" */ '@/components/TheCanvasWrapper.vue'),
-  loading: Loading,
-  error: Loading,
-  timeout: 3000000,
-});
+// import Loading from '@/components/base/BaseLoading.vue';
 
 document.ontouchmove = function(e) { //eslint-disable-line
   return true;
@@ -103,8 +96,8 @@ export default {
   components: {
     TheHeader,
     TheFooter,
-    TheCanvasWrapper,
-    BaseNotificationBar,
+    TheCanvasWrapper: () => import(/* webpackChunkName: "TheCanvasWrapper" */ '@/components/TheCanvasWrapper.vue'),
+    // BaseNotificationBar,
   },
   data() {
     return {
