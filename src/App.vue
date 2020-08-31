@@ -85,7 +85,7 @@ import { mapGetters } from 'vuex';
 import TheHeader from '@/components/TheHeader.vue';
 import TheFooter from '@/components/TheFooter.vue';
 // import BaseNotificationBar from '@/components/base/BaseNotificationBar.vue';
-import { allIframeLinks as sketches } from '@/seed.js';
+// import { allIframeLinks as sketches } from '@/seed.js';
 // import Loading from '@/components/base/BaseLoading.vue';
 
 document.ontouchmove = function(e) { //eslint-disable-line
@@ -153,6 +153,28 @@ export default {
       this.canvasWrapperKey = Math.random().toFixed(2);
     },
   },
+  beforeCreate() {
+    const lastPlayed = localStorage.getItem('lastPlayed');
+    if (lastPlayed) {
+      this.$store.dispatch('setActiveItem', lastPlayed);
+      this.$router.push({ name: 'play', params: { id: lastPlayed } });
+      localStorage.removeItem('lastPlayed');
+      return;
+    }
+    this.$root.$on('refreshCanvas', () => {
+      this.canvasWrapperKey = Math.random().toFixed(2);
+    });
+    const { id } = this.$route.params;
+    if (id !== 'random') {
+      const iframeItem = this.$store.state.iframeItems.find(
+        (item) => item.id === id,
+      ) || {
+        id: ['eyes', 'eyes', 'virus', 'p'][Math.floor(Math.random() * 4)],
+        type: 'sketch',
+      };
+      this.$store.dispatch('setActiveItem', iframeItem);
+    }
+  },
   created() {
     document.addEventListener(
       'swUpdated', this.showRefreshUI, { once: true },
@@ -177,28 +199,28 @@ export default {
     //   localStorage.removeItem('lastPlayed');
     //   return;
     // }
-    const { id } = this.$route.params;
-    if (id !== 'random') {
-      const sketch = sketches.find(
-        (item) => item.id === id,
-      ) || {
-        id: ['eyes', 'eyes', 'p'][Math.floor(Math.random() * 3)],
-        type: 'sketch',
-      };
+    // const { id } = this.$route.params;
+    // if (id !== 'random') {
+    //   const sketch = sketches.find(
+    //     (item) => item.id === id,
+    //   ) || {
+    //     id: ['eyes', 'eyes', 'p'][Math.floor(Math.random() * 3)],
+    //     type: 'sketch',
+    //   };
 
-      if (sketch.id !== id && id) {
-        this.$router.push({
-          params: {
-            id: undefined,
-          },
-        });
-      }
+    //   if (sketch.id !== id && id) {
+    //     this.$router.push({
+    //       params: {
+    //         id: undefined,
+    //       },
+    //     });
+    //   }
 
-      this.$store.dispatch('setActiveItem', sketch);
-    }
-    this.$root.$on('refreshCanvas', () => {
-      this.canvasWrapperKey = Math.random().toFixed(2);
-    });
+    //   this.$store.dispatch('setActiveItem', sketch);
+    // }
+    // this.$root.$on('refreshCanvas', () => {
+    //   this.canvasWrapperKey = Math.random().toFixed(2);
+    // });
   },
   destroyed() {
     window.removeEventListener('resize', this.handleResize);
