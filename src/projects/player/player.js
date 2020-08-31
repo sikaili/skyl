@@ -1,4 +1,3 @@
-import p5 from 'p5/lib/p5.min';
 import Tone from 'tone';
 import setListeners from '@/js/utlis/addEventListeners';
 import PeakDetect from '@/js/utlis/PeakDetect';

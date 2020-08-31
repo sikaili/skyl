@@ -92,7 +92,7 @@ const TheCanvasWrapper = () => ({
   component: import(/* webpackChunkName: "TheCanvasWrapper" */ '@/components/TheCanvasWrapper.vue'),
   loading: Loading,
   error: Loading,
-  timeout: 3000,
+  timeout: 3000000,
 });
 
 document.ontouchmove = function(e) { //eslint-disable-line
@@ -215,7 +215,7 @@ export default {
   methods: {
     showRefreshUI(e) {
       this.registration = e.detail;
-      this.updateExists = true;
+      // this.updateExists = true;
     },
     refreshApp() {
       this.updateExists = false;

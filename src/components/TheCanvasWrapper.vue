@@ -124,6 +124,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import copyToClipBoard from '@/js/utlis/copyToClipBoard';
+import loadScript from '@/js/utlis/loadScript';
 
 let current;
 let loaded = true;
@@ -132,9 +133,7 @@ const changeSketch = (name) => {
   name = name.toLowerCase();
   if (!loaded) {
     loaded = true;
-    import(/* webpackChunkName: "p5" */ 'p5/lib/p5.min').then(module => { //eslint-disable-line
-      const p5 = module.default;
-      window.p5 = p5;
+    loadScript('/p5.min.js').then(() => { //eslint-disable-line
       p5.disableFriendlyErrors = true;
       import("./../projects/" + name + "/" + name+ ".js").then(module => { //eslint-disable-line
       current = new p5(module.default, 'canvasContainer'); //eslint-disable-line
