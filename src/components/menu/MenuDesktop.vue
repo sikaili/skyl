@@ -71,7 +71,7 @@
             >
               <transition name="loading">
                 <div
-                  v-show="loadingAnimation"
+                  v-show="loadingAnimation && !w.apps"
                   class="loading bg-blue f3"
                 >
                   Loading...
@@ -80,7 +80,7 @@
               <div class="pa4">
                 <span class="f4 f1-ns b dib pr3">{{ w.name }}</span>
                 <b class="ml1 mt2 dib bg-blue">{{ w.year }}</b>
-                <blockquote class="ph0 pb2 mb1 bb mh0 mt0">
+                <div class="ph0 pb2 mb1 bb mh0 mt0">
                   <div
                     v-if="$route.name.includes('music')"
                     class="mt3"
@@ -91,7 +91,21 @@
                       @emitCurrentSong="setCurrentSong"
                     />
                   </div>
+                  <div
+                    v-if="w.apps"
+                    class="Menu__itemList"
+                  >
+                    <span
+                      v-for="(item, index) in w.apps"
 
+                      :key="index"
+                      class="tc f6 link ba bw2 mh1 ph1 pv2 mt2 dib black dim"
+                      @click="play(item)"
+                    >
+                      {{ item }}
+                      <i class="icon ion-md-return-right" />
+                    </span>
+                  </div>
                   <p class="lh-copy f6">
                     {{ w.des }}
                     <br>
@@ -109,7 +123,7 @@
                       <i class="icon ion-md-return-right" />
                     </span>
                   </p>
-                </blockquote>
+                </div>
                 <div class="w-100 overflow-auto">
                   <code class="f7 db lh-copy nowrap">{{ w.link }}</code>
                 </div>
@@ -146,8 +160,10 @@
             </div>
           </transition>
         </div>
+        </transition>
       </div>
     </div>
+  </div>
   </div>
 </template>
 
@@ -183,6 +199,13 @@ export default {
     .Menu {
         &__button {
             width: 30%;
+        }
+        &__item {
+            &List {
+                display: flex;
+                flex-flow: row wrap;
+                justify-content: flex-start;
+            }
         }
 
         &__player {

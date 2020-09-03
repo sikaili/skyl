@@ -55,6 +55,21 @@
             <div class="ph4 pv3">
               <!-- <span class="f4 f1-ns b dib pr3">{{ item.name }}</span> -->
               <blockquote class="ph0 pb2 mb0 bb mh0 mt0">
+                <div
+                  v-if="item.apps"
+                  class="Menu__itemList"
+                >
+                  <span
+                    v-for="(listItem, index) in item.apps"
+
+                    :key="index"
+                    class="tc f6 link ba bw2 mh1 ph1 pv2 mv2 dib black dim"
+                    @click="play(listItem)"
+                  >
+                    {{ listItem }}
+                    <i class="icon ion-md-return-right" />
+                  </span>
+                </div>
                 <p class="lh-copy f6 ma0 black">
                   {{ item.des }}
                   <br>

@@ -6,7 +6,6 @@ import Play from '@/components/views/Play.vue';
 import Page from '@/components/views/Page.vue';
 
 const Cv = () => import(/* webpackChunkName: "Cv" */ '@/components/views/Cv.vue');
-const Article = () => import(/* webpackChunkName: "Article" */'@/components/views/Article.vue');
 
 Vue.use(Router);
 
@@ -47,11 +46,6 @@ const router = new Router({
       path: '/cv',
       name: 'cv/',
       component: Cv,
-    },
-    {
-      path: '/article',
-      name: 'article',
-      component: Article,
     },
     { path: '*', redirect: '/play/random' },
   ],

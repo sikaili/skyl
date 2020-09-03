@@ -169,7 +169,7 @@ export default {
       const iframeItem = this.$store.state.iframeItems.find(
         (item) => item.id === id,
       ) || {
-        id: ['eyes', 'eyes', 'virus', 'p'][Math.floor(Math.random() * 4)],
+        id: ['eyes', 'eyes', 'p', 'quadtree'][Math.floor(Math.random() * 4)],
         type: 'sketch',
       };
       this.$store.dispatch('setActiveItem', iframeItem);

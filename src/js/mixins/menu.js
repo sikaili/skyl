@@ -78,7 +78,7 @@ export default {
       this.$router.push({ params: { songSlug: emit.title.toLowerCase().replace(' ', '-') } });
     },
     showPlayButton(item) {
-      return item.link.split(':')[0] === 'https' && this.type !== 'music';
+      return item.link.split(':')[0] === 'https' && this.type !== 'music' && !item.list;
     },
     pauseToneAudioContext() {
       if (this.name === 'music' && window.Tone && window.Tone.context.state === 'running') {
@@ -119,8 +119,9 @@ export default {
     },
     play(item) {
       this.abortLoad();
-      this.setActiveItem(item.app || item.id);
-      this.$router.push({ path: `/play/${item.app || item.id}` })
+      const itemName = item.app || item.id || item;
+      this.setActiveItem(itemName);
+      this.$router.push({ path: `/play/${itemName}` })
         .catch((err) => {});
       if (item.app && item.id) {
         this.$router.push({ query: { id: item.id } });

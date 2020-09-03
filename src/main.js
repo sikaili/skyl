@@ -4,8 +4,11 @@ import App from '@/App.vue';
 import store from '@/store';
 import router from '@/router';
 import VueGtag from 'vue-gtag';
+// import loadScript from '@/js/utlis/loadScript';
 
 import './registerServiceWorker';
+
+// loadScript('/p5.min.js');
 
 Vue.use(VueGtag, {
   disableScriptLoad: true,

@@ -37,7 +37,7 @@ workbox.routing.registerNavigationRoute('/index.html');
 
 workbox.routing.registerRoute(
   /^https:\/\/fonts\.googleapis\.com/,
-  new workbox.strategies.StaleWhileRevalidate({
+  new workbox.strategies.CacheFirst({
     cacheName: 'google-fonts-stylesheets',
     plugins: [
       new workbox.expiration.Plugin({
@@ -94,13 +94,13 @@ workbox.routing.registerRoute(/tachyons.min.css$/,
     ],
   }));
 
-workbox.routing.registerRoute(
-  ({ request }) => request.destination === 'script'
-                    || request.destination === 'style',
-  new workbox.strategies.StaleWhileRevalidate({
-    cacheName: 'static-resources',
-  }),
-);
+// workbox.routing.registerRoute(
+//   ({ request }) => request.destination === 'script'
+//                     || request.destination === 'style',
+//   new workbox.strategies.StaleWhileRevalidate({
+//     cacheName: 'static-resources',
+//   }),
+// );
 
 const cacheName = 'assets-cache';
 

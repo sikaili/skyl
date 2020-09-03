@@ -3,11 +3,13 @@ import sketches from '@/assets/JSON/sketches.json';
 
 const seedData = {
   work: [{
-    name: 'p',
+    name: 'Cave',
+    apps: ['cave', 'virus', 'reaction-diffusion', 'quadtree'],
     year: '2020',
-    des: 'Speed up a single sound object, move and compose your own',
-    link: 'https://skyl.fr/play/p/',
-    img: '/img/covers/p.png',
+    des: 'Experiments during the 2020 lockdown.',
+    // p des: 'Speed up a single sound object, move and compose your own',
+    link: 'http://skyl.fr/',
+    img: '/img/covers/cave.jpg',
     credits: [{
       role: 'Code, recording ',
       name: 'Sikai Li',
