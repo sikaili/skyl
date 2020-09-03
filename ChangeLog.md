@@ -1,3 +1,11 @@
+## [2.9.8] - 2020-09-03
+### Added
+- menu item multi items:.apps in seeddata ([3d44a5](https://github.com/sikaili/skyl.fr/commit/3d44a5))
+### Fixed
+- ios chrome no canvas ([1aea56](https://github.com/sikaili/skyl.fr/commit/1aea56))
+### Changed
+- load p5 with loadscript ([10a2fc](https://github.com/sikaili/skyl.fr/commit/10a2fc))
+
 ## [2.9.7] - 2020-08-30
 ### Changed
 - async import canvas wrapper, remove workbox rules for media file, fix player bug ([2e22a4](https://github.com/sikaili/skyl.fr/commit/2e22a4))
