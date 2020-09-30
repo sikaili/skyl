@@ -1,3 +1,7 @@
+## [2.9.9] - 2020-09-30
+### Fixed
+- tone js import ([d8ecc8](https://github.com/sikaili/skyl.fr/commit/d8ecc8))
+
 ## [2.9.8] - 2020-09-03
 ### Added
 - menu item multi items:.apps in seeddata ([3d44a5](https://github.com/sikaili/skyl.fr/commit/3d44a5))
