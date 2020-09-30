@@ -1,4 +1,4 @@
-import Tone from 'tone';
+import * as Tone from 'tone';
 import F3 from './sound/light.mp3';
 import A3 from './sound/chasing.mp3';
 import E3 from './sound/bouton_reverb.mp3';

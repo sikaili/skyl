@@ -1,6 +1,6 @@
 import calDistance from '@/js/utlis/calDistance';
 import setListeners from '@/js/utlis/addEventListeners';
-import Tone from 'tone';
+import * as Tone from 'tone';
 import texts from '../eyes/assets/hanzi.json';
 
 window.Tone = window.Tone ? window.Tone : Tone;

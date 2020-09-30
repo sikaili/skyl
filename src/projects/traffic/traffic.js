@@ -1,4 +1,4 @@
-import Tone from 'tone';
+import * as Tone from 'tone';
 import setListeners from '@/js/utlis/addEventListeners';
 
 window.Tone = window.Tone ? window.Tone : Tone;

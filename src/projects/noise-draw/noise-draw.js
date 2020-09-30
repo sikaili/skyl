@@ -1,4 +1,4 @@
-import Tone from 'tone';
+import * as Tone from 'tone';
 import setListeners from '@/js/utlis/addEventListeners';
 import setGestures from '@/js/utlis/addGestures';
 import calDistance from '@/js/utlis/calDistance';

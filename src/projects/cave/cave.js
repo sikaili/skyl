@@ -1,4 +1,4 @@
-import Tone from 'tone';
+import * as Tone from 'tone';
 import PeakDetect from '@/js/utlis/PeakDetect';
 import setListeners from '@/js/utlis/addEventListeners';
 import { Vertices } from 'matter-js';
