@@ -81,7 +81,7 @@ export default function (instance) {
     });
     sampler0.dispose();
     sampler1.dispose();
-    Tone.context.suspend();
+    // Tone.context.close();
     sk.remove();
     Object.entries((prop) => delete sk[prop]);
     console.log('p is killed');

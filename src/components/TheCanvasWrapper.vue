@@ -125,6 +125,7 @@
 import { mapGetters } from 'vuex';
 import copyToClipBoard from '@/js/utlis/copyToClipBoard';
 import loadScript from '@/js/utlis/loadScript';
+import * as Tone from 'tone';
 
 let current;
 let loaded = true;
@@ -136,7 +137,7 @@ const changeSketch = (name) => {
     loadScript('/p5.min.js').then(() => { //eslint-disable-line
       p5.disableFriendlyErrors = true;
       import("./../projects/" + name + "/" + name+ ".js").then(module => { //eslint-disable-line
-      current = new p5(module.default, 'canvasContainer'); //eslint-disable-line
+        current = new p5(module.default, 'canvasContainer'); //eslint-disable-line
         current.name = name;
         console.log(current.pixelDensity());
         if (current.pixelDensity() >= 2) {

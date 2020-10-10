@@ -17,6 +17,7 @@ export default function (sk) {
     Video.disconnect();
     clearInterval(sk.interval);
     sk.remove();
+    console.log('k means killed');
   };
 
   sk.settings = {

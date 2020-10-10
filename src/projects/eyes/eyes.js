@@ -149,16 +149,16 @@ const eyes = (instance) => {
     }
   }
   sk.stop = () => {
-    console.log('eyes is killed');
     sk.stopped = true;
     sk.noLoop();
     sk.eyeRight = null;
     sk.eyeLeft = null;
     sampler0.dispose();
     sampler1.dispose();
-    Tone.context.suspend();
+    // Tone.context.close();
     sk.remove();
     Object.entries((prop) => delete sk[prop]);
+    console.log('eyes is killed');
   };
 
   sk.start = () => {

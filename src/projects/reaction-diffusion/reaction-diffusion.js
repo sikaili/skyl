@@ -134,9 +134,8 @@ export default (instance) => {
     sk.noLoop();
     oscs.map((osc) => osc.dispose());
     pans.map((pan) => pan.dispose());
-    Tone.context.suspend();
-
     sk.remove();
+    console.log('reaction-diffusion killed');
   };
   sk.resetDefaultSettings = () => {
     const keys = Object.keys(sk.settings).filter((key) => sk.settings[key].type === 'range');
@@ -182,20 +181,20 @@ export default (instance) => {
           } else {
             // if (brightness > sk.settings.min.value / 255 && brightness < sk.settings.max.value / 255) {
             // const ratioModelClassification = ((r - g) / (r + g) >= 0) && ((r - g) / (r + g) <= 0.5) && (b / (r + g) <= 0.5);
-            const kovacClassification = (r > 95 && g > 40 && b > 20 && r > g && r > b && (r - g) > 15 && r - Math.min([g, b] > 15));
-            if (brightness < 1 && kovacClassification) {
-              grid[x][y].color = img.pixels.slice(n, n + 3);
-              next[x][y].color = img.pixels.slice(n, n + 3);
+            // const kovacClassification = (r > 95 && g > 40 && b > 20 && r > g && r > b && (r - g) > 15 && r - Math.min([g, b] > 15));
+            if (brightness < 1) {
+              // grid[x][y].color = img.pixels.slice(n, n + 3);
+              // next[x][y].color = img.pixels.slice(n, n + 3);
               grid[x][y].b = 1 - brightness;
               grid[x][y].a = brightness;
               grid[x][y].z = (1 - brightness) * -110;
-              grid[x][y].scale = brightness + 0.5;
-              next[x][y].scale = brightness + 0.5;
+              // grid[x][y].scale = brightness + 0.5;
+              // next[x][y].scale = brightness + 0.5;
             } else {
-              grid[x][y].color = null;
-              next[x][y].color = null;
-              grid[x][y].scale = 1;
-              next[x][y].scale = 1;
+              // grid[x][y].color = null;
+              // next[x][y].color = null;
+              // grid[x][y].scale = 1;
+              // next[x][y].scale = 1;
             }
           }
         }
@@ -324,7 +323,7 @@ export default (instance) => {
         }
         swap();
       }
-    }, 30);
+    }, 100);
   };
 
   sk.draw = () => {
@@ -335,70 +334,49 @@ export default (instance) => {
     sk.rotateZ(sk.noise(sk.frameCount / 30) - 0.5 + (sk.z ? sk.z : 0));
     sk.rotateX(sk.noise(sk.frameCount / 50) / 2 + (sk.x ? sk.x : 0));
     sk.translate(-sk.width / 2, -sk.height / 2);
-
     sk.background(255);
+
     for (let x = 0; x < grid.length; x += 1) {
       for (let y = 0; y < grid[0].length; y += 1) {
         if (!grid[x][y].isBorder) {
           const {
-            a, b, color, z,
+            a, b, z,
           } = grid[x][y];
 
-          let diffrence = Math.floor((a - b) * 255);
-          if (diffrence < 50) {
-            // point mode
-            if (sk.settings.point) {
-              sk.push();
-              if (diffrence < 100) {
-                sk.stroke(96 * (1 + sk.noise(x / 50 * diffrence, y / 50)), 200 - diffrence);
-              } else {
-                sk.noStroke();
-              }
-              sk.translate(x * interval, y * interval);
-              const fill = 255 - (diffrence * diffrence) / 30;
-              sk.fill(fill, -diffrence);
-              if (z < 30 && color) {
-                // const color1 = [...color].map((color) => (color + fill) / 2);
-                // sk.fill([...color, 100]);
-              }
-              const height = diffrence * diffrence / 700 + 10 + z;
-              let i = 0;
-              if (height > 88 && height < 103) {
-                count += 1;
-                sk.normalMaterial();
-                if (x / grid.length > 0.5) {
-                  if (y / grid.length > 0.5) {
-                    i = 0;
-                  } else {
-                    i = 1;
-                  }
-                } else if (y / grid.length > 0.5) {
-                  i = 2;
+          const diffrence = Math.floor((a - b) * 255);
+          if (diffrence < 20) {
+            sk.push();
+            sk.stroke(127, 200 - diffrence);
+            sk.translate(x * interval, y * interval);
+            const fill = 255 - (diffrence * diffrence) / 30;
+            sk.fill(fill, -diffrence);
+            const height = diffrence * diffrence / 700 + 10 + z;
+            let i = 0;
+            if (height > 88 && height < 103) {
+              count += 1;
+              sk.normalMaterial();
+              // sk.fill(Math.random() * 255);
+              // sk.stroke(0);
+              if (x / grid.length > 0.5) {
+                if (y / grid.length > 0.5) {
+                  i = 0;
                 } else {
-                  i = 3;
+                  i = 1;
                 }
-                const pan = sk.constrain((x / grid.length - 0.5) + [0.75, 0.5, -0.5, -0.75][i], -1, 1);
-                pans[i].set({ pan });
-                oscs[i].set({
-                  frequency:
+              } else if (y / grid.length > 0.5) {
+                i = 2;
+              } else {
+                i = 3;
+              }
+              const pan = sk.constrain((x / grid.length - 0.5) + [0.75, 0.5, -0.5, -0.75][i], -0.7, 0.7);
+              pans[i].set({ pan });
+              oscs[i].set({
+                frequency:
                   sk.noise(x, y) * oscs[i].type && oscs[i].type.includes('sine') ? 440 : 880,
-                });
-              }
-              sk.box(interval, interval, height);
-              sk.pop();
-            // stroke mode
-            } else {
-              if (diffrence > 127) {
-                diffrence = 127 + (diffrence - 127) * 3;
-              }
-              sk.push();
-              sk.stroke(diffrence, 127);
-              sk.strokeWeight(sk.map(diffrence, 0, 230, sk.width > 512 ? 4 : 2, -1));
-              sk.translate(x * interval, y * interval);
-              sk.rotate(sk.noise(x / 50, y / 30) * 2 * 3.14);
-              sk.line(0, 0, 0, interval + sk.noise(x / 100, y / 100) * 3);
-              sk.pop();
+              });
             }
+            sk.box(interval, interval, height);
+            sk.pop();
           }
         }
       }
@@ -421,9 +399,9 @@ export default (instance) => {
       Tone.start().then(() => {
         oscs.forEach((osc) => {
           if (osc.width) {
-            osc.width.value = Math.random() * 4;
+            osc.width.value = Math.random() * 2 + -1;
           }
-          osc.count = Math.floor(Math.random() * 5);
+          osc.count = Math.floor(Math.random() * 5 + 1);
           osc.spread = Math.floor(Math.random() * 5);
           osc.start();
           sk.soundIsOn = true;

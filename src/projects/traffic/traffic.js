@@ -1,7 +1,6 @@
 import * as Tone from 'tone';
 import setListeners from '@/js/utlis/addEventListeners';
-
-
+// need ancient tone to work
 
 const s = (instance) => {
   const sk = instance;
@@ -57,7 +56,6 @@ const s = (instance) => {
       release: 1,
     },
   }).chain(distortion, tremolo, Tone.Master);
-
   const divNode = document.querySelector('#canvasContainer');
 
   // save and get last
@@ -106,17 +104,6 @@ const s = (instance) => {
     [440, 220, [440, 220, [440, 220, 440]]],
   );
 
-  const setSeqNotes = () => {
-    if (sk.notes !== sk.settings.notes.value) {
-      const arr = sk.settings.notes.value.split(',');
-      const notes = [arr[0], arr[1], [arr[2], arr[3], [arr[4], arr[5], arr[6]]]];
-      notes.map((a, index) => {
-        seq.at(index, a);
-      });
-      sk.notes = sk.settings.notes.value;
-    }
-  };
-
   const triggerSynth = (time) => {
     const notes = ['C2', 'A4', 'D3', 'A2', 'E4', 'Eb3', 'A2', 'D4'];
     try {
@@ -138,7 +125,7 @@ const s = (instance) => {
     distortion = null;
     tremolo = null;
     Tone.Transport.stop();
-    Tone.context.suspend();
+    // Tone.context.close();
     sk.remove();
     console.log('traffic is killed');
   };
@@ -170,7 +157,6 @@ const s = (instance) => {
   sk.setupTone = () => {
     seq.humanize = true;
     seq.probability = 1;
-    seq.start();
     Tone.Transport.schedule(triggerSynth, 0);
     Tone.Transport.schedule(triggerSynth, '16n');
     Tone.Transport.schedule(triggerSynth, '8n');
@@ -179,6 +165,7 @@ const s = (instance) => {
     Tone.Transport.loop = true;
     Tone.Transport.bpm.value = 70;
     Tone.Transport.start();
+    seq.start();
   };
 
   sk.tri = (x, y, r) => {

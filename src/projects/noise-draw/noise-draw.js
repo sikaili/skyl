@@ -36,7 +36,7 @@ export default function (sk) {
     filt.dispose();
     pan.dispose();
     tremolo.dispose();
-    Tone.context.suspend();
+// Tone.context.close();
     sk.remove();
   };
   sk.dark = Math.random() > 0.3;

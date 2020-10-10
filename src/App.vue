@@ -84,6 +84,7 @@
 import { mapGetters } from 'vuex';
 import TheHeader from '@/components/TheHeader.vue';
 import TheFooter from '@/components/TheFooter.vue';
+
 // import BaseNotificationBar from '@/components/base/BaseNotificationBar.vue';
 // import { allIframeLinks as sketches } from '@/seed.js';
 // import Loading from '@/components/base/BaseLoading.vue';
@@ -175,7 +176,7 @@ export default {
       this.$store.dispatch('setActiveItem', iframeItem);
     }
   },
-  created() {
+  mounted() {
     document.addEventListener(
       'swUpdated', this.showRefreshUI, { once: true },
     );
@@ -191,7 +192,6 @@ export default {
     window.addEventListener('scroll', this.handleScroll);
     window.addEventListener('orientationchange', this.handleResize);
     this.handleResize();
-
     // const lastPlayed = localStorage.getItem('lastPlayed');
     // if (lastPlayed) {
     //   this.$store.dispatch('setActiveItem', lastPlayed);

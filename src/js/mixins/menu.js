@@ -58,7 +58,7 @@ export default {
   },
   updated() {
     // if (this.name === 'music' && window.Tone && window.Tone.context.state === 'running') {
-    //   window.Tone.context.suspend();
+    //   window.Tone.context.close();
     // } else if (this.name !== 'music' && window.Tone && window.Tone.context.state === 'suspended') {
     //   window.Tone.context.resume();
     // }
@@ -82,7 +82,7 @@ export default {
     },
     pauseToneAudioContext() {
       if (this.name === 'music' && window.Tone && window.Tone.context.state === 'running') {
-        window.Tone.context.suspend();
+        window.Tone.context.close();
       }
     },
     playerProps(item) {

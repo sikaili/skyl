@@ -19,7 +19,7 @@ export default (instance) => {
     sk.player.disconnect();
     sk.player.dispose();
     fft.dispose();
-    Tone.context.suspend();
+    // Tone.context.close();
     sk.remove();
     Object.entries((prop) => delete sk[prop]);
     console.log('cave is killed');

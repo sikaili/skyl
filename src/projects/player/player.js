@@ -107,7 +107,7 @@ export default function (sk) {
     player.disconnect();
     player.dispose();
     fft.dispose();
-    Tone.context.suspend();
+// Tone.context.close();
     sk.remove();
     particles = [];
     Object.entries((prop) => delete sk[prop]);
