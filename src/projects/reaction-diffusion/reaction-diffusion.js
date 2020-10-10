@@ -3,8 +3,6 @@ import setListeners from '@/js/utlis/addEventListeners';
 import * as Tone from 'tone';
 import texts from '../eyes/assets/hanzi.json';
 
-window.Tone = window.Tone ? window.Tone : Tone;
-
 export default (instance) => {
   const sk = instance;
 

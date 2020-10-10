@@ -1,7 +1,7 @@
 import * as Tone from 'tone';
 import setListeners from '@/js/utlis/addEventListeners';
 
-window.Tone = window.Tone ? window.Tone : Tone;
+
 
 const s = (instance) => {
   const sk = instance;

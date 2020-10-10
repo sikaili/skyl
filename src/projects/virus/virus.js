@@ -16,8 +16,6 @@ import Particle from './sub/particles';
 import E3 from './sound/chasing.mp3';
 import D3 from './sound/light.mp3';
 
-window.Tone = window.Tone ? window.Tone : Tone;
-
 console.log('import virus');
 
 const sketch = (instance) => {

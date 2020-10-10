@@ -6,8 +6,6 @@ import copyToClipBoard from '@/js/utlis/copyToClipBoard';
 import { Vertices } from 'matter-js';
 import drawings from './drawings.json';
 
-window.Tone = window.Tone ? window.Tone : Tone;
-
 let globleDrawArray = [];
 let isViewMode = false;
 let xoff = 0;

@@ -57,17 +57,17 @@ export default {
     window.addEventListener('click', this.pauseToneAudioContext);
   },
   updated() {
-    if (this.name === 'music' && window.Tone && window.Tone.context.state === 'running') {
-      window.Tone.context.suspend();
-    } else if (this.name !== 'music' && window.Tone && window.Tone.context.state === 'suspended') {
-      window.Tone.context.resume();
-    }
+    // if (this.name === 'music' && window.Tone && window.Tone.context.state === 'running') {
+    //   window.Tone.context.suspend();
+    // } else if (this.name !== 'music' && window.Tone && window.Tone.context.state === 'suspended') {
+    //   window.Tone.context.resume();
+    // }
   },
   beforeDestroy() {
-    if (window.Tone && window.Tone.context.state === 'suspended') {
-      window.Tone.context.resume();
-    }
-    window.removeEventListener('click', this.pauseToneAudioContext);
+    // if (window.Tone && window.Tone.context.state === 'suspended') {
+    //   window.Tone.context.resume();
+    // }
+    // window.removeEventListener('click', this.pauseToneAudioContext);
   },
   methods: {
     ...mapActions(['setActiveItem', 'toggleItem', 'changeLoadingState']),

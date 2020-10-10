@@ -15,8 +15,6 @@ import Particle from './particles';
 import E3 from '../virus/sound/chasing.mp3';
 import D3 from '../virus/sound/light.mp3';
 
-window.Tone = window.Tone ? window.Tone : Tone;
-
 console.log('import bubbles');
 
 const sketch = (instance) => {
@@ -151,19 +149,23 @@ const sketch = (instance) => {
   };
 
   sk.stop = () => {
-    sk.noLoop();
-    Runner.stop(runner);
-    World.clear(engine.world, false, true);
-    Engine.clear(engine);
-    runner = null;
-    engine = null;
-    Tone.context.suspend();
-    Particle.prototype.sampler2.dispose();
-    Particle.prototype.samplers.map((a) => a.dispose());
-    sk.remove();
-    window.decomp = undefined;
-    console.log('virus killed');
-    particles = [];
+    try {
+      sk.noLoop();
+      Runner.stop(runner);
+      World.clear(engine.world, false, true);
+      Engine.clear(engine);
+      runner = null;
+      engine = null;
+      Tone.context.suspend();
+      Particle.prototype.sampler2.dispose();
+      Particle.prototype.samplers.map((a) => a.dispose());
+      sk.remove();
+      window.decomp = undefined;
+      console.log('virus killed');
+      particles = [];
+    } catch (err) {
+
+    }
   };
 
   sk.addParticles = (items) => {

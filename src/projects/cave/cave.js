@@ -4,12 +4,12 @@ import setListeners from '@/js/utlis/addEventListeners';
 import { Vertices } from 'matter-js';
 import drawings from '../noise-draw/drawings.json';
 
-window.Tone = window.Tone ? window.Tone : Tone;
-
-if (!window.audioCtx) {
-  window.audioCtx = new AudioContext({ sampleRate: 44100 });
-  Tone.setContext(window.audioCtx);
-}
+// const AudioContext = window.AudioContext // Default
+//               || window.webkitAudioContext; // Safari and old versions of Chrome
+// if (!window.audioCtx) {
+//   window.audioCtx = new AudioContext({ sampleRate: 44100 });
+//   Tone.setContext(window.audioCtx);
+// }
 
 export default (instance) => {
   const sk = instance;

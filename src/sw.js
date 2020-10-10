@@ -8,13 +8,13 @@ self.addEventListener('message', (event) => {
 // workbox.core.clientsClaim(); // Vue CLI 4 and Workbox v4
 
 self.__precacheManifest = [].concat(self.__precacheManifest || []);
-const arr = self.__precacheManifest.filter((obj) => {
-  if ((obj.url && obj.url.indexOf('/src/projects/player/sound/') === -1) && (obj.url.indexOf('img/') === -1 || obj.url.indexOf('img/covers') !== -1)) {
-    return true;
-  }
-  return false;
-});
-self.__precacheManifest = [].concat(arr || []);
+// const arr = self.__precacheManifest.filter((obj) => {
+//   if ((obj.url && obj.url.indexOf('/src/projects/player/sound/') === -1) && (obj.url.indexOf('img/') === -1 || obj.url.indexOf('img/covers') !== -1)) {
+//     return true;
+//   }
+//   return false;
+// });
+// self.__precacheManifest = [].concat(arr || []);
 const precacheController = new workbox.precaching.PrecacheController();
 precacheController.addToCacheList(self.__precacheManifest);
 
@@ -104,8 +104,8 @@ workbox.routing.registerRoute(/tachyons.min.css$/,
 
 const cacheName = 'assets-cache';
 
-workbox.routing.registerRoute(/\.(?:png|gif|jpg|mp3|m4a|mp4)$/,
-  new workbox.strategies.CacheFirst({
+workbox.routing.registerRoute(/\.(?:png|gif|jpg)$/,
+  new workbox.strategies.StaleWhileRevalidate({
     cacheName,
     plugins: [
       new workbox.cacheableResponse.Plugin({
