@@ -1,3 +1,7 @@
+## [2.9.10] - 2020-10-10
+### Changed
+- update tone.js and so on ([aa4748](https://github.com/sikaili/skyl.fr/commit/aa4748))
+
 ## [2.9.9] - 2020-09-30
 ### Fixed
 - tone js import ([d8ecc8](https://github.com/sikaili/skyl.fr/commit/d8ecc8))
