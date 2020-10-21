@@ -125,7 +125,6 @@
 import { mapGetters } from 'vuex';
 import copyToClipBoard from '@/js/utlis/copyToClipBoard';
 import loadScript from '@/js/utlis/loadScript';
-import * as Tone from 'tone';
 
 let current;
 let loaded = true;
@@ -139,10 +138,8 @@ const changeSketch = (name) => {
       import("./../projects/" + name + "/" + name+ ".js").then(module => { //eslint-disable-line
         current = new p5(module.default, 'canvasContainer'); //eslint-disable-line
         current.name = name;
-        console.log(current.pixelDensity());
         if (current.pixelDensity() >= 2) {
           current.pixelDensity(2);
-          console.log(current.pixelDensity());
         }
       })
         .catch((err) => {
@@ -324,7 +321,6 @@ export default {
     handleSliderChange(settingObj) {
       if (settingObj.callback) {
         if (settingObj.callback.value) {
-          console.log(settingObj);
           current[settingObj.callback.name](...settingObj.callback.value);
         } else {
           current[settingObj.callback.name]();

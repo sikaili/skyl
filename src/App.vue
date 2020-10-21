@@ -84,6 +84,7 @@
 import { mapGetters } from 'vuex';
 import TheHeader from '@/components/TheHeader.vue';
 import TheFooter from '@/components/TheFooter.vue';
+import TheCanvasWrapper from '@/components/TheCanvasWrapper.vue';
 
 // import BaseNotificationBar from '@/components/base/BaseNotificationBar.vue';
 // import { allIframeLinks as sketches } from '@/seed.js';
@@ -97,7 +98,7 @@ export default {
   components: {
     TheHeader,
     TheFooter,
-    TheCanvasWrapper: () => import(/* webpackChunkName: "TheCanvasWrapper" */ '@/components/TheCanvasWrapper.vue'),
+    TheCanvasWrapper,
     // BaseNotificationBar,
   },
   data() {

@@ -8,13 +8,13 @@ self.addEventListener('message', (event) => {
 // workbox.core.clientsClaim(); // Vue CLI 4 and Workbox v4
 
 self.__precacheManifest = [].concat(self.__precacheManifest || []);
-// const arr = self.__precacheManifest.filter((obj) => {
-//   if ((obj.url && obj.url.indexOf('/src/projects/player/sound/') === -1) && (obj.url.indexOf('img/') === -1 || obj.url.indexOf('img/covers') !== -1)) {
-//     return true;
-//   }
-//   return false;
-// });
-// self.__precacheManifest = [].concat(arr || []);
+const arr = self.__precacheManifest.filter((obj) => {
+  if ((obj.url && obj.url.indexOf('/src/projects/player/sound/') === -1) && (obj.url.indexOf('img/') === -1 || obj.url.indexOf('img/covers') !== -1)) {
+    return true;
+  }
+  return false;
+});
+self.__precacheManifest = [].concat(arr || []);
 const precacheController = new workbox.precaching.PrecacheController();
 precacheController.addToCacheList(self.__precacheManifest);
 
@@ -94,6 +94,19 @@ workbox.routing.registerRoute(/tachyons.min.css$/,
     ],
   }));
 
+workbox.routing.registerRoute(/p5.min.js$/,
+  new workbox.strategies.CacheFirst({
+    cacheName: 'p5',
+    plugins: [
+      new workbox.cacheableResponse.Plugin({
+        statuses: [200],
+      }),
+      new workbox.expiration.Plugin({
+        maxAgeSeconds: 60 * 60 * 24 * 365,
+        maxEntries: 60,
+      }),
+    ],
+  }));
 // workbox.routing.registerRoute(
 //   ({ request }) => request.destination === 'script'
 //                     || request.destination === 'style',
@@ -117,4 +130,9 @@ workbox.routing.registerRoute(/\.(?:png|gif|jpg)$/,
         maxEntries: 60,
       }),
     ],
+  }));
+
+workbox.routing.registerRoute(/\.(?:m4a)$/,
+  new workbox.strategies.NetworkOnly({
+    cacheName: 'm4a',
   }));
