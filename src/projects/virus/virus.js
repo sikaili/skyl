@@ -146,7 +146,7 @@ const sketch = (instance) => {
     Engine.clear(engine);
     runner = null;
     engine = null;
-    Tone.context.suspend();
+    // Tone.context.suspend();
     Particle.prototype.sampler2.dispose();
     Particle.prototype.samplers.map((a) => a.dispose());
     sk.remove();

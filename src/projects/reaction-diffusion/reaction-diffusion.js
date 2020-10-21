@@ -26,16 +26,16 @@ export default (instance) => {
       step: 0.01,
     },
     feed: {
-      value: 0.0545,
-      default: 0.0545,
+      value: 0.079,
+      default: 0.079,
       type: 'range',
       max: 0.15,
       min: 0.01,
       step: 0.001,
     },
     k: {
-      value: 0.062,
-      default: 0.062,
+      value: 0.098,
+      default: 0.098,
       type: 'range',
       max: 0.15,
       min: 0.01,
@@ -53,8 +53,8 @@ export default (instance) => {
     },
     threshold: {
       // value: 0.1,
-      value: 0.3,
-      default: 0.3,
+      value: 0.39,
+      default: 0.39,
       type: 'range',
       max: 1,
       min: 0.0,
@@ -62,7 +62,7 @@ export default (instance) => {
       noRandom: true,
     },
     interval: {
-      value: sk.windowWidth > 512 ? 8 : 6,
+      value: sk.windowWidth > 512 ? 7 : 5,
       default: 6,
       type: 'range',
       max: 8,
@@ -146,6 +146,7 @@ export default (instance) => {
     });
   };
   sk.saveCapture = () => {
+    const m = sk.pixelDensity;
     sk.pixelDensity(sk.windowWidth < 512 ? 5 : 12);
     sk.redraw();
     sk.saveCanvas(sk.canvas, `reaction_a${ dA() }b${dB() }f${feed() }k${k() }t${t()}`, 'png');
@@ -155,7 +156,7 @@ export default (instance) => {
       sk.saveCanvas(sk.canvas, `reaction_a${ dA() }b${dB() }f${feed() }k${k() }t${t()}`, 'png');
       sk.settings.point = !sk.settings.point;
     }
-    sk.pixelDensity(1);
+    sk.pixelDensity(m);
   };
   const initGridAB = (img) => {
     const height = Math.ceil(sk.height / interval);
@@ -219,8 +220,8 @@ export default (instance) => {
     }
     sk.gridIsSet = true;
   };
-  const sendTextCanvas = (canvas = sk.textContent, text = 'home,I,had,a,lot.of,questions&and&no-answers.') => {
-    // canvas.pixelDensity(1);
+  const sendTextCanvas = (canvas = sk.textContent, text = 'X') => {
+    canvas.pixelDensity(1);
     canvas.background(255);
     canvas.push();
     canvas.fill(0);
@@ -239,7 +240,7 @@ export default (instance) => {
   };
   sk.setup = () => {
     sk.canvas = sk.createCanvas(sk.windowWidth, sk.windowHeight, sk.WEBGL);
-    sk.pixelDensity(1);
+    // sk.pixelDensity(1);
     grid = [];
     next = [];
     // sk.strokeCap(sk.SQUARE);
@@ -323,18 +324,17 @@ export default (instance) => {
         }
         swap();
       }
-    }, 100);
+    }, 50);
   };
 
   sk.draw = () => {
     let count = 0;
-
     // webgl
     sk.rotateY((sk.noise(sk.frameCount / 100) - 0.5) + (sk.y ? sk.y : 0));
     sk.rotateZ(sk.noise(sk.frameCount / 30) - 0.5 + (sk.z ? sk.z : 0));
     sk.rotateX(sk.noise(sk.frameCount / 50) / 2 + (sk.x ? sk.x : 0));
     sk.translate(-sk.width / 2, -sk.height / 2);
-    sk.background(255);
+    sk.background(0);
 
     for (let x = 0; x < grid.length; x += 1) {
       for (let y = 0; y < grid[0].length; y += 1) {
@@ -346,10 +346,11 @@ export default (instance) => {
           const diffrence = Math.floor((a - b) * 255);
           if (diffrence < 20) {
             sk.push();
-            sk.stroke(127, 200 - diffrence);
             sk.translate(x * interval, y * interval);
-            const fill = 255 - (diffrence * diffrence) / 30;
-            sk.fill(fill, -diffrence);
+            const fill = 255 - (diffrence * diffrence) / 30 + 50;
+            sk.stroke(fill - 127, 127 + diffrence);
+            sk.fill(fill, -diffrence / 2);
+            // sk.noFill();
             const height = diffrence * diffrence / 700 + 10 + z;
             let i = 0;
             if (height > 88 && height < 103) {
@@ -419,7 +420,7 @@ export default (instance) => {
   };
   sk.skipCount = 0;
   sk.handleTouchMove = (ev) => {
-    const sendTextDistanceThreshold = 40;
+    const sendTextDistanceThreshold = 60;
     ev.preventDefault();
     if (sk.staticBodyVertex) {
       if (sk.staticBodyVertex.length > 0) {
