@@ -153,14 +153,16 @@ const changeSketch = (name) => {
 
 const handleResize = () => {
   setTimeout(() => {
-    const width = document.documentElement.clientWidth
+    if (window.p5) {
+      const width = document.documentElement.clientWidth
       || window.innerWidth || document.body.clientWidth;
-    const height = document.documentElement.clientHeight
+      const height = document.documentElement.clientHeight
       || window.innerHeight || document.body.clientHeight;
-    window.p5.prototype.windowHeight = height;
-    window.p5.prototype.windowWidth = width;
-    if (current) {
-      current.resizeCanvas(width, height);
+      window.p5.prototype.windowHeight = height;
+      window.p5.prototype.windowWidth = width;
+      if (current) {
+        current.resizeCanvas(width, height);
+      }
     }
   }, 505);
 };

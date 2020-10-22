@@ -85,6 +85,7 @@ import { mapGetters } from 'vuex';
 import TheHeader from '@/components/TheHeader.vue';
 import TheFooter from '@/components/TheFooter.vue';
 import TheCanvasWrapper from '@/components/TheCanvasWrapper.vue';
+import loadScript from '@/js/utlis/loadScript';
 
 // import BaseNotificationBar from '@/components/base/BaseNotificationBar.vue';
 // import { allIframeLinks as sketches } from '@/seed.js';
@@ -178,6 +179,13 @@ export default {
     }
   },
   mounted() {
+    loadScript('https://www.googletagmanager.com/gtag/js?id=UA-143317718-5');
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = (...theArgs) => {
+      window.dataLayer.push(theArgs);
+    };
+    window.gtag('js', new Date());
+    window.gtag('config', 'UA-143317718-5');
     document.addEventListener(
       'swUpdated', this.showRefreshUI, { once: true },
     );

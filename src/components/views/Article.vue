@@ -57,14 +57,14 @@
 <script>
 import useData from '@/js/use/data';
 import date from '@/js/utlis/date';
+import ImageComponent from '@/components/ImageContainer.vue';
 
 import {
   ref, computed,
 } from '@vue/composition-api';
 
-const ImageComponent = () => import(/* webpackChunkName: "image" */'@/components/ImageContainer.vue');
-
 export default {
+
   name: 'Article',
   components: { ImageComponent },
   props: {

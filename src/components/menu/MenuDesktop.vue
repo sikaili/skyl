@@ -127,11 +127,11 @@
                 <div class="w-100 overflow-auto">
                   <code class="f7 db lh-copy nowrap">{{ w.link }}</code>
                 </div>
-                <image-component
+                <img
                   :src="w.img"
                   :alt="w.name"
                   class="w-100 dim"
-                />
+                >
                 <template v-if="w.credits.length > 1">
                   <h5 v-if="w.credits.length > 1">
                     Credits
@@ -160,10 +160,8 @@
             </div>
           </transition>
         </div>
-        </transition>
       </div>
     </div>
-  </div>
   </div>
 </template>
 
@@ -171,14 +169,12 @@
 import { menuMxn } from '@/js/mixins';
 
 const PlayerComponent = () => import(/* webpackChunkName: "vue-player" */'vue-aplayer');
-const ImageComponent = () => import(/* webpackChunkName: "image" */'@/components/ImageContainer.vue');
 
 PlayerComponent.disableVersionBadge = true;
 
 export default {
   components: {
     PlayerComponent,
-    ImageComponent,
   },
   mixins: [menuMxn],
   props: {

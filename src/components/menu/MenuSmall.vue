@@ -96,11 +96,11 @@
                   class="f7 truncate black lh-copy nowrap"
                 >{{ item.link }}</a>
               </div>
-              <image-component
+              <img
                 :src="item.img"
                 :alt="item.name"
                 class="w-100 dim"
-              />
+              >
               <template v-if="item.credits.length > 1">
                 <h4>Credits</h4>
                 <div
@@ -136,7 +136,6 @@
 import { menuMxn } from '@/js/mixins';
 
 const PlayerComponent = () => import(/* webpackChunkName: "vue-player" */'vue-aplayer');
-const ImageComponent = () => import(/* webpackChunkName: "image" */'@/components/ImageContainer.vue');
 
 PlayerComponent.disableVersionBadge = true;
 
@@ -144,7 +143,6 @@ export default {
   name: 'Menu',
   components: {
     PlayerComponent,
-    ImageComponent,
   },
   mixins: [menuMxn],
   props: {
