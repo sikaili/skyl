@@ -1,11 +1,10 @@
 // workbox.setConfig({ debug: true });
-
 self.addEventListener('message', (event) => {
+  console.log(event);
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
   }
 });
-// workbox.core.clientsClaim(); // Vue CLI 4 and Workbox v4
 
 self.__precacheManifest = [].concat(self.__precacheManifest || []);
 const arr = self.__precacheManifest.filter((obj) => {
@@ -14,12 +13,14 @@ const arr = self.__precacheManifest.filter((obj) => {
   }
   return false;
 });
+console.log(arr);
 self.__precacheManifest = [].concat(arr || []);
-const precacheController = new workbox.precaching.PrecacheController();
+
+const precacheController = new workbox.precaching.PrecacheController('precache-list');
 precacheController.addToCacheList(self.__precacheManifest);
 
 self.addEventListener('install', (event) => {
-  event.waitUntil(precacheController.install());
+  event.waitUntil(() => precacheController.install());
 });
 
 self.addEventListener('activate', (event) => {
@@ -30,10 +31,6 @@ self.addEventListener('activate', (event) => {
 // Since we have a SPA here, this should be index.html always.
 // https://stackoverflow.com/questions/49963982/vue-router-history-mode-with-pwa-in-offline-mode
 workbox.routing.registerNavigationRoute('/index.html');
-
-// Setup cache strategy for Google Fonts. They consist of two parts, a static one
-// coming from fonts.gstatic.com (strategy CacheFirst) and a more ferquently updated on
-// from fonts.googleapis.com. Hence, split in two registerroutes
 
 workbox.routing.registerRoute(
   /^https:\/\/fonts\.googleapis\.com/,
@@ -107,19 +104,10 @@ workbox.routing.registerRoute(/p5.min.js$/,
       }),
     ],
   }));
-// workbox.routing.registerRoute(
-//   ({ request }) => request.destination === 'script'
-//                     || request.destination === 'style',
-//   new workbox.strategies.StaleWhileRevalidate({
-//     cacheName: 'static-resources',
-//   }),
-// );
-
-const cacheName = 'assets-cache';
 
 workbox.routing.registerRoute(/\.(?:png|gif|jpg)$/,
-  new workbox.strategies.StaleWhileRevalidate({
-    cacheName,
+  new workbox.strategies.CacheFirst({
+    cacheName: 'image-cache',
     plugins: [
       new workbox.cacheableResponse.Plugin({
         statuses: [200],
@@ -136,3 +124,48 @@ workbox.routing.registerRoute(/\.(?:m4a)$/,
   new workbox.strategies.NetworkOnly({
     cacheName: 'm4a',
   }));
+
+workbox.routing.registerRoute(
+  ({ request }) => request.destination === 'script',
+  new workbox.strategies.CacheFirst({
+    cacheName: 'static-resources',
+  }),
+);
+
+const { setDefaultHandler, setCatchHandler } = workbox.routing;
+const { StaleWhileRevalidate } = workbox.strategies;
+
+// Use a stale-while-revalidate strategy for all other requests.
+setDefaultHandler(new StaleWhileRevalidate());
+
+// This "catch" handler is triggered when any of the other routes fail to
+// generate a response.
+setCatchHandler(({ event }) => {
+  // The FALLBACK_URL entries must be added to the cache ahead of time, either
+  // via runtime or precaching. If they are precached, then call
+  // `matchPrecache(FALLBACK_URL)` (from the `workbox-precaching` package)
+  // to get the response from the correct cache.
+  //
+  // Use event, request, and url to figure out how to respond.
+  // One approach would be to use request.destination, see
+  // https://medium.com/dev-channel/service-worker-caching-strategies-based-on-request-types-57411dd7652c
+  switch (event.request.destination) {
+    case 'document':
+      // If using precached URLs:
+      // return matchPrecache(FALLBACK_HTML_URL);
+      return precacheController.matchPrecache('index.html');
+      break;
+    case 'image':
+      // If using precached URLs:
+      // return matchPrecache(FALLBACK_IMAGE_URL);
+      return precacheController.matchPrecache('/');
+      break;
+    case 'font':
+      // If using precached URLs:
+      // return matchPrecache(FALLBACK_FONT_URL);
+      return precacheController.matchPrecache('/');
+      break;
+    default:
+      return Response.error();
+  }
+});

@@ -12,7 +12,7 @@ module.exports = {
       exclude: [
         /manifest\.json$/,
       ],
-      maximumFileSizeToCacheInBytes: 1000000,
+      // maximumFileSizeToCacheInBytes: 2000000,
     },
     themeColor: '#1d1d1e',
   },

@@ -239,7 +239,7 @@ export default {
   methods: {
     showRefreshUI(e) {
       this.registration = e.detail;
-      // this.updateExists = true;
+      this.updateExists = true;
     },
     refreshApp() {
       this.updateExists = false;
@@ -275,6 +275,8 @@ export default {
 </script>
 
 <style lang="scss">
+    @import 'https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.5.6/css/ionicons.min.css';
+
     .App {
         font-family: 'Roboto Mono', monospace, 'helvetica neue', helvetica, sans-serif;
         font-display: swap;
