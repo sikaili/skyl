@@ -1,3 +1,12 @@
+## [2.9.11] - 2020-10-24
+### Fixed
+- offline on aws, set cache-control header with aws cli ([cbacac](https://github.com/sikaili/skyl.fr/commit/cbacac))
+- webperf, undo lazyload canvas wrapper ([servic](https://github.com/sikaili/skyl.fr/commit/servic))
+### Changed
+- move google analytics to app ([0d5a3f](https://github.com/sikaili/skyl.fr/commit/0d5a3f))
+- reaction-diffusion default settings ([8e4fe7](https://github.com/sikaili/skyl.fr/commit/8e4fe7))
+- remove traffic, not comptible with new Tone.js version ([59e9b8](https://github.com/sikaili/skyl.fr/commit/59e9b8))
+
 ## [2.9.10] - 2020-10-10
 ### Changed
 - update tone.js and so on ([aa4748](https://github.com/sikaili/skyl.fr/commit/aa4748))
