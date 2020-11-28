@@ -1,5 +1,5 @@
 process.env.VUE_APP_VERSION = require('./package.json').version;
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 module.exports = {
   productionSourceMap: false,
@@ -15,6 +15,13 @@ module.exports = {
       // maximumFileSizeToCacheInBytes: 2000000,
     },
     themeColor: '#1d1d1e',
+  },
+  devServer: {
+    allowedHosts: [
+      '.skyl.local',
+      'skyl.local',
+    ],
+    https: true,
   },
   configureWebpack: {
     module: {

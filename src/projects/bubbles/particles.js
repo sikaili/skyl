@@ -8,7 +8,7 @@ export default class Particle {
     this.body = Bodies.rectangle(x, y, this.r, this.r);
     this.item = item;
     this.fill = 255;
-    Body.setMass(this.body, 3);
+    Body.setMass(this.body, 20);
   }
 
   triggerAttack() {
@@ -43,7 +43,7 @@ export default class Particle {
       sk.ellipse(0, 0, this.r);
       sk.fill(0);
       sk.text(this.item.name.trim(), 0, -this.r / 2);
-      sk.text(this.item.price, 0, 40);
+      // sk.text(this.item.price, 0, 40);
     }
     sk.pop();
   }

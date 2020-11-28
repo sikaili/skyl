@@ -225,7 +225,7 @@ export default (instance) => {
   };
 
   sk.setup = () => {
-    sk.noCursor();
+    // sk.noCursor();
     sk.points = generatePoints(5, [{ x: -50, y: 50 }, { x: 50, y: 50 }, { x: 50, y: -50 }, { x: -50, y: -50 }]);
     sk.randomSeed(2200);
     sk.rectMode(sk.CENTER);
@@ -408,6 +408,9 @@ export default (instance) => {
       sk.textSize(sk.width > 768 ? 36 : 24);
       if (!sk.soundIsLoading) {
         sk.text('Touch to Play', 0.5 * sk.width, sk.windowHeight * 0.6);
+        sk.fill(180, (Math.sin((sk.frameCount / 50) * sk.PI) + 1) * 180);
+        sk.textSize(sk.width > 768 ? 24 : 18);
+        sk.text('(sound on)', 0.5 * sk.width, sk.windowHeight * 0.6 + 48);
       } else {
         sk.text('Loading...', 0.5 * sk.windowWidth, sk.windowHeight * 0.6);
       }

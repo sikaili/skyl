@@ -19,26 +19,35 @@ console.log('import bubbles');
 
 const sketch = (instance) => {
   const sk = instance;
-  const str = `396,nicomede workwear jacket;
-57, nicomede shell jacket;
-83,craig green hoddie;
-48,acnes studio bag;
-80,acnes studio t-shirt;
-220,acnes studio parka;
-144,acnes studio maille;
-37,uniclo;
-57,isabel benenato trousers;
-50,muji;
-268,kiko X ascis;
-110,adidas runner;
-24,cos pantalons;
-17,cos kimono;
-17,cos t-shirt;
-12,tabi sockets;`;
+  const str = `396,1320,nicomede workwear jacket, top;
+57,495,nicomede shell jacket, top;
+83, 275, craig green hoddie, top;
+48, 120, acnes studio bag, acc;
+80,200,acnes studio t-shirt, top;
+220,550,acnes studio parka, top;
+144,360,acnes studio maille, top;
+37,96,uniqlo, top;
+57,380, isabel benenato trousers, trousers;
+50,muji, acc;
+268, 500, asics kiko insulted top, suit;
+108, 180, adidas runner, shoes;
+24,79,cos pantalons, trousers;
+17, 69, cos kimono, top;
+17,35, cos t-shirt, top;
+12,12,tabi sockets, acc;
+92, 450,kenzo workwear, top;
+100, 200,coster green, suit;
+78, 130,salomon xt-wings, shoes;
+196, 220, asics kiko kiril, shoes;
+55, 160, maison margiela t-shirt, top;
+21, casio, acc;
+251, 831, craig green tunnel trousers, trousers;
+`;
   const traiteStr = (str) => {
     const itemsArr = str.split(';').map((item) => ({
       price: +item.trim().split(',')[0],
       name: item.trim().split(',')[1],
+      type: item.trim().split(',')[2],
     }));
     return itemsArr;
   };
@@ -156,7 +165,7 @@ const sketch = (instance) => {
       Engine.clear(engine);
       runner = null;
       engine = null;
-  // Tone.context.close();
+      // Tone.context.close();
       Particle.prototype.sampler2.dispose();
       Particle.prototype.samplers.map((a) => a.dispose());
       sk.remove();

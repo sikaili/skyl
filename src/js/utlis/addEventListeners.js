@@ -4,7 +4,9 @@ const setListeners = (sk, Tone) => { //eslint-disable-line
     'click',
     async () => {
       try {
-        await Tone.start();
+        if (Tone) {
+          await Tone.start();
+        }
         sk.start();
         sk.soundIsReady = true;
       } catch (err) {
@@ -17,7 +19,9 @@ const setListeners = (sk, Tone) => { //eslint-disable-line
     'touchstart',
     async () => {
       try {
-        await Tone.start();
+        if (Tone) {
+          await Tone.start();
+        }
         sk.start();
         sk.soundIsReady = true;
       } catch (err) {

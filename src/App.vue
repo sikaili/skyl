@@ -189,13 +189,15 @@ export default {
     document.addEventListener(
       'swUpdated', this.showRefreshUI, { once: true },
     );
-    navigator.serviceWorker.addEventListener(
-      'controllerchange', () => {
-        if (this.refreshing) return;
-        this.refreshing = true;
-        window.location.reload();
-      },
-    );
+    if (navigator && navigator.serviceWorker) {
+      navigator.serviceWorker.addEventListener(
+        'controllerchange', () => {
+          if (this.refreshing) return;
+          this.refreshing = true;
+          window.location.reload();
+        },
+      );
+    }
 
     window.addEventListener('resize', this.handleResize);
     window.addEventListener('scroll', this.handleScroll);

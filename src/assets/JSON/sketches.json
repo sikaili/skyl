@@ -1,37 +1,42 @@
-[{
-    "id": "virus",
-    "type": "sketch"
-  },
-  {
-    "id": "eyes",
-    "type": "sketch"
-  },
-  {
-    "id": "p",
-    "type": "sketch"
-  },
-  {
-    "id": "cave",
-    "type": "sketch"
-  },
-  {
-    "id": "noise-draw",
-    "type": "sketch"
-  },  
-  {
-    "id": "k-means-selfie",
-    "type": "sketch"
-  },
-  {
-    "id": "quadtree",
-    "type": "sketch"
-  },
-  {
-    "id": "reaction-diffusion",
-    "type": "sketch"
-  },
-  {
-    "id": "bubbles",
-    "type": "sketch"
-  }
+[
+	{
+		"id": "virus",
+		"type": "sketch"
+	},
+	{
+		"id": "eyes",
+		"type": "sketch"
+	},
+	{
+		"id": "p",
+		"type": "sketch"
+	},
+	{
+		"id": "cave",
+		"type": "sketch"
+	},
+	{
+		"id": "noise-draw",
+		"type": "sketch"
+	},
+	{
+		"id": "k-means-selfie",
+		"type": "sketch"
+	},
+	{
+		"id": "quadtree",
+		"type": "sketch"
+	},
+	{
+		"id": "reaction-diffusion",
+		"type": "sketch"
+	},
+	{
+		"id": "bubbles",
+		"type": "sketch"
+	},
+	{
+		"id": "node",
+		"type": "sketch"
+	}
 ]
