@@ -26,6 +26,7 @@ export default class Particle {
       this.updating = false;
     }
     sk.push();
+    sk.rectMode(sk.CENTER);
     sk.translate(this.body.position.x, this.body.position.y);
     this.body.angle %= 3.1415;
     sk.rotate(this.body.angle);
@@ -40,13 +41,16 @@ export default class Particle {
       // angle += (0 - angle) * 0.5;
       // sk.rotate(-angle * 0.5);
       sk.stroke(0);
-      sk.line(-this.r / 2, 0, 0, 0);
-      sk.fill([255, 255, 255]);
-      sk.ellipse(0, 0, this.r);
+      sk.fill([200, 200, 200]);
+      sk.ellipse(0, 0, this.r * (0.45 + 0.05 * (Math.sin(sk.frameCount / (this.item.price / 20)))));
       sk.fill(0);
       sk.text(this.item.name.trim(), 0, -this.r / 2);
       // sk.text(this.item.price, 0, 40);
     }
     sk.pop();
+    sk.stroke(0, 100);
+    sk.line(this.body.position.x, this.body.position.y, (sk.typeArray.indexOf(this.item.type.trim()) + 0.5) * sk.length, sk.height / 2);
+    sk.line(this.body.position.x, this.body.position.y, (sk.typeArray.indexOf(this.item.type.trim()) + 0.5) * sk.length, this.body.position.y > sk.height / 2 ? sk.height : 0);
+    sk.fill(0);
   }
 }

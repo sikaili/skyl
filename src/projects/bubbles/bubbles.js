@@ -20,46 +20,51 @@ console.log('import bubbles');
 const sketch = (instance) => {
   const sk = instance;
   const str = `396,1320,nicomede workwear jacket, top;
-57,495,nicomede shell jacket, top;
-83, 275, craig green hoddie, top;
-48, 120, acnes studio bag, acc;
+57,495,nicomede puffer jacket, top;
+83, 275,craig green hoddie, top;
+48, 120,acnes studio bag, acc;
 80,200,acnes studio t-shirt, top;
 220,550,acnes studio parka, top;
 144,360,acnes studio maille, top;
 37,96,uniqlo, top;
-57,380, isabel benenato trousers, trousers;
-50,50, muji, acc;
-268, 500, asics kiko insulted top, suit;
-108, 180, adidas runner, shoes;
-24,79,cos pantalons, trousers;
+57,380,isabel benenato trousers, trousers;
+50,50,muji, acc;
+100,200,kiko insulted trousers, trousers;
+168,300,kiko insulted jacket,top;
+108,180,adidas ultraboost, shoes;
+24,79,cos trousers, trousers;
 17, 69, cos kimono, top;
 17,35, cos t-shirt, top;
 12,12,tabi sockets, acc;
-92, 450,kenzo workwear, top;
-100, 200,coster green, suit;
+92, 450,kenzo workwear jacket, top;
+100, 200,coster green, trousers;
 78, 130,salomon xt-wings, shoes;
-196, 220, asics kiko kiril, shoes;
+196, 220, kiko kiril, shoes;
 55, 160, maison margiela t-shirt, top;
 21, 34, casio, acc;
 251, 831, craig green tunnel trousers, trousers;
+69,99,cos wide trousers,trousers;
 `;
+  sk.typeArray = ['acc', 'top', 'trousers', 'shoes'];
+  console.log(sk.typeArray.indexOf('top'));
   const traiteStr = (str) => {
     const itemsArr = str.split(';').map((item) => ({
       price: +item.trim().split(',')[0],
       priceOrigin: +item.trim().split(',')[1],
       name: item.trim().split(',')[2],
-      type: item.trim().split(',')[3],
+      type: `${item.trim().split(',')[3]}`,
     }));
     return itemsArr;
   };
   const items = traiteStr(str);
+  console.log(JSON.stringify(items));
   items.sort((a, b) => a.price - b.price);
   const total = Object.values(items).reduce((t, { price }) => t + price, 0);
   console.log(total);
   sk.settings = {
     type: 'large',
     gravity: {
-      value: 1,
+      value: 0.1,
       type: 'range',
       max: 1.0,
       min: -1.0,
@@ -71,8 +76,6 @@ const sketch = (instance) => {
     actions: [{
       name: 'addParticles',
       icon: 'add',
-    }, {
-      name: 'clearParticles', icon: 'trash',
     }],
   };
   const divNode = document.querySelector('#canvasContainer');
@@ -174,28 +177,31 @@ const sketch = (instance) => {
       console.log('virus killed');
       particles = [];
     } catch (err) {
-
+      console.warn(err);
     }
   };
 
   sk.addParticles = (items) => {
+    const getX = (index) => (sk.width / sk.typeArray.length) * index;
+
+    sk.typeArray.forEach((type, index) => {
+      const border1 = Bodies.rectangle(getX(index), sk.height / 2, 5, sk.height, {
+        isStatic: true,
+      });
+      World.add(engine.world, border1);
+    });
+
     items.forEach((item, index) => {
+      const x = 10 + getX(sk.typeArray.indexOf(item.type.trim()));
       const particle = new Particle(
-        sk.width / 2 + index * 5,
+        x + index,
         50 * Math.floor((index / 3)),
-        Math.sqrt(item.price) * 8,
+        Math.sqrt(item.price) * (sk.width < 600 ? 4 : 8),
         item,
       );
       particles.push(particle);
       World.add(engine.world, particle.body);
     });
-  };
-  sk.clearParticles = () => {
-    virusNo = 3;
-    particles.forEach((particle) => {
-      Composite.remove(engine.world, particle.body);
-    });
-    particles = [];
   };
 
   sk.setup = () => {
@@ -207,9 +213,8 @@ const sketch = (instance) => {
     sk.background(0);
     sk.noStroke();
     sk.strokeCap(sk.SQUARE);
-    sk.rectMode(sk.CENTER);
     sk.textAlign(sk.CENTER);
-    sk.textSize(sk.width < 600 ? 20 : 30);
+    sk.textSize(sk.width < 600 ? 15 : 25);
     sk.mouseX = sk.width / 2;
     sk.mouseY = sk.height / 2;
     sk.addParticles(items);
@@ -219,6 +224,14 @@ const sketch = (instance) => {
     engine.world.gravity.y = sk.settings.gravity.value;
     sk.noFill();
     sk.background([200, 200, 200, touched ? 150 : 255]);
+    sk.rectMode(sk.CORNER);
+    sk.length = sk.width / sk.typeArray.length;
+    sk.typeArray.forEach((ele, index) => {
+      sk.fill(200 - 20 * (index % 2));
+      sk.rect(index * sk.length, 0, sk.length, sk.height);
+      sk.fill(0);
+      sk.ellipse((index + 0.5) * sk.length, sk.height / 2, sk.length * 0.15);
+    });
     particles.forEach((particle) => {
       particle.display(sk);
     });
