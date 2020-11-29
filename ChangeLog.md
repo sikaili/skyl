@@ -1,3 +1,11 @@
+## [2.9.12] - 2020-11-29
+### Added
+- nodejs create sketch automation ([17216e](https://github.com/sikaili/skyl.fr/commit/17216e))
+### Fixed
+- bubbles display ([bdb5ff](https://github.com/sikaili/skyl.fr/commit/bdb5ff))
+### Changed
+- node auto project optim and other minor changes ([5984e4](https://github.com/sikaili/skyl.fr/commit/5984e4))
+
 ## [2.9.11] - 2020-10-24
 ### Fixed
 - offline on aws, set cache-control header with aws cli ([cbacac](https://github.com/sikaili/skyl.fr/commit/cbacac))
