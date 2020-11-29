@@ -28,7 +28,7 @@ const sketch = (instance) => {
 144,360,acnes studio maille, top;
 37,96,uniqlo, top;
 57,380, isabel benenato trousers, trousers;
-50,muji, acc;
+50,50, muji, acc;
 268, 500, asics kiko insulted top, suit;
 108, 180, adidas runner, shoes;
 24,79,cos pantalons, trousers;
@@ -40,14 +40,15 @@ const sketch = (instance) => {
 78, 130,salomon xt-wings, shoes;
 196, 220, asics kiko kiril, shoes;
 55, 160, maison margiela t-shirt, top;
-21, casio, acc;
+21, 34, casio, acc;
 251, 831, craig green tunnel trousers, trousers;
 `;
   const traiteStr = (str) => {
     const itemsArr = str.split(';').map((item) => ({
       price: +item.trim().split(',')[0],
-      name: item.trim().split(',')[1],
-      type: item.trim().split(',')[2],
+      priceOrigin: +item.trim().split(',')[1],
+      name: item.trim().split(',')[2],
+      type: item.trim().split(',')[3],
     }));
     return itemsArr;
   };

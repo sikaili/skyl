@@ -32,8 +32,10 @@ export default class Particle {
     sk.stroke(0);
     sk.fill(this.fill);
     sk.rect(0, 0, this.r);
+    sk.fill(0, 0);
     if (this.item && this.item.name) {
       sk.rotate(this.body.angle + this.body.angle / (3.14 / 4) * 3.14 / 2);
+      sk.rect(0, 0, this.r / Math.sqrt((this.item.price / this.item.priceOrigin)));
       // const { angle } = this.body;
       // angle += (0 - angle) * 0.5;
       // sk.rotate(-angle * 0.5);
