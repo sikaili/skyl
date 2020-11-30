@@ -1,3 +1,8 @@
+## [2.10.0] - 2020-11-30
+### Changed
+- refacto seed.js, store.js, using projects.json seed.json ([d9280b](https://github.com/sikaili/skyl.fr/commit/d9280b))
+- optim bubbles ([071e53](https://github.com/sikaili/skyl.fr/commit/071e53))
+
 ## [2.9.12] - 2020-11-29
 ### Added
 - nodejs create sketch automation ([17216e](https://github.com/sikaili/skyl.fr/commit/17216e))
