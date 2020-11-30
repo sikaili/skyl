@@ -21,7 +21,7 @@ module.exports = {
       '.skyl.local',
       'skyl.local',
     ],
-    https: true,
+    https: false,
   },
   configureWebpack: {
     module: {

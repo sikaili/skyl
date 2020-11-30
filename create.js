@@ -2,7 +2,7 @@ const child = require('child_process');
 const fs = require('fs');
 const readline = require('readline');
 
-const SKETCHES_PATH = 'src/assets/JSON/sketches.json';
+const SKETCHES_PATH = 'src/assets/JSON/projects.json';
 const SKETCHE_JS_PATH = (name) => `src/projects/${name}/${name}.js`;
 
 const rl = readline.createInterface({
@@ -18,9 +18,10 @@ rl.question('Choose a project name:', (name) => {
 rl.on('close', () => {
   const rawdata = fs.readFileSync(SKETCHES_PATH);
   const sketches = JSON.parse(rawdata);
-  sketches.push({
+  sketches.unshift({
     id: projectName,
     type: 'sketch',
+    beta: 'true',
   });
   fs.writeFileSync(SKETCHES_PATH, JSON.stringify(sketches, null, '\t'));
   child.execSync(`cd src/projects && mkdir ${projectName} && cd ${projectName} && touch ${projectName}.js && cd ../..`);

@@ -34,30 +34,5 @@ const getData = (endpoint, options) => axios
       });
     }
   });
-const addMedia = (data) => {
-  const seedData = data;
-  const arrayDump = Object.entries(seedData);
-  arrayDump.map((obj) => {
-    seedData[obj[0]].map((a) => {
-      !a.about ? (a.about = a.des) : '';
-      a.id = a.name
-        .split(' ')
-        .join('-')
-        .toLowerCase();
-      const num = 15;
-      const arr = [];
-      for (let i = 0; i < num; i++) {
-        try {
-          const m = require(`@/assets/${a.id}/${a.id}_${i}.jpg`);
-          arr.push(m);
-        } catch (err) {
-          continue;
-        }
-        a.imgs = arr;
-      }
-    });
-  });
-  return seedData;
-};
 
-export { is404, getData, addMedia };
+export { is404, getData };

@@ -14,7 +14,6 @@
 		"date-fns": "^2.14.0",
 		"hammerjs": "^2.0.8",
 		"matter-js": "^0.14.2",
-		"p5": "^1.0.0",
 		"poly-decomp": "^0.3.0",
 		"register-service-worker": "^1.7.1",
 		"tone": "^14.7.58",

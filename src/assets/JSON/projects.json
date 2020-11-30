@@ -1,0 +1,117 @@
+[
+	{
+		"id": "virus",
+		"type": "sketch"
+	},
+	{
+		"id": "reaction-diffusion",
+		"type": "sketch"
+	},
+	{
+		"id": "quadtree",
+		"type": "sketch"
+	},
+	{
+		"id": "p",
+		"type": "sketch"
+	},
+	{
+		"id": "noise-draw",
+		"link": "https://noise-draw.skyl.fr",
+		"type": "sketch"
+	},
+	{
+		"id": "node",
+		"type": "sketch",
+		"beta": true
+	},
+	{
+		"id": "little-garden",
+		"link": "https://skyl.fr/music/little-garden",
+		"type": "sketch",
+		"app": "p"
+	},
+	{
+		"id": "k-means-selfie",
+		"type": "sketch"
+	},
+	{
+		"id": "eyes",
+		"link": "https://eyes.skyl.fr",
+		"type": "sketch"
+	},
+	{
+		"id": "cave",
+		"type": "sketch"
+	},
+	{
+		"id": "bubbles",
+		"type": "sketch"
+	},
+	{
+		"id": "amarrage",
+		"link": "https://skyl.fr/music/amarrage",
+		"type": "sketch",
+		"app": "cave"
+	},
+	{
+		"id": "3d-terrain",
+		"link": "https://apps.skyl.fr/3d-terrain/",
+		"type": "iframe"
+	},
+	{
+		"id": "c-syn",
+		"link": "https://apps.skyl.fr/c-syn/",
+		"type": "iframe-music"
+	},
+	{
+		"id": "e-minor",
+		"link": "https://apps.skyl.fr/e-minor/",
+		"type": "iframe-music"
+	},
+	{
+		"id": "flower",
+		"link": "https://apps.skyl.fr/hua/",
+		"type": "iframe-music"
+	},
+	{
+		"id": "forces",
+		"link": "https://forces.skyl.fr",
+		"type": "iframe"
+	},
+	{
+		"id": "fractal-circles",
+		"link": "https://apps.skyl.fr/fractal-circles/",
+		"type": "iframe"
+	},
+	{
+		"id": "glitch",
+		"link": "https://apps.skyl.fr/glitch/",
+		"type": "iframe"
+	},
+	{
+		"id": "ocean-loop",
+		"link": "https://apps.skyl.fr/plastic-ocean",
+		"type": "iframe"
+	},
+	{
+		"id": "saturation-chinoise",
+		"link": "https://apps.skyl.fr/saturation-chinoise/",
+		"type": "iframe-music"
+	},
+	{
+		"id": "unsustainable",
+		"link": "https://unsustainable.skyl.fr",
+		"type": "iframe"
+	},
+	{
+		"id": "washed",
+		"link": "https://apps.skyl.fr/washed/",
+		"type": "iframe"
+	},
+	{
+		"id": "where's-jane",
+		"link": "https://myss.skyl.fr",
+		"type": "iframe"
+	}
+]

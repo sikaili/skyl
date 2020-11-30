@@ -115,7 +115,7 @@ export default {
       canvasFullScreen: 'canvasFullScreen',
     }),
     filteredIframeItems() {
-      return this.iframeItems.filter((item) => item.type !== 'musicIframe' && !item.app);
+      return this.iframeItems.filter((item) => item.type !== 'iframe-music' && !item.app);
     },
   },
   created() {

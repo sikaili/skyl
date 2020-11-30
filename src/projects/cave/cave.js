@@ -2,7 +2,6 @@ import * as Tone from 'tone';
 import PeakDetect from '@/js/utlis/PeakDetect';
 import setListeners from '@/js/utlis/addEventListeners';
 import { Vertices } from 'matter-js';
-import drawings from '../noise-draw/drawings.json';
 
 // const AudioContext = window.AudioContext // Default
 //               || window.webkitAudioContext; // Safari and old versions of Chrome
@@ -144,11 +143,14 @@ export default (instance) => {
     if (Math.random() > sk.settings.randomShape.value && givenPoints.length === 0) {
       let arr = [];
       if (!Object.keys(localStorage).includes('drawingImported')) {
-        Object.keys(drawings).forEach((name) => {
-          localStorage.setItem(name, JSON.stringify(drawings[name]));
+        import('../noise-draw/drawings.json').then((module) => {
+          const drawings = module.default;
+          Object.keys(drawings).forEach((name) => {
+            localStorage.setItem(name, JSON.stringify(drawings[name]));
+          });
+          console.log('drawingImported', 'true');
+          localStorage.setItem('drawingImported', 'true');
         });
-        console.log('drawingImported', 'true');
-        localStorage.setItem('drawingImported', 'true');
       }
       // export json of all # drawings
       // const obj = {};

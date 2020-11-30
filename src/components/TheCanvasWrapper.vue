@@ -47,7 +47,7 @@
         <div
           v-if="showList"
           class="Settings__PlayerList overflow-y-scroll f6 tl bg-white-30"
-          :class="{ 'Settings__PlayerList--full': type === 'musicIframe' }"
+          :class="{ 'Settings__PlayerList--full': type === 'iframe-music' }"
         >
           <span
             v-for="(item, index) in list.items"
@@ -200,7 +200,7 @@ export default {
   },
   data() {
     return {
-      showList: this.type === 'musicIframe',
+      showList: this.type === 'iframe-music',
       showCanvasSettings: false,
       settings: null,
       songs: { items: ['Cripple', 'Amarrage', 'La Danse', 'Rotation', 'flower', 'saturation-chinoise', 'c-syn', 'e-minor'] },
@@ -215,10 +215,10 @@ export default {
       return ['player', 'cave'].includes(this.current);
     },
     showSettingsIcon() {
-      return !this.showCanvasSettings && (this.settings || this.type === 'musicIframe') && !this.canvasFullScreen;
+      return !this.showCanvasSettings && (this.settings || this.type === 'iframe-music') && !this.canvasFullScreen;
     },
     list() {
-      if (this.type === 'musicIframe' || this.current === 'player' || this.current === 'cave') {
+      if (this.type === 'iframe-music' || this.current === 'player' || this.current === 'cave') {
         return this.songs;
       }
       if (this.settings && this.settings.list && this.settings.list.items) {
@@ -264,12 +264,12 @@ export default {
   },
   beforeMount() {
     loaded = false;
-    if (this.type !== 'musicIframe') {
+    if (this.type !== 'iframe-music') {
       changeSketch(this.current);
     }
     loaded = true;
     const getSettings = (retry) => {
-      if (this.type === 'musicIframe') {
+      if (this.type === 'iframe-music') {
         this.songId = this.current;
         return;
       }
@@ -334,7 +334,7 @@ export default {
         current[this.list.action](songId);
         return;
       }
-      if (this.type === 'musicIframe') {
+      if (this.type === 'iframe-music') {
         if (this.iframes.includes(songId)) {
           this.$store.dispatch('setActiveItem', songId);
           this.$router.push({ params: { id: songId } });

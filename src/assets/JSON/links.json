@@ -2,8 +2,8 @@
   { "link": "https://forces.skyl.fr" },
   { "link": "https://apps.skyl.fr/3d-terrain/" },
   { "link": "https://apps.skyl.fr/washed/" },
-  { "link": "https://apps.skyl.fr/e-minor/", "type": "musicIframe" },
-  { "link": "https://apps.skyl.fr/c-syn/", "type": "musicIframe" },
+  { "link": "https://apps.skyl.fr/e-minor/", "type": "iframe-music" },
+  { "link": "https://apps.skyl.fr/c-syn/", "type": "iframe-music" },
   { "link": "https://apps.skyl.fr/fractal-circles/" },
   { "link": "https://apps.skyl.fr/glitch/" }
 ]

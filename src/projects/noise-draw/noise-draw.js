@@ -4,7 +4,6 @@ import setGestures from '@/js/utlis/addGestures';
 import calDistance from '@/js/utlis/calDistance';
 import copyToClipBoard from '@/js/utlis/copyToClipBoard';
 import { Vertices } from 'matter-js';
-import drawings from './drawings.json';
 
 let globleDrawArray = [];
 let isViewMode = false;
@@ -12,11 +11,14 @@ let xoff = 0;
 let yoff = 0;
 
 if (!Object.keys(localStorage).includes('drawingImported')) {
-  Object.keys(drawings).forEach((name) => {
-    localStorage.setItem(name, JSON.stringify(drawings[name]));
+  import('./drawings.json').then((module) => {
+    const drawings = module.default;
+    Object.keys(drawings).forEach((name) => {
+      localStorage.setItem(name, JSON.stringify(drawings[name]));
+    });
+    console.log('drawingImported', 'true');
+    localStorage.setItem('drawingImported', 'true');
   });
-  console.log('drawingImported', 'true');
-  localStorage.setItem('drawingImported', 'true');
 }
 
 export default function (sk) {
@@ -36,7 +38,7 @@ export default function (sk) {
     filt.dispose();
     pan.dispose();
     tremolo.dispose();
-// Tone.context.close();
+    // Tone.context.close();
     sk.remove();
   };
   sk.dark = Math.random() > 0.3;

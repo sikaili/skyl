@@ -37,6 +37,7 @@
 	},
 	{
 		"id": "node",
-		"type": "sketch"
+		"type": "sketch",
+		"beta": true
 	}
 ]

@@ -1,23 +1,23 @@
 import Vuex from 'vuex';
 import Vue from 'vue';
-import { seedData, allIframeLinks } from '@/seed.js';
+import { infosProjects, listProjects } from '@/seed';
 
 Vue.use(Vuex);
-
 const state = {
-  work: seedData.work,
-  music: seedData.music,
+  projects: infosProjects,
   activeItem: {},
   loading: true,
-  iframeItems: allIframeLinks,
+  iframeItems: listProjects,
+  filter: 'beta',
   canvasFullScreen: false,
 };
 const mutations = {
   TOGGLE_ITEM(state, payload) {
-    state[payload.name].forEach((item) => {
-      item === payload.obj && item.show ? (item.show = false) : ''; //eslint-disable-line
-      item === payload.obj ? (item.show = true) : (item.show = false); //eslint-disable-line
-    });
+    state.projects.filter((item) => item.type === payload.name)
+      .forEach((item) => {
+        item === payload.obj && item.show ? (item.show = false) : ''; //eslint-disable-line
+        item === payload.obj ? (item.show = true) : (item.show = false); //eslint-disable-line
+      });
   },
   SET_ACTIVE_ITEM(state, item) {
     if (typeof item === 'string') {
@@ -32,20 +32,16 @@ const mutations = {
   CHANG_LOADING_STATE(state, loading) {
     state.loading = loading;
   },
-  UPDATE_MUSIC(state, music) {
-    state.music = music;
-  },
-  UPDATE_WORK(state, work) {
-    state.work = work;
+  UPDATE_PROJECTS(state, payload) {
+    state.projects = payload;
   },
   SET_CANVAS_FULLSCREEN(state, payload) {
     state.canvasFullScreen = payload;
   },
 };
 const actions = {
-  updateProjectsFeed(context, payload) {
-    context.commit('UPDATE_MUSIC', payload.music);
-    context.commit('UPDATE_WORK', payload.work);
+  updateProjects(context, payload) {
+    context.commit('UPDATE_MUSIC', payload);
     context.commit('CHANG_LOADING_STATE', false);
   },
   toggleItem(context, payload) {
@@ -69,13 +65,13 @@ const getters = {
     return state.activeItem;
   },
   iframeItems(state) {
-    return state.iframeItems;
+    return state.iframeItems.filter((item) => !item[state.filter]);
   },
   workItems(state) {
-    return state.work;
+    return state.projects.filter((item) => item.type === 'work');
   },
   musicItems(state) {
-    return state.music;
+    return state.projects.filter((item) => item.type === 'music');
   },
   loading(state) {
     return state.loading;

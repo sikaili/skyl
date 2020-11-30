@@ -28,7 +28,7 @@
       :style="iframeContainer"
     >
       <the-canvas-wrapper
-        v-if="activeItem && activeItem.type === 'sketch' || activeItem.type === 'musicIframe'"
+        v-if="activeItem && activeItem.type === 'sketch' || activeItem.type === 'iframe-music'"
         :key="canvasWrapperKey + 2"
         :current="activeItem.app ? activeItem.app : activeItem.id"
         :type="activeItem.type"
@@ -88,7 +88,7 @@ import TheCanvasWrapper from '@/components/TheCanvasWrapper.vue';
 import loadScript from '@/js/utlis/loadScript';
 
 // import BaseNotificationBar from '@/components/base/BaseNotificationBar.vue';
-// import { allIframeLinks as sketches } from '@/seed.js';
+// import { allProjects as sketches } from '@/seed.js';
 // import Loading from '@/components/base/BaseLoading.vue';
 
 document.ontouchmove = function(e) { //eslint-disable-line
