@@ -10,6 +10,7 @@ import {
   MouseConstraint,
   Runner,
   Mouse,
+  Events,
 } from 'matter-js';
 import Particle from './particles';
 import E3 from '../virus/sound/chasing.mp3';
@@ -19,7 +20,9 @@ console.log('import bubbles');
 
 const sketch = (instance) => {
   const sk = instance;
-  const str = `396,1320,nicomede workwear jacket,top;
+  const str = `85,170,camper crclr,shoes;
+130,299,kiko camper ss18,shoes;
+396,1320,nicomede workwear jacket,top;
 57,495,nicomede puffer jacket,top;
 83,275,craig green hoddie,top;
 48,120,acnes studio bag,acc;
@@ -57,7 +60,7 @@ const sketch = (instance) => {
     return itemsArr;
   };
   const items = traiteStr(str);
-  console.log(JSON.stringify(items));
+  // console.log(JSON.stringify(items));
   items.sort((a, b) => a.price - b.price);
   const total = Object.values(items).reduce((t, { price }) => t + price, 0);
   const total1 = Object.values(items).reduce((t, { priceOrigin }) => t + priceOrigin, 0);
@@ -65,6 +68,9 @@ const sketch = (instance) => {
   console.log(total);
   console.log(total1);
 
+  sk.preload = () => {
+    sk.font = sk.loadFont('/fonts/JetBrainsMono-Regular.ttf');
+  };
   sk.settings = {
     type: 'large',
     gravity: {
@@ -145,13 +151,13 @@ const sketch = (instance) => {
         stiffness: 1,
       },
     };
-    const mouseConstraint = MouseConstraint.create(engine, options);
+    sk.mouseConstraint = MouseConstraint.create(engine, options);
     Composite.add(sk.borders, [
       border1,
       border2,
       border3,
       border4,
-      mouseConstraint,
+      sk.mouseConstraint,
     ]);
     World.add(engine.world, sk.borders);
   };
@@ -206,6 +212,12 @@ const sketch = (instance) => {
       particles.push(particle);
       World.add(engine.world, particle.body);
     });
+    Events.on(sk.mouseConstraint, 'startdrag', ({ body }) => {
+      const item = particles.filter((item) => item.body === body)[0];
+      if (item) {
+        item.isActive = !item.isActive;
+      }
+    });
   };
 
   sk.setup = () => {
@@ -218,7 +230,8 @@ const sketch = (instance) => {
     sk.noStroke();
     sk.strokeCap(sk.SQUARE);
     sk.textAlign(sk.CENTER);
-    sk.textSize(sk.width < 600 ? 15 : 25);
+    sk.fontSize = sk.width < 600 ? 15 : 25;
+    sk.textSize(sk.fontSize);
     sk.mouseX = sk.width / 2;
     sk.mouseY = sk.height / 2;
     sk.addParticles(items);
@@ -253,31 +266,6 @@ const sketch = (instance) => {
       sk.pop();
     }
   };
-
-  class Shape {
-    constructor(body) {
-      this.points = body.vertices;
-      this.center = body.position;
-      this.body = body;
-    }
-
-    display() {
-      sk.push();
-      sk.fill(this.body.isStatic ? 0 : [0, 50 + sk.noise(sk.frameCount / 20) * 255]);
-      sk.fill(this.body.isStatic ? 0 : [0, 50 + sk.noise(sk.frameCount / 20) * 255]);
-      sk.translate(this.body.position.x, this.body.position.y);
-      sk.rotate(this.body.angle);
-      sk.beginShape();
-      this.points.forEach((point) => {
-        sk.vertex(
-          point.x - this.center.x - sk.noise(point.x + sk.frameCount / 20) * 15,
-          point.y - this.center.y - sk.noise(point.y + sk.frameCount / 30) * 15,
-        );
-      });
-      sk.endShape();
-      sk.pop();
-    }
-  }
 
   sk.handleTouchEnd = (ev) => {
     ev.preventDefault();

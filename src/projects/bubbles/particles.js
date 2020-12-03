@@ -8,6 +8,7 @@ export default class Particle {
     this.body = Bodies.rectangle(x, y, this.r, this.r);
     this.item = item;
     this.fill = 255;
+    this.isActive = false;
     Body.setMass(this.body, 20);
   }
 
@@ -22,6 +23,7 @@ export default class Particle {
   }
 
   display(sk) {
+    this.fill = this.isActive ? 0 : 255;
     if (this.body.angularVelocity < 0.005) {
       this.updating = false;
     }
@@ -36,14 +38,21 @@ export default class Particle {
     sk.fill(0, 0);
     if (this.item && this.item.name) {
       sk.rotate(this.body.angle + this.body.angle / (3.14 / 4) * 3.14 / 2);
+      sk.fill(200, (this.item.price / this.item.priceOrigin) * 255);
       sk.rect(0, 0, this.r / Math.sqrt((this.item.price / this.item.priceOrigin)));
       // const { angle } = this.body;
       // angle += (0 - angle) * 0.5;
       // sk.rotate(-angle * 0.5);
-      sk.stroke(0);
+      sk.stroke(0, 125);
       sk.fill([200, 200, 200]);
       sk.ellipse(0, 0, this.r * (0.45 + 0.05 * (Math.sin(sk.frameCount / (this.item.price / 20)))));
+      const fontBox = sk.font.textBounds(this.item.name.trim(), 0, -this.r / 2, sk.fontSize);
+      // console.log(fontBox);
       sk.fill(0);
+      sk.rectMode(sk.CORNER);
+      sk.rect(fontBox.x - 10, fontBox.y, fontBox.w + 20, fontBox.h);
+      sk.fill(255);
+      sk.textFont(sk.font);
       sk.text(this.item.name.trim(), 0, -this.r / 2);
       // sk.text(this.item.price, 0, 40);
     }
