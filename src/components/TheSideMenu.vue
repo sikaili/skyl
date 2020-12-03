@@ -79,7 +79,7 @@
         class="Sidemenu__List overflow-y-scroll vh-50 f6 tl bg-white-30"
       >
         <span
-          v-for="(item, index) in filteredIframeItems"
+          v-for="(item, index) in filteredplayableSketches"
           :key="index"
         >
           <p
@@ -111,11 +111,11 @@ export default {
   computed: {
     ...mapGetters({
       activeItem: 'activeItem',
-      iframeItems: 'iframeItems',
+      playableSketches: 'playableSketches',
       canvasFullScreen: 'canvasFullScreen',
     }),
-    filteredIframeItems() {
-      return this.iframeItems.filter((item) => item.type !== 'iframe-music' && !item.app);
+    filteredplayableSketches() {
+      return this.playableSketches.filter((item) => item.type !== 'iframe-music' && !item.app);
     },
   },
   created() {
@@ -152,8 +152,8 @@ export default {
       this.$root.$emit('refreshCanvas', true);
     },
     randomIframe(sketch = false) {
-      const n = Math.floor(Math.random() * (sketch ? 6 : this.iframeItems.length));
-      const item = this.iframeItems[n];
+      const n = Math.floor(Math.random() * (sketch ? 6 : this.playableSketches.length));
+      const item = this.playableSketches[n];
       this.displayList = false;
       this.setActiveItem(item);
       this.$router.replace({ params: { id: item.id } });

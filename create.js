@@ -2,7 +2,7 @@ const child = require('child_process');
 const fs = require('fs');
 const readline = require('readline');
 
-const SKETCHES_PATH = 'src/assets/JSON/projects.json';
+const SKETCHES_PATH = 'src/assets/JSON/sketches.json';
 const SKETCHE_JS_PATH = (name) => `src/projects/${name}/${name}.js`;
 
 const rl = readline.createInterface({

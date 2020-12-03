@@ -19,38 +19,38 @@ console.log('import bubbles');
 
 const sketch = (instance) => {
   const sk = instance;
-  const str = `396,1320,nicomede workwear jacket, top;
-57,495,nicomede puffer jacket, top;
-83, 275,craig green hoddie, top;
-48, 120,acnes studio bag, acc;
-80,200,acnes studio t-shirt, top;
-220,550,acnes studio parka, top;
-144,360,acnes studio maille, top;
-37,96,uniqlo, top;
-57,380,isabel benenato trousers, trousers;
-50,50,muji, acc;
-100,200,kiko insulted trousers, trousers;
+  const str = `396,1320,nicomede workwear jacket,top;
+57,495,nicomede puffer jacket,top;
+83,275,craig green hoddie,top;
+48,120,acnes studio bag,acc;
+80,200,acnes studio t-shirt,top;
+220,550,acnes studio parka,top;
+144,360,acnes studio maille,top;
+37,96,uniqlo,top;
+57,380,isabel benenato trousers,trousers;
+50,50,muji,acc;
+100,200,kiko insulted trousers,trousers;
 168,300,kiko insulted jacket,top;
-108,180,adidas ultraboost, shoes;
-24,79,cos trousers, trousers;
-17, 69, cos kimono, top;
-17,35, cos t-shirt, top;
-12,12,tabi sockets, acc;
-92, 450,kenzo workwear jacket, top;
-100, 200,coster green, trousers;
-78, 130,salomon xt-wings, shoes;
-196, 220, kiko kiril, shoes;
-55, 160, maison margiela t-shirt, top;
-21, 34, casio, acc;
-251, 831, craig green tunnel trousers, trousers;
-69,99,cos wide trousers,trousers;
+108,180,adidas ultraboost,shoes;
+24,79,cos trousers,trousers;
+17,69,cos kimono,top;
+17,35,cos t-shirt,top;
+12,12,tabi sockets,acc;
+92,450,kenzo workwear jacket,top;
+100,200,coster green,trousers;
+78,130,salomon xt-wings,shoes;
+196,220,kiko kiril,shoes;
+55,160,maison margiela t-shirt,top;
+21,34,casio,acc;
+251,831,craig green tunnel trousers,trousers;
+69,99,cos wide trousers,trousers
 `;
   sk.typeArray = ['acc', 'top', 'trousers', 'shoes'];
-  console.log(sk.typeArray.indexOf('top'));
+  // console.log(sk.typeArray.indexOf('top'));
   const traiteStr = (str) => {
     const itemsArr = str.split(';').map((item) => ({
       price: +item.trim().split(',')[0],
-      priceOrigin: +item.trim().split(',')[1],
+      priceOrigin: +item.trim().split(',')[1] || 0,
       name: item.trim().split(',')[2],
       type: `${item.trim().split(',')[3]}`,
     }));
@@ -60,7 +60,11 @@ const sketch = (instance) => {
   console.log(JSON.stringify(items));
   items.sort((a, b) => a.price - b.price);
   const total = Object.values(items).reduce((t, { price }) => t + price, 0);
+  const total1 = Object.values(items).reduce((t, { priceOrigin }) => t + priceOrigin, 0);
+
   console.log(total);
+  console.log(total1);
+
   sk.settings = {
     type: 'large',
     gravity: {

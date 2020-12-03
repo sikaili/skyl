@@ -1,4 +1,4 @@
-import listProjects from '@/assets/JSON/projects.json';
+import playableSketches from '@/assets/JSON/sketches.json';
 import infosProjects from '@/assets/JSON/seed.json';
 // const infosProjects = {
 //   work: [{
@@ -357,5 +357,5 @@ infosProjects.forEach((a) => {
 
 export {
   infosProjects,
-  listProjects,
+  playableSketches,
 };

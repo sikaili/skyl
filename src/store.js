@@ -1,18 +1,18 @@
 import Vuex from 'vuex';
 import Vue from 'vue';
-import { infosProjects, listProjects } from '@/seed';
+import { infosProjects, playableSketches } from '@/seed';
 
 Vue.use(Vuex);
 const state = {
   projects: infosProjects,
   activeItem: {},
   loading: true,
-  iframeItems: listProjects,
-  filter: 'beta',
+  playableSketches,
+  filter: process.env.VUE_APP_FILTER,
   canvasFullScreen: false,
 };
 const mutations = {
-  TOGGLE_ITEM(state, payload) {
+  TOGGLE_MENU_ITEM(state, payload) {
     state.projects.filter((item) => item.type === payload.name)
       .forEach((item) => {
         item === payload.obj && item.show ? (item.show = false) : ''; //eslint-disable-line
@@ -21,13 +21,13 @@ const mutations = {
   },
   SET_ACTIVE_ITEM(state, item) {
     if (typeof item === 'string') {
-      item = state.iframeItems.find((obj) => obj.id === item);
+      item = state.playableSketches.find((obj) => obj.id === item);
     }
     if (item && item.link && !item.link.includes('https')) return;
     state.activeItem = item;
   },
-  SET_IFRAME_ITEMS(state, payload) {
-    state.iframeItems = payload;
+  SET_PLAYABLE_SKETCHES(state, payload) {
+    state.playableSketches = payload;
   },
   CHANG_LOADING_STATE(state, loading) {
     state.loading = loading;
@@ -41,17 +41,14 @@ const mutations = {
 };
 const actions = {
   updateProjects(context, payload) {
-    context.commit('UPDATE_MUSIC', payload);
+    context.commit('UPDATE_PROJECTS', payload);
     context.commit('CHANG_LOADING_STATE', false);
   },
-  toggleItem(context, payload) {
-    context.commit('TOGGLE_ITEM', payload);
+  toggleMenuItem(context, payload) {
+    context.commit('TOGGLE_MENU_ITEM', payload);
   },
   setActiveItem(context, payload) {
     context.commit('SET_ACTIVE_ITEM', payload);
-  },
-  setIframeItems(context, payload) {
-    context.commit('SET_IFRAME_ITEMS', payload);
   },
   changeLoadingState(context, payload) {
     context.commit('CHANG_LOADING_STATE', payload);
@@ -64,8 +61,8 @@ const getters = {
   activeItem(state) {
     return state.activeItem;
   },
-  iframeItems(state) {
-    return state.iframeItems.filter((item) => !item[state.filter]);
+  playableSketches(state) {
+    return state.playableSketches.filter((item) => !item[state.filter]);
   },
   workItems(state) {
     return state.projects.filter((item) => item.type === 'work');

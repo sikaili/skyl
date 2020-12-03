@@ -6,7 +6,7 @@ export default {
   watch: {
     loading(loading) {
       if (loading === false && this.$mq !== 'sm') {
-        this.toggleItem({
+        this.toggleMenuItem({
           name: this.name,
           obj: this.menuItems[0],
         });
@@ -14,7 +14,7 @@ export default {
     },
     $route() {
       if (this.menuItems && this.menuItems.filter((item) => item.show).length === 0 && this.$mq !== 'sm') {
-        this.toggleItem({
+        this.toggleMenuItem({
           name: this.name,
           obj: this.menuItems[0],
         });
@@ -47,7 +47,7 @@ export default {
     if (this.$mq !== 'sm' || this.$route.params.id) {
       // set active router item from params id
       const item = this.menuItems.filter((item) => item.id === this.$route.params.id)[0];
-      this.toggleItem({
+      this.toggleMenuItem({
         name: this.name,
         obj: item || this.menuItems[0],
       });
@@ -70,7 +70,7 @@ export default {
     // window.removeEventListener('click', this.pauseToneAudioContext);
   },
   methods: {
-    ...mapActions(['setActiveItem', 'toggleItem', 'changeLoadingState']),
+    ...mapActions(['setActiveItem', 'toggleMenuItem', 'changeLoadingState']),
     showReadMoreButton(item) {
       return item.imgs.length > 1 && this.type !== 'music';
     },
@@ -136,7 +136,7 @@ export default {
         this.menuItems.filter((a) => a !== item).map((a) => (a.show = false));
         item.show = !item.show;
       } else {
-        this.toggleItem({ name: this.name, obj: item });
+        this.toggleMenuItem({ name: this.name, obj: item });
       }
     },
     handleMouseIn(itemToEmit) {

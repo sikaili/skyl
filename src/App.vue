@@ -157,25 +157,26 @@ export default {
     },
   },
   beforeCreate() {
-    const lastPlayed = localStorage.getItem('lastPlayed');
-    if (lastPlayed) {
-      this.$store.dispatch('setActiveItem', lastPlayed);
-      this.$router.push({ name: 'play', params: { id: lastPlayed } });
-      localStorage.removeItem('lastPlayed');
-      return;
-    }
+    // const lastPlayed = localStorage.getItem('lastPlayed');
+    // if (lastPlayed) {
+    //   this.$store.dispatch('setActiveItem', lastPlayed);
+    //   this.$router.push({ name: 'play', params: { id: lastPlayed } });
+    //   localStorage.removeItem('lastPlayed');
+    //   return;
+    // }
     this.$root.$on('refreshCanvas', () => {
       this.canvasWrapperKey = Math.random().toFixed(2);
     });
     const { id } = this.$route.params;
     if (id !== 'random') {
-      const iframeItem = this.$store.state.iframeItems.find(
+      const sketches = ['eyes', 'eyes', 'p', 'quadtree', 'virus'];
+      const sketch = this.$store.state.playableSketches.find(
         (item) => item.id === id,
       ) || {
-        id: ['eyes', 'eyes', 'p', 'quadtree'][Math.floor(Math.random() * 4)],
+        id: sketches[Math.floor(Math.random() * sketches.length)],
         type: 'sketch',
       };
-      this.$store.dispatch('setActiveItem', iframeItem);
+      this.$store.dispatch('setActiveItem', sketch);
     }
   },
   mounted() {
