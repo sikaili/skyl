@@ -25,9 +25,14 @@ Vue.use(VueMq, {
 });
 
 Vue.config.productionTip = false;
-
-window.vm = new Vue({
-  router,
-  store,
-  render: (h) => h(App),
-}).$mount('#app');
+let gate;
+if (process.env.VUE_APP_PROMPT) {
+  gate = prompt('enter the code');
+}
+if (gate === process.env.VUE_APP_CODE || !process.env.VUE_APP_CODE) {
+  window.vm = new Vue({
+    router,
+    store,
+    render: (h) => h(App),
+  }).$mount('#app');
+}
