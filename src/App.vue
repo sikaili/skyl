@@ -94,6 +94,7 @@ import loadScript from '@/js/utlis/loadScript';
 document.ontouchmove = function(e) { //eslint-disable-line
   return true;
 };
+
 export default {
   name: 'App',
   components: {
@@ -113,7 +114,6 @@ export default {
       height: 0,
       showIframe: false,
       canvasWrapperKey: 0,
-      sketches: {},
       version: process.env.VUE_APP_VERSION,
     };
   },
@@ -124,7 +124,7 @@ export default {
         return `width:${this.$mq === 'sm' ? window.screen.width : this.width}px;
       height:${this.height}px;
       opacity:${this.$route.path.includes('play') ? 1 : ''};
-      -moz-transform: scale(1);
+      '-moz-transform: scale(1);
       -moz-transform-origin: 0 0;
       -o-transform: scale(1);
       -o-transform-origin: 0 0;
@@ -137,18 +137,20 @@ export default {
     iframeStyle() {
       const inPlay = this.$route.name === 'play';
       const scale = this.$mq === 'sm' ? 2 : 1;
-      return `width:${
-        this.$mq === 'sm' ? window.screen.width * scale : this.width * scale
-      }px;
-      height:${this.height * scale}px;
-      opacity:${inPlay ? 1 : 0.4};
-      -moz-transform: scale(${1 / scale});
-      -moz-transform-origin: 0 0;
-      -o-transform: scale(${1 / scale});
-      -o-transform-origin: 0 0;
-      -webkit-transform: scale(${1 / scale});
-      -webkit-transform-origin: 0 0;
-      `;
+      const headerHeight = this.$mq === 'sm' ? 80 : 55;
+      const height = this.height * scale - (this.activeItem.hasMargin ? headerHeight + 22 : 0);
+      return {
+        width: `${this.$mq === 'sm' ? window.screen.width * scale : this.width * scale }px`,
+        height: `${height}px`,
+        opacity: inPlay ? 1 : 0.4,
+        'margin-top': `${this.activeItem.hasMargin ? headerHeight : 0 }px`,
+        '-moz-transform': `scale(${1 / scale})`,
+        '-moz-transform-origin': '0 0',
+        '-o-transform': `scale(${1 / scale})`,
+        '-o-transform-origin': '0 0',
+        '-webkit-transform': `scale(${1 / scale})`,
+        '-webkit-transform-origin': '0 0',
+      };
     },
   },
   watch: {
@@ -157,13 +159,6 @@ export default {
     },
   },
   beforeCreate() {
-    // const lastPlayed = localStorage.getItem('lastPlayed');
-    // if (lastPlayed) {
-    //   this.$store.dispatch('setActiveItem', lastPlayed);
-    //   this.$router.push({ name: 'play', params: { id: lastPlayed } });
-    //   localStorage.removeItem('lastPlayed');
-    //   return;
-    // }
     this.$root.$on('refreshCanvas', () => {
       this.canvasWrapperKey = Math.random().toFixed(2);
     });
@@ -199,40 +194,10 @@ export default {
         },
       );
     }
-
     window.addEventListener('resize', this.handleResize);
     window.addEventListener('scroll', this.handleScroll);
     window.addEventListener('orientationchange', this.handleResize);
     this.handleResize();
-    // const lastPlayed = localStorage.getItem('lastPlayed');
-    // if (lastPlayed) {
-    //   this.$store.dispatch('setActiveItem', lastPlayed);
-    //   this.$router.push({ name: 'play', params: { id: lastPlayed } });
-    //   localStorage.removeItem('lastPlayed');
-    //   return;
-    // }
-    // const { id } = this.$route.params;
-    // if (id !== 'random') {
-    //   const sketch = sketches.find(
-    //     (item) => item.id === id,
-    //   ) || {
-    //     id: ['eyes', 'eyes', 'p'][Math.floor(Math.random() * 3)],
-    //     type: 'sketch',
-    //   };
-
-    //   if (sketch.id !== id && id) {
-    //     this.$router.push({
-    //       params: {
-    //         id: undefined,
-    //       },
-    //     });
-    //   }
-
-    //   this.$store.dispatch('setActiveItem', sketch);
-    // }
-    // this.$root.$on('refreshCanvas', () => {
-    //   this.canvasWrapperKey = Math.random().toFixed(2);
-    // });
   },
   destroyed() {
     window.removeEventListener('resize', this.handleResize);
@@ -304,23 +269,28 @@ export default {
         width: 15px;
         height: 30px;
     }
+
     .slide-fade-main-enter-active {
         transition: all 0.2s ease;
     }
+
     .slide-fade-main-leave-active {
         transition: all 0s;
     }
+
     .slide-fade-main-enter,
     .slide-fade-main-leave-to {
         transform: translateY(-30px);
         opacity: 0;
     }
+
     canvas.p5Canvas {
         display: block;
         margin-left: auto;
         margin-right: auto;
         padding: 0 0 0 0;
     }
+
     .Notification {
         background-color: rgba(0,0,0, 0.8);
         padding: 18px 48px;

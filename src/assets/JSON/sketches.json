@@ -112,6 +112,7 @@
 	{
 		"id": "where's-jane",
 		"link": "https://myss.skyl.fr",
+		"hasMargin": true,
 		"type": "iframe"
 	}
 ]
