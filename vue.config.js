@@ -1,5 +1,6 @@
 process.env.VUE_APP_VERSION = require('./package.json').version;
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
 
 module.exports = {
   productionSourceMap: false,
@@ -39,6 +40,27 @@ module.exports = {
     },
     plugins: [
       // new BundleAnalyzerPlugin(),
+      new ImageMinimizerPlugin({
+        minimizerOptions: {
+          // Lossless optimization with custom option
+          // Feel free to experiment with options for better result for you
+          plugins: [
+            ['gifsicle', { interlaced: true }],
+            ['jpegtran', { progressive: true }],
+            ['optipng', { optimizationLevel: 5 }],
+            [
+              'svgo',
+              {
+                plugins: [
+                  {
+                    removeViewBox: false,
+                  },
+                ],
+              },
+            ],
+          ],
+        },
+      }),
     ],
   },
   css: {
