@@ -36,6 +36,9 @@ export default {
     name() {
       return this.type.toLowerCase();
     },
+    activeItem() {
+      return this.menuItems.filter((item) => item.show)[0];
+    },
     isTouchDevice() {
       return 'ontouchstart' in window;
     },
@@ -75,7 +78,7 @@ export default {
       return item.imgs.length > 1 && this.type !== 'music';
     },
     setCurrentSong(emit) {
-      this.$router.push({ params: { songSlug: emit.title.toLowerCase().replace(' ', '-') } });
+      this.$router.push({ params: { id: this.activeItem.name, songSlug: emit.title.toLowerCase().replace(' ', '-') } });
     },
     showPlayButton(item) {
       return item.link.split(':')[0] === 'https' && this.type !== 'music' && !item.list;

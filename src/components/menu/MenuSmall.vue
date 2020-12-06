@@ -6,7 +6,7 @@
       class="Menu__menuItems w-100 bg-white-80"
     >
       <div
-        v-for="item in menuItems"
+        v-for="(item) in menuItems"
         :key="item.id"
         class="flex flex-column justify-center"
       >
@@ -30,9 +30,17 @@
                   "
                 />
                 <b
+                  v-show="!item.show && item.isNew"
+                  class="Menu__itemsMarker dib bg-pink black"
+                >
+                  new
+                </b>
+                <b
                   v-show="item.show"
-                  class="dib bg-blue"
-                >{{ item.year }}</b>
+                  class="Menu__itemsMarker dib bg-blue black"
+                >
+                  {{ item.year }}
+                </b>
               </dd>
             </dl>
           </div>
@@ -161,6 +169,13 @@ export default {
 };
 </script>
 <style lang="scss">
+    .Menu {
+        &__items {
+            &Marker {
+                color: black;
+            }
+        }
+    }
 
     svg.w1 {
         max-height: 44px;

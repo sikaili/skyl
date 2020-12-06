@@ -40,6 +40,12 @@
                 style="overflow: hidden; white-space: nowrap;"
               >
                 {{ item.name }}
+                <b
+                  v-show="item.isNew"
+                  class="Menu__itemMarker ml1 dib bg-pink"
+                >
+                  new
+                </b>
                 <i
                   :class="
                     `absolute right-0 mr1 fr ma0 icon ion-md-arrow-dropright ${
@@ -203,6 +209,15 @@ export default {
                 display: flex;
                 flex-flow: row wrap;
                 justify-content: flex-start;
+            }
+
+            &Marker {
+                position: absolute;
+                margin-left: 12px;
+                color: black;
+                line-height: 16px;
+                font-size: 16px;
+                margin-top: 8px;
             }
         }
 
