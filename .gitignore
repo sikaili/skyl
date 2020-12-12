@@ -4,6 +4,7 @@ node_modules
 /ori/
 /src/assets/ori
 /full-size-imgs
+.m4a
 
 # local env files
 .env.local

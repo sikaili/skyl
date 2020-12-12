@@ -1,3 +1,13 @@
+## [2.11.0] - 2020-12-12
+### Added
+- new muisic, seed, image resize plugin ([5488d3](https://github.com/sikaili/skyl.fr/commit/5488d3))
+- isNew option for projects ([a7c454](https://github.com/sikaili/skyl.fr/commit/a7c454))
+- iframe hasmargin option ([26cecc](https://github.com/sikaili/skyl.fr/commit/26cecc))
+- bubbles add font bounds, mouseConstraint, isActive status. ([03270e](https://github.com/sikaili/skyl.fr/commit/03270e))
+### Changed
+- password needed for staging env ([2ff7ba](https://github.com/sikaili/skyl.fr/commit/2ff7ba))
+- show beta sketches only in dev mode ([5d32e8](https://github.com/sikaili/skyl.fr/commit/5d32e8))
+
 ## [2.10.0] - 2020-11-30
 ### Changed
 - refacto seed.js, store.js, using sketches.json seed.json ([d9280b](https://github.com/sikaili/skyl.fr/commit/d9280b))

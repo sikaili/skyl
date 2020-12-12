@@ -25,7 +25,7 @@ Vue.use(VueMq, {
 });
 
 Vue.config.productionTip = false;
-let gate;
+let gate = null;
 if (process.env.VUE_APP_PROMPT) {
   gate = prompt('enter the code');
 }
