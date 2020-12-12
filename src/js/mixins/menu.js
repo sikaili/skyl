@@ -1,6 +1,6 @@
-// eslint-disable-next-line no-unused-vars
 import { mapGetters, mapActions } from 'vuex';
 import TheIntro from '@/components/TheIntro.vue';
+import { sendEvent } from '@/js/utlis/googleAnalytics';
 
 export default {
   watch: {
@@ -78,7 +78,9 @@ export default {
       return item.imgs.length > 1 && this.type !== 'music';
     },
     setCurrentSong(emit) {
-      this.$router.push({ params: { id: this.activeItem.name, songSlug: emit.title.toLowerCase().replace(' ', '-') } });
+      const songTitle = emit.title.toLowerCase().replace(/\s/g, '-');
+      sendEvent(`listen-${songTitle}`);
+      this.$router.push({ params: { id: this.activeItem.name, songSlug: songTitle } });
     },
     showPlayButton(item) {
       return item.link.split(':')[0] === 'https' && this.type !== 'music' && !item.list;
@@ -129,7 +131,7 @@ export default {
       if (item.app && item.id) {
         this.$router.push({ query: { id: item.id } });
       }
-      // this.$ga.event(`play-${item}`, 'click', 'usage-menu', 1);
+      sendEvent(`play-${item.id}`);
     },
     setItemActive(item, options) {
       this.$router
@@ -141,6 +143,7 @@ export default {
       } else {
         this.toggleMenuItem({ name: this.name, obj: item });
       }
+      sendEvent(`menu-${item.name.replace(/\s/, '-')}`);
     },
     handleMouseIn(itemToEmit) {
       if (itemToEmit && !this.isIpad && this.type !== 'music') {
@@ -170,7 +173,7 @@ export default {
       }, 1000);
     },
     goToPage(item) {
-      // this.$ga.event(`read-more-${item}`, 'click', 'usage-menu', 1);
+      sendEvent(`read-more-${item.id}`);
       this.$router.push({ path: `/page/${this.name}/${item.id}` });
     },
   },
