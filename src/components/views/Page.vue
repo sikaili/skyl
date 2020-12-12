@@ -124,7 +124,7 @@ export default {
   },
   computed: {
     item() {
-      const itemsArray = this.$store.state[this.$route.params.category];
+      const itemsArray = this.$store.state.projects;
       if (this.id > itemsArray.length) {
         return 'ERROR!';
       }
