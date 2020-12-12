@@ -1,3 +1,9 @@
+## [2.11.1] - 2020-12-12
+### Fixed
+- pages error (modif store) ([b5fb2e](https://github.com/sikaili/skyl.fr/commit/b5fb2e))
+### Changed
+- refacto google analytics ([637f02](https://github.com/sikaili/skyl.fr/commit/637f02))
+
 ## [2.11.0] - 2020-12-12
 ### Added
 - new muisic, seed, image resize plugin ([5488d3](https://github.com/sikaili/skyl.fr/commit/5488d3))
