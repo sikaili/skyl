@@ -46,7 +46,10 @@ const sketch = (instance) => {
 55,160,maison margiela t-shirt,top;
 21,34,casio,acc;
 251,831,craig green tunnel trousers,trousers;
-69,99,cos wide trousers,trousers
+69,99,cos wide trousers,trousers;
+120,220,kenzo jumper,top;
+82,140,pix,shoes;
+88,160,nike ispa,trousers
 `;
   sk.typeArray = ['acc', 'top', 'trousers', 'shoes'];
   // console.log(sk.typeArray.indexOf('top'));

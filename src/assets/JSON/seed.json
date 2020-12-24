@@ -3,7 +3,7 @@
     "apps": ["cave", "virus", "reaction-diffusion", "quadtree"],
     "year": "2020",
     "des": "Experiments during the 2020 lockdown.",
-    "isNew":true,
+    "isNew": true,
     "link": "http://skyl.fr/",
     "img": "/img/covers/cave.jpg",
     "credits": [{
@@ -118,13 +118,19 @@
     "link": "https://skyl.fr/music/seed",
     "img": "/img/covers/impro.jpg",
     "isNew": true,
-    "list": [
+    "list": [{
+        "title": "Let Ring",
+        "artist": "Sikai Li",
+        "src": "/src/projects/player/sound/let_ring.m4a",
+        "pic": "/img/covers/impro.jpg"
+      },
       {
         "title": "Vagues ZOOM H5",
         "artist": "Sikai Li",
         "src": "/src/projects/player/sound/vagues.m4a",
         "pic": "/img/covers/impro.jpg"
-      },{
+      },
+      {
         "title": "跳",
         "artist": "Sikai Li",
         "src": "/src/projects/player/sound/rack_jump.m4a",
