@@ -23,7 +23,7 @@ const sketch = (instance) => {
   const str = `85,170,camper crclr,shoes;
 130,299,kiko camper ss18,shoes;
 396,1320,nicomede workwear jacket,top;
-57,495,nicomede puffer jacket,top;
+57,495,nicomede down jacket,top;
 83,275,craig green hoddie,top;
 48,120,acnes studio bag,acc;
 80,200,acnes studio t-shirt,top;
@@ -49,7 +49,11 @@ const sketch = (instance) => {
 69,99,cos wide trousers,trousers;
 120,220,kenzo jumper,top;
 82,140,pix,shoes;
-88,160,nike ispa,trousers
+88,160,nike ispa,trousers;
+320,800,craig green swirl trousers,trousers;
+502,1045,craig green swirl jacket,top;
+95,355,craig green flower diamond t-shirt,top;
+35,377,nicomede overshirt,top;
 `;
   sk.typeArray = ['acc', 'top', 'trousers', 'shoes'];
   // console.log(sk.typeArray.indexOf('top'));
@@ -65,11 +69,11 @@ const sketch = (instance) => {
   const items = traiteStr(str);
   // console.log(JSON.stringify(items));
   items.sort((a, b) => a.price - b.price);
-  const total = Object.values(items).reduce((t, { price }) => t + price, 0);
-  const total1 = Object.values(items).reduce((t, { priceOrigin }) => t + priceOrigin, 0);
+  const boughtPriceTotal = Object.values(items).reduce((t, { price }) => t + price, 0);
+  const retailPriceTotal = Object.values(items).reduce((t, { priceOrigin }) => t + priceOrigin, 0);
 
-  console.log(total);
-  console.log(total1);
+  console.log(boughtPriceTotal);
+  console.log(retailPriceTotal);
 
   sk.preload = () => {
     sk.font = sk.loadFont('/fonts/JetBrainsMono-Regular.ttf');

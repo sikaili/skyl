@@ -80,7 +80,7 @@ export default {
     setCurrentSong(emit) {
       const songTitle = emit.title.toLowerCase().replace(/\s/g, '-');
       sendEvent(`listen-${songTitle}`);
-      this.$router.push({ params: { id: this.activeItem.name, songSlug: songTitle } });
+      this.$router.push({ params: { songSlug: songTitle } });
     },
     showPlayButton(item) {
       return item.link.split(':')[0] === 'https' && this.type !== 'music' && !item.list;
@@ -135,8 +135,9 @@ export default {
     },
     setItemActive(item, options) {
       this.$router
-        .push({ name: this.name, params: { id: item.id } })
+        .push({ name: this.name, params: { id: item.id, songSlug: undefined } })
         .catch((err) => {});
+
       if (options === 'touchScreen') {
         this.menuItems.filter((a) => a !== item).map((a) => (a.show = false));
         item.show = !item.show;

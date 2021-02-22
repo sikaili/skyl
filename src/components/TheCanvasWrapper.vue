@@ -300,11 +300,6 @@ export default {
     };
     getSettings();
   },
-  mounted() {
-    if (this.isPlayer && (this.activeItem.id !== this.current)) {
-      this.$router.push({ params: { id: this.current }, query: { id: this.activeItem.id } });
-    }
-  },
   beforeDestroy() {
     if (current) {
       try {
@@ -337,11 +332,9 @@ export default {
       if (this.type === 'iframe-music') {
         if (this.iframes.includes(songId)) {
           this.$store.dispatch('setActiveItem', songId);
-          this.$router.push({ params: { id: songId } });
+          // this.$router.push({ params: { id: songId } });
         } else {
-          const playerId = Math.random() > 0.5 ? 'cave' : 'player';
-          this.$store.dispatch('setActiveItem', playerId);
-          this.$router.push({ params: { id: playerId }, query: { id: songId } });
+          this.$store.dispatch('setActiveItem', 'cave');
         }
         return;
       }
@@ -350,10 +343,9 @@ export default {
         current.setSong(songId);
         this.hide('showCanvasSettings');
         this.songId = songId;
-        this.$router.push({ query: { id: songId } });
       } else {
         this.$store.dispatch('setActiveItem', songId);
-        this.$router.push({ params: { id: 'player' }, query: { id: songId } });
+        // this.$router.push({ params: { id: 'player' }, query: { id: songId } });
       }
     },
     setRGB(colorArray) {

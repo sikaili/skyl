@@ -67,7 +67,7 @@ export default (instance) => {
 
   if (vm.$route.query.id && typeof vm.$route.query.id === 'string') {
     sk.settings.list.current = vm.$route.query.id;
-  } else {
+  } else if (vm.$route.name === 'play') {
     const id = sk.settings.list.current;
     if (vm.$route.query.id !== id) {
       vm.$router.push({ query: { id } });
