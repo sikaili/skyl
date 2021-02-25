@@ -21,11 +21,6 @@
 		"type": "sketch"
 	},
 	{
-		"id": "node",
-		"type": "sketch",
-		"beta": true
-	},
-	{
 		"id": "little-garden",
 		"link": "https://skyl.fr/music/little-garden",
 		"type": "sketch",

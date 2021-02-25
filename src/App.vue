@@ -164,7 +164,7 @@ export default {
     });
     const { id } = this.$route.params;
     if (id !== 'random') {
-      const sketches = ['eyes', 'eyes', 'p', 'quadtree', 'virus'];
+      const sketches = ['eyes', 'eyes', 'p', 'quadtree'];
       const sketch = this.$store.state.playableSketches.find(
         (item) => item.id === id,
       ) || {

@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Drawings from '@/components/views/Drawings.vue';
+import Gallery from '@/components/views/Gallery.vue';
 import Menu from '@/components/views/Menu.vue';
 import Play from '@/components/views/Play.vue';
 import Page from '@/components/views/Page.vue';
@@ -19,8 +19,13 @@ const router = new Router({
     },
     {
       path: '/drawings',
-      name: 'Drawings',
-      component: Drawings,
+      name: 'drawings',
+      component: Gallery,
+    },
+    {
+      path: '/photos',
+      name: 'photos',
+      component: Gallery,
     },
     {
       path: '/work/:id?',

@@ -28,7 +28,7 @@
       :class="$mq === `sm` ? `w-100` : `w-80`"
     >
       <div
-        v-for="(drawing, imgIndex) in drawings"
+        v-for="(drawing, imgIndex) in previews"
         :key="imgIndex"
         class="w-third white-50"
       >
@@ -38,11 +38,14 @@
         >
           <img
             :src="drawing.link"
-            :alt="drawing.name"
+            :alt="drawing.name ? drawing.name : ''"
             class="db dim bw0 ba black-50 border-box"
             :class="$mq === `sm` ? `bw1` : `bw5`"
           >
-          <dl class="mt2 f6 lh-copy">
+          <dl
+            v-if="drawing.name"
+            class="mt2 f6 lh-copy"
+          >
             <dt class="clip">Title</dt>
             <dd class="ml0 black truncate w-100">{{ drawing.name }}</dd>
           </dl>
@@ -54,7 +57,7 @@
       class="b--black-20 cl"
     >
       <div
-        v-for="(drawing, imgIndex) in drawings"
+        v-for="(drawing, imgIndex) in previews"
         :key="imgIndex"
         class="center w-30 pa3 cl"
         :class="$mq === `sm` ? `w-100` : `w-40`"
@@ -65,10 +68,13 @@
         >
           <img
             :src="drawing.link"
-            :alt="drawing.name"
+            :alt="drawing.name ? drawing.name : ''"
             class="w-100 db dim ba bw5 white-50 border-box"
           >
-          <dl class="mt2 f6 lh-copy">
+          <dl
+            v-if="drawing.name"
+            class="mt2 f6 lh-copy"
+          >
             <dt class="clip">Title</dt>
             <dd class="ml0 black truncate w-100">{{ drawing.name }}</dd>
           </dl>
@@ -91,7 +97,7 @@
 import VueGallery from 'vue-gallery';
 
 export default {
-  name: 'Draw',
+  name: 'Gallery',
   components: {
     VueGallery,
   },
@@ -118,10 +124,10 @@ export default {
           name: 'mushroom',
           link: require('@/assets/drawings/4.jpg'),
         },
-        {
-          name: 'down',
-          link: require('@/assets/drawings/8.jpg'),
-        },
+        // {
+        //   name: 'down',
+        //   link: require('@/assets/drawings/8.jpg'),
+        // },
         {
           name: 'up',
           link: require('@/assets/drawings/9.jpg'),
@@ -167,14 +173,24 @@ export default {
         //   link: require("@/assets/drawings/up1.jpg")
         // }
       ],
+      photos: [],
       grid: false,
       index: null,
     };
   },
   computed: {
-    images() {
-      return this.drawings.map((a) => a.link);
+    previews() {
+      return this[this.$route.name];
     },
+    images() {
+      return this.previews.map((a) => a.link);
+    },
+  },
+  created() {
+    this.photos = Array(17).fill(null).map((item, index) => ({
+      link: require(`@/assets/photos/_${index}.jpg`),
+    }));
+    console.log(JSON.stringify(this.photos));
   },
   methods: {
     scroll() {

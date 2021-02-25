@@ -13,10 +13,18 @@
       Music
     </router-link>
     <router-link
+      v-if="$route.name!=='drawings'"
       :class="classBySize"
       to="/drawings"
     >
       Drawings
+    </router-link>
+    <router-link
+      v-else-if="$route.name==='drawings'"
+      :class="classBySize"
+      to="/photos"
+    >
+      Photos
     </router-link>
     <router-link
       :class="classBySize"
