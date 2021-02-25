@@ -1,6 +1,6 @@
 [{
     "name": "Cave",
-    "apps": ["cave", "virus", "reaction-diffusion", "quadtree"],
+    "apps": ["cave", "virus", "reaction-diffusion", "bubbles", "quadtree"],
     "year": "2020",
     "des": "Experiments during the 2020 lockdown.",
     "isNew": true,

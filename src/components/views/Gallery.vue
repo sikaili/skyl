@@ -1,6 +1,6 @@
 /* eslint-disable */
 <template>
-  <div>
+  <div :key="$route.name">
     <VueGallery
       :images="images"
       :index="index"
