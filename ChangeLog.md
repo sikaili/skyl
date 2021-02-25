@@ -1,3 +1,7 @@
+## [2.12.1] - 2021-02-25
+### Changed
+- reaction-diffusion back to legacy version def9c8 ([2fc52f](https://github.com/sikaili/skyl.fr/commit/2fc52f))
+
 ## [2.12.0] - 2021-02-25
 ### Added
 - rubrique photos ([9ed525](https://github.com/sikaili/skyl.fr/commit/9ed525))
