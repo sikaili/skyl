@@ -1,3 +1,12 @@
+## [2.12.0] - 2021-02-25
+### Added
+- rubrique photos ([9ed525](https://github.com/sikaili/skyl.fr/commit/9ed525))
+- let ring ([81df7e](https://github.com/sikaili/skyl.fr/commit/81df7e))
+### Fixed
+- album navigation pb ([4d95d5](https://github.com/sikaili/skyl.fr/commit/4d95d5))
+### Changed
+- minify photos ([695467](https://github.com/sikaili/skyl.fr/commit/695467))
+
 ## [2.11.1] - 2020-12-12
 ### Fixed
 - pages error (modif store) ([b5fb2e](https://github.com/sikaili/skyl.fr/commit/b5fb2e))
